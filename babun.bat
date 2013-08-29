@@ -1,6 +1,13 @@
 @echo off
 setlocal enableextensions enabledelayedexpansion
 
+rem there have to be TWO EMPTY LINES after this declaration!!!
+rem -----------------------------------------------------------
+set N=^
+
+
+rem -----------------------------------------------------------
+
 :SETUP
 set CYGWIN_VERSION=x86
 set PROXY=
@@ -12,6 +19,7 @@ set CYGWIN_HOME=%BABUN_HOME%\cygwin\
 set PACKAGES_HOME=%BABUN_HOME%\packages\
 
 set DOWNLOADER=%DOWNLOADS%\download.vbs
+set LINKER=%DOWNLOADS%\link.vbs
 set UNZIPPER=%DOWNLOADS%\unzip.exe
 set CYGWIN_INSTALLER=%DOWNLOADS%\%CYGWIN_INSTALLER%setup-%CYGWIN_VERSION%.exe
 set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
@@ -19,6 +27,8 @@ set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
 set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
+
+set SCRIPT_PATH=%~dpnx0
 
 :CHECKFORSWITCHES
 IF '%1'=='/h' GOTO INFO
@@ -90,8 +100,61 @@ if not exist %CYGWIN_HOME% (
 	mkdir %CYGWIN_HOME%
 )
 
-echo Building download.vbs script
-findstr "^::" "%~sf0" > %DOWNLOADS%\download.vbs
+echo Building embeeded scripts
+
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - LINK.VBS
+rem ---------------------------------
+set LINK_VBS=^
+	set oWS = WScript.CreateObject("WScript.Shell") !N!^
+	sLinkFile = Wscript.Arguments(0) !N!^
+	set oLink = oWS.CreateShortcut(sLinkFile) !N!^
+	oLink.TargetPath = Wscript.Arguments(1) !N!^
+	oLink.Save
+	
+echo !LINK_VBS! > %DOWNLOADS%\link.vbs
+
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - DOWNLOAD.VBS
+rem ---------------------------------
+set DOWNLOAD_VBS=^
+	strLink = Wscript.Arguments(0)!N!^
+	strSaveName = Mid(strLink, InStrRev(strLink,"/") + 1, Len(strLink)) !N!^
+	strSaveTo = Wscript.Arguments(1) ^& strSaveName !N!^
+	WScript.Echo "Download: " ^& strLink !N!^
+	WScript.Echo "Save to : " ^& strSaveTo !N!^
+	Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.6.0") !N!^
+	objHTTP.setTimeouts 30000, 30000, 30000, 30000 !N!^
+	objHTTP.open "GET", strLink, False !N!^
+	If WScript.Arguments.Count >= 3 Then !N!^
+		objHTTP.setProxy 2, Wscript.Arguments(2), "" !N!^
+	End If!N!^
+	If WScript.Arguments.Count = 5 Then!N!^
+		objHTTP.setProxyCredentials Wscript.Arguments(3), Wscript.Arguments(4)!N!^
+	End If!N!^
+	objHTTP.send!N!^
+	Set objFSO = CreateObject("Scripting.FileSystemObject")!N!^
+	If objFSO.FileExists(strSaveTo) Then!N!^
+	  objFSO.DeleteFile(strSaveTo)!N!^
+	End If!N!^
+	If objHTTP.Status = 200 Then!N!^
+	  Dim objStream!N!^
+	  Set objStream = CreateObject("ADODB.Stream")!N!^
+	  With objStream!N!^
+		.Type = 1 'adTypeBinary!N!^
+		.Open!N!^
+		.Write objHTTP.responseBody!N!^
+		.SaveToFile strSaveTo!N!^
+		.Close!N!^
+	  End With!N!^
+	  set objStream = Nothing!N!^
+	End If!N!^
+	If objFSO.FileExists(strSaveTo) Then!N!^
+	  WScript.Echo "Download completed successfuly."!N!^
+	End If
+		
+echo !DOWNLOAD_VBS! > %DOWNLOADS%\download.vbs
+
 
 echo Downloading cygwin, packages and tools installer
 if not exist %CYGWIN_INSTALLER% (
@@ -119,6 +182,8 @@ echo Installing cygwin
 --no-shortcuts ^
 --no-startmenu ^
 --no-desktop 
+
+cscript //Nologo %LINKER% "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\Cygwin.bat"
 
 GOTO END
 
@@ -152,49 +217,5 @@ ECHO.
 ECHO.
 GOTO END
 
-rem --------------------------
-rem EMBEEDED VBS SCRIPT TRICK
-rem --------------------------
-::strLink = Wscript.Arguments(0)
-::strSaveName = Mid(strLink, InStrRev(strLink,"/") + 1, Len(strLink))
-::strSaveTo = Wscript.Arguments(1) & strSaveName
-::
-::WScript.Echo "Download: " & strLink
-::WScript.Echo "Save to : " & strSaveTo
-::
-::Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.6.0")
-::objHTTP.setTimeouts 30000, 30000, 30000, 30000 
-::objHTTP.open "GET", strLink, False
-::If WScript.Arguments.Count >= 3 Then
-::	objHTTP.setProxy 2, Wscript.Arguments(2), ""
-::End If
-::If WScript.Arguments.Count = 5 Then
-::	objHTTP.setProxyCredentials Wscript.Arguments(3), Wscript.Arguments(4)
-::End If
-::
-::objHTTP.send
-::
-::Set objFSO = CreateObject("Scripting.FileSystemObject")
-::If objFSO.FileExists(strSaveTo) Then
-::  objFSO.DeleteFile(strSaveTo)
-::End If
-::
-::If objHTTP.Status = 200 Then
-::  Dim objStream
-::  Set objStream = CreateObject("ADODB.Stream")
-::  With objStream
-::    .Type = 1 'adTypeBinary
-::    .Open
-::    .Write objHTTP.responseBody
-::    .SaveToFile strSaveTo
-::    .Close
-::  End With
-::  set objStream = Nothing
-::End If
-::
-::If objFSO.FileExists(strSaveTo) Then
-::  WScript.Echo "Download `" & strSaveName & "` completed successfuly."
-::End If
-::
 rem SCRIPT END
 :END

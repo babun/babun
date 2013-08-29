@@ -1,4 +1,4 @@
-# Babun - powershell you need!
+# Babun - windows shell you will love!
 
 Install:
 Click [here](https://github.com/reficio/babun/raw/master/babun.bat)  to download the babun.bat installer. 

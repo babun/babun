@@ -1,5 +1,4 @@
-http://findatlantis.com/wiki/index.php/Installing_all_of_Cygwin_unattended
+# Babun
 
-http://blogs.technet.com/b/ashleymcglone/archive/2010/11/18/big-downloads-with-powershell.aspx
-
-https://semitwist.com/articles/article/view/downloading-files-from-plain-batch-with-zero-dependencies
+Install:
+Click [here](https://github.com/reficio/babun/raw/master/babun.bat)  to download the babun.bat installer. Then just run the script in the console.

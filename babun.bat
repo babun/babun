@@ -126,7 +126,7 @@ set DOWNLOAD_VBS=^
 	Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.6.0") !N!^
 	objHTTP.setTimeouts 30000, 30000, 30000, 30000 !N!^
 	objHTTP.open "GET", strLink, False !N!^
-	If WScript.Arguments.Count >= 3 Then !N!^
+	If WScript.Arguments.Count ^>= 3 Then !N!^
 		objHTTP.setProxy 2, Wscript.Arguments(2), "" !N!^
 	End If!N!^
 	If WScript.Arguments.Count = 5 Then!N!^

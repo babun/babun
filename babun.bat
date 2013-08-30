@@ -1,18 +1,12 @@
 @echo off
 setlocal enableextensions enabledelayedexpansion
 
-rem there have to be TWO EMPTY LINES after this declaration!!!
-rem -----------------------------------------------------------
-set N=^
-
-
-rem -----------------------------------------------------------
-
 :SETUP
 set CYGWIN_VERSION=x86
 set PROXY=
 set FORCE=false
 
+set SCRIPT_PATH=%~dpnx0
 set BABUN_HOME=%USERPROFILE%\.babun\
 set DOWNLOADS=%BABUN_HOME%\downloads\
 set CYGWIN_HOME=%BABUN_HOME%\cygwin\
@@ -28,7 +22,13 @@ set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
 set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
 
-set SCRIPT_PATH=%~dpnx0
+:CONSTANTS
+rem there have to be TWO EMPTY LINES after this declaration!!!
+rem -----------------------------------------------------------
+set N=^
+
+
+rem -----------------------------------------------------------
 
 :CHECKFORSWITCHES
 IF '%1'=='/h' GOTO INFO
@@ -38,43 +38,41 @@ IF '%1'=='/proxy' GOTO PROXY
 IF '%1'=='' (GOTO BEGIN) ELSE (GOTO BADSYNTAX)
 REM Done checking command line for switches
 GOTO BEGIN
-REM
-REM
-:VERSION64
-SET CYGWIN_VERSION=x86_64
-SHIFT
-GOTO CHECKFORSWITCHES
-REM
-:FORCE
-SET FORCE=true
-SHIFT
-GOTO CHECKFORSWITCHES
-REM
-:PROXY
-set line=%2
-	set i=0
-	rem fetch proxy tokens to an array
-	:TOKEN
-	for /f "tokens=1* delims=:" %%a in ("!line!") do (		
-		set array[!i!]=%%a
-		set /A i+=1	
-		set line=%%b
-		if not "%line%" == "" goto :TOKEN
-	)
-	rem parse and validate proxy tokens
-	if [%array[0]%] NEQ  [] (
-		if [%array[1]%] == [] (GOTO :BADSYNTAX)
-		set PROXY=%array[0]%:%array[1]%
-	)
-	if [%array[2]%] NEQ  [] (
-		if [%array[3]%] == [] (GOTO :BADSYNTAX)
-		set PROXY_USER=%array[2]%
-		set PROXY_PASS=%array[3]%
-	)
-SHIFT
-SHIFT
-GOTO CHECKFORSWITCHES
-REM
+
+	:VERSION64
+	SET CYGWIN_VERSION=x86_64
+	SHIFT
+	GOTO CHECKFORSWITCHES
+
+	:FORCE
+	SET FORCE=true
+	SHIFT
+	GOTO CHECKFORSWITCHES
+
+	:PROXY
+	set line=%2
+		set i=0
+		rem fetch proxy tokens to an array
+		:PROXYTOKEN
+		for /f "tokens=1* delims=:" %%a in ("!line!") do (		
+			set array[!i!]=%%a
+			set /A i+=1	
+			set line=%%b
+			if not "%line%" == "" goto :PROXYTOKEN
+		)
+		rem parse and validate proxy tokens
+		if [%array[0]%] NEQ  [] (
+			if [%array[1]%] == [] (GOTO :BADSYNTAX)
+			set PROXY=%array[0]%:%array[1]%
+		)
+		if [%array[2]%] NEQ  [] (
+			if [%array[3]%] == [] (GOTO :BADSYNTAX)
+			set PROXY_USER=%array[2]%
+			set PROXY_PASS=%array[3]%
+		)
+	SHIFT
+	SHIFT
+	GOTO CHECKFORSWITCHES
 
 
 :BEGIN
@@ -85,23 +83,11 @@ echo proxy_user=%PROXY_USER%
 echo proxy_pass=%PROXY_PASS%
 echo.
 
-if not exist %BABUN_HOME% (
-	echo Creating Babun home folder
-	mkdir %BABUN_HOME%
-)
-
-if not exist %DOWNLOADS% (
-	echo Creating downloads home folder
-	mkdir %DOWNLOADS%
-)
-
-if not exist %CYGWIN_HOME% (
-	echo Creating cygwin home folder
-	mkdir %CYGWIN_HOME%
-)
+if not exist %BABUN_HOME% (mkdir %BABUN_HOME%)
+if not exist %DOWNLOADS% (mkdir %DOWNLOADS%)
+if not exist %CYGWIN_HOME% (mkdir %CYGWIN_HOME%)
 
 echo Building embeeded scripts
-
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - LINK.VBS
 rem ---------------------------------
@@ -156,7 +142,7 @@ set DOWNLOAD_VBS=^
 echo !DOWNLOAD_VBS! > %DOWNLOADS%\download.vbs
 
 
-echo Downloading cygwin, packages and tools installer
+echo Downloading cygwin, packages and tools
 if not exist %CYGWIN_INSTALLER% (
 	cscript //Nologo %DOWNLOADER% %CYGWIN_SETUP_URL% %DOWNLOADS% %PROXY% %PROXY_USER% %PROXY_PASS%
 )
@@ -170,21 +156,23 @@ if not exist %PACKAGES% (
 	%UNZIPPER% -o %PACKAGES% -d %PACKAGES_HOME%
 )
 	
-rem trick to avoid admin rights
+echo Installing cygwin
 copy %CYGWIN_INSTALLER% %DOWNLOADS%\cygwin.exe
 
 echo Installing cygwin
 %DOWNLOADS%\cygwin.exe ^
---quiet-mode ^
---local-install ^
---local-package-dir %PACKAGES_HOME% ^
---root %CYGWIN_HOME% ^
---no-shortcuts ^
---no-startmenu ^
---no-desktop 
+	--quiet-mode ^
+	--local-install ^
+	--local-package-dir %PACKAGES_HOME% ^
+	--root %CYGWIN_HOME% ^
+	--no-shortcuts ^
+	--no-startmenu ^
+	--no-desktop 
 
+echo Creating desktop link
 cscript //Nologo %LINKER% "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\Cygwin.bat"
 
+echo Enjoy!
 GOTO END
 
 :BADSYNTAX
@@ -194,28 +182,17 @@ GOTO END
 :INFO
 ECHO.
 ECHO    Name: babun.bat  
-ECHO    Use this batch file to install 'babun' console
-ECHO.
-ECHO    Syntax: babun [/h] [/64] [/force] [/proxy=host:port] [/proxy_cred=user:pass]
-ECHO.
-ECHO 	'/h'	Displays the help text.
-ECHO.
-ECHO 	'/64'	Installs the 64-bit version of Cygwin (32-bit is the default)
-ECHO.
-ECHO 	'/force'	Forces download even if files are cached.
-ECHO.
-ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port
-ECHO.
-ECHO    For example:
-ECHO.
-ECHO 	babun /h 
-ECHO.
-ECHO 	babun /64 /force /proxy=test.com:80
-ECHO.
-ECHO 	babun /64 /force /proxy=test.com:80:john:pass 
-ECHO.
+ECHO    Use this batch file to install 'babun' console !N!
+ECHO    Syntax: babun [/h] [/64] [/force] [/proxy=host:port] [/proxy_cred=user:pass] !N!
+ECHO 	'/h'	Displays the help text. !N!
+ECHO 	'/64'	Installs the 64-bit version of Cygwin (32-bit is the default) !N!
+ECHO 	'/force'	Forces download even if files are cached. !N!
+ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
+ECHO    For example: !N!
+ECHO 	babun /h !N!
+ECHO 	babun /64 /force /proxy=test.com:80 !N!
+ECHO 	babun /64 /force /proxy=test.com:80:john:pass !N!
 ECHO.
 GOTO END
 
-rem SCRIPT END
 :END

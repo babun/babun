@@ -22,6 +22,7 @@ set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
 set CONSOLE2_ZIP=%DOWNLOADS%\Console-2.00b148-Beta_32bit.zip
 set CONSOLE2=%CONSOLE2_HOME%\Console.exe
 set BARK=%DOWNLOADS%\bark
+set SETUP=%DOWNLOADS%\setup.sh
 
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
@@ -29,6 +30,7 @@ set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
 set CONSOLE2_URL=http://freefr.dl.sourceforge.net/project/console/console-devel/2.00/Console-2.00b148-Beta_32bit.zip
 set CONSOLE2_SETTINGS_URL=https://raw.github.com/reficio/babun/master/src/console.xml
 set BARK_URL=https://raw.github.com/reficio/babun/master/src/bark
+set SETUP_URL=https://raw.github.com/reficio/babun/master/src/setup.sh
 
 :CONSTANTS
 rem there have to be TWO EMPTY LINES after this declaration!!!
@@ -160,7 +162,6 @@ if not exist "%CONSOLE2_ZIP%" (
 	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 	"%UNZIPPER%" -o "%CONSOLE2_ZIP%" -d %BABUN_HOME%
 	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_SETTINGS_URL%" "%CONSOLE2_HOME%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
-	copy 
 )
 if not exist "%PACKAGES%" (
 	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
@@ -170,6 +171,9 @@ if not exist "%PACKAGES%" (
 )
 if not exist "%BARK%" (
 	cscript //Nologo "%DOWNLOADER%" "%BARK_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+)	
+if not exist "%SETUP%" (
+	cscript //Nologo "%DOWNLOADER%" "%SETUP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )	
 	
 echo Installing cygwin

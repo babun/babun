@@ -84,9 +84,9 @@ echo proxy_user=%PROXY_USER%
 echo proxy_pass=%PROXY_PASS%
 echo.
 
-if not exist %BABUN_HOME% (mkdir %BABUN_HOME%)
-if not exist %DOWNLOADS% (mkdir %DOWNLOADS%)
-if not exist %CYGWIN_HOME% (mkdir %CYGWIN_HOME%)
+if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
+if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")
+if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%")
 
 echo Building embeeded scripts
 rem ---------------------------------
@@ -99,7 +99,7 @@ set LINK_VBS=^
 	oLink.TargetPath = Wscript.Arguments(1) !N!^
 	oLink.Save
 	
-echo !LINK_VBS! > %LINKER%
+echo !LINK_VBS! > "%LINKER%"
 
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - DOWNLOAD.VBS
@@ -140,27 +140,27 @@ set DOWNLOAD_VBS=^
 	  WScript.Echo "Download completed successfuly."!N!^
 	End If
 		
-echo !DOWNLOAD_VBS! > %DOWNLOADER%
+echo !DOWNLOAD_VBS! > "%DOWNLOADER%"
 
 echo Downloading cygwin, packages and tools
-if not exist %CYGWIN_INSTALLER% (
-	cscript //Nologo %DOWNLOADER% %CYGWIN_SETUP_URL% %DOWNLOADS% %PROXY% %PROXY_USER% %PROXY_PASS%
+if not exist "%CYGWIN_INSTALLER%" (
+	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
-if not exist %UNZIPPER% (
-	cscript //Nologo %DOWNLOADER% %UNZIP_URL% %DOWNLOADS% %PROXY% %PROXY_USER% %PROXY_PASS% 
+if not exist "%UNZIPPER%" (
+	cscript //Nologo "%DOWNLOADER%" "%UNZIP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
-if not exist %PACKAGES% (
-	cscript //Nologo %DOWNLOADER% %PACKAGES_URL% %DOWNLOADS% %PROXY% %PROXY_USER% %PROXY_PASS%
-	RD /S /Q %PACKAGES_HOME%
-	mkdir %PACKAGES_HOME%
-	%UNZIPPER% -o %PACKAGES% -d %PACKAGES_HOME%
+if not exist "%PACKAGES%" (
+	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	RD /S /Q "%PACKAGES_HOME%"
+	mkdir "%PACKAGES_HOME%"
+	"%UNZIPPER%" -o "%PACKAGES%" -d %PACKAGES_HOME%
 )
 	
 echo Installing cygwin
-copy %CYGWIN_INSTALLER% %CYGWIN_NO_ADMIN_INSTALLER%
+copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%"
 
 echo Installing cygwin
-%CYGWIN_NO_ADMIN_INSTALLER% ^
+"%CYGWIN_NO_ADMIN_INSTALLER%" ^
 	--quiet-mode ^
 	--local-install ^
 	--local-package-dir %PACKAGES_HOME% ^
@@ -170,7 +170,7 @@ echo Installing cygwin
 	--no-desktop 
 
 echo Creating desktop link
-cscript //Nologo %LINKER% "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\Cygwin.bat"
+cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\Cygwin.bat"
 
 echo Enjoy...
 GOTO END

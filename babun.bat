@@ -11,6 +11,7 @@ set BABUN_HOME=%USERPROFILE%\.babun\
 set DOWNLOADS=%BABUN_HOME%\downloads\
 set CYGWIN_HOME=%BABUN_HOME%\cygwin\
 set PACKAGES_HOME=%BABUN_HOME%\packages\
+set CONSOLE2_HOME=%BABUN_HOME%\console2\
 
 set DOWNLOADER=%DOWNLOADS%\download.vbs
 set LINKER=%DOWNLOADS%\link.vbs
@@ -18,10 +19,12 @@ set UNZIPPER=%DOWNLOADS%\unzip.exe
 set CYGWIN_INSTALLER=%DOWNLOADS%\%CYGWIN_INSTALLER%setup-%CYGWIN_VERSION%.exe
 set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
 set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
+set CONSOLE2=%DOWNLOADS%\Console-2.00b148-Beta_32bit.zip
 
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
 set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
+set CONSOLE2_URL=http://freefr.dl.sourceforge.net/project/console/console-devel/2.00/Console-2.00b148-Beta_32bit.zip
 
 :CONSTANTS
 rem there have to be TWO EMPTY LINES after this declaration!!!
@@ -39,7 +42,6 @@ IF '%1'=='/proxy' GOTO PROXY
 IF '%1'=='' (GOTO BEGIN) ELSE (GOTO BADSYNTAX)
 REM Done checking command line for switches
 GOTO BEGIN
-
 	:VERSION64
 	SET CYGWIN_VERSION=x86_64
 	SHIFT
@@ -142,12 +144,16 @@ set DOWNLOAD_VBS=^
 		
 echo !DOWNLOAD_VBS! > "%DOWNLOADER%"
 
-echo Downloading cygwin, packages and tools
+echo Downloading cygwin, console2, packages and tools
 if not exist "%CYGWIN_INSTALLER%" (
 	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
 if not exist "%UNZIPPER%" (
 	cscript //Nologo "%DOWNLOADER%" "%UNZIP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+)
+if not exist "%CONSOLE2%" (
+	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	"%UNZIPPER%" -o "%CONSOLE2%" -d %CONSOLE2_HOME%
 )
 if not exist "%PACKAGES%" (
 	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
@@ -171,6 +177,9 @@ echo Installing cygwin
 
 echo Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\Cygwin.bat"
+
+echo Starting babun
+start cmd.exe /k "%CYGWIN_HOME%\Cygwin.bat"
 
 echo Enjoy...
 GOTO END

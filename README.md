@@ -8,8 +8,8 @@ __Make sure to use the /proxy switch if you are behind a corporate firewall!__
 What is so cool about babun:
 * it is a bundled and tweaked cygwin console
 * it can be installed without admin rights on Windows computers
-* it provides a linux-like package manager called bark (like apt-get or yum) (IN-PROGRESS)
-* it provides a tabbed console windows (Console2) (IN-PROGRESS)
+* it provides a linux-like package manager called bark (tweaked clone of apt-cyg) (IN-PROGRESS)
+* it provides a tabbed console windows (Console2) - Ctrl+F1 opens a new tab 
 * it provides an automatic, silent command-line installer
 * it is mega cool :)
 

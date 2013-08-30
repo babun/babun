@@ -177,13 +177,14 @@ echo Installing cygwin
 	--root %CYGWIN_HOME% ^
 	--no-shortcuts ^
 	--no-startmenu ^
-	--no-desktop 
+	--no-desktop ^
+	--packages wget
 
 echo Creating desktop link
-cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"
+csc	ript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"
 
 echo Starting babun
-call "%CONSOLE2%"
+start "%CONSOLE2%"
 
 echo Enjoy...
 GOTO END

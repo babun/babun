@@ -5,6 +5,13 @@ Click [here](https://github.com/reficio/babun/raw/master/babun.bat)  to download
 
 Then just run the script in the console.
 
+What is so cool about babun:
+* it is a bundled and tweaked cygwin console
+* it can be installed without admin rights on Windows computers
+* it provides a linux-like package manager called bark (like apt-get or yum) (IN-PROGRESS)
+* it provides a tabbed console windows (Console2) (IN-PROGRESS)
+* it is mega cool!
+
 To check the syntax execute:
 <pre>
 $ babun.bat /h

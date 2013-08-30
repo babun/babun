@@ -16,6 +16,7 @@ set DOWNLOADER=%DOWNLOADS%\download.vbs
 set LINKER=%DOWNLOADS%\link.vbs
 set UNZIPPER=%DOWNLOADS%\unzip.exe
 set CYGWIN_INSTALLER=%DOWNLOADS%\%CYGWIN_INSTALLER%setup-%CYGWIN_VERSION%.exe
+set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
 set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
 
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
@@ -98,7 +99,7 @@ set LINK_VBS=^
 	oLink.TargetPath = Wscript.Arguments(1) !N!^
 	oLink.Save
 	
-echo !LINK_VBS! > %DOWNLOADS%\link.vbs
+echo !LINK_VBS! > %LINKER%
 
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - DOWNLOAD.VBS
@@ -139,8 +140,7 @@ set DOWNLOAD_VBS=^
 	  WScript.Echo "Download completed successfuly."!N!^
 	End If
 		
-echo !DOWNLOAD_VBS! > %DOWNLOADS%\download.vbs
-
+echo !DOWNLOAD_VBS! > %DOWNLOADER%
 
 echo Downloading cygwin, packages and tools
 if not exist %CYGWIN_INSTALLER% (
@@ -157,10 +157,10 @@ if not exist %PACKAGES% (
 )
 	
 echo Installing cygwin
-copy %CYGWIN_INSTALLER% %DOWNLOADS%\cygwin.exe
+copy %CYGWIN_INSTALLER% %CYGWIN_NO_ADMIN_INSTALLER%
 
 echo Installing cygwin
-%DOWNLOADS%\cygwin.exe ^
+%CYGWIN_NO_ADMIN_INSTALLER% ^
 	--quiet-mode ^
 	--local-install ^
 	--local-package-dir %PACKAGES_HOME% ^
@@ -172,7 +172,7 @@ echo Installing cygwin
 echo Creating desktop link
 cscript //Nologo %LINKER% "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\Cygwin.bat"
 
-echo Enjoy!
+echo Enjoy...
 GOTO END
 
 :BADSYNTAX

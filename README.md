@@ -3,6 +3,8 @@
 Install:
 Click [here](https://github.com/reficio/babun/raw/master/babun.bat)  to download the babun.bat installer. Then just run the script in the console.
 
+__Make sure to use the /proxy switch if you are behind a corporate firewall!__
+
 What is so cool about babun:
 * it is a bundled and tweaked cygwin console
 * it can be installed without admin rights on Windows computers

@@ -184,7 +184,7 @@ echo Installing cygwin
 	--no-shortcuts ^
 	--no-startmenu ^
 	--no-desktop ^
-	--packages wget, openssh
+	--packages wget
 
 echo Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"

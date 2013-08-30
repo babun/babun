@@ -163,20 +163,19 @@ if not exist "%CONSOLE2_ZIP%" (
 	"%UNZIPPER%" -o "%CONSOLE2_ZIP%" -d %BABUN_HOME%
 	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_SETTINGS_URL%" "%CONSOLE2_HOME%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
 )
-if not exist "%PACKAGES%" (
-	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-	RD /S /Q "%PACKAGES_HOME%"
-	mkdir "%PACKAGES_HOME%"
-	"%UNZIPPER%" -o "%PACKAGES%" -d %PACKAGES_HOME%		
-)
 if not exist "%BARK%" (
 	cscript //Nologo "%DOWNLOADER%" "%BARK_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )	
 if not exist "%SETUP%" (
 	cscript //Nologo "%DOWNLOADER%" "%SETUP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )	
+if not exist "%PACKAGES%" (
+	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	RD /S /Q "%PACKAGES_HOME%"
+	mkdir "%PACKAGES_HOME%"
+	"%UNZIPPER%" -o "%PACKAGES%" -d %PACKAGES_HOME%		
+)
 	
-echo Installing cygwin
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%"
 
 echo Installing cygwin
@@ -190,6 +189,9 @@ echo Installing cygwin
 	--no-desktop ^
 	--packages wget
 
+echo Configuring babun
+"%CYGWIN_HOME%\bin\bash.exe" --norc --noprofile "%DOWNLOADS%\setup.sh"
+	
 echo Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"
 

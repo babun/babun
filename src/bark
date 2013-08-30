@@ -383,7 +383,7 @@ case "$command" in
           echo Package $package is already installed, skipping
           continue
         fi
-        apt-cyg --noscripts install $package
+        bark --noscripts install $package
         if ! test $? = 0 ; then warn=1; fi
       done
     fi
@@ -430,7 +430,7 @@ case "$command" in
     do
       if test "-$pkg-" = "-$req-"
       then
-        echo apt-cyg cannot remove package $pkg, exiting
+        echo bark cannot remove package $pkg, exiting
         exit 1
       fi
     done

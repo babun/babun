@@ -8,6 +8,7 @@ What is so cool about babun:
 * it can be installed without admin rights on Windows computers
 * it provides a linux-like package manager called bark (like apt-get or yum) (IN-PROGRESS)
 * it provides a tabbed console windows (Console2) (IN-PROGRESS)
+* it provides an automatic, silent command-line installer
 * it is mega cool :)
 
 To check the syntax execute:

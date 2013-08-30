@@ -12,6 +12,7 @@ set DOWNLOADS=%BABUN_HOME%\downloads\
 set CYGWIN_HOME=%BABUN_HOME%\cygwin\
 set PACKAGES_HOME=%BABUN_HOME%\packages\
 set CONSOLE2_HOME=%BABUN_HOME%\Console2\
+set USER_AGENT=Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
 set DOWNLOADER=%DOWNLOADS%\download.vbs
 set LINKER=%DOWNLOADS%\link.vbs
@@ -121,12 +122,12 @@ set DOWNLOAD_VBS=^
 	Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.6.0") !N!^
 	objHTTP.setTimeouts 30000, 30000, 30000, 30000 !N!^
 	objHTTP.open "GET", strLink, False !N!^
-	objHTTP.setRequestHeader "User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)" !N!^
-	If WScript.Arguments.Count ^>= 3 Then !N!^
-		objHTTP.setProxy 2, Wscript.Arguments(2), "" !N!^
+	objHTTP.setRequestHeader "User-Agent", Wscript.Arguments(2) !N!^
+	If WScript.Arguments.Count ^>= 4 Then !N!^
+		objHTTP.setProxy 2, Wscript.Arguments(3), "" !N!^
 	End If!N!^
-	If WScript.Arguments.Count = 5 Then!N!^
-		objHTTP.setProxyCredentials Wscript.Arguments(3), Wscript.Arguments(4)!N!^
+	If WScript.Arguments.Count = 6 Then!N!^
+		objHTTP.setProxyCredentials Wscript.Arguments(4), Wscript.Arguments(5)!N!^
 	End If!N!^
 	objHTTP.send!N!^
 	Set objFSO = CreateObject("Scripting.FileSystemObject")!N!^
@@ -153,24 +154,24 @@ echo !DOWNLOAD_VBS! > "%DOWNLOADER%"
 
 echo Downloading cygwin, console2, packages and tools
 if not exist "%CYGWIN_INSTALLER%" (
-	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
 if not exist "%UNZIPPER%" (
-	cscript //Nologo "%DOWNLOADER%" "%UNZIP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	cscript //Nologo "%DOWNLOADER%" "%UNZIP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
 if not exist "%CONSOLE2_ZIP%" (
-	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 	"%UNZIPPER%" -o "%CONSOLE2_ZIP%" -d %BABUN_HOME%
-	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_SETTINGS_URL%" "%CONSOLE2_HOME%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
+	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_SETTINGS_URL%" "%CONSOLE2_HOME%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
 )
 if not exist "%BARK%" (
-	cscript //Nologo "%DOWNLOADER%" "%BARK_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	cscript //Nologo "%DOWNLOADER%" "%BARK_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )	
 if not exist "%SETUP%" (
-	cscript //Nologo "%DOWNLOADER%" "%SETUP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	cscript //Nologo "%DOWNLOADER%" "%SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )	
 if not exist "%PACKAGES%" (
-	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 	RD /S /Q "%PACKAGES_HOME%"
 	mkdir "%PACKAGES_HOME%"
 	"%UNZIPPER%" -o "%PACKAGES%" -d %PACKAGES_HOME%		
@@ -190,7 +191,7 @@ echo Installing cygwin
 	--packages wget
 
 echo Configuring babun
-"%CYGWIN_HOME%\bin\bash.exe" --norc --noprofile "%DOWNLOADS%\setup.sh"
+"%CYGWIN_HOME%\bin\bash.exe" "%DOWNLOADS%\setup.sh"
 	
 echo Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"

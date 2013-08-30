@@ -21,12 +21,14 @@ set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
 set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
 set CONSOLE2_ZIP=%DOWNLOADS%\Console-2.00b148-Beta_32bit.zip
 set CONSOLE2=%CONSOLE2_HOME%\Console.exe
+set BARK=%DOWNLOADS%\bark
 
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
 set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
 set CONSOLE2_URL=http://freefr.dl.sourceforge.net/project/console/console-devel/2.00/Console-2.00b148-Beta_32bit.zip
 set CONSOLE2_SETTINGS_URL=https://raw.github.com/reficio/babun/master/src/console.xml
+set BARK_URL=https://raw.github.com/reficio/babun/master/src/bark
 
 :CONSTANTS
 rem there have to be TWO EMPTY LINES after this declaration!!!
@@ -165,6 +167,9 @@ if not exist "%PACKAGES%" (
 	mkdir "%PACKAGES_HOME%"
 	"%UNZIPPER%" -o "%PACKAGES%" -d %PACKAGES_HOME%		
 )
+if not exist "%BARK%" (
+	cscript //Nologo "%DOWNLOADER%" "%BARK_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+)	
 	
 echo Installing cygwin
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%"
@@ -181,10 +186,10 @@ echo Installing cygwin
 	--packages wget
 
 echo Creating desktop link
-csc	ript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"
+cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"
 
 echo Starting babun
-start "%CONSOLE2%"
+start "" "%CONSOLE2%"
 
 echo Enjoy...
 GOTO END

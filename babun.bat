@@ -11,7 +11,7 @@ set BABUN_HOME=%USERPROFILE%\.babun\
 set DOWNLOADS=%BABUN_HOME%\downloads\
 set CYGWIN_HOME=%BABUN_HOME%\cygwin\
 set PACKAGES_HOME=%BABUN_HOME%\packages\
-set CONSOLE2_HOME=%BABUN_HOME%\console2\
+set CONSOLE2_HOME=%BABUN_HOME%\Console2\
 
 set DOWNLOADER=%DOWNLOADS%\download.vbs
 set LINKER=%DOWNLOADS%\link.vbs
@@ -19,12 +19,14 @@ set UNZIPPER=%DOWNLOADS%\unzip.exe
 set CYGWIN_INSTALLER=%DOWNLOADS%\%CYGWIN_INSTALLER%setup-%CYGWIN_VERSION%.exe
 set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
 set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
-set CONSOLE2=%DOWNLOADS%\Console-2.00b148-Beta_32bit.zip
+set CONSOLE2_ZIP=%DOWNLOADS%\Console-2.00b148-Beta_32bit.zip
+set CONSOLE2=%CONSOLE2_HOME%\Console.exe
 
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
 set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
 set CONSOLE2_URL=http://freefr.dl.sourceforge.net/project/console/console-devel/2.00/Console-2.00b148-Beta_32bit.zip
+set CONSOLE2_SETTINGS_URL=https://raw.github.com/reficio/babun/master/src/console.xml
 
 :CONSTANTS
 rem there have to be TWO EMPTY LINES after this declaration!!!
@@ -151,15 +153,17 @@ if not exist "%CYGWIN_INSTALLER%" (
 if not exist "%UNZIPPER%" (
 	cscript //Nologo "%DOWNLOADER%" "%UNZIP_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
-if not exist "%CONSOLE2%" (
+if not exist "%CONSOLE2_ZIP%" (
 	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-	"%UNZIPPER%" -o "%CONSOLE2%" -d %CONSOLE2_HOME%
+	"%UNZIPPER%" -o "%CONSOLE2_ZIP%" -d %BABUN_HOME%
+	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_SETTINGS_URL%" "%CONSOLE2_HOME%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
+	copy 
 )
 if not exist "%PACKAGES%" (
 	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 	RD /S /Q "%PACKAGES_HOME%"
 	mkdir "%PACKAGES_HOME%"
-	"%UNZIPPER%" -o "%PACKAGES%" -d %PACKAGES_HOME%
+	"%UNZIPPER%" -o "%PACKAGES%" -d %PACKAGES_HOME%		
 )
 	
 echo Installing cygwin
@@ -176,10 +180,10 @@ echo Installing cygwin
 	--no-desktop 
 
 echo Creating desktop link
-cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\Cygwin.bat"
+cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"
 
 echo Starting babun
-start cmd.exe /k "%CYGWIN_HOME%\Cygwin.bat"
+call "%CONSOLE2%"
 
 echo Enjoy...
 GOTO END

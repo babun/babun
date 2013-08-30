@@ -4,4 +4,7 @@
 # 
 echo "Setting up babun!"
 
+#configure bark
+chmod +x /usr/local/bin/bark
+
 exit 0

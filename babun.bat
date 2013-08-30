@@ -195,6 +195,9 @@ echo Configuring babun
 echo Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"
 
+echo Installing bark
+copy %BARK% %CYGWIN_HOME%\usr\local\bin
+
 echo Starting babun
 start "" "%CONSOLE2%"
 

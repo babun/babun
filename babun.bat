@@ -109,8 +109,7 @@ set UNZIP_VBS=^
 		fso.CreateFolder(ExtractTo) !N!^
 	End If !N!^
 	set objShell = CreateObject("Shell.Application") !N!^
-	set FilesInZip = objShell.NameSpace(ZipFile).items !N!^
-	objShell.NameSpace(ExtractTo).CopyHere(FilesInZip) !N!^
+	objShell.NameSpace(ExtractTo).CopyHere objShell.NameSpace(ZipFile).items !N!^
 	Set fso = Nothing !N!^
 	Set objShell = Nothing
 	

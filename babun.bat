@@ -12,6 +12,7 @@ set BABUN_HOME=%USERPROFILE%\.babun\
 set DOWNLOADS=%BABUN_HOME%\downloads\
 set CYGWIN_HOME=%BABUN_HOME%\cygwin\
 set PACKAGES_HOME=%BABUN_HOME%\packages\
+set SRC_HOME=%BABUN_HOME%\src\
 set USER_AGENT=Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
 rem scripts:
@@ -187,6 +188,12 @@ if exist "%PACKAGES_HOME%" (
 )
 mkdir "%PACKAGES_HOME%"
 cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
+
+if exist "%SRC_HOME%" (
+	RD /S /Q "%SRC_HOME%"
+)
+mkdir "%SRC_HOME%"
+cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
 	
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%"
 
@@ -201,7 +208,12 @@ echo Installing cygwin
 	--no-desktop ^
 	--packages wget
 
-echo Configuring babun
+echo Tweaking shell
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "Bash init"'
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
 
 echo Configuring start scripts
 copy /y nul "%CYGWIN_HOME%\start.bat"
@@ -211,11 +223,7 @@ del "%CYGWIN_HOME%\Cygwin*"
 echo Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 
-echo Installing bark
-rem copy "%BARK%" "%CYGWIN_HOME%\usr\local\bin"
-
 echo Starting babun
-rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
 start %CYGWIN_HOME%\bin\mintty.exe -
 
 echo Enjoy...

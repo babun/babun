@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 setlocal enableextensions enabledelayedexpansion
 
 :SETUP
@@ -109,7 +109,7 @@ set UNZIP_VBS=^
 		fso.CreateFolder(ExtractTo) !N!^
 	End If !N!^
 	set objShell = CreateObject("Shell.Application") !N!^
-	objShell.NameSpace(ExtractTo).CopyHere objShell.NameSpace(ZipFile).items !N!^
+	objShell.NameSpace(ExtractTo).CopyHere objShell.NameSpace(ZipFile).Items !N!^
 	Set fso = Nothing !N!^
 	Set objShell = Nothing
 	
@@ -138,15 +138,15 @@ set DOWNLOAD_VBS=^
 	strSaveTo = Wscript.Arguments(1) ^& strSaveName !N!^
 	WScript.Echo "Download: " ^& strLink !N!^
 	WScript.Echo "Save to : " ^& strSaveTo !N!^
-	Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.6.0") !N!^
+	Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.3.0") !N!^
 	objHTTP.setTimeouts 30000, 30000, 30000, 30000 !N!^
 	objHTTP.open "GET", strLink, False !N!^
 	objHTTP.setRequestHeader "User-Agent", Wscript.Arguments(2) !N!^
-	If WScript.Arguments.Count ^>= 4 Then !N!^
+	If ((WScript.Arguments.Count ^>= 4) And (Len(WScript.Arguments(3)) ^> 0)) Then !N!^
 		objHTTP.setProxy 2, Wscript.Arguments(3), "" !N!^
 	End If!N!^
-	If WScript.Arguments.Count = 6 Then!N!^
-		objHTTP.setProxyCredentials Wscript.Arguments(4), Wscript.Arguments(5)!N!^
+	If ((WScript.Arguments.Count = 6) And (Len(WScript.Arguments(3)) ^> 0)) Then !N!^
+		objHTTP.setProxyCredentials Wscript.Arguments(4), Wscript.Arguments(5) !N!^
 	End If!N!^
 	objHTTP.send!N!^
 	Set objFSO = CreateObject("Scripting.FileSystemObject")!N!^

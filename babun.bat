@@ -30,6 +30,7 @@ set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERS
 set SRC_URL=https://github.com/reficio/babun/archive/%BABUN_VERSION%.zip
 
 set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
+set LOG_FILE=babun.log
 
 :CONSTANTS
 rem there have to be TWO EMPTY LINES after this declaration!!!
@@ -84,15 +85,17 @@ GOTO BEGIN
 
 
 :BEGIN
-echo Installing babun: version=%BABUN_VERSION% ; cygwin version=%CYGWIN_VERSION%
+call:logg "Installing babun version [%BABUN_VERSION%]"
 
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
 if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")
 if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%")
 
-del "%DOWNLOADS%\*.vbs"
+if exist "%DOWNLOADS%\*.vbs" (
+	del /F /Q "%DOWNLOADS%\*.vbs"
+)
 
-echo Building embeeded scripts
+call:logg "Extracting embeeded VBS scripts"
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - UNZIP.VBS
 rem ---------------------------------
@@ -131,8 +134,7 @@ set DOWNLOAD_VBS=^
 	strLink = Wscript.Arguments(0)!N!^
 	strSaveName = Mid(strLink, InStrRev(strLink,"/") + 1, Len(strLink)) !N!^
 	strSaveTo = Wscript.Arguments(1) ^& strSaveName !N!^
-	WScript.Echo "Download: " ^& strLink !N!^
-	WScript.Echo "Save to : " ^& strSaveTo !N!^
+	WScript.StdOut.Write "[babun] Downloading " ^& strLink !N!^
 	Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.3.0") !N!^
 	objHTTP.setTimeouts 30000, 30000, 30000, 30000 !N!^
 	objHTTP.open "GET", strLink, False !N!^
@@ -161,12 +163,13 @@ set DOWNLOAD_VBS=^
 	  set objStream = Nothing!N!^
 	End If!N!^
 	If objFSO.FileExists(strSaveTo) Then!N!^
-	  WScript.Echo "Download completed successfuly."!N!^
+	  WScript.Echo " [OK]" !N!^
+	Else !N!^
+		WScript.Echo " [FAILED]" !N!^
 	End If
 		
 echo !DOWNLOAD_VBS! > "%DOWNLOADER%"
 
-echo Downloading cygwin, console2, packages and tools
 if not exist "%CYGWIN_INSTALLER%" (
 	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
@@ -181,17 +184,19 @@ if exist "%PACKAGES_HOME%" (
 	RD /S /Q "%PACKAGES_HOME%"
 )
 mkdir "%PACKAGES_HOME%"
+call:logg "Unzipping cygwin packages"
 cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
 
 if exist "%SRC_HOME%" (
 	RD /S /Q "%SRC_HOME%"
 )
 mkdir "%SRC_HOME%"
+call:logg "Unzipping bash configuration"
 cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
 	
-copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%"
+copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% 
 
-echo Installing cygwin
+call:logg "Installing cygwin"
 "%CYGWIN_NO_ADMIN_INSTALLER%" ^
 	--quiet-mode ^
 	--local-install ^
@@ -200,37 +205,36 @@ echo Installing cygwin
 	--no-shortcuts ^
 	--no-startmenu ^
 	--no-desktop ^
-	--packages wget
+	--packages wget > %LOG_FILE%
 
-echo Tweaking shell
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "Bash init"'
-xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y
-xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y
-xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y
+call:logg "Tweaking shell settings"
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"'
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y >> %LOG_FILE%
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y >> %LOG_FILE%
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y >> %LOG_FILE%
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
 
-echo Propagating proxy properties
+call:logg "Propagating proxy properties"
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "" > "%CYGWIN_HOME%\home\%username%\.babunrc"'
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
 
-echo Configuring start scripts
-copy /y nul "%CYGWIN_HOME%\start.bat"
+call:logg "Configuring start scripts"
+copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE%
 echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat"
 del "%CYGWIN_HOME%\Cygwin*"
 	
-echo Creating desktop link
+call:logg "Creating desktop link"
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 
-echo Starting babun
+call:logg "Starting babun"
 start %CYGWIN_HOME%\bin\mintty.exe -
 
-echo Enjoy...
-GOTO END
+GOTO:EOF
 
 :BADSYNTAX
 ECHO Usage: babun.bat [/h] [/64] [/force] [/proxy=host:port[:user:pass]]
-GOTO END
+GOTO:EOF
 
 :INFO
 ECHO.
@@ -248,4 +252,8 @@ ECHO 	babun /64 /force /proxy=test.com:80:john:pass !N!
 ECHO.
 GOTO END
 
-:END
+GOTO:EOF
+	
+:logg
+	ECHO [babun] %~1
+GOTO:EOF

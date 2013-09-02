@@ -41,7 +41,7 @@ set N=^
 rem -----------------------------------------------------------
 	
 :CHECKFORSWITCHES
-IF '%1'=='/h' GOTO INFO
+IF '%1'=='/h' GOTO USAGE
 IF '%1'=='/64' GOTO VERSION64
 IF '%1'=='/force' GOTO FORCE
 IF '%1'=='/proxy' GOTO PROXY
@@ -85,17 +85,22 @@ GOTO BEGIN
 
 
 :BEGIN
-call:log "Installing babun version [%BABUN_VERSION%]"
+call:println "Installing babun version [%BABUN_VERSION%]"
 
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
 if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")
 if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%")
 
+if '%force%'=='true' (
+ 	call:println "Forcing download as /force switch specified"
+ 	del /F /Q "%DOWNLOADS%\*.*"
+)
+
 if exist "%DOWNLOADS%\*.vbs" (
 	del /F /Q "%DOWNLOADS%\*.vbs"
 )
 
-call:log "Extracting embeeded VBS scripts"
+call:println "Extracting embeeded VBS scripts"
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - UNZIP.VBS
 rem ---------------------------------
@@ -184,19 +189,19 @@ if exist "%PACKAGES_HOME%" (
 	RD /S /Q "%PACKAGES_HOME%"
 )
 mkdir "%PACKAGES_HOME%"
-call:log "Unzipping cygwin packages"
+call:println "Extracting binary packages"
 cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
 
 if exist "%SRC_HOME%" (
 	RD /S /Q "%SRC_HOME%"
 )
 mkdir "%SRC_HOME%"
-call:log "Unzipping bash configuration"
+call:println "Extracting bash configuration"
 cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
 	
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% 
 
-call:log "Installing cygwin"
+call:println "Installing cygwin"
 "%CYGWIN_NO_ADMIN_INSTALLER%" ^
 	--quiet-mode ^
 	--local-install ^
@@ -207,27 +212,27 @@ call:log "Installing cygwin"
 	--no-desktop ^
 	--packages wget > %LOG_FILE%
 
-call:log "Tweaking shell settings"
+call:println "Tweaking shell settings"
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"'
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y >> %LOG_FILE%
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y >> %LOG_FILE%
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y >> %LOG_FILE%
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
 
-call:log "Propagating proxy properties"
+call:println "Propagating proxy properties"
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "" > "%CYGWIN_HOME%\home\%username%\.babunrc"'
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
 
-call:log "Configuring start scripts"
+call:println "Configuring start scripts"
 copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE%
 echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat"
 del "%CYGWIN_HOME%\Cygwin*"
 	
-call:log "Creating desktop link"
+call:println "Creating desktop link"
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 
-call:log "Starting babun"
+call:println "Starting babun"
 start %CYGWIN_HOME%\bin\mintty.exe -
 
 GOTO:EOF
@@ -236,24 +241,22 @@ GOTO:EOF
 ECHO Usage: babun.bat [/h] [/64] [/force] [/proxy=host:port[:user:pass]]
 GOTO:EOF
 
-:INFO
+:USAGE
 ECHO.
 ECHO    Name: babun.bat  
 ECHO    Use this batch file to install 'babun' console !N!
 ECHO    Syntax: babun [/h] [/64] [/force] [/proxy=host:port] [/proxy_cred=user:pass] !N!
 ECHO 	'/h'	Displays the help text. !N!
 ECHO 	'/64'	Installs the 64-bit version of Cygwin (32-bit is the default) !N!
-ECHO 	'/force'	Forces download even if files are cached. !N!
+ECHO 	'/force'	Forces download even if files are downloaded. !N!
 ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
 ECHO    For example: !N!
 ECHO 	babun /h !N!
 ECHO 	babun /64 /force /proxy=test.com:80 !N!
 ECHO 	babun /64 /force /proxy=test.com:80:john:pass !N!
 ECHO.
-GOTO END
-
 GOTO:EOF
 	
-:log
-	ECHO [babun] %~1
+:println
+ECHO [babun] %~1
 GOTO:EOF

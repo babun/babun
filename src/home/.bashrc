@@ -197,6 +197,11 @@
 # 
 # alias cd=cd_func
 
+# do not delete these lines!
+if [ -f "${HOME}/.babunrc" ]; then
+   source "${HOME}/.babunrc"
+fi
+
 export LANG=$(locale -uU)
 # export LANG="en_US.UTF-8"
 # export LC_CTYPE="en_US.UTF-8"
@@ -211,3 +216,4 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 PS1='\[\033[01;32m\]\u\[\033[01;34m\]::\[\033[01;31m\]\h \[\033[00;34m\]{ \[\033[01;34m\]\w \[\033[00;34m\]}\[\033[01;32m\]-> \[\033[00m\]'
+

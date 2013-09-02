@@ -215,6 +215,11 @@ xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
 
+echo Propagating proxy properties
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "" > "%CYGWIN_HOME%\home\%username%\.babunrc"'
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
+
 echo Configuring start scripts
 copy /y nul "%CYGWIN_HOME%\start.bat"
 echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat"

@@ -31,3 +31,6 @@ $ babun.bat /h
         babun /64 /force /proxy=test.com:80
         babun /64 /force /proxy=test.com:80:john:pass
 </pre>
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/reficio/babun/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

@@ -84,12 +84,7 @@ GOTO BEGIN
 
 
 :BEGIN
-echo version=%CYGWIN_VERSION%
-echo force=%FORCE%
-echo proxy_host=%PROXY%
-echo proxy_user=%PROXY_USER%
-echo proxy_pass=%PROXY_PASS%
-echo.
+echo Installing babun: version=%BABUN_VERSION% ; cygwin version=%CYGWIN_VERSION%
 
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
 if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")

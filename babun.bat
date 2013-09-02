@@ -85,7 +85,7 @@ GOTO BEGIN
 
 
 :BEGIN
-call:logg "Installing babun version [%BABUN_VERSION%]"
+call:log "Installing babun version [%BABUN_VERSION%]"
 
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
 if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")
@@ -95,7 +95,7 @@ if exist "%DOWNLOADS%\*.vbs" (
 	del /F /Q "%DOWNLOADS%\*.vbs"
 )
 
-call:logg "Extracting embeeded VBS scripts"
+call:log "Extracting embeeded VBS scripts"
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - UNZIP.VBS
 rem ---------------------------------
@@ -184,19 +184,19 @@ if exist "%PACKAGES_HOME%" (
 	RD /S /Q "%PACKAGES_HOME%"
 )
 mkdir "%PACKAGES_HOME%"
-call:logg "Unzipping cygwin packages"
+call:log "Unzipping cygwin packages"
 cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
 
 if exist "%SRC_HOME%" (
 	RD /S /Q "%SRC_HOME%"
 )
 mkdir "%SRC_HOME%"
-call:logg "Unzipping bash configuration"
+call:log "Unzipping bash configuration"
 cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
 	
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% 
 
-call:logg "Installing cygwin"
+call:log "Installing cygwin"
 "%CYGWIN_NO_ADMIN_INSTALLER%" ^
 	--quiet-mode ^
 	--local-install ^
@@ -207,27 +207,27 @@ call:logg "Installing cygwin"
 	--no-desktop ^
 	--packages wget > %LOG_FILE%
 
-call:logg "Tweaking shell settings"
+call:log "Tweaking shell settings"
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"'
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y >> %LOG_FILE%
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y >> %LOG_FILE%
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y >> %LOG_FILE%
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
 
-call:logg "Propagating proxy properties"
+call:log "Propagating proxy properties"
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "" > "%CYGWIN_HOME%\home\%username%\.babunrc"'
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
 
-call:logg "Configuring start scripts"
+call:log "Configuring start scripts"
 copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE%
 echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat"
 del "%CYGWIN_HOME%\Cygwin*"
 	
-call:logg "Creating desktop link"
+call:log "Creating desktop link"
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 
-call:logg "Starting babun"
+call:log "Starting babun"
 start %CYGWIN_HOME%\bin\mintty.exe -
 
 GOTO:EOF
@@ -254,6 +254,6 @@ GOTO END
 
 GOTO:EOF
 	
-:logg
+:log
 	ECHO [babun] %~1
 GOTO:EOF

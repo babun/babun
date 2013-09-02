@@ -2,6 +2,7 @@
 setlocal enableextensions enabledelayedexpansion
 
 :SETUP
+set BABUN_VERSION=master
 set CYGWIN_VERSION=x86
 set PROXY=
 set FORCE=false
@@ -11,27 +12,23 @@ set BABUN_HOME=%USERPROFILE%\.babun\
 set DOWNLOADS=%BABUN_HOME%\downloads\
 set CYGWIN_HOME=%BABUN_HOME%\cygwin\
 set PACKAGES_HOME=%BABUN_HOME%\packages\
-set CONSOLE2_HOME=%BABUN_HOME%\Console2\
 set USER_AGENT=Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
+rem scripts:
 set DOWNLOADER=%DOWNLOADS%\download.vbs
 set LINKER=%DOWNLOADS%\link.vbs
-set UNZIPPER=%DOWNLOADS%\unzip.exe
+set UNZIPPER=%DOWNLOADS%\unzip.vbs
+
+rem to-download:
 set CYGWIN_INSTALLER=%DOWNLOADS%\%CYGWIN_INSTALLER%setup-%CYGWIN_VERSION%.exe
-set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
 set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
-set CONSOLE2_ZIP=%DOWNLOADS%\Console-2.00b148-Beta_32bit.zip
-set CONSOLE2=%CONSOLE2_HOME%\Console.exe
-set BARK=%DOWNLOADS%\bark
-set SETUP=%DOWNLOADS%\setup.sh
+set SRC=%DOWNLOADS%\%BABUN_VERSION%.zip
 
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
-set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
-set CONSOLE2_URL=http://freefr.dl.sourceforge.net/project/console/console-devel/2.00/Console-2.00b148-Beta_32bit.zip
-set CONSOLE2_SETTINGS_URL=https://raw.github.com/reficio/babun/master/src/console.xml
-set BARK_URL=https://raw.github.com/reficio/babun/master/src/bark
-set SETUP_URL=https://raw.github.com/reficio/babun/master/src/setup.sh
+set SRC_URL=https://github.com/reficio/babun/archive/%BABUN_VERSION%.zip
+
+set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
 
 :CONSTANTS
 rem there have to be TWO EMPTY LINES after this declaration!!!
@@ -40,7 +37,7 @@ set N=^
 
 
 rem -----------------------------------------------------------
-
+	
 :CHECKFORSWITCHES
 IF '%1'=='/h' GOTO INFO
 IF '%1'=='/64' GOTO VERSION64
@@ -97,7 +94,28 @@ if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
 if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")
 if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%")
 
+del "%DOWNLOADS%\*.vbs"
+
 echo Building embeeded scripts
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - UNZIP.VBS
+rem ---------------------------------
+set UNZIP_VBS=^
+	set fso = CreateObject("Scripting.FileSystemObject") !N!^
+	ZipFile = fso.GetAbsolutePathName(Wscript.Arguments(0)) !N!^
+	ExtractTo = fso.GetAbsolutePathName(Wscript.Arguments(1)) !N!^
+	If NOT fso.FolderExists(ExtractTo) Then !N!^
+		fso.CreateFolder(ExtractTo) !N!^
+	End If !N!^
+	set objShell = CreateObject("Shell.Application") !N!^
+	set FilesInZip = objShell.NameSpace(ZipFile).items !N!^
+	objShell.NameSpace(ExtractTo).CopyHere(FilesInZip) !N!^
+	Set fso = Nothing !N!^
+	Set objShell = Nothing
+	
+echo !UNZIP_VBS! > "%UNZIPPER%"
+
+
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - LINK.VBS
 rem ---------------------------------
@@ -106,6 +124,7 @@ set LINK_VBS=^
 	sLinkFile = Wscript.Arguments(0) !N!^
 	set oLink = oWS.CreateShortcut(sLinkFile) !N!^
 	oLink.TargetPath = Wscript.Arguments(1) !N!^
+	oLink.Arguments  = Wscript.Arguments(2) !N!^
 	oLink.Save
 	
 echo !LINK_VBS! > "%LINKER%"
@@ -156,26 +175,18 @@ echo Downloading cygwin, console2, packages and tools
 if not exist "%CYGWIN_INSTALLER%" (
 	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
-if not exist "%UNZIPPER%" (
-	cscript //Nologo "%DOWNLOADER%" "%UNZIP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+if not exist "%SRC%" (
+	cscript //Nologo "%DOWNLOADER%" "%SRC_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 )
-if not exist "%CONSOLE2_ZIP%" (
-	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-	"%UNZIPPER%" -o "%CONSOLE2_ZIP%" -d %BABUN_HOME%
-	cscript //Nologo "%DOWNLOADER%" "%CONSOLE2_SETTINGS_URL%" "%CONSOLE2_HOME%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
-)
-if not exist "%BARK%" (
-	cscript //Nologo "%DOWNLOADER%" "%BARK_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-)	
-if not exist "%SETUP%" (
-	cscript //Nologo "%DOWNLOADER%" "%SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-)	
 if not exist "%PACKAGES%" (
-	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-	RD /S /Q "%PACKAGES_HOME%"
-	mkdir "%PACKAGES_HOME%"
-	"%UNZIPPER%" -o "%PACKAGES%" -d %PACKAGES_HOME%		
+	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
 )
+
+if exist "%PACKAGES_HOME%" (
+	RD /S /Q "%PACKAGES_HOME%"
+)
+mkdir "%PACKAGES_HOME%"
+cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
 	
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%"
 
@@ -191,16 +202,21 @@ echo Installing cygwin
 	--packages wget
 
 echo Configuring babun
-"%CYGWIN_HOME%\bin\bash.exe" "%DOWNLOADS%\setup.sh"
+
+echo Configuring start scripts
+copy /y nul "%CYGWIN_HOME%\start.bat"
+echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat"
+del "%CYGWIN_HOME%\Cygwin*"
 	
 echo Creating desktop link
-cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CONSOLE2%"
+cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 
 echo Installing bark
-copy "%BARK%" "%CYGWIN_HOME%\usr\local\bin"
+rem copy "%BARK%" "%CYGWIN_HOME%\usr\local\bin"
 
 echo Starting babun
-start "" "%CONSOLE2%"
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
+start %CYGWIN_HOME%\bin\mintty.exe -
 
 echo Enjoy...
 GOTO END

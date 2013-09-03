@@ -247,7 +247,7 @@ ECHO    Name: babun.bat
 ECHO    Use this batch file to install 'babun' console !N!
 ECHO    Syntax: babun [/h] [/64] [/force] [/proxy=host:port] [/proxy_cred=user:pass] !N!
 ECHO 	'/h'	Displays the help text. !N!
-ECHO 	'/64'	Installs the 64-bit version of Cygwin (32-bit is the default) !N!
+ECHO 	'/64'	Installs the 64-bit version of Cygwin (NOT RECOMMENDED!) !N!
 ECHO 	'/force'	Forces download even if files are downloaded. !N!
 ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
 ECHO    For example: !N!

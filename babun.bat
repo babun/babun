@@ -143,7 +143,7 @@ set DOWNLOAD_VBS=^
 	strLink = Wscript.Arguments(0)!N!^
 	strSaveName = Mid(strLink, InStrRev(strLink,"/") + 1, Len(strLink)) !N!^
 	strSaveTo = Wscript.Arguments(1) ^& strSaveName !N!^
-	WScript.StdOut.Write "[babun] Downloading " ^& strLink !N!^
+	WScript.StdOut.Write "[babun] Downloading " ^& strLink ^& " "!N!^
 	Set objHTTP = Nothing !N!^
 	If ((WScript.Arguments.Count ^>= 4) And (Len(WScript.Arguments(3)) ^> 0)) Then !N!^
 		Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.6.0") !N!^
@@ -179,21 +179,24 @@ set DOWNLOAD_VBS=^
 	  set objStream = Nothing!N!^
 	End If!N!^
 	If objFSO.FileExists(strSaveTo) Then!N!^
-	  WScript.Echo " [OK]" !N!^
+	  WScript.Echo "[OK]" !N!^
 	Else !N!^
-		WScript.Echo " [FAILED]" !N!^
+		WScript.Echo "[FAILED]" !N!^
 	End If
 		
 echo !DOWNLOAD_VBS! > "%DOWNLOADER%"
 
 if not exist "%CYGWIN_INSTALLER%" (
 	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	if not exist "%CYGWIN_INSTALLER%" (GOTO ERROR)
 )
 if not exist "%SRC%" (
 	cscript //Nologo "%DOWNLOADER%" "%SRC_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	if not exist "%SRC%" (GOTO ERROR)
 )
 if not exist "%PACKAGES%" (
 	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
+	if not exist "%PACKAGES%" (GOTO ERROR)
 )
 
 if exist "%PACKAGES_HOME%" (
@@ -222,6 +225,8 @@ ECHO [babun] Installing cygwin
 	--no-startmenu ^
 	--no-desktop ^
 	--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time > %LOG_FILE%
+if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
+	
 	
 :PROPAGATE		
 ECHO [babun] Tweaking shell settings
@@ -271,5 +276,8 @@ ECHO 	babun /64 /force /proxy=test.com:80 !N!
 ECHO 	babun /64 /force /proxy=test.com:80:john:pass !N!
 ECHO.
 GOTO END
+
+:ERROR
+ECHO Terminating due to errors
 
 :END

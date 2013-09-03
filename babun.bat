@@ -86,21 +86,22 @@ GOTO BEGIN
 
 
 :BEGIN
+if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
 ECHO [babun] Installing babun version [%BABUN_VERSION%]
 
 rem goto PROPAGATE
 
-if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
-if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")
-if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%")
+if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%" || goto :ERROR)
+if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%" || goto :ERROR)
+if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%" || goto :ERROR)
 
 if '%force%'=='true' (
  	ECHO [babun] Forcing download as /force switch specified
- 	del /F /Q "%DOWNLOADS%\*.*"
+ 	del /F /Q "%DOWNLOADS%\*.*" || goto :ERROR
 )
 
 if exist "%SCRIPTS_HOME%" (
-	RD /S /Q "%SCRIPTS_HOME%"
+	RD /S /Q "%SCRIPTS_HOME%" || goto :ERROR
 )
 mkdir "%SCRIPTS_HOME%"
 
@@ -120,7 +121,7 @@ set UNZIP_VBS=^
 	Set fso = Nothing !N!^
 	Set objShell = Nothing
 	
-echo !UNZIP_VBS! > "%UNZIPPER%"
+echo !UNZIP_VBS! > "%UNZIPPER%" || goto :ERROR
 
 
 rem ---------------------------------
@@ -134,7 +135,7 @@ set LINK_VBS=^
 	oLink.Arguments  = Wscript.Arguments(2) !N!^
 	oLink.Save
 	
-echo !LINK_VBS! > "%LINKER%"
+echo !LINK_VBS! > "%LINKER%" || goto :ERROR
 
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - DOWNLOAD.VBS
@@ -184,7 +185,7 @@ set DOWNLOAD_VBS=^
 		WScript.Echo "[FAILED]" !N!^
 	End If
 		
-echo !DOWNLOAD_VBS! > "%DOWNLOADER%"
+echo !DOWNLOAD_VBS! > "%DOWNLOADER%" || goto :ERROR
 
 if not exist "%CYGWIN_INSTALLER%" (
 	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
@@ -200,20 +201,20 @@ if not exist "%PACKAGES%" (
 )
 
 if exist "%PACKAGES_HOME%" (
-	RD /S /Q "%PACKAGES_HOME%"
+	RD /S /Q "%PACKAGES_HOME%" || goto :ERROR
 )
 mkdir "%PACKAGES_HOME%"
 ECHO [babun] Extracting binary packages
 cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
 
 if exist "%SRC_HOME%" (
-	RD /S /Q "%SRC_HOME%"
+	RD /S /Q "%SRC_HOME%" || goto :ERROR
 )
 mkdir "%SRC_HOME%"
 ECHO [babun] Extracting bash configuration
 cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
 	
-copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% 
+copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% || goto :ERROR
 
 ECHO [babun] Installing cygwin
 "%CYGWIN_NO_ADMIN_INSTALLER%" ^
@@ -230,30 +231,30 @@ if %ERRORLEVEL% NEQ 0 (GOTO ERROR)
 	
 :PROPAGATE		
 ECHO [babun] Tweaking shell settings
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"'
-xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y >> %LOG_FILE%
-xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y >> %LOG_FILE%
-xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y >> %LOG_FILE%
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"' || goto :ERROR
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y >> %LOG_FILE% || goto :ERROR
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y >> %LOG_FILE% || goto :ERROR
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y >> %LOG_FILE% || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark' || goto :ERROR
 
 ECHO [babun] Propagating babun properties
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "# Do not modify this file. It will be overwritten." > "%CYGWIN_HOME%\home\%username%\.babunrc" '
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=\"http://%PROXY_USER%:%PROXY_PASS%@%PROXY%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" '
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=\"http://%PROXY_USER%:%PROXY_PASS%@%PROXY%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" '
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export cygwin_version=\"%CYGWIN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" '
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export babun_version=\"%BABUN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" '
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export user_agent=\"%USER_AGENT%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" '
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "# Do not modify this file. It will be overwritten." > "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=\"http://%PROXY_USER%:%PROXY_PASS%@%PROXY%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=\"http://%PROXY_USER%:%PROXY_PASS%@%PROXY%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export cygwin_version=\"%CYGWIN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export babun_version=\"%BABUN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export user_agent=\"%USER_AGENT%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 
 ECHO [babun] Configuring start scripts
-copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE%
-echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat"
-del "%CYGWIN_HOME%\Cygwin*"
+copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE% || goto :ERROR
+echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat" || goto :ERROR
+del "%CYGWIN_HOME%\Cygwin*" || goto :ERROR
 	
 ECHO [babun] Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 
 ECHO [babun] Starting babun
-start %CYGWIN_HOME%\bin\mintty.exe -
+start %CYGWIN_HOME%\bin\mintty.exe - || goto :ERROR
 
 GOTO END
 
@@ -278,6 +279,7 @@ ECHO.
 GOTO END
 
 :ERROR
-ECHO Terminating due to errors
+ECHO Terminating due to error #%errorlevel%
+EXIT /b %errorlevel%
 
 :END

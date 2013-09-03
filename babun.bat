@@ -210,7 +210,7 @@ call:println "Installing cygwin"
 	--no-shortcuts ^
 	--no-startmenu ^
 	--no-desktop ^
-	--packages wget > %LOG_FILE%
+	--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time > %LOG_FILE%
 
 call:println "Tweaking shell settings"
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"'

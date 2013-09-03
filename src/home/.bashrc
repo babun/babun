@@ -202,10 +202,14 @@ if [ -f "${HOME}/.babunrc" ]; then
    source "${HOME}/.babunrc"
 fi
 
-export LANG=$(locale -uU)
-# export LANG="en_US.UTF-8"
-# export LC_CTYPE="en_US.UTF-8"
-# export LC_ALL="en_US.UTF-8"
+# Uncomment these lines to the set your machine's default locale (and comment out the UTF-8 ones)
+# export LANG=$(locale -uU)
+# export LC_CTYPE=$(locale -uU)
+# export LC_ALL=$(locale -uU)
+
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 
 CYGWIN="${CYGWIN} nodosfilewarning mintty"; export CYGWIN
 export TERM=xterm-256color

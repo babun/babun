@@ -157,7 +157,9 @@ set DOWNLOAD_VBS=^
 		objHTTP.setProxy 2, Wscript.Arguments(3), "" !N!^
 	End If!N!^
 	If ((WScript.Arguments.Count = 6) And (Len(WScript.Arguments(3)) ^> 0)) Then !N!^
-		objHTTP.setProxyCredentials Wscript.Arguments(4), Wscript.Arguments(5) !N!^
+		If ((Len(WScript.Arguments(4)) ^> 0) And (Len(WScript.Arguments(5)) ^> 0)) Then !N!^
+			objHTTP.setProxyCredentials Wscript.Arguments(4), Wscript.Arguments(5) !N!^
+		End If!N!^
 	End If!N!^
 	objHTTP.send!N!^
 	Set objFSO = CreateObject("Scripting.FileSystemObject")!N!^

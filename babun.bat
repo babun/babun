@@ -12,13 +12,14 @@ set BABUN_HOME=%USERPROFILE%\.babun\
 set DOWNLOADS=%BABUN_HOME%\downloads\
 set CYGWIN_HOME=%BABUN_HOME%\cygwin\
 set PACKAGES_HOME=%BABUN_HOME%\packages\
+set SCRIPTS_HOME=%BABUN_HOME%\scripts\
 set SRC_HOME=%BABUN_HOME%\src\
 set USER_AGENT=Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
 rem scripts:
-set DOWNLOADER=%DOWNLOADS%\download.vbs
-set LINKER=%DOWNLOADS%\link.vbs
-set UNZIPPER=%DOWNLOADS%\unzip.vbs
+set DOWNLOADER=%SCRIPTS_HOME%\download.vbs
+set LINKER=%SCRIPTS_HOME%\link.vbs
+set UNZIPPER=%SCRIPTS_HOME%\unzip.vbs
 
 rem to-download:
 set CYGWIN_INSTALLER=%DOWNLOADS%\%CYGWIN_INSTALLER%setup-%CYGWIN_VERSION%.exe
@@ -96,9 +97,10 @@ if '%force%'=='true' (
  	del /F /Q "%DOWNLOADS%\*.*"
 )
 
-if exist "%DOWNLOADS%\*.vbs" (
-	del /F /Q "%DOWNLOADS%\*.vbs"
+if exist "%SCRIPTS_HOME%" (
+	RD /S /Q "%SCRIPTS_HOME%"
 )
+mkdir "%SCRIPTS_HOME%"
 
 ECHO [babun] Extracting embeeded VBS scripts
 rem ---------------------------------

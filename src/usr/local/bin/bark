@@ -25,6 +25,8 @@
 # THE SOFTWARE.
 # 
 
+source ~/.babunrc
+
 # this script requires some packages
 
 WGET=`which wget 2> /dev/null`
@@ -62,10 +64,9 @@ function usage()
 
 function version()
 {
-  echo "bark version 0.57"
-  echo "Written by Stephen Jungels"
-  echo ""
-  echo "Copyright (c) 2005-9 Stephen Jungels.  Released under the GPL."
+  echo "bark version 1.0 (based on apt-cyg 0.57)"
+  echo "Tweaked and maintained by Tom Bujok (@tombujok)"
+  echo "Copyright (c) 2013. Released under the MIT."
 }
 
 
@@ -103,14 +104,14 @@ function getsetup()
   then
     touch setup.ini
     mv setup.ini setup.ini-save
-    wget -N $mirror/setup.bz2
+    wget -N $mirror/$cygwin_version/setup.bz2
     if test -e setup.bz2 && test $? -eq 0
     then
       bunzip2 setup.bz2
       mv setup setup.ini
       echo Updated setup.ini
     else
-      wget -N $mirror/setup.ini
+      wget -N $mirror/$cygwin_version/setup.ini
       if test -e setup.ini && test $? -eq 0
       then
         echo Updated setup.ini

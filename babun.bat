@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 setlocal enableextensions enabledelayedexpansion
 
 :SETUP
@@ -85,14 +85,14 @@ GOTO BEGIN
 
 
 :BEGIN
-call:println "Installing babun version [%BABUN_VERSION%]"
+ECHO [babun] Installing babun version [%BABUN_VERSION%]
 
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
 if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")
 if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%")
 
 if '%force%'=='true' (
- 	call:println "Forcing download as /force switch specified"
+ 	ECHO [babun] Forcing download as /force switch specified
  	del /F /Q "%DOWNLOADS%\*.*"
 )
 
@@ -100,7 +100,7 @@ if exist "%DOWNLOADS%\*.vbs" (
 	del /F /Q "%DOWNLOADS%\*.vbs"
 )
 
-call:println "Extracting embeeded VBS scripts"
+ECHO [babun] Extracting embeeded VBS scripts
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - UNZIP.VBS
 rem ---------------------------------
@@ -140,8 +140,13 @@ set DOWNLOAD_VBS=^
 	strSaveName = Mid(strLink, InStrRev(strLink,"/") + 1, Len(strLink)) !N!^
 	strSaveTo = Wscript.Arguments(1) ^& strSaveName !N!^
 	WScript.StdOut.Write "[babun] Downloading " ^& strLink !N!^
-	Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.3.0") !N!^
-	objHTTP.setTimeouts 30000, 30000, 30000, 30000 !N!^
+	Set objHTTP = Nothing !N!^
+	If ((WScript.Arguments.Count ^>= 4) And (Len(WScript.Arguments(3)) ^> 0)) Then !N!^
+		Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.6.0") !N!^
+	Else !N!^
+		Set objHTTP = CreateObject("Msxml2.ServerXMLHTTP.3.0") !N!^
+	End If !N!^
+	objHTTP.setTimeouts 120000, 120000, 120000, 120000 !N!^
 	objHTTP.open "GET", strLink, False !N!^
 	objHTTP.setRequestHeader "User-Agent", Wscript.Arguments(2) !N!^
 	If ((WScript.Arguments.Count ^>= 4) And (Len(WScript.Arguments(3)) ^> 0)) Then !N!^
@@ -189,19 +194,19 @@ if exist "%PACKAGES_HOME%" (
 	RD /S /Q "%PACKAGES_HOME%"
 )
 mkdir "%PACKAGES_HOME%"
-call:println "Extracting binary packages"
+ECHO [babun] Extracting binary packages
 cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
 
 if exist "%SRC_HOME%" (
 	RD /S /Q "%SRC_HOME%"
 )
 mkdir "%SRC_HOME%"
-call:println "Extracting bash configuration"
+ECHO [babun] Extracting bash configuration
 cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
 	
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% 
 
-call:println "Installing cygwin"
+ECHO [babun] Installing cygwin
 "%CYGWIN_NO_ADMIN_INSTALLER%" ^
 	--quiet-mode ^
 	--local-install ^
@@ -212,34 +217,34 @@ call:println "Installing cygwin"
 	--no-desktop ^
 	--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time > %LOG_FILE%
 
-call:println "Tweaking shell settings"
+ECHO [babun] Tweaking shell settings
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"'
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y >> %LOG_FILE%
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y >> %LOG_FILE%
 xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y >> %LOG_FILE%
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark'
 
-call:println "Propagating proxy properties"
+ECHO [babun] Propagating proxy properties
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "" > "%CYGWIN_HOME%\home\%username%\.babunrc"'
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%" >> "%CYGWIN_HOME%\home\%username%\.babunrc"'
 
-call:println "Configuring start scripts"
+ECHO [babun] Configuring start scripts
 copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE%
 echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat"
 del "%CYGWIN_HOME%\Cygwin*"
 	
-call:println "Creating desktop link"
+ECHO [babun] Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 
-call:println "Starting babun"
+ECHO [babun] Starting babun
 start %CYGWIN_HOME%\bin\mintty.exe -
 
-GOTO:EOF
+GOTO END
 
 :BADSYNTAX
 ECHO Usage: babun.bat [/h] [/64] [/force] [/proxy=host:port[:user:pass]]
-GOTO:EOF
+GOTO END
 
 :USAGE
 ECHO.
@@ -255,8 +260,6 @@ ECHO 	babun /h !N!
 ECHO 	babun /64 /force /proxy=test.com:80 !N!
 ECHO 	babun /64 /force /proxy=test.com:80:john:pass !N!
 ECHO.
-GOTO:EOF
-	
-:println
-ECHO [babun] %~1
-GOTO:EOF
+GOTO END
+
+:END

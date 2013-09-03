@@ -88,8 +88,6 @@ GOTO BEGIN
 :BEGIN
 ECHO [babun] Installing babun version [%BABUN_VERSION%]
 
-GOTO PROPAGATE
-
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%")
 if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%")
 if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%")
@@ -220,8 +218,6 @@ ECHO [babun] Installing cygwin
 	--no-startmenu ^
 	--no-desktop ^
 	--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time > %LOG_FILE%
-
-:PROPAGATE
 	
 ECHO [babun] Tweaking shell settings
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"'

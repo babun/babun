@@ -66,7 +66,7 @@ function version()
 {
   echo "bark version 1.0 (based on apt-cyg 0.57)"
   echo "Tweaked and maintained by Tom Bujok (@tombujok)"
-  echo "Copyright (c) 2013. Released under the MIT."
+  echo "Copyright (c) 2013.  Released under the MIT."
 }
 
 

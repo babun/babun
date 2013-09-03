@@ -46,6 +46,7 @@ IF '%1'=='/h' GOTO USAGE
 IF '%1'=='/uninstall' GOTO UNINSTALL
 IF '%1'=='/64' GOTO VERSION64
 IF '%1'=='/force' GOTO FORCE
+IF '%1'=='/user-agent' GOTO AGENT
 IF '%1'=='/proxy' GOTO PROXY
 IF '%1'=='' (GOTO BEGIN) ELSE (GOTO BADSYNTAX)
 REM Done checking command line for switches
@@ -84,8 +85,14 @@ GOTO BEGIN
 	SHIFT
 	SHIFT
 	GOTO CHECKFORSWITCHES
-
-
+	
+	:AGENT
+	set USER_AGENT=%~2
+	SHIFT
+	SHIFT
+	GOTO CHECKFORSWITCHES
+	
+	
 :BEGIN
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
 ECHO [babun] Installing babun version [%BABUN_VERSION%]
@@ -154,7 +161,9 @@ set DOWNLOAD_VBS=^
 	End If !N!^
 	objHTTP.setTimeouts 120000, 120000, 120000, 120000 !N!^
 	objHTTP.open "GET", strLink, False !N!^
-	objHTTP.setRequestHeader "User-Agent", Wscript.Arguments(2) !N!^
+	If (Len(WScript.Arguments(2)) ^> 0) Then!N!^
+	  objHTTP.setRequestHeader "User-Agent", Wscript.Arguments(2) !N!^
+	End If !N!^
 	If ((WScript.Arguments.Count ^>= 4) And (Len(WScript.Arguments(3)) ^> 0)) Then !N!^
 		objHTTP.setProxy 2, Wscript.Arguments(3), "" !N!^
 	End If!N!^
@@ -280,6 +289,7 @@ ECHO.
 ECHO    Name: babun.bat  
 ECHO    Use this batch script to install 'babun' console !N!
 ECHO    Syntax: babun [/h] [/64] [/force] [/proxy=host:port] [/proxy_cred=user:pass] !N!
+ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server. !N!
 ECHO 	'/h'	Displays the help text. !N!
 ECHO 	'/force'	Forces download even if files are downloaded. !N!
 ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
@@ -289,6 +299,7 @@ ECHO    For example: !N!
 ECHO 	babun /h !N!
 ECHO 	babun /64 /force /proxy=test.com:80 !N!
 ECHO 	babun /64 /force /proxy=test.com:80:john:pass !N!
+ECHO 	babun /user-agent="Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20100101 Firefox/19.0" !N!
 ECHO.
 GOTO END
 

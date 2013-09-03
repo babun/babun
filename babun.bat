@@ -43,6 +43,7 @@ rem -----------------------------------------------------------
 	
 :CHECKFORSWITCHES
 IF '%1'=='/h' GOTO USAGE
+IF '%1'=='/uninstall' GOTO UNINSTALL
 IF '%1'=='/64' GOTO VERSION64
 IF '%1'=='/force' GOTO FORCE
 IF '%1'=='/proxy' GOTO PROXY
@@ -206,6 +207,7 @@ if exist "%PACKAGES_HOME%" (
 mkdir "%PACKAGES_HOME%"
 ECHO [babun] Extracting binary packages
 cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
+if not exist "%PACKAGES_HOME%/*.*" (GOTO ERROR)
 
 if exist "%SRC_HOME%" (
 	RD /S /Q "%SRC_HOME%" || goto :ERROR
@@ -213,6 +215,7 @@ if exist "%SRC_HOME%" (
 mkdir "%SRC_HOME%"
 ECHO [babun] Extracting bash configuration
 cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
+if not exist "%SRC_HOME%/*.*" (GOTO ERROR)
 	
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% || goto :ERROR
 
@@ -252,25 +255,36 @@ del "%CYGWIN_HOME%\Cygwin*" || goto :ERROR
 	
 ECHO [babun] Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
+if not exist "%USERPROFILE%\Desktop\babun.lnk" (GOTO ERROR)
 
 ECHO [babun] Starting babun
 start %CYGWIN_HOME%\bin\mintty.exe - || goto :ERROR
 
 GOTO END
 
+:UNINSTALL
+ECHO [babun] Uninstalling...
+if not exist "%BABUN_HOME%" (
+	echo [babun] Not installed
+	GOTO END
+) 
+RD /S /Q "%BABUN_HOME%" || goto :ERROR
+GOTO END
+
 :BADSYNTAX
-ECHO Usage: babun.bat [/h] [/64] [/force] [/proxy=host:port[:user:pass]]
+ECHO Usage: babun.bat [/h] [/force] [/proxy=host:port[:user:pass]] [/64] [/uninstall]
 GOTO END
 
 :USAGE
 ECHO.
 ECHO    Name: babun.bat  
-ECHO    Use this batch file to install 'babun' console !N!
+ECHO    Use this batch script to install 'babun' console !N!
 ECHO    Syntax: babun [/h] [/64] [/force] [/proxy=host:port] [/proxy_cred=user:pass] !N!
 ECHO 	'/h'	Displays the help text. !N!
-ECHO 	'/64'	Installs the 64-bit version of Cygwin (NOT RECOMMENDED!) !N!
 ECHO 	'/force'	Forces download even if files are downloaded. !N!
 ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
+ECHO 	'/64'	Installs the 64-bit version of Cygwin (NOT RECOMMENDED!) !N!
+ECHO 	'/uninstall'	Uninstalls babun, option is exclusive, others are ignored  !N!
 ECHO    For example: !N!
 ECHO 	babun /h !N!
 ECHO 	babun /64 /force /proxy=test.com:80 !N!

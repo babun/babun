@@ -5,7 +5,7 @@ setlocal enableextensions enabledelayedexpansion
 set BABUN_VERSION=master
 set CYGWIN_VERSION=x86
 set PROXY=
-set FORCE=false
+set NOCACHE=false
 
 set SCRIPT_PATH=%~dpnx0
 set BABUN_HOME=%USERPROFILE%\.babun\
@@ -40,12 +40,13 @@ set N=^
 
 
 rem -----------------------------------------------------------
+
 	
 :CHECKFORSWITCHES
 IF '%1'=='/h' GOTO USAGE
 IF '%1'=='/uninstall' GOTO UNINSTALL
 IF '%1'=='/64' GOTO VERSION64
-IF '%1'=='/force' GOTO FORCE
+IF '%1'=='/nocache' GOTO NOCACHE
 IF '%1'=='/user-agent' GOTO AGENT
 IF '%1'=='/proxy' GOTO PROXY
 IF '%1'=='' (GOTO BEGIN) ELSE (GOTO BADSYNTAX)
@@ -56,8 +57,8 @@ GOTO BEGIN
 	SHIFT
 	GOTO CHECKFORSWITCHES
 
-	:FORCE
-	SET FORCE=true
+	:NOCACHE
+	SET NOCACHE=true
 	SHIFT
 	GOTO CHECKFORSWITCHES
 
@@ -103,8 +104,8 @@ if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%" || goto :ERROR)
 if not exist "%DOWNLOADS%" (mkdir "%DOWNLOADS%" || goto :ERROR)
 if not exist "%CYGWIN_HOME%" (mkdir "%CYGWIN_HOME%" || goto :ERROR)
 
-if '%force%'=='true' (
- 	ECHO [babun] Forcing download as /force switch specified
+if '%NOCACHE%'=='true' (
+ 	ECHO [babun] Forcing download as /nocache switch specified
  	del /F /Q "%DOWNLOADS%\*.*" || goto :ERROR
 )
 
@@ -251,8 +252,23 @@ xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%usern
 
 ECHO [babun] Propagating babun properties
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "# Do not modify this file. It will be overwritten." > "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=\"http://%PROXY_USER%:%PROXY_PASS%@%PROXY%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=\"http://%PROXY_USER%:%PROXY_PASS%@%PROXY%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+
+set PROXYBASH=
+IF NOT "%PROXY%"=="" IF NOT "%PROXY_USER%"=="" IF NOT "%PROXY_PASS%"==""  (	
+	set PROXYBASH=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%
+)
+IF NOT "%PROXY%"=="" IF "%PROXY_USER%"=="" IF "%PROXY_PASS%"==""  (	
+	set PROXYBASH=http://%PROXY%
+)
+IF NOT "%PROXYBASH%"=="" (
+	ECHO [babun] Propagating proxy properties [%PROXYBASH%]
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=\"%PROXYBASH%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export https_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export rsync_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export no_proxy=\"localhost,127.0.0.1,localaddress\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+)
+
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export cygwin_version=\"%CYGWIN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export babun_version=\"%BABUN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export user_agent=\"%USER_AGENT%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
@@ -260,7 +276,9 @@ ECHO [babun] Propagating babun properties
 ECHO [babun] Configuring start scripts
 copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE% || goto :ERROR
 echo start %CYGWIN_HOME%\bin\mintty.exe - >> "%CYGWIN_HOME%\start.bat" || goto :ERROR
-del "%CYGWIN_HOME%\Cygwin*" || goto :ERROR
+if exist "%CYGWIN_HOME%\Cygwin*" (
+	del "%CYGWIN_HOME%\Cygwin*" || goto :ERROR
+)
 	
 ECHO [babun] Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
@@ -281,24 +299,24 @@ RD /S /Q "%BABUN_HOME%" || goto :ERROR
 GOTO END
 
 :BADSYNTAX
-ECHO Usage: babun.bat [/h] [/force] [/proxy=host:port[:user:pass]] [/64] [/uninstall]
+ECHO Usage: babun.bat [/h] [/nocache] [/proxy=host:port[:user:pass]] [/64] [/uninstall]
 GOTO END
 
 :USAGE
 ECHO.
 ECHO    Name: babun.bat  
 ECHO    Use this batch script to install 'babun' console !N!
-ECHO    Syntax: babun [/h] [/64] [/force] [/proxy=host:port] [/proxy_cred=user:pass] !N!
+ECHO    Syntax: babun [/h] [/64] [/nocache] [/proxy=host:port] [/proxy_cred=user:pass] !N!
 ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server. !N!
 ECHO 	'/h'	Displays the help text. !N!
-ECHO 	'/force'	Forces download even if files are downloaded. !N!
+ECHO 	'/nocache'	Forces download even if files are downloaded. !N!
 ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
 ECHO 	'/64'	Installs the 64-bit version of Cygwin (NOT RECOMMENDED) !N!
 ECHO 	'/uninstall'	Uninstalls babun, option is exclusive, others are ignored  !N!
 ECHO    For example: !N!
 ECHO 	babun /h !N!
-ECHO 	babun /64 /force /proxy=test.com:80 !N!
-ECHO 	babun /64 /force /proxy=test.com:80:john:pass !N!
+ECHO 	babun /64 /nocache /proxy=test.com:80 !N!
+ECHO 	babun /64 /nocache /proxy=test.com:80:john:pass !N!
 ECHO 	babun /user-agent="Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20100101 Firefox/19.0" !N!
 ECHO.
 GOTO END

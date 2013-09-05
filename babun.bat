@@ -96,7 +96,7 @@ GOTO BEGIN
 	
 	
 :BEGIN
-if exist %CYGWIN_HOME%\bin\mintty.exe goto RUN
+if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
 
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
 ECHO [babun] Installing babun version [%BABUN_VERSION%]
@@ -286,8 +286,6 @@ if exist "%CYGWIN_HOME%\Cygwin*" (
 ECHO [babun] Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 if not exist "%USERPROFILE%\Desktop\babun.lnk" (GOTO ERROR)
-
-goto RUN
 
 :RUN
 ECHO [babun] Starting babun

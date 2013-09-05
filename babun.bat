@@ -52,6 +52,7 @@ IF '%1'=='/proxy' GOTO PROXY
 IF '%1'=='' (GOTO BEGIN) ELSE (GOTO BADSYNTAX)
 REM Done checking command line for switches
 GOTO BEGIN
+
 	:VERSION64
 	SET CYGWIN_VERSION=x86_64
 	SHIFT
@@ -95,6 +96,8 @@ GOTO BEGIN
 	
 	
 :BEGIN
+if exist %CYGWIN_HOME%\bin\mintty.exe goto RUN
+
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
 ECHO [babun] Installing babun version [%BABUN_VERSION%]
 
@@ -284,6 +287,9 @@ ECHO [babun] Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 if not exist "%USERPROFILE%\Desktop\babun.lnk" (GOTO ERROR)
 
+goto RUN
+
+:RUN
 ECHO [babun] Starting babun
 start %CYGWIN_HOME%\bin\mintty.exe - || goto :ERROR
 

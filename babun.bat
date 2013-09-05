@@ -40,7 +40,6 @@ set N=^
 
 
 rem -----------------------------------------------------------
-
 	
 :CHECKFORSWITCHES
 IF '%1'=='/h' GOTO USAGE
@@ -78,6 +77,8 @@ GOTO BEGIN
 		if [%array[0]%] NEQ  [] (
 			if [%array[1]%] == [] (GOTO :BADSYNTAX)
 			set PROXY=%array[0]%:%array[1]%
+			set PROXY_HOST=%array[0]%
+			set PROXY_PORT=%array[1]%
 		)
 		if [%array[2]%] NEQ  [] (
 			if [%array[3]%] == [] (GOTO :BADSYNTAX)
@@ -93,8 +94,7 @@ GOTO BEGIN
 	SHIFT
 	SHIFT
 	GOTO CHECKFORSWITCHES
-	
-	
+		
 :BEGIN
 if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
 
@@ -134,7 +134,6 @@ set UNZIP_VBS=^
 	Set objShell = Nothing
 	
 echo !UNZIP_VBS! > "%UNZIPPER%" || goto :ERROR
-
 
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - LINK.VBS
@@ -244,7 +243,6 @@ ECHO [babun] Installing cygwin
 	--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time > %LOG_FILE%
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
 	
-	
 :PROPAGATE		
 ECHO [babun] Tweaking shell settings
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"' || goto :ERROR
@@ -257,24 +255,32 @@ ECHO [babun] Propagating babun properties
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "# Do not modify this file. It will be overwritten." > "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 
 set PROXYBASH=
+set PROXY_JAVAOPTS=
 IF NOT "%PROXY%"=="" IF NOT "%PROXY_USER%"=="" IF NOT "%PROXY_PASS%"==""  (	
 	set PROXYBASH=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%
+	set PROXY_JAVAOPTS=-Dhttp.proxyHost=%PROXY_HOST% -Dhttp.proxyPort=%PROXY_PORT%
 )
 IF NOT "%PROXY%"=="" IF "%PROXY_USER%"=="" IF "%PROXY_PASS%"==""  (	
 	set PROXYBASH=http://%PROXY%
+	set PROXY_JAVAOPTS=%PROXY_JAVA_OPTS% -Dhttp.proxyUser=%PROXY_USER% -Dhttp.proxyPassword=%PROXY_PASS%
 )
 IF NOT "%PROXYBASH%"=="" (
 	ECHO [babun] Propagating proxy properties [%PROXYBASH%]
 	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=\"%PROXYBASH%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export https_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
-	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export rsync_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export no_proxy=\"localhost,127.0.0.1,localaddress\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 )
-
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export cygwin_version=\"%CYGWIN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export babun_version=\"%BABUN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export user_agent=\"%USER_AGENT%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export JAVA_OPTS=\"%PROXY_JAVAOPTS% -Xms128m -Xmx512m\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export MAVEN_OPTS=\$JAVA_OPTS" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ANT_OPTS=\$JAVA_OPTS" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export GRADLE_OPTS=\$JAVA_OPTS" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "alias java=\"java $JAVA_OPTS \"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 
 ECHO [babun] Configuring start scripts
 copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE% || goto :ERROR

@@ -296,6 +296,9 @@ if not exist "%BABUN_HOME%" (
 	GOTO END
 ) 
 RD /S /Q "%BABUN_HOME%" || goto :ERROR
+if exist "%USERPROFILE%\Desktop\babun.lnk" (
+  del "%USERPROFILE%\Desktop\babun.lnk" || goto :ERROR
+)
 GOTO END
 
 :BADSYNTAX
@@ -307,8 +310,8 @@ ECHO.
 ECHO    Name: babun.bat  
 ECHO    Use this batch script to install 'babun' console !N!
 ECHO    Syntax: babun [/h] [/64] [/nocache] [/proxy=host:port] [/proxy_cred=user:pass] !N!
-ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server. !N!
 ECHO 	'/h'	Displays the help text. !N!
+ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server. !N!
 ECHO 	'/nocache'	Forces download even if files are downloaded. !N!
 ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
 ECHO 	'/64'	Installs the 64-bit version of Cygwin (NOT RECOMMENDED) !N!

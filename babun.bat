@@ -42,7 +42,8 @@ set N=^
 rem -----------------------------------------------------------
 	
 :CHECKFORSWITCHES
-IF '%1'=='/h' GOTO USAGE
+IF '%1'=='/h' GOTO USAGE 
+IF '%1'=='/?' GOTO USAGE
 IF '%1'=='/uninstall' GOTO UNINSTALL
 IF '%1'=='/64' GOTO VERSION64
 IF '%1'=='/nocache' GOTO NOCACHE

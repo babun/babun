@@ -332,7 +332,7 @@ ECHO    Options:
 ECHO 	'/?' or '/h' 	Displays the help text
 ECHO 	'/nocache'	Forces download even if files are downloaded
 ECHO 	'/64'		Marks to download the 64-bit version of Cygwin (NOT RECOMMENDED) 
-ECHO 	'/install'	Installs babun; forces the reinstallation even if previous installation exists  
+ECHO 	'/install'	Installs babun; forces the reinstallation even even if already installed  
 ECHO 	'/uninstall'	Uninstalls babun; option is exclusive, others are ignored  
 ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server
 ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port 

@@ -321,21 +321,26 @@ GOTO END
 
 :USAGE
 ECHO.
-ECHO    Name: babun.bat  
-ECHO    Use this batch script to install 'babun' console !N!
-ECHO    Syntax: babun [/h] [/64] [/nocache] [/proxy=host:port] [/proxy_cred=user:pass] !N!
-ECHO 	'/h'	Displays the help text. !N!
-ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server. !N!
-ECHO 	'/nocache'	Forces download even if files are downloaded. !N!
-ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
-ECHO 	'/64'	Installs the 64-bit version of Cygwin (NOT RECOMMENDED) !N!
-ECHO 	'/install'	Forces to install babun even if previous installation exists  !N!
-ECHO 	'/uninstall'	Uninstalls babun, option is exclusive, others are ignored  !N!
-ECHO    For example: !N!
-ECHO 	babun /h !N!
-ECHO 	babun /64 /nocache /proxy=test.com:80 !N!
-ECHO 	babun /64 /nocache /proxy=test.com:80:john:pass !N!
-ECHO 	babun /user-agent="Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20100101 Firefox/19.0" !N!
+ECHO    Syntax:
+ECHO		babun	[/h] [/?] [/64] [/nocache] [/install] [/uninstall]
+ECHO			[/proxy=host:port[:user:pass]] [/user-agent=agent-string]  !N!
+ECHO    Default behavior if no option passed:
+ECHO   	* install -^> if babun IS NOT installed
+ECHO   	* start -^> if babun IS installed
+ECHO.
+ECHO    Options:
+ECHO 	'/?' or '/h' 	Displays the help text
+ECHO 	'/nocache'	Forces download even if files are downloaded
+ECHO 	'/64'		Marks to download the 64-bit version of Cygwin (NOT RECOMMENDED) 
+ECHO 	'/install'	Installs babun; forces the reinstallation even if previous installation exists  
+ECHO 	'/uninstall'	Uninstalls babun; option is exclusive, others are ignored  
+ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server
+ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port 
+ECHO.
+ECHO    For example: 
+ECHO 	babun /? 
+ECHO 	babun /nocache /proxy=test.com:80 /install 
+ECHO 	babun /install /user-agent="Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20100101 Firefox/19.0" 
 ECHO.
 GOTO END
 

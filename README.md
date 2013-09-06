@@ -3,13 +3,14 @@
 Install:
 Click [here](https://github.com/reficio/babun/raw/master/babun.bat)  to download the babun.bat installer. Then just run the script in the console.
 
-__Make sure to use the /proxy switch if you are behind a corporate firewall!__
+__Make sure to use the /proxy switch if you are behind a corporate firewall/proxy!__
 
 What is so cool about babun:
-* it is a bundled and tweaked cygwin console
+* it is a pre-bundled and tweaked cygwin console
 * it can be installed without admin rights on Windows computers
-* it provides a linux-like package manager called bark (IN-PROGRESS)
+* it provides a linux-like package manager called bark
 * it provides a xterm-256 compatible console
+* it natively supports HTTP proxying (installer and the console)
 * it provides an automatic, silent command-line installer
 * it is mega cool :)
 
@@ -32,7 +33,7 @@ $ babun.bat /h
         '/install'      Installs babun; forces the reinstallation even if already installed
         '/uninstall'    Uninstalls babun, option is exclusive, others are ignored
         '/user-agent=agent-string'      Identify as agent-string to the http server.
-        '/proxy=host:port[user:pass]'   Enables proxy host:port
+        '/proxy=host:port[user:pass]'   Enables HTTP proxy host:port
 
    For example:
         babun /?

@@ -335,7 +335,7 @@ ECHO 	'/64'		Marks to download the 64-bit version of Cygwin (NOT RECOMMENDED)
 ECHO 	'/install'	Installs babun; forces the reinstallation even if already installed  
 ECHO 	'/uninstall'	Uninstalls babun; option is exclusive, others are ignored  
 ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server
-ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port 
+ECHO 	'/proxy=host:port[user:pass]'	Enables HTTP proxy host:port 
 ECHO.
 ECHO    For example: 
 ECHO 	babun /? 

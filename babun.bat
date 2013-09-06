@@ -340,7 +340,7 @@ ECHO.
 ECHO    For example: 
 ECHO 	babun /? 
 ECHO 	babun /nocache /proxy=test.com:80 /install 
-ECHO 	babun /install /user-agent="Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20100101 Firefox/19.0" 
+ECHO 	babun /install /user-agent="Mozilla/5.0 (Windows NT 6.1; rv:6.0)" 
 ECHO.
 GOTO END
 

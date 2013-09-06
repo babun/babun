@@ -37,7 +37,7 @@ $ babun.bat /h
    For example:
         babun /?
         babun /nocache /proxy=test.com:80 /install
-        babun /install /user-agent="Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20100101 Firefox/19.0"
+        babun /install /user-agent="Mozilla/5.0 (Windows NT 6.1; rv:6.0)"
 </pre>
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/reficio/babun/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

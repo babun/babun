@@ -44,6 +44,7 @@ rem -----------------------------------------------------------
 :CHECKFORSWITCHES
 IF '%1'=='/h' GOTO USAGE 
 IF '%1'=='/?' GOTO USAGE
+if '%1'=='/install' GOTO INSTALL
 IF '%1'=='/uninstall' GOTO UNINSTALL
 IF '%1'=='/64' GOTO VERSION64
 IF '%1'=='/nocache' GOTO NOCACHE
@@ -98,7 +99,9 @@ GOTO BEGIN
 		
 :BEGIN
 if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
+GOTO INSTALL
 
+:INSTALL
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
 ECHO [babun] Installing babun version [%BABUN_VERSION%]
 

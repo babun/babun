@@ -29,7 +29,7 @@ $ babun.bat /h
         '/?' or '/h'    Displays the help text.
         '/nocache'      Forces download even if files are downloaded.
         '/64'           Marks to download the 64-bit version of Cygwin (NOT RECOMMENDED)
-        '/install'      Installs babun; forces the reinstallation even if previous installation exists
+        '/install'      Installs babun; forces the reinstallation even if already installed
         '/uninstall'    Uninstalls babun, option is exclusive, others are ignored
         '/user-agent=agent-string'      Identify as agent-string to the http server.
         '/proxy=host:port[user:pass]'   Enables proxy host:port

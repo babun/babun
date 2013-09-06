@@ -44,6 +44,7 @@ rem -----------------------------------------------------------
 :CHECKFORSWITCHES
 IF '%1'=='/h' GOTO USAGE 
 IF '%1'=='/?' GOTO USAGE
+if '%1'=='/install' GOTO INSTALL
 IF '%1'=='/uninstall' GOTO UNINSTALL
 IF '%1'=='/64' GOTO VERSION64
 IF '%1'=='/nocache' GOTO NOCACHE
@@ -98,7 +99,9 @@ GOTO BEGIN
 		
 :BEGIN
 if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
+GOTO INSTALL
 
+:INSTALL
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
 ECHO [babun] Installing babun version [%BABUN_VERSION%]
 
@@ -326,6 +329,7 @@ ECHO 	'/user-agent=agent-string'	Identify as agent-string to the http server. !N
 ECHO 	'/nocache'	Forces download even if files are downloaded. !N!
 ECHO 	'/proxy=host:port[user:pass]'	Enables proxy host:port !N!
 ECHO 	'/64'	Installs the 64-bit version of Cygwin (NOT RECOMMENDED) !N!
+ECHO 	'/install'	Forces to install babun even if previous installation exists  !N!
 ECHO 	'/uninstall'	Uninstalls babun, option is exclusive, others are ignored  !N!
 ECHO    For example: !N!
 ECHO 	babun /h !N!

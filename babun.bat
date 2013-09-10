@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 setlocal enableextensions enabledelayedexpansion
 
 :SETUP
@@ -8,12 +8,12 @@ set PROXY=
 set NOCACHE=false
 
 set SCRIPT_PATH=%~dpnx0
-set BABUN_HOME=%USERPROFILE%\.babun\
-set DOWNLOADS=%BABUN_HOME%\downloads\
-set CYGWIN_HOME=%BABUN_HOME%\cygwin\
-set PACKAGES_HOME=%BABUN_HOME%\packages\
-set SCRIPTS_HOME=%BABUN_HOME%\scripts\
-set SRC_HOME=%BABUN_HOME%\src\
+set BABUN_HOME=%USERPROFILE%\.babun
+set DOWNLOADS=%BABUN_HOME%\downloads
+set CYGWIN_HOME=%BABUN_HOME%\cygwin
+set PACKAGES_HOME=%BABUN_HOME%\packages
+set SCRIPTS_HOME=%BABUN_HOME%\scripts
+set SRC_HOME=%BABUN_HOME%\src
 set USER_AGENT=Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
 rem scripts:
@@ -101,7 +101,6 @@ GOTO BEGIN
 		
 :BEGIN
 if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
-GOTO INSTALL
 
 :INSTALL
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)	
@@ -212,18 +211,18 @@ rem ---------------------------------
 set SETPATH_VBS=^
 	' ignore if no argument was passed to the script!N!^
 	if (WScript.Arguments.Count ^>= 1) Then!N!^
-		babunPath = Wscript.Arguments(0)!N!^
+		path = Wscript.Arguments(0)!N!^
 		Set WshShell = WScript.CreateObject("WScript.Shell")!N!^
 		Set WshEnv = WshShell.Environment("USER")!N!^
 		userPath = WshEnv("Path")!N!^
 		' check if path does not already exists in the user path!N!^
-		if InStr(1, userPath, babunPath) ^= 0 Then!N!^
+		if InStr(1, userPath, path) ^= 0 Then!N!^
 			' check if path is not empty!N!^
 			if Len(userPath) Then!N!^
-				babunPath = ";" ^& babunPath!N!^
+				path = ";" ^& path!N!^
 			End If!N!^
 			' set the path!N!^
-			WshEnv("Path") = WshEnv("Path") ^& babunPath!N!^
+			WshEnv("Path") = WshEnv("Path") ^& path!N!^
 		End If!N!^
 	End If
 	
@@ -236,20 +235,17 @@ rem ---------------------------------
 set UNSETPATH_VBS=^
 	' ignore if no argument was passed to the script!N!^
 	if (WScript.Arguments.Count ^>= 1) Then!N!^
-		babunPath = Wscript.Arguments(0)!N!^
+		path = Wscript.Arguments(0)!N!^
+		pathWithSeparator = ";" ^& babunPath!N!^
 		Set WshShell = WScript.CreateObject("WScript.Shell")!N!^
 		Set WshEnv = WshShell.Environment("USER")!N!^
 		userPath = WshEnv("Path")!N!^
-		' check if babunPath exists in the user path!N!^
-		if InStr(1, userPath, babunPath) ^> 0 Then!N!^
-			strToRemove = babunPath!N!^
-			babunpathWithSeparator = ";" ^& babunPath!N!^
-			' check if babunPath contains separator!N!^
-			If InStr(1, userPath, babunpathWithSeparator) ^> 0 Then!N!^
-				strToRemove = babunpathWithSeparator!N!^
-			End If!N!^
-			' remove babun path from user path!N!^
-			unsetPath = Replace(userPath,strToRemove, "")!N!^
+		' check if path exists in the user path!N!^
+		unsetPath = userPath
+		if InStr(1, userPath, path) ^> 0 Then!N!^
+			' remove path from user path!N!^
+			unsetPath = Replace(unsetPath, pathWithSeparator, "")!N!^
+			unsetPath = Replace(unsetPath, path, "")!N!^
 			WshEnv("Path") = unsetPath!N!^
 		End If!N!^
 	End If

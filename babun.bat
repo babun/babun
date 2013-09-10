@@ -20,6 +20,8 @@ rem scripts:
 set DOWNLOADER=%SCRIPTS_HOME%\download.vbs
 set LINKER=%SCRIPTS_HOME%\link.vbs
 set UNZIPPER=%SCRIPTS_HOME%\unzip.vbs
+set PATHSETTER=%SCRIPTS_HOME%\setpath.vbs
+set PATHUNSETTER=%SCRIPTS_HOME%\unsetpath.vbs
 
 rem to-download:
 set CYGWIN_INSTALLER=%DOWNLOADS%\%CYGWIN_INSTALLER%setup-%CYGWIN_VERSION%.exe
@@ -204,6 +206,56 @@ set DOWNLOAD_VBS=^
 		
 echo !DOWNLOAD_VBS! > "%DOWNLOADER%" || goto :ERROR
 
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - SETPATH.VBS
+rem ---------------------------------
+set SETPATH_VBS=^
+	' ignore if no argument was passed to the script!N!^
+	if (WScript.Arguments.Count ^>= 1) Then!N!^
+		babunPath = Wscript.Arguments(0)!N!^
+		Set WshShell = WScript.CreateObject("WScript.Shell")!N!^
+		Set WshEnv = WshShell.Environment("USER")!N!^
+		userPath = WshEnv("Path")!N!^
+		' check if path does not already exists in the user path!N!^
+		if InStr(1, userPath, babunPath) ^= 0 Then!N!^
+			' check if path is not empty!N!^
+			if Len(userPath) Then!N!^
+				babunPath = ";" ^& babunPath!N!^
+			End If!N!^
+			' set the path!N!^
+			WshEnv("Path") = WshEnv("Path") ^& babunPath!N!^
+		End If!N!^
+	End If
+	
+echo !SETPATH_VBS! > "%PATHSETTER%" || goto :ERROR
+
+
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - UNSETPATH.VBS
+rem ---------------------------------
+set UNSETPATH_VBS=^
+	' ignore if no argument was passed to the script!N!^
+	if (WScript.Arguments.Count ^>= 1) Then!N!^
+		babunPath = Wscript.Arguments(0)!N!^
+		Set WshShell = WScript.CreateObject("WScript.Shell")!N!^
+		Set WshEnv = WshShell.Environment("USER")!N!^
+		userPath = WshEnv("Path")!N!^
+		' check if path does not already exists in the user path!N!^
+		if InStr(1, userPath, babunPath) ^> 0 Then!N!^
+			strToRemove = babunPath!N!^
+			babunpathWithSeparator = ";" ^& babunPath!N!^
+			' check if path is not empty!N!^
+			If InStr(1, userPath, babunpathWithSeparator) ^> 0 Then!N!^
+				strToRemove = babunpathWithSeparator!N!^
+			End If!N!^
+			' remove babun path from user path!N!^
+			unsetPath = Replace(userPath,strToRemove, "")!N!^
+			WshEnv("Path") = unsetPath!N!^
+		End If!N!^
+	End If
+	
+echo !UNSETPATH_VBS! > "%PATHUNSETTER%" || goto :ERROR
+
 if not exist "%CYGWIN_INSTALLER%" (
 	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 	if not exist "%CYGWIN_INSTALLER%" (GOTO ERROR)
@@ -297,6 +349,9 @@ ECHO [babun] Creating desktop link
 cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 if not exist "%USERPROFILE%\Desktop\babun.lnk" (GOTO ERROR)
 
+ECHO [babun] Setting path
+cscript //Nologo "%PATHSETTER%" "%SRC_HOME%\babun-%BABUN_VERSION%"
+
 :RUN
 ECHO [babun] Starting babun
 start %CYGWIN_HOME%\bin\mintty.exe - || goto :ERROR
@@ -309,6 +364,9 @@ if not exist "%BABUN_HOME%" (
 	echo [babun] Not installed
 	GOTO END
 ) 
+echo [babun] Removing path...
+cscript //Nologo "%PATHUNSETTER%" "%SRC_HOME%\babun-%BABUN_VERSION%" || goto :ERROR
+echo [babun] Deleting files...
 RD /S /Q "%BABUN_HOME%" || goto :ERROR
 if exist "%USERPROFILE%\Desktop\babun.lnk" (
   del "%USERPROFILE%\Desktop\babun.lnk" || goto :ERROR

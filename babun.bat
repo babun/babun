@@ -364,8 +364,10 @@ if not exist "%BABUN_HOME%" (
 	echo [babun] Not installed
 	GOTO END
 ) 
-echo [babun] Removing path...
-cscript //Nologo "%PATHUNSETTER%" "%SRC_HOME%\babun-%BABUN_VERSION%" || goto :ERROR
+if exist "%PATHUNSETTER%" (
+	echo [babun] Removing path...
+	cscript //Nologo "%PATHUNSETTER%" "%SRC_HOME%\babun-%BABUN_VERSION%" || goto :ERROR
+)
 echo [babun] Deleting files...
 RD /S /Q "%BABUN_HOME%" || goto :ERROR
 if exist "%USERPROFILE%\Desktop\babun.lnk" (

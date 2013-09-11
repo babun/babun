@@ -24,7 +24,7 @@ set PATHSETTER=%SCRIPTS_HOME%\setpath.vbs
 set PATHUNSETTER=%SCRIPTS_HOME%\unsetpath.vbs
 
 rem to-download:
-set CYGWIN_INSTALLER=%DOWNLOADS%\%CYGWIN_INSTALLER%setup-%CYGWIN_VERSION%.exe
+set CYGWIN_INSTALLER=%DOWNLOADS%\setup-%CYGWIN_VERSION%.exe
 set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
 set SRC=%DOWNLOADS%\%BABUN_VERSION%.zip
 
@@ -159,7 +159,7 @@ rem ---------------------------------
 set DOWNLOAD_VBS=^
 	strLink = Wscript.Arguments(0)!N!^
 	strSaveName = Mid(strLink, InStrRev(strLink,"/") + 1, Len(strLink)) !N!^
-	strSaveTo = Wscript.Arguments(1) ^& strSaveName !N!^
+	strSaveTo = Wscript.Arguments(1) ^& "\" ^& strSaveName !N!^
 	WScript.StdOut.Write "[babun] Downloading " ^& strLink ^& " "!N!^
 	Set objHTTP = Nothing !N!^
 	If ((WScript.Arguments.Count ^>= 4) And (Len(WScript.Arguments(3)) ^> 0)) Then !N!^

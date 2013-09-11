@@ -356,6 +356,7 @@ GOTO END
 
 :UNINSTALL
 ECHO [babun] Uninstalling...
+
 if not exist "%BABUN_HOME%" (
 	echo [babun] Not installed
 	GOTO END

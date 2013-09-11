@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 setlocal enableextensions enabledelayedexpansion
 
 :SETUP
@@ -96,7 +96,7 @@ GOTO BEGIN
 	:AGENT
 	set USER_AGENT=%~2
 	SHIFT
-	SHIFT
+	SHIFT	
 	GOTO CHECKFORSWITCHES
 		
 :BEGIN
@@ -241,7 +241,7 @@ set UNSETPATH_VBS=^
 		Set WshEnv = WshShell.Environment("USER")!N!^
 		userPath = WshEnv("Path")!N!^
 		' check if path exists in the user path!N!^
-		unsetPath = userPath
+		unsetPath = userPath!N!^
 		if InStr(1, userPath, path) ^> 0 Then!N!^
 			' remove path from user path!N!^
 			unsetPath = Replace(unsetPath, pathWithSeparator, "")!N!^

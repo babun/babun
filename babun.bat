@@ -232,9 +232,9 @@ if %ERRORLEVEL% NEQ 0 (GOTO ERROR)
 :PROPAGATE		
 ECHO [babun] Tweaking shell settings
 "%CYGWIN_HOME%\bin\sh.exe" -c '/bin/echo.exe "[babun] Bash shell init"' || goto :ERROR
-"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/shell/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/shell/src" || goto :ERROR
-"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/bash/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/bash/src" || goto :ERROR
-"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/pact/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/pact/src" || goto :ERROR
+"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/shell/install.sh %SRC_HOME%/babun-%BABUN_VERSION%/shell/src' || goto :ERROR
+"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/bash/install.sh %SRC_HOME%/babun-%BABUN_VERSION%/bash/src' || goto :ERROR
+"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/pact/install.sh %SRC_HOME%/babun-%BABUN_VERSION%/pact/src' || goto :ERROR
 "%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/zsh/install.sh' || goto :ERROR
 
 ECHO [babun] Configuring start scripts

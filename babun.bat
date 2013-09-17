@@ -17,11 +17,13 @@ set SRC_HOME=%BABUN_HOME%\src
 set USER_AGENT=Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
 rem scripts:
-set DOWNLOADER=%SCRIPTS_HOME%\download.vbs
+set DOWNLOADER=%DOWNLOADS%\download.vbs
+set WGET==%DOWNLOADS%\wget.exe
+set UNZIPPER=%DOWNLOADS%\unzip.exe
+
 set LINKER=%SCRIPTS_HOME%\link.vbs
-set UNZIPPER=%SCRIPTS_HOME%\unzip.vbs
-set PATHSETTER=%SCRIPTS_HOME%\setpath.vbs
-set PATHUNSETTER=%SCRIPTS_HOME%\unsetpath.vbs
+set PATH_SETTER=%SCRIPTS_HOME%\setpath.vbs
+set PATH_UNSETTER=%SCRIPTS_HOME%\unsetpath.vbs
 
 rem to-download:
 set CYGWIN_INSTALLER=%DOWNLOADS%\setup-%CYGWIN_VERSION%.exe
@@ -31,6 +33,9 @@ set SRC=%DOWNLOADS%\%BABUN_VERSION%.zip
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
 set SRC_URL=https://github.com/reficio/babun/archive/%BABUN_VERSION%.zip
+set WGET_URL=http://users.ugent.be/~bpuype/wget/wget.exe
+set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
+
 
 set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
 set LOG_FILE=babun.log
@@ -117,41 +122,6 @@ if '%NOCACHE%'=='true' (
  	del /F /Q "%DOWNLOADS%\*.*" || goto :ERROR
 )
 
-if exist "%SCRIPTS_HOME%" (
-	RD /S /Q "%SCRIPTS_HOME%" || goto :ERROR
-)
-mkdir "%SCRIPTS_HOME%"
-
-ECHO [babun] Extracting embeeded VBS scripts
-rem ---------------------------------
-rem EMBEEDED VBS TRICK - UNZIP.VBS
-rem ---------------------------------
-set UNZIP_VBS=^
-	set fso = CreateObject("Scripting.FileSystemObject") !N!^
-	ZipFile = fso.GetAbsolutePathName(Wscript.Arguments(0)) !N!^
-	ExtractTo = fso.GetAbsolutePathName(Wscript.Arguments(1)) !N!^
-	If NOT fso.FolderExists(ExtractTo) Then !N!^
-		fso.CreateFolder(ExtractTo) !N!^
-	End If !N!^
-	set objShell = CreateObject("Shell.Application") !N!^
-	objShell.NameSpace(ExtractTo).CopyHere objShell.NameSpace(ZipFile).Items !N!^
-	Set fso = Nothing !N!^
-	Set objShell = Nothing
-	
-echo !UNZIP_VBS! > "%UNZIPPER%" || goto :ERROR
-
-rem ---------------------------------
-rem EMBEEDED VBS TRICK - LINK.VBS
-rem ---------------------------------
-set LINK_VBS=^
-	set oWS = WScript.CreateObject("WScript.Shell") !N!^
-	sLinkFile = Wscript.Arguments(0) !N!^
-	set oLink = oWS.CreateShortcut(sLinkFile) !N!^
-	oLink.TargetPath = Wscript.Arguments(1) !N!^
-	oLink.Arguments  = Wscript.Arguments(2) !N!^
-	oLink.Save
-	
-echo !LINK_VBS! > "%LINKER%" || goto :ERROR
 
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - DOWNLOAD.VBS
@@ -205,81 +175,53 @@ set DOWNLOAD_VBS=^
 		
 echo !DOWNLOAD_VBS! > "%DOWNLOADER%" || goto :ERROR
 
-rem ---------------------------------
-rem EMBEEDED VBS TRICK - SETPATH.VBS
-rem ---------------------------------
-set SETPATH_VBS=^
-	' ignore if no argument was passed to the script!N!^
-	if (WScript.Arguments.Count ^>= 1) Then!N!^
-		path = Wscript.Arguments(0)!N!^
-		Set WshShell = WScript.CreateObject("WScript.Shell")!N!^
-		Set WshEnv = WshShell.Environment("USER")!N!^
-		userPath = WshEnv("Path")!N!^
-		' check if path does not already exists in the user path!N!^
-		if InStr(1, userPath, path) ^= 0 Then!N!^
-			' check if path is not empty!N!^
-			if Len(userPath) Then!N!^
-				path = ";" ^& path!N!^
-			End If!N!^
-			' set the path!N!^
-			WshEnv("Path") = WshEnv("Path") ^& path!N!^
-		End If!N!^
-	End If
-	
-echo !SETPATH_VBS! > "%PATHSETTER%" || goto :ERROR
+:: download babun source
+if not exist "%SRC%" (
+	cscript //Nologo "%DOWNLOADER%" "%SRC_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	if not exist "%SRC%" (GOTO ERROR)
+)
+:: download wget.exe
+if not exist "%WGET%" (
+	cscript //Nologo "%DOWNLOADER%" "%WGET_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	if not exist "%SRC%" (GOTO ERROR)
+)
+:: download unzip.exe
+if not exist "%UNZIP%" (
+	cscript //Nologo "%DOWNLOADER%" "%UNZIP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	if not exist "%SRC%" (GOTO ERROR)
+)
+:: extract babun source 
+if exist "%SRC_HOME%" (
+	RD /S /Q "%SRC_HOME%" || goto :ERROR
+)
+mkdir "%SRC_HOME%"
+"%UNZIPPER%" "%SRC%" -d "%SRC_HOME%"	
+if not exist "%SRC_HOME%/*.*" (GOTO ERROR)
 
 
-rem ---------------------------------
-rem EMBEEDED VBS TRICK - UNSETPATH.VBS
-rem ---------------------------------
-set UNSETPATH_VBS=^
-	' ignore if no argument was passed to the script!N!^
-	if (WScript.Arguments.Count ^>= 1) Then!N!^
-		path = Wscript.Arguments(0)!N!^
-		pathWithSeparator = ";" ^& babunPath!N!^
-		Set WshShell = WScript.CreateObject("WScript.Shell")!N!^
-		Set WshEnv = WshShell.Environment("USER")!N!^
-		userPath = WshEnv("Path")!N!^
-		' check if path exists in the user path!N!^
-		unsetPath = userPath!N!^
-		if InStr(1, userPath, path) ^> 0 Then!N!^
-			' remove path from user path!N!^
-			unsetPath = Replace(unsetPath, pathWithSeparator, "")!N!^
-			unsetPath = Replace(unsetPath, path, "")!N!^
-			WshEnv("Path") = unsetPath!N!^
-		End If!N!^
-	End If
-	
-echo !UNSETPATH_VBS! > "%PATHUNSETTER%" || goto :ERROR
+goto END
+
 
 if not exist "%CYGWIN_INSTALLER%" (
 	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 	if not exist "%CYGWIN_INSTALLER%" (GOTO ERROR)
-)
-if not exist "%SRC%" (
-	cscript //Nologo "%DOWNLOADER%" "%SRC_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-	if not exist "%SRC%" (GOTO ERROR)
 )
 if not exist "%PACKAGES%" (
 	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
 	if not exist "%PACKAGES%" (GOTO ERROR)
 )
 
+goto END
+
 if exist "%PACKAGES_HOME%" (
 	RD /S /Q "%PACKAGES_HOME%" || goto :ERROR
 )
 mkdir "%PACKAGES_HOME%"
 ECHO [babun] Extracting binary packages
-cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
+"%UNZIPPER%" "%PACKAGES%" -d "%PACKAGES_HOME%"	
 if not exist "%PACKAGES_HOME%/*.*" (GOTO ERROR)
 
-if exist "%SRC_HOME%" (
-	RD /S /Q "%SRC_HOME%" || goto :ERROR
-)
-mkdir "%SRC_HOME%"
-ECHO [babun] Extracting bash configuration
-cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
-if not exist "%SRC_HOME%/*.*" (GOTO ERROR)
+
 	
 copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% || goto :ERROR
 

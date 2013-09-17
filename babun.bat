@@ -107,6 +107,7 @@ GOTO BEGIN
 	GOTO CHECKFORSWITCHES
 		
 :BEGIN
+goto PROPAGATE
 if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
 
 :INSTALL
@@ -230,14 +231,11 @@ if %ERRORLEVEL% NEQ 0 (GOTO ERROR)
 	
 :PROPAGATE		
 ECHO [babun] Tweaking shell settings
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"' || goto :ERROR
-"%CYGWIN_HOME%\bin\bash.exe" -c '%SRC_HOME%/babun-%BABUN_VERSION%/shell/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/shell/src" > %LOG_FILE% || goto :ERROR
-"%CYGWIN_HOME%\bin\bash.exe" -c '%SRC_HOME%/babun-%BABUN_VERSION%/bash/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/bash/src" > %LOG_FILE% || goto :ERROR
-"%CYGWIN_HOME%\bin\bash.exe" -c '%SRC_HOME%/babun-%BABUN_VERSION%/pact/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/pact/src" > %LOG_FILE% || goto :ERROR
-"%CYGWIN_HOME%\bin\bash.exe" -c '%SRC_HOME%/babun-%BABUN_VERSION%/zsh/install.sh'" > %LOG_FILE% || goto :ERROR
-
-ECHO [babun] Propagating babun properties
-"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "# Do not modify this file. It will be overwritten." > "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+"%CYGWIN_HOME%\bin\sh.exe" -c '/bin/echo.exe "[babun] Bash shell init"' || goto :ERROR
+"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/shell/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/shell/src" || goto :ERROR
+"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/bash/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/bash/src" || goto :ERROR
+"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/pact/install.sh' "%SRC_HOME%/babun-%BABUN_VERSION%/pact/src" || goto :ERROR
+"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/zsh/install.sh' || goto :ERROR
 
 ECHO [babun] Configuring start scripts
 copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE% || goto :ERROR

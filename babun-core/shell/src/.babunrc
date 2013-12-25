@@ -1,0 +1,1 @@
+export JAVA_OPTS="-Xms128m -Xmxm"

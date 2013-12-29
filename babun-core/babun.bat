@@ -2,44 +2,37 @@
 setlocal enableextensions enabledelayedexpansion
 
 :SETUP
-set BABUN_VERSION=modules
+set BABUN_VERSION=master
 set CYGWIN_VERSION=x86
 set PROXY=
 set NOCACHE=false
 
 set SCRIPT_PATH=%~dpnx0
-set SCRIPT_PATH=%SCRIPT_PATH:\=/%
-set BABUN_HOME=%USERPROFILE%/.babun
-set BABUN_HOME=%BABUN_HOME:\=/%
-
-set DOWNLOADS=%BABUN_HOME%/downloads
-set CYGWIN_HOME=%BABUN_HOME%/cygwin
-set PACKAGES_HOME=%BABUN_HOME%/packages
-set SRC_HOME=%BABUN_HOME%/src
-set SCRIPTS_HOME=%SRC_HOME%/babun-%BABUN_VERSION%/tools
-
+set BABUN_HOME=%USERPROFILE%\.babun
+set DOWNLOADS=%BABUN_HOME%\downloads
+set CYGWIN_HOME=%BABUN_HOME%\cygwin
+set PACKAGES_HOME=%BABUN_HOME%\packages
+set SCRIPTS_HOME=%BABUN_HOME%\scripts
+set SRC_HOME=%BABUN_HOME%\src
 set USER_AGENT=Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
 rem scripts:
-set DOWNLOADER=%DOWNLOADS%/download.vbs
-set WGET==%DOWNLOADS%/wget.exe
-set UNZIPPER=%DOWNLOADS%/unzip.exe
-
-set LINKER=%SCRIPTS_HOME%/link.vbs
-set PATH_SETTER=%SCRIPTS_HOME%/setpath.vbs
-set PATH_UNSETTER=%SCRIPTS_HOME%/unsetpath.vbs
+set DOWNLOADER=%SCRIPTS_HOME%\download.vbs
+set LINKER=%SCRIPTS_HOME%\link.vbs
+set UNZIPPER=%SCRIPTS_HOME%\unzip.vbs
+set PATHSETTER=%SCRIPTS_HOME%\setpath.vbs
+set PATHUNSETTER=%SCRIPTS_HOME%\unsetpath.vbs
 
 rem to-download:
-set PACKAGES=%DOWNLOADS%/packages-%CYGWIN_VERSION%.zip
-set SRC=%DOWNLOADS%/%BABUN_VERSION%.zip
+set CYGWIN_INSTALLER=%DOWNLOADS%\setup-%CYGWIN_VERSION%.exe
+set PACKAGES=%DOWNLOADS%\packages-%CYGWIN_VERSION%.zip
+set SRC=%DOWNLOADS%\%BABUN_VERSION%.zip
 
 set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_VERSION%.exe
 set PACKAGES_URL=https://babun.svn.cloudforge.com/packages/packages-%CYGWIN_VERSION%.zip
 set SRC_URL=https://github.com/reficio/babun/archive/%BABUN_VERSION%.zip
-set WGET_URL=http://users.ugent.be/~bpuype/wget/wget.exe
-set UNZIP_URL=http://stahlworks.com/dev/unzip.exe
 
-set CYGWIN_INSTALLER=%DOWNLOADS%/cygwin.exe
+set CYGWIN_NO_ADMIN_INSTALLER=%DOWNLOADS%\cygwin.exe
 set LOG_FILE=babun.log
 
 :CONSTANTS
@@ -107,7 +100,6 @@ GOTO BEGIN
 	GOTO CHECKFORSWITCHES
 		
 :BEGIN
-goto PROPAGATE
 if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
 
 :INSTALL
@@ -124,6 +116,42 @@ if '%NOCACHE%'=='true' (
  	ECHO [babun] Forcing download as /nocache switch specified
  	del /F /Q "%DOWNLOADS%\*.*" || goto :ERROR
 )
+
+if exist "%SCRIPTS_HOME%" (
+	RD /S /Q "%SCRIPTS_HOME%" || goto :ERROR
+)
+mkdir "%SCRIPTS_HOME%"
+
+ECHO [babun] Extracting embeeded VBS scripts
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - UNZIP.VBS
+rem ---------------------------------
+set UNZIP_VBS=^
+	set fso = CreateObject("Scripting.FileSystemObject") !N!^
+	ZipFile = fso.GetAbsolutePathName(Wscript.Arguments(0)) !N!^
+	ExtractTo = fso.GetAbsolutePathName(Wscript.Arguments(1)) !N!^
+	If NOT fso.FolderExists(ExtractTo) Then !N!^
+		fso.CreateFolder(ExtractTo) !N!^
+	End If !N!^
+	set objShell = CreateObject("Shell.Application") !N!^
+	objShell.NameSpace(ExtractTo).CopyHere objShell.NameSpace(ZipFile).Items !N!^
+	Set fso = Nothing !N!^
+	Set objShell = Nothing
+	
+echo !UNZIP_VBS! > "%UNZIPPER%" || goto :ERROR
+
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - LINK.VBS
+rem ---------------------------------
+set LINK_VBS=^
+	set oWS = WScript.CreateObject("WScript.Shell") !N!^
+	sLinkFile = Wscript.Arguments(0) !N!^
+	set oLink = oWS.CreateShortcut(sLinkFile) !N!^
+	oLink.TargetPath = Wscript.Arguments(1) !N!^
+	oLink.Arguments  = Wscript.Arguments(2) !N!^
+	oLink.Save
+	
+echo !LINK_VBS! > "%LINKER%" || goto :ERROR
 
 rem ---------------------------------
 rem EMBEEDED VBS TRICK - DOWNLOAD.VBS
@@ -177,48 +205,86 @@ set DOWNLOAD_VBS=^
 		
 echo !DOWNLOAD_VBS! > "%DOWNLOADER%" || goto :ERROR
 
-:: download babun source
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - SETPATH.VBS
+rem ---------------------------------
+set SETPATH_VBS=^
+	' ignore if no argument was passed to the script!N!^
+	if (WScript.Arguments.Count ^>= 1) Then!N!^
+		path = Wscript.Arguments(0)!N!^
+		Set WshShell = WScript.CreateObject("WScript.Shell")!N!^
+		Set WshEnv = WshShell.Environment("USER")!N!^
+		userPath = WshEnv("Path")!N!^
+		' check if path does not already exists in the user path!N!^
+		if InStr(1, userPath, path) ^= 0 Then!N!^
+			' check if path is not empty!N!^
+			if Len(userPath) Then!N!^
+				path = ";" ^& path!N!^
+			End If!N!^
+			' set the path!N!^
+			WshEnv("Path") = WshEnv("Path") ^& path!N!^
+		End If!N!^
+	End If
+	
+echo !SETPATH_VBS! > "%PATHSETTER%" || goto :ERROR
+
+
+rem ---------------------------------
+rem EMBEEDED VBS TRICK - UNSETPATH.VBS
+rem ---------------------------------
+set UNSETPATH_VBS=^
+	' ignore if no argument was passed to the script!N!^
+	if (WScript.Arguments.Count ^>= 1) Then!N!^
+		path = Wscript.Arguments(0)!N!^
+		pathWithSeparator = ";" ^& babunPath!N!^
+		Set WshShell = WScript.CreateObject("WScript.Shell")!N!^
+		Set WshEnv = WshShell.Environment("USER")!N!^
+		userPath = WshEnv("Path")!N!^
+		' check if path exists in the user path!N!^
+		unsetPath = userPath!N!^
+		if InStr(1, userPath, path) ^> 0 Then!N!^
+			' remove path from user path!N!^
+			unsetPath = Replace(unsetPath, pathWithSeparator, "")!N!^
+			unsetPath = Replace(unsetPath, path, "")!N!^
+			WshEnv("Path") = unsetPath!N!^
+		End If!N!^
+	End If
+	
+echo !UNSETPATH_VBS! > "%PATHUNSETTER%" || goto :ERROR
+
+if not exist "%CYGWIN_INSTALLER%" (
+	cscript //Nologo "%DOWNLOADER%" "%CYGWIN_SETUP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
+	if not exist "%CYGWIN_INSTALLER%" (GOTO ERROR)
+)
 if not exist "%SRC%" (
 	cscript //Nologo "%DOWNLOADER%" "%SRC_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
 	if not exist "%SRC%" (GOTO ERROR)
 )
-:: download wget.exe
-if not exist "%WGET%" (
-	cscript //Nologo "%DOWNLOADER%" "%WGET_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-	if not exist "%SRC%" (GOTO ERROR)
+if not exist "%PACKAGES%" (
+	cscript //Nologo "%DOWNLOADER%" "%PACKAGES_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"	
+	if not exist "%PACKAGES%" (GOTO ERROR)
 )
-:: download unzip.exe
-if not exist "%UNZIP%" (
-	cscript //Nologo "%DOWNLOADER%" "%UNZIP_URL%" "%DOWNLOADS%" "%USER_AGENT%" "%PROXY%" "%PROXY_USER%" "%PROXY_PASS%"
-	if not exist "%SRC%" (GOTO ERROR)
-)
-:: extract babun source 
-echo [babun] extracting babun source
-if exist "%SRC_HOME%" (
-	RD /S /Q "%SRC_HOME%" || goto :ERROR
-)
-mkdir "%SRC_HOME%"
-"%UNZIPPER%" "%SRC%" -d "%SRC_HOME%" > %LOG_FILE%
-if not exist "%SRC_HOME%/*.*" (GOTO ERROR)
-
-:: TODO add proxy
-echo [babun] downloading cygwin
-%WGET% --no-check-certificate "%CYGWIN_SETUP_URL%" -O "%CYGWIN_INSTALLER%" -U "%USER_AGENT%"
-
-:: TODO add proxy
-echo [babun] downloading cygwin packages
-%WGET% --no-check-certificate "%PACKAGES_URL%" -O "%PACKAGES%" -U "%USER_AGENT%"
 
 if exist "%PACKAGES_HOME%" (
 	RD /S /Q "%PACKAGES_HOME%" || goto :ERROR
 )
 mkdir "%PACKAGES_HOME%"
 ECHO [babun] Extracting binary packages
-"%UNZIPPER%" "%PACKAGES%" -d "%PACKAGES_HOME%"	
+cscript //Nologo "%UNZIPPER%" "%PACKAGES%" "%PACKAGES_HOME%"	
 if not exist "%PACKAGES_HOME%/*.*" (GOTO ERROR)
 
+if exist "%SRC_HOME%" (
+	RD /S /Q "%SRC_HOME%" || goto :ERROR
+)
+mkdir "%SRC_HOME%"
+ECHO [babun] Extracting bash configuration
+cscript //Nologo "%UNZIPPER%" "%SRC%" "%SRC_HOME%"	
+if not exist "%SRC_HOME%/*.*" (GOTO ERROR)
+	
+copy "%CYGWIN_INSTALLER%" "%CYGWIN_NO_ADMIN_INSTALLER%" >> %LOG_FILE% || goto :ERROR
+
 ECHO [babun] Installing cygwin
-"%CYGWIN_INSTALLER%" ^
+"%CYGWIN_NO_ADMIN_INSTALLER%" ^
 	--quiet-mode ^
 	--local-install ^
 	--local-package-dir %PACKAGES_HOME% ^
@@ -231,11 +297,42 @@ if %ERRORLEVEL% NEQ 0 (GOTO ERROR)
 	
 :PROPAGATE		
 ECHO [babun] Tweaking shell settings
-"%CYGWIN_HOME%\bin\sh.exe" -c '/bin/echo.exe "[babun] Bash shell init"' || goto :ERROR
-"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/shell/install.sh %SRC_HOME%/babun-%BABUN_VERSION%/shell/src' || goto :ERROR
-"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/bash/install.sh %SRC_HOME%/babun-%BABUN_VERSION%/bash/src' || goto :ERROR
-"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/pact/install.sh %SRC_HOME%/babun-%BABUN_VERSION%/pact/src' || goto :ERROR
-"%CYGWIN_HOME%\bin\sh.exe" -c 'CYGWIN=nodosfilewarning %SRC_HOME%/babun-%BABUN_VERSION%/zsh/install.sh' || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "[babun] Bash shell init"' || goto :ERROR
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\etc\*.*" "%CYGWIN_HOME%\etc" /i /s /y >> %LOG_FILE% || goto :ERROR
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\usr\*.*" "%CYGWIN_HOME%\usr" /i /s /y >> %LOG_FILE% || goto :ERROR
+xcopy "%SRC_HOME%\babun-%BABUN_VERSION%\src\home\*.*" "%CYGWIN_HOME%\home\%username%" /i /s /y >> %LOG_FILE% || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/chmod.exe +x /usr/local/bin/bark' || goto :ERROR
+
+ECHO [babun] Propagating babun properties
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "# Do not modify this file. It will be overwritten." > "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+
+set PROXYBASH=
+set PROXY_JAVAOPTS=
+IF NOT "%PROXY%"=="" IF NOT "%PROXY_USER%"=="" IF NOT "%PROXY_PASS%"==""  (	
+	set PROXYBASH=http://%PROXY_USER%:%PROXY_PASS%@%PROXY%
+	set PROXY_JAVAOPTS=-Dhttp.proxyHost=%PROXY_HOST% -Dhttp.proxyPort=%PROXY_PORT%
+)
+IF NOT "%PROXY%"=="" IF "%PROXY_USER%"=="" IF "%PROXY_PASS%"==""  (	
+	set PROXYBASH=http://%PROXY%
+	set PROXY_JAVAOPTS=%PROXY_JAVA_OPTS% -Dhttp.proxyUser=%PROXY_USER% -Dhttp.proxyPassword=%PROXY_PASS%
+)
+IF NOT "%PROXYBASH%"=="" (
+	ECHO [babun] Propagating proxy properties [%PROXYBASH%]
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export http_proxy=\"%PROXYBASH%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export https_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ftp_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export rsync_proxy=\$http_proxy" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+	"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export no_proxy=\"localhost,127.0.0.1,localaddress\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+)
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export cygwin_version=\"%CYGWIN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export babun_version=\"%BABUN_VERSION%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+"%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export user_agent=\"%USER_AGENT%\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export JAVA_OPTS=\"%PROXY_JAVAOPTS% -Xms128m -Xmx512m\"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export MAVEN_OPTS=\$JAVA_OPTS" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export ANT_OPTS=\$JAVA_OPTS" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "export GRADLE_OPTS=\$JAVA_OPTS" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
+rem "%CYGWIN_HOME%\bin\bash.exe" -c '/bin/echo.exe "alias java=\"java $JAVA_OPTS \"" >> "%CYGWIN_HOME%\home\%username%\.babunrc" ' || goto :ERROR
 
 ECHO [babun] Configuring start scripts
 copy /y nul "%CYGWIN_HOME%\start.bat" >> %LOG_FILE% || goto :ERROR
@@ -249,7 +346,7 @@ cscript //Nologo "%LINKER%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin
 if not exist "%USERPROFILE%\Desktop\babun.lnk" (GOTO ERROR)
 
 ECHO [babun] Setting path
-cscript //Nologo "%PATH_SETTER%" "%SRC_HOME%\babun-%BABUN_VERSION%"
+cscript //Nologo "%PATHSETTER%" "%SRC_HOME%\babun-%BABUN_VERSION%"
 
 :RUN
 ECHO [babun] Starting babun
@@ -265,7 +362,7 @@ if not exist "%BABUN_HOME%" (
 ) 
 if exist "%PATHUNSETTER%" (
 	echo [babun] Removing path...
-	cscript //Nologo "%PATH_UNSETTER%" "%SRC_HOME%\babun-%BABUN_VERSION%" || goto :ERROR
+	cscript //Nologo "%PATHUNSETTER%" "%SRC_HOME%\babun-%BABUN_VERSION%" || goto :ERROR
 )
 echo [babun] Deleting files...
 RD /S /Q "%BABUN_HOME%" || goto :ERROR

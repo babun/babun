@@ -1,2 +1,0 @@
-unzip.exe downloaded from: http://stahlworks.com/dev/?tool=zipunzip
-wget.exe downloaded from: http://users.ugent.be/~bpuype/wget/

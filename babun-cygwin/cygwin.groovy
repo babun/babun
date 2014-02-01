@@ -52,6 +52,7 @@ def installCygwin(File repoFolder, File outputFolder) {
 
 int executeCmd(String command, int timeout) {
     def process = command.execute()
+    addShutdownHook { process.destroy() }
     process.consumeProcessOutput(out, err)
     process.waitForOrKill(timeout * 60000)
     return process.exitValue()

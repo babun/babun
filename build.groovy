@@ -43,22 +43,22 @@ def doPackage() {
 
 def executeBabunPackages() {
     String module = "babun-packages"
-    if(shouldSkipModule(module)) return
-    File script = new File(getRoot(), "${module}/packages.groovy")
-    File conf = new File(getRoot(), "${module}/conf/")
-    File out = new File(getTarget(), "${module}")
-    String command = "groovy ${script.getAbsolutePath()} ${conf.getAbsolutePath()} ${out.getAbsolutePath()}"
-    executeCmd(command, 10)
+    if (shouldSkipModule(module)) return
+    File workingDir = new File(getRoot(), module);
+    String conf = new File(getRoot(), "${module}/conf/").absolutePath
+    String out = new File(getTarget(), "${module}").absolutePath
+    def command = ["groovy", "packages.groovy", conf, out]
+    executeCmd(command, workingDir, 10)
 }
 
 def executeBabunCygwin() {
     String module = "babun-cygwin"
-    if(shouldSkipModule(module)) return
-    File script = new File(getRoot(), "${module}/cygwin.groovy")
-    File repo = new File(getTarget(), "babun-packages")
-    File out = new File(getTarget(), "${module}")
-    String command = "groovy ${script.getAbsolutePath()} ${repo.absolutePath} ${out.absolutePath}"
-    executeCmd(command, 10)
+    if (shouldSkipModule(module)) return
+    File workingDir =new File(getRoot(), module);
+    String repo = new File(getTarget(), "babun-packages").absolutePath
+    String out = new File(getTarget(), "${module}").absolutePath
+    def command = ["groovy", "cygwin.groovy", repo, out]
+    executeCmd(command, workingDir, 10)
 }
 
 def shouldSkipModule(String module) {
@@ -79,8 +79,11 @@ File getRoot() {
     return new File(getClass().protectionDomain.codeSource.location.path).parentFile
 }
 
-int executeCmd(String command, int timeout) {
-    def process = command.execute()
+int executeCmd(List<String> command, File workingDir, int timeout) {
+    ProcessBuilder processBuilder = new ProcessBuilder(command)
+    processBuilder.directory(workingDir)
+    Process process = processBuilder.start()
+    addShutdownHook { process.destroy() }
     process.consumeProcessOutput(out, err)
     process.waitForOrKill(timeout * 60000)
     return process.exitValue()

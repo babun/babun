@@ -88,5 +88,3 @@ int executeCmd(List<String> command, File workingDir, int timeout) {
     process.waitForOrKill(timeout * 60000)
     return process.exitValue()
 }
-
-

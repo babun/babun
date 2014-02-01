@@ -1,5 +1,4 @@
 #!/usr/bin/env groovy
-
 import static java.lang.System.*
 
 execute()

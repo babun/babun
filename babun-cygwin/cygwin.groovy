@@ -8,7 +8,8 @@ def execute() {
     try {
         checkArguments()
         (repoFolder, outputFolder) = initEnvironment()
-        installCygwin(repoFolder, outputFolder)
+        File cygwinInstaller = downloadCygwinInstaller(outputFolder)
+        installCygwin(cygwinInstaller, repoFolder, outputFolder)
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()
@@ -34,9 +35,17 @@ def initEnvironment() {
     return [repoFolder, outputFolder]
 }
 
-def installCygwin(File repoFolder, File outputFolder) {
+def downloadCygwinInstaller(File outputFolder) {
+    File cygwinInstaller = new File(outputFolder, "setup-x86.exe")
+    use(FileBinaryCategory) {
+        cygwinInstaller << "http://cygwin.com/setup-x86.exe".toURL()
+    }
+    return cygwinInstaller
+}
+
+def installCygwin(File cygwinInstaller, File repoFolder, File outputFolder) {
     println "Installing cygwin"
-    String installCommand = "setup-x86.exe " +
+    String installCommand = "'${cygwinInstaller.absolutePath}' " +
             "--quiet-mode " +
             "--local-install " +
             "--local-package-dir '${repoFolder.absolutePath}' " +
@@ -60,4 +69,15 @@ int executeCmd(String command, int timeout) {
 
 def error(String message, boolean noPrefix = false) {
     err.println((noPrefix ? "" : "ERROR: ") + message)
+}
+
+class FileBinaryCategory {
+    def static leftShift(File file, URL url) {
+        url.withInputStream { is ->
+            file.withOutputStream { os ->
+                def bs = new BufferedOutputStream(os)
+                bs << is
+            }
+        }
+    }
 }

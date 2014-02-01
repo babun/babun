@@ -81,6 +81,7 @@ def downloadRootPackage(String repo, String setupIni, String rootPkg, Set<String
         }
     } catch (Exception ex) {
         error("Could not download dependency tree for [$rootPkg]")
+        ex.printStackTrace()
         processedInStep = [] as Set
     }
     processedInStep

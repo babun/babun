@@ -11,7 +11,7 @@ def execute() {
         (confFolder, outputFolder) = initEnvironment()
         downloadPackages(confFolder, outputFolder, "x86")
     } catch (Exception ex) {
-        error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
+        error("Unexpected error occurred: " + ex + " . Quitting!")
         ex.printStackTrace()
         exit(-1)
     }
@@ -19,7 +19,7 @@ def execute() {
 
 def checkArguments() {
     if (this.args.length != 2) {
-        error("Usage: packages.groovy <conf_folder> <output_folder>")
+        error("Usage: packages.groovy <conf_folder> <output_folder>", true)
         exit(-1)
     }
 }

@@ -48,6 +48,7 @@ def installCygwin(File cygwinInstaller, File repoFolder, File outputFolder) {
     String installCommand = "\"${cygwinInstaller.absolutePath}\" " +
             "--quiet-mode " +
             "--local-install " +
+            "--root " +
             "--local-package-dir \"${repoFolder.absolutePath}\" " +
             "--root \"${outputFolder.absolutePath}\" " +
             "--no-shortcuts " +

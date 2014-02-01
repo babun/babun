@@ -124,7 +124,7 @@ def parsePackageRequires(String pkgInfo) {
 def downloadPackage(String repositoryUrl, String packagePath, File outputFolder) {
     String packageUrl = repositoryUrl + packagePath
     String downloadCommand = "wget -l 2 -r -np -q --cut-dirs=2 -P " + outputFolder.getAbsolutePath() + " " + packageUrl
-    if (executeCmd(downloadCommand, 60000 * 5) != 0) {
+    if (executeCmd(downloadCommand, 5) != 0) {
         println "Could not download " + packageUrl
         return false
     }
@@ -134,7 +134,7 @@ def downloadPackage(String repositoryUrl, String packagePath, File outputFolder)
 int executeCmd(String command, int timeout) {
     def process = command.execute()
     process.consumeProcessOutput(out, err)
-    process.waitForOrKill(timeout)
+    process.waitForOrKill(timeout * 60000)
     return process.exitValue()
 }
 

@@ -2,3 +2,4 @@ setup*.log
 setup*.log.*
 babun.log
 out
+target

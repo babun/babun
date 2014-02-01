@@ -28,7 +28,7 @@ def initEnvironment() {
 }
 
 def doClean() {
-    println "Executing -> clean"
+    println "EXEC clean"
     File target = getTarget()
     if (target.exists()) {
         target.deleteDir()
@@ -36,19 +36,14 @@ def doClean() {
 }
 
 def doPackage() {
-    println "Executing -> package"
+    println "EXEC package"
     executeBabunPackages()
     executeBabunCygwin()
 }
 
 def executeBabunPackages() {
     String module = "babun-packages"
-    File packagesOut = new File(getTarget(), module)
-    if (packagesOut.exists()) {
-        println "Skipping -> ${module}"
-        return
-    }
-    println "Executing -> ${module}"
+    if(shouldSkipModule(module)) return
     File script = new File(getRoot(), "${module}/packages.groovy")
     File conf = new File(getRoot(), "${module}/conf/")
     File out = new File(getTarget(), "${module}")
@@ -58,7 +53,22 @@ def executeBabunPackages() {
 
 def executeBabunCygwin() {
     String module = "babun-cygwin"
-    println "Executing -> ${module}"
+    if(shouldSkipModule(module)) return
+    File script = new File(getRoot(), "${module}/cygwin.groovy")
+    File repo = new File(getTarget(), "babun-packages")
+    File out = new File(getTarget(), "${module}")
+    String command = "${script.getAbsolutePath()} ${repo.absolutePath} ${out.absolutePath}"
+    executeCmd(command, 10)
+}
+
+def shouldSkipModule(String module) {
+    File out = new File(getTarget(), module)
+    if (out.exists()) {
+        println "SKIP ${module}"
+        return true
+    }
+    println "EXEC ${module}"
+    return false
 }
 
 File getTarget() {

@@ -10,6 +10,7 @@ def execute() {
         (repoFolder, outputFolder) = initEnvironment()
         File cygwinInstaller = downloadCygwinInstaller(outputFolder)
         installCygwin(cygwinInstaller, repoFolder, outputFolder)
+        cygwinInstaller.delete()
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()

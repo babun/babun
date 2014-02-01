@@ -28,7 +28,6 @@ gcc
 gdbm
 gettext
 gmp
-GNOME
 gnutls
 grep
 groff
@@ -58,7 +57,6 @@ ncursesw
 openldap
 openssh
 openssl
-p.txt
 p11-kit
 pcre
 perl

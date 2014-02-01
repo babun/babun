@@ -36,6 +36,7 @@ def initEnvironment() {
 }
 
 def downloadCygwinInstaller(File outputFolder) {
+    println "Downloading cygwin"
     File cygwinInstaller = new File(outputFolder, "setup-x86.exe")
     use(FileBinaryCategory) {
         cygwinInstaller << "http://cygwin.com/setup-x86.exe".toURL()
@@ -48,14 +49,13 @@ def installCygwin(File cygwinInstaller, File repoFolder, File outputFolder) {
     String installCommand = "\"${cygwinInstaller.absolutePath}\" " +
             "--quiet-mode " +
             "--local-install " +
-            "--root " +
             "--local-package-dir \"${repoFolder.absolutePath}\" " +
             "--root \"${outputFolder.absolutePath}\" " +
             "--no-shortcuts " +
             "--no-startmenu " +
             "--no-desktop " +
             "--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time"
-//    println installCommand
+    println installCommand
     executeCmd(installCommand, 10)
 }
 

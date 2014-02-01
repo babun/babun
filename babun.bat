@@ -107,7 +107,7 @@ GOTO BEGIN
 	GOTO CHECKFORSWITCHES
 		
 :BEGIN
-goto PROPAGATE
+rem goto PROPAGATE
 if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
 
 :INSTALL

@@ -45,11 +45,11 @@ def downloadCygwinInstaller(File outputFolder) {
 
 def installCygwin(File cygwinInstaller, File repoFolder, File outputFolder) {
     println "Installing cygwin"
-    String installCommand = "${cygwinInstaller.absolutePath} " +
+    String installCommand = "\"${cygwinInstaller.absolutePath}\" " +
             "--quiet-mode " +
             "--local-install " +
-            "--local-package-dir '${repoFolder.absolutePath}' " +
-            "--root '${outputFolder.absolutePath}' " +
+            "--local-package-dir \"${repoFolder.absolutePath}\" " +
+            "--root \"${outputFolder.absolutePath}\" " +
             "--no-shortcuts " +
             "--no-startmenu " +
             "--no-desktop " +

@@ -47,7 +47,7 @@ def executeBabunPackages() {
     File script = new File(getRoot(), "${module}/packages.groovy")
     File conf = new File(getRoot(), "${module}/conf/")
     File out = new File(getTarget(), "${module}")
-    String command = "${script.getAbsolutePath()} ${conf.getAbsolutePath()} ${out.getAbsolutePath()}"
+    String command = "groovy ${script.getAbsolutePath()} ${conf.getAbsolutePath()} ${out.getAbsolutePath()}"
     executeCmd(command, 10)
 }
 
@@ -57,7 +57,7 @@ def executeBabunCygwin() {
     File script = new File(getRoot(), "${module}/cygwin.groovy")
     File repo = new File(getTarget(), "babun-packages")
     File out = new File(getTarget(), "${module}")
-    String command = "${script.getAbsolutePath()} ${repo.absolutePath} ${out.absolutePath}"
+    String command = "groovy ${script.getAbsolutePath()} ${repo.absolutePath} ${out.absolutePath}"
     executeCmd(command, 10)
 }
 

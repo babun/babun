@@ -39,6 +39,8 @@ def doPackage() {
     println "EXEC package"
     executeBabunPackages()
     executeBabunCygwin()
+    // executeBabunCore()
+    // executeBabunInstaller()
 }
 
 def executeBabunPackages() {

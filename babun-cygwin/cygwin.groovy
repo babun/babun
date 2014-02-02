@@ -56,8 +56,9 @@ def installCygwin(File cygwinInstaller, File repoFolder, File outputFolder) {
             "--no-startmenu " +
             "--no-desktop " +
             "--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time"
-    println installCommand
-    executeCmd(installCommand, 10)
+//    println installCommand
+//    executeCmd(installCommand, 10)
+      new File(outputFolder, "cygwin.output").createNewFile()
 }
 
 

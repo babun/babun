@@ -54,6 +54,12 @@ def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
     }
 }
 
+def downloadSetupIni(String repository, String bitVersion) {
+    println "Downloading [setup.ini] from repository [${repository}]"
+    String setupIniUrl = "${repository}/${bitVersion}/setup.ini"
+    return setupIniUrl.toURL().text
+}
+
 def downloadRootPackage(String repo, String setupIni, String rootPkg, Set<String> processed, File outputFolder) {
     def processedInStep = [] as Set
     println "Processing top-level package [$rootPkg]"
@@ -100,10 +106,9 @@ def buildPackageDependencyTree(String setupIni, String pkgName, Set<String> resu
     }
 }
 
-def downloadSetupIni(String repository, String bitVersion) {
-    println "Downloading [setup.ini] from repository [${repository}]"
-    String setupIniUrl = "${repository}/${bitVersion}/setup.ini"
-    return setupIniUrl.toURL().text
+def parsePackageRequires(String pkgInfo) {
+    String requires = pkgInfo?.split("\n")?.find() { it.startsWith("requires:") }
+    return requires?.replace("requires:", "")?.trim()?.split("\\s")
 }
 
 def parsePackageInfo(String setupIni, String packageName) {
@@ -114,11 +119,6 @@ def parsePackagePath(String pkgInfo) {
     String version = pkgInfo?.split("\n")?.find() { it.startsWith("install:") }
     String[] tokens = version?.replace("install:", "")?.trim()?.split("\\s")
     return tokens?.length > 0 ? tokens[0] : null
-}
-
-def parsePackageRequires(String pkgInfo) {
-    String requires = pkgInfo?.split("\n")?.find() { it.startsWith("requires:") }
-    return requires?.replace("requires:", "")?.trim()?.split("\\s")
 }
 
 def downloadPackage(String repositoryUrl, String packagePath, File outputFolder) {

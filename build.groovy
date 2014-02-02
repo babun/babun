@@ -33,7 +33,9 @@ def doClean() {
     println "EXEC clean"
     File target = getTarget()
     if (target.exists()) {
-        target.deleteDir()
+        if(!target.deleteDir()) {
+            throw new RuntimeException("Cannot delete targe folder")
+        }
     }
 }
 

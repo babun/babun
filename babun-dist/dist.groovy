@@ -28,7 +28,7 @@ def execute() {
 
 def checkArguments() {
     if (this.args.length != 4) {
-        error("Usage: installer.groovy <cygwin_folder> <input_folder> <output_folder> <version>")
+        error("Usage: dist.groovy <cygwin_folder> <input_folder> <output_folder> <version>")
         exit(-1)
     }
 }
@@ -85,7 +85,7 @@ def createBabunDist(File outputFolder, String version) {
     dist.renameTo(distWithVersion)
 
     // zip dist folder
-    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}.zip") {
+    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip") {
         fileset(dir: "${outputFolder.absolutePath}") {
             include(name: "babun-${version}/**")
         }

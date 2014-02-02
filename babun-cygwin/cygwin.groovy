@@ -4,12 +4,12 @@ import static java.lang.System.*
 execute()
 
 def execute() {
-    File repoFolder, outputFolder
+    File repoFolder, outputFolder, cygwinFolder
     try {
         checkArguments()
-        (repoFolder, outputFolder) = initEnvironment()
+        (repoFolder, outputFolder, cygwinFolder) = initEnvironment()
         File cygwinInstaller = downloadCygwinInstaller(outputFolder)
-        installCygwin(cygwinInstaller, repoFolder, outputFolder)
+        installCygwin(cygwinInstaller, repoFolder, cygwinFolder)
         cygwinInstaller.delete()
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
@@ -33,7 +33,9 @@ def initEnvironment() {
         outputFolder.deleteDir()
     }
     outputFolder.mkdir()
-    return [repoFolder, outputFolder]
+    File cygwinFolder = new File(outputFolder, "cygwin")
+    cygwinFolder.mkdir()
+    return [repoFolder, outputFolder, cygwinFolder]
 }
 
 def downloadCygwinInstaller(File outputFolder) {
@@ -45,20 +47,20 @@ def downloadCygwinInstaller(File outputFolder) {
     return cygwinInstaller
 }
 
-def installCygwin(File cygwinInstaller, File repoFolder, File outputFolder) {
+def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder) {
     println "Installing cygwin"
     String installCommand = "\"${cygwinInstaller.absolutePath}\" " +
             "--quiet-mode " +
             "--local-install " +
             "--local-package-dir \"${repoFolder.absolutePath}\" " +
-            "--root \"${outputFolder.absolutePath}\" " +
+            "--root \"${cygwinFolder.absolutePath}\" " +
             "--no-shortcuts " +
             "--no-startmenu " +
             "--no-desktop " +
             "--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time"
 //    println installCommand
 //    executeCmd(installCommand, 10)
-      new File(outputFolder, "cygwin.output").createNewFile()
+      new File(cygwinFolder.absolutePath, "cygwin.output").createNewFile()
 }
 
 

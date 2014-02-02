@@ -39,7 +39,7 @@ def doPackage() {
     println "EXEC package"
     executeBabunPackages()
     executeBabunCygwin()
-    // executeBabunCore()
+    executeBabunCore()
     // executeBabunInstaller()
 }
 
@@ -60,6 +60,16 @@ def executeBabunCygwin() {
     String repo = new File(getTarget(), "babun-packages").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     def command = ["groovy", "cygwin.groovy", repo, out]
+    executeCmd(command, workingDir, 10)
+}
+
+def executeBabunCore() {
+    String module = "babun-core"
+    if (shouldSkipModule(module)) return
+    File workingDir =new File(getRoot(), module);
+    String cygwin = new File(getTarget(), "babun-cygwin").absolutePath
+    String out = new File(getTarget(), "${module}").absolutePath
+    def command = ["groovy", "core.groovy", cygwin, out]
     executeCmd(command, workingDir, 10)
 }
 

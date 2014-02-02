@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 import static java.lang.System.*
 
+version = "1.0.0"
+
 execute()
 
 def execute() {
@@ -40,7 +42,7 @@ def doPackage() {
     executeBabunPackages()
     executeBabunCygwin()
     executeBabunCore()
-    executeBabunInstaller()
+    executeBabunDist()
 }
 
 def executeBabunPackages() {
@@ -73,15 +75,14 @@ def executeBabunCore() {
     executeCmd(command, workingDir, 10)
 }
 
-def executeBabunInstaller() {
-    String module = "babun-installer"
+def executeBabunDist() {
+    String module = "babun-dist"
     if (shouldSkipModule(module)) return
     File workingDir =new File(getRoot(), module);
     String input = workingDir.absolutePath
     String cygwin = new File(getTarget(), "babun-core/cygwin").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    String version = "1.0.0"
-    def command = ["groovy", "installer.groovy", cygwin, input, out, version]
+    def command = ["groovy", "dist.groovy", cygwin, input, out, version]
     executeCmd(command, workingDir, 10)
 }
 

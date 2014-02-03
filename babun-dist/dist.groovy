@@ -48,7 +48,11 @@ def initEnvironment() {
 
 def copyCygwin(File cygwinFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/cygwin", quiet: true) {
-        fileset(dir: "${cygwinFolder.absolutePath}")
+        fileset(dir: "${cygwinFolder.absolutePath}") {
+            exclude(name: "Cygwin.bat")
+            exclude(name: "Cygwin.ico")
+            exclude(name: "Cygwin-Terminal.ico")
+        }
     }
 }
 
@@ -65,7 +69,7 @@ def copyStartScripts(File inputFolder, File outputFolder) {
 }
 
 def zipBabun(File outputFolder) {
-    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/dist/babun.zip") {
+    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/dist/babun.zip", level: 9) {
         fileset(dir: "${outputFolder.absolutePath}") {
             include(name: '.babun/**')
         }
@@ -85,7 +89,7 @@ def createBabunDist(File outputFolder, String version) {
     dist.renameTo(distWithVersion)
 
     // zip dist folder
-    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip") {
+    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip", level: 9) {
         fileset(dir: "${outputFolder.absolutePath}") {
             include(name: "babun-${version}/**")
         }

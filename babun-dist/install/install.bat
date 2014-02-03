@@ -1,22 +1,31 @@
-@echo off
+﻿@echo off
 setlocal enableextensions enabledelayedexpansion
 
-set SCRIPT_PATH=%~dpnx0
+set SCRIPT_PATH=%~dp0
 set SCRIPT_PATH=%SCRIPT_PATH:\=/%
 
 set BABUN_HOME=%USERPROFILE%\.babun
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 
+set INSTALLER_PATH=
 set BABUN_ZIP=%SCRIPT_PATH%/babun.zip
 set UNZIPPER=%SCRIPT_PATH%/unzip.exe
 
 set SETPATH_SCRIPT=%BABUN_HOME%\tools\setpath.vbs
 set LINK_SCRIPT=%BABUN_HOME%\tools\link.vbs
+set LOG_FILE=%SCRIPT_PATH%/installer.log
 
 :UNZIP
-ECHO [babun] Unzipping babun
+ECHO [babun] Installing babun
+if exist "%BABUN_HOME%/*.*" (
+ 	ECHO [babun] Babun home alread exist: %BABUN_HOME%"
+	ECHO [babun] Delete the old folder in order to proceed. Terminating!
+ 	EXIT /b 255
+)
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%" || goto :ERROR)
-"%UNZIPPER%" "%BABUN_ZIP%" -d "%USERPROFILE%"
+ECHO [babun] Unzipping 
+
+"%UNZIPPER%" "%BABUN_ZIP%" -d "%USERPROFILE%" > %LOG_FILE%
 if not exist "%BABUN_HOME%/*.*" (GOTO ERROR)
 
 :PATH

@@ -1,7 +1,10 @@
 #!/usr/bin/env groovy
 import static java.lang.System.*
+import static java.lang.System.getenv
 
-version = "1.0.0"
+VERSION = "1.0.0"
+TEN_MINUTES = 10
+TWENTY_MINUTES = 20
 
 execute()
 
@@ -12,12 +15,14 @@ def execute() {
         doClean()
     } else if (mode == "package") {
         doPackage()
+    } else if (mode == "release") {
+        doRelease()
     }
 }
 
 def checkArguments() {
-    if (this.args.length != 1 || !this.args[0].matches("clean|package")) {
-        err.println "Usage: build.groovy <clean|package>"
+    if (this.args.length != 1 || !this.args[0].matches("clean|package|release")) {
+        err.println "Usage: build.groovy <clean|package|release>"
         exit(-1)
     }
 }
@@ -33,7 +38,7 @@ def doClean() {
     println "EXEC clean"
     File target = getTarget()
     if (target.exists()) {
-        if(!target.deleteDir()) {
+        if (!target.deleteDir()) {
             throw new RuntimeException("Cannot delete targe folder")
         }
     }
@@ -47,6 +52,12 @@ def doPackage() {
     executeBabunDist()
 }
 
+def doRelease() {
+    println "EXEC release"
+    doPackage()
+    executeRelease()
+}
+
 def executeBabunPackages() {
     String module = "babun-packages"
     if (shouldSkipModule(module)) return
@@ -54,38 +65,45 @@ def executeBabunPackages() {
     String conf = new File(getRoot(), "${module}/conf/").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     def command = ["groovy", "packages.groovy", conf, out]
-    executeCmd(command, workingDir, 10)
+    executeCmd(command, workingDir, TEN_MINUTES)
 }
 
 def executeBabunCygwin() {
     String module = "babun-cygwin"
     if (shouldSkipModule(module)) return
-    File workingDir =new File(getRoot(), module);
+    File workingDir = new File(getRoot(), module);
     String repo = new File(getTarget(), "babun-packages").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     def command = ["groovy", "cygwin.groovy", repo, out]
-    executeCmd(command, workingDir, 10)
+    executeCmd(command, workingDir, TEN_MINUTES)
 }
 
 def executeBabunCore() {
     String module = "babun-core"
     if (shouldSkipModule(module)) return
-    File workingDir =new File(getRoot(), module);
+    File workingDir = new File(getRoot(), module);
     String cygwin = new File(getTarget(), "babun-cygwin/cygwin").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     def command = ["groovy", "core.groovy", cygwin, out]
-    executeCmd(command, workingDir, 10)
+    executeCmd(command, workingDir, TEN_MINUTES)
 }
 
 def executeBabunDist() {
     String module = "babun-dist"
     if (shouldSkipModule(module)) return
-    File workingDir =new File(getRoot(), module);
+    File workingDir = new File(getRoot(), module);
     String input = workingDir.absolutePath
     String cygwin = new File(getTarget(), "babun-core/cygwin").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "dist.groovy", cygwin, input, out, version]
-    executeCmd(command, workingDir, 10)
+    def command = ["groovy", "dist.groovy", cygwin, input, out, VERSION]
+    executeCmd(command, workingDir, TEN_MINUTES)
+}
+
+def executeRelease() {
+    File artifact = new File(getTarget(), "babun-dist/babun-${VERSION}-dist.zip")
+    def args = ["groovy", "release.groovy", "babun", "babun-dist", VERSION,
+            artifact.absolutePath, getenv("bintray_user"), getenv("bintray_secret")]
+    executeCmd(args, getRoot(), TWENTY_MINUTES)
 }
 
 def shouldSkipModule(String module) {
@@ -114,4 +132,8 @@ int executeCmd(List<String> command, File workingDir, int timeout) {
     process.consumeProcessOutput(out, err)
     process.waitForOrKill(timeout * 60000)
     return process.exitValue()
+}
+
+def getReleaseScript() {
+    new File(getRoot(), "release.groovy")
 }

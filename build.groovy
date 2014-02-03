@@ -100,6 +100,8 @@ def executeBabunDist() {
 }
 
 def executeRelease() {
+    assert getenv("bintray_user") != null
+    assert getenv("bintray_secret") != null
     File artifact = new File(getTarget(), "babun-dist/babun-${VERSION}-dist.zip")
     def args = ["groovy", "release.groovy", "babun", "babun-dist", VERSION,
             artifact.absolutePath, getenv("bintray_user"), getenv("bintray_secret")]

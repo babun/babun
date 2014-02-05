@@ -5,10 +5,7 @@ base-files
 bash
 bzip2
 coreutils
-cron
-crypt
 csih
-curl
 cygutils
 cygwin
 diffutils
@@ -22,6 +19,7 @@ gnutls
 grep
 groff
 gzip
+ipc-utils
 less
 libevent2.0_5
 links
@@ -36,12 +34,12 @@ openssl
 pcre
 perl
 ping
-readline
 rsync
 run
 sed
 shutdown
 tar
+terminfo
 time
 unzip
 vim

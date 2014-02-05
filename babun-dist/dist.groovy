@@ -1,5 +1,6 @@
 #!/usr/bin/env groovy
-import static java.lang.System.*
+import static java.lang.System.err
+import static java.lang.System.exit
 
 execute()
 
@@ -74,6 +75,11 @@ def zipBabun(File outputFolder) {
             include(name: '.babun/**')
         }
     }
+    new AntBuilder().bzip2(src: "${outputFolder.absolutePath}/dist/babun.zip",
+            destFile: "${outputFolder.absolutePath}/dist/babun.bzip2") {
+    }
+    File zip = new File("${outputFolder.absolutePath}/dist/babun.zip")
+    assert true == zip.delete()
 }
 
 def copyInstallScripts(File inputFolder, File outputFolder) {

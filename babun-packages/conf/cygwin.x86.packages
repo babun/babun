@@ -1,5 +1,6 @@
 alternatives
 attr
+awk
 base-cygwin
 base-files
 bash

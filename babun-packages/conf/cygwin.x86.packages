@@ -38,6 +38,7 @@ httping
 ipc-utils
 less
 libedit
+libevent
 libffi
 libgcrypt
 libgpg-error

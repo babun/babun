@@ -89,7 +89,7 @@ def createBabunDist(File outputFolder, String version) {
     dist.renameTo(distWithVersion)
 
     // zip dist folder
-    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip", level: 1) {
+    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip", level: 9) {
         fileset(dir: "${outputFolder.absolutePath}") {
             include(name: "babun-${version}/**")
         }

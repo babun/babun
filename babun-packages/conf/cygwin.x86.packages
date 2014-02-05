@@ -70,7 +70,6 @@ run
 sed
 shutdown
 sqlite3
-svn
 tar
 tcp_wrappers
 terminfo

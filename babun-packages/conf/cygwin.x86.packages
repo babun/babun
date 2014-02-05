@@ -6,6 +6,7 @@ bash
 bzip2
 coreutils
 csih
+curl
 cygutils
 cygwin
 diffutils
@@ -31,8 +32,10 @@ nano
 ncurses
 openssh
 openssl
+pcre
 perl
 ping
+readline
 rsync
 run
 sed

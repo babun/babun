@@ -57,19 +57,19 @@ def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder) {
             "--no-shortcuts " +
             "--no-startmenu " +
             "--no-desktop " +
-            "--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time"
+            "--packages cron,shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,httping,time,zsh"
     println installCommand
     executeCmd(installCommand, 10)
 //      new File(cygwinFolder.absolutePath, "cygwin.output").createNewFile()
 }
 
 
-int executeCmd(String command, int timeout) {
+def executeCmd(String command, int timeout) {
     def process = command.execute()
     addShutdownHook { process.destroy() }
     process.consumeProcessOutput(out, err)
     process.waitForOrKill(timeout * 60000)
-    return process.exitValue()
+    assert process.exitValue() == 0
 }
 
 def error(String message, boolean noPrefix = false) {

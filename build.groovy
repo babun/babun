@@ -126,14 +126,14 @@ File getRoot() {
     return new File(getClass().protectionDomain.codeSource.location.path).parentFile
 }
 
-int executeCmd(List<String> command, File workingDir, int timeout) {
+def executeCmd(List<String> command, File workingDir, int timeout) {
     ProcessBuilder processBuilder = new ProcessBuilder(command)
     processBuilder.directory(workingDir)
     Process process = processBuilder.start()
     addShutdownHook { process.destroy() }
     process.consumeProcessOutput(out, err)
     process.waitForOrKill(timeout * 60000)
-    return process.exitValue()
+    assert process.exitValue() == 0
 }
 
 def getReleaseScript() {

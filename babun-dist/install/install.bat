@@ -25,7 +25,7 @@ if exist "%BABUN_HOME%/*.*" (
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%" || goto :ERROR)
 ECHO [babun] Unzipping 
 
-"%UNZIPPER%" "%BABUN_ZIP%" -d "%USERPROFILE%" > %LOG_FILE%
+"%UNZIPPER%" "%BABUN_ZIP%" -d "%USERPROFILE%"
 if not exist "%BABUN_HOME%/*.*" (GOTO ERROR)
 
 :PATH

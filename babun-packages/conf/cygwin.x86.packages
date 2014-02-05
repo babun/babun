@@ -31,7 +31,6 @@ nano
 ncurses
 openssh
 openssl
-pcre
 perl
 ping
 rsync

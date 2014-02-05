@@ -27,6 +27,7 @@ gawk
 gcc
 gdbm
 gettext
+git
 gmp
 gnutls
 grep

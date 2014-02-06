@@ -46,7 +46,7 @@ openssl
 pcre
 perl
 ping
-procps 
+procps
 readline
 rebase
 rsync

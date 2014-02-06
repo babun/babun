@@ -41,8 +41,8 @@ def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
     for (repo in repositories) {
         String setupIni = downloadSetupIni(repo, bitVersion)
         for (String rootPkg : rootPackages) {
-            if (processed.contains(rootPkg)) continue
-            def processedInStep = downloadRootPackage(repo, setupIni, rootPkg, processed, outputFolder)
+            if (processed.contains(rootPkg.trim())) continue
+            def processedInStep = downloadRootPackage(repo, setupIni, rootPkg.trim(), processed, outputFolder)
             processed.addAll(processedInStep)
         }
         rootPackages.removeAll(processed)
@@ -100,8 +100,8 @@ def buildPackageDependencyTree(String setupIni, String pkgName, Set<String> resu
     }
     String[] deps = parsePackageRequires(pkgInfo)
     for (String dep : deps) {
-        if (!result.contains(dep)) {
-            buildPackageDependencyTree(setupIni, dep, result)
+        if (!result.contains(dep.trim())) {
+            buildPackageDependencyTree(setupIni, dep.trim(), result)
         }
     }
 }

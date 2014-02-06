@@ -1,12 +1,12 @@
 alternatives
-aspell 
+aspell
 aspell-en
 attr
 base-cygwin
 base-files
 bash
 bash-completion
-bc 
+bc
 bzip2
 coreutils
 cron
@@ -18,7 +18,7 @@ cygwin
 diffutils
 dos2unix
 editrights
-emacs 
+emacs
 enscript
 findutils
 gawk
@@ -29,7 +29,7 @@ grep
 groff
 gzip
 ipc-utils
-keychain 
+keychain
 less
 libevent2.0_5
 links

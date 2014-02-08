@@ -2,6 +2,7 @@ alternatives
 aspell
 aspell-en
 attr
+automake
 base-cygwin
 base-files
 bash

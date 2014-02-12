@@ -82,7 +82,7 @@ def findSymlinks(File outputFolder) {
     File cygwinOutputFolder = new File(outputFolder, ".babun/cygwin")
     String bashExe = cygwinOutputFolder.absolutePath + "/bin/bash.exe"
     String findSymlinksSh = "/etc/postinstall/symlinks_find.sh"
-    Stirng shellCmd = "${bashExe} --norc --noprofile "
+    String shellCmd = "${bashExe} --norc --noprofile "
     // exexute chmod on the main script
     String chmodCmd = "\"chmod 755 ${findSymlinksSh}\""
     executeCmd(shellCmd + chmodCmd, 5)

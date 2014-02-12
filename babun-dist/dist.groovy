@@ -85,10 +85,10 @@ def findSymlinks(File outputFolder) {
     Stirng shellCmd = "${bashExe} --norc --noprofile "
     // exexute chmod on the main script
     String chmodCmd = "\"chmod 755 ${findSymlinksSh}\""
-    executeCmd(shellCmd + chmodCmd, 1)
+    executeCmd(shellCmd + chmodCmd, 5)
     // execute find links
     String findCmd = "\"${findSymlinksSh}\""    
-    executeCmd(shellCmd + findCmd, 1)
+    executeCmd(shellCmd + findCmd, 10)
     // delete finder script
     File findSymlinksFile = new File(cygwinOutputFolder, findSymlinksSh)
     findSymlinksFile.delete()

@@ -81,8 +81,9 @@ def copySymlinksScripts(File inputFolder, File outputFolder) {
 def findSymlinks(File outputFolder) {
     File cygwinOutputFolder = new File(outputFolder, ".babun/cygwin")
     String bashExe = cygwinOutputFolder.absolutePath + "/bin/bash.exe"
-    String findSymlinksSh = "/etc/postinstall/find_symlinks.sh"
-    String bashCmd = "${bashExe} ${findSymlinksSh}"
+    String findSymlinksSh = "/etc/postinstall/symlinks_find.sh"
+    String bashCmd = "${bashExe} --norc --noprofile \"chmod 755 ${findSymlinksSh}; ${findSymlinksSh}\""
+    println("[babun] Executing [${bashCmd}]")
     executeCmd(bashCmd, 5)
     File findSymlinksFile = new File(cygwinOutputFolder, findSymlinksSh)
     findSymlinksFile.delete()

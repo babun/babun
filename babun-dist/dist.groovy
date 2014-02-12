@@ -82,9 +82,14 @@ def findSymlinks(File outputFolder) {
     File cygwinOutputFolder = new File(outputFolder, ".babun/cygwin")
     String bashExe = cygwinOutputFolder.absolutePath + "/bin/bash.exe"
     String findSymlinksSh = "/etc/postinstall/symlinks_find.sh"
-    String bashCmd = "${bashExe} --norc --noprofile \"chmod 755 ${findSymlinksSh}; ${findSymlinksSh}\""
-    println("[babun] Executing [${bashCmd}]")
-    executeCmd(bashCmd, 5)
+    Stirng shellCmd = "${bashExe} --norc --noprofile "
+    // exexute chmod on the main script
+    String chmodCmd = "\"chmod 755 ${findSymlinksSh}\""
+    executeCmd(shellCmd + chmodCmd, 1)
+    // execute find links
+    String findCmd = "\"${findSymlinksSh}\""    
+    executeCmd(shellCmd + findCmd, 1)
+    // delete finder script
     File findSymlinksFile = new File(cygwinOutputFolder, findSymlinksSh)
     findSymlinksFile.delete()
 }
@@ -122,6 +127,7 @@ def error(String message, boolean noPrefix = false) {
 }
 
 def executeCmd(String command, int timeout) {
+    println("[babun] Executing [${command}]")
     def process = command.execute()
     addShutdownHook { process.destroy() }
     process.consumeProcessOutput(out, err)

@@ -15,6 +15,10 @@ def execute() {
         copyTools(inputFolder, outputFolder)
         copyStartScripts(inputFolder, outputFolder)
 
+        // handle symlinks
+        copyBrokenSymlinksScripts(inputFolder, outputFolder)
+        findBrokenSymlinks(outputFolder)        
+
         // prepare Dist
         zipBabun(outputFolder)
         copyInstallScripts(inputFolder, outputFolder)
@@ -69,6 +73,22 @@ def copyStartScripts(File inputFolder, File outputFolder) {
     }
 }
 
+def copyBrokenSymlinksScripts(File inputFolder, File outputFolder) {
+    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/cygwin/etc/postinstall", quiet: true) {
+        fileset(dir: "${inputFolder.absolutePath}/symlinks")
+    }    
+}
+
+def findBrokenLinks(File outputFolder) {
+    File cygwinOutputFolder = new File(outputFolder, ".babun/cygwin")
+    String bashExe = cygwinOutputFolder.absolutePath + "/bin/bash.exe"
+    String findSymlinksSh = "/etc/postinstall/find_symlinks.sh"
+    String bashCmd = "${bashExe} ${findSymlinksSh}"
+    executeCmd(bashCmd, 5)
+    File findSymlinksFile = new File(cygwinOutputFolder, findSymlinksSh)
+    findSymlinksFile.delete()
+}
+
 def zipBabun(File outputFolder) {
     new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/dist/babun.zip", level: 9) {
         fileset(dir: "${outputFolder.absolutePath}") {
@@ -99,4 +119,12 @@ def createBabunDist(File outputFolder, String version) {
 
 def error(String message, boolean noPrefix = false) {
     err.println((noPrefix ? "" : "ERROR: ") + message)
+}
+
+def executeCmd(String command, int timeout) {
+    def process = command.execute()
+    addShutdownHook { process.destroy() }
+    process.consumeProcessOutput(out, err)
+    process.waitForOrKill(timeout * 60000)
+    assert process.exitValue() == 0
 }

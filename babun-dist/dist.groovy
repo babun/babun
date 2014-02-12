@@ -83,10 +83,6 @@ def findSymlinks(File outputFolder) {
     String bashExe = cygwinOutputFolder.absolutePath + "/bin/bash.exe"
     String findSymlinksSh = "/etc/postinstall/symlinks_find.sh"
     String shellCmd = "${bashExe} --norc --noprofile "
-    // exexute chmod on the main script
-    String chmodCmd = "\"chmod 755 ${findSymlinksSh}\""
-    executeCmd(shellCmd + chmodCmd, 5)
-    // execute find links
     String findCmd = "\"${findSymlinksSh}\""    
     executeCmd(shellCmd + findCmd, 10)
     // delete finder script

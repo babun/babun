@@ -1,6 +1,5 @@
 #!/usr/bin/env groovy
-import static java.lang.System.err
-import static java.lang.System.exit
+import static java.lang.System.*
 
 execute()
 

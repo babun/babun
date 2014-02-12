@@ -16,8 +16,8 @@ def execute() {
         copyStartScripts(inputFolder, outputFolder)
 
         // handle symlinks
-        copyBrokenSymlinksScripts(inputFolder, outputFolder)
-        findBrokenSymlinks(outputFolder)        
+        copySymlinksScripts(inputFolder, outputFolder)
+        findSymlinks(outputFolder)        
 
         // prepare Dist
         zipBabun(outputFolder)
@@ -73,13 +73,13 @@ def copyStartScripts(File inputFolder, File outputFolder) {
     }
 }
 
-def copyBrokenSymlinksScripts(File inputFolder, File outputFolder) {
+def copySymlinksScripts(File inputFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/cygwin/etc/postinstall", quiet: true) {
         fileset(dir: "${inputFolder.absolutePath}/symlinks")
     }    
 }
 
-def findBrokenLinks(File outputFolder) {
+def findSymlinks(File outputFolder) {
     File cygwinOutputFolder = new File(outputFolder, ".babun/cygwin")
     String bashExe = cygwinOutputFolder.absolutePath + "/bin/bash.exe"
     String findSymlinksSh = "/etc/postinstall/find_symlinks.sh"

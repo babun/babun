@@ -51,6 +51,7 @@ ECHO [babun] Babun installed successfully. You can delete the the installer.
 ECHO [babun] Fixing broken symlinks. It may take a while...
 %CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/bin/dos2unix.exe /etc/postinstall/symlinks_repair.sh" || goto :ERROR
 %CYGWIN_HOME%\bin\bash.exe --norc --noprofile "/etc/postinstall/symlinks_repair.sh" || goto :ERROR
+%CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/bin/mv.exe /etc/postinstall/symlinks_repair.sh /etc/postinstall/symlinks_repair.sh.done" || goto :ERROR
 
 :FIXUSERPROFILE
 ECHO [babun] Fixing user profile.

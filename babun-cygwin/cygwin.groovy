@@ -76,11 +76,14 @@ def copySymlinksScripts(File inputFolder, File cygwinFolder) {
 }
 
 def findSymlinks(File cygwinFolder) {
-    String findSymlinksCmd = "${cygwinFolder.absolutePath}/bin/bash.exe --norc --noprofile \"/etc/postinstall/symlinks_find.sh\""
+    String symlinksFindScript = "/etc/postinstall/symlinks_find.sh"
+    String findSymlinksCmd = "${cygwinFolder.absolutePath}/bin/bash.exe --norc --noprofile \"${symlinksFindScript}\""
     executeCmd(findSymlinksCmd, 10)
+    new File(cygwinFolder, symlinksFindScript).delete()
 }
 
 def executeCmd(String command, int timeout) {
+    println "Executing: ${command}"
     def process = command.execute()
     addShutdownHook { process.destroy() }
     process.consumeProcessOutput(out, err)

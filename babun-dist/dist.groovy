@@ -13,16 +13,10 @@ def execute() {
         copyCygwin(cygwinFolder, outputFolder)
         copyTools(inputFolder, outputFolder)
         copyStartScripts(inputFolder, outputFolder)
-
-        // handle symlinks
-        copySymlinksScripts(inputFolder, outputFolder)
-        findSymlinks(outputFolder)        
-
         // prepare Dist
         zipBabun(outputFolder)
         copyInstallScripts(inputFolder, outputFolder)
         createBabunDist(outputFolder, version)
-
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()
@@ -70,24 +64,6 @@ def copyStartScripts(File inputFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun", quiet: true) {
         fileset(dir: "${inputFolder.absolutePath}/start")
     }
-}
-
-def copySymlinksScripts(File inputFolder, File outputFolder) {
-    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/cygwin/etc/postinstall", quiet: true) {
-        fileset(dir: "${inputFolder.absolutePath}/symlinks")
-    }    
-}
-
-def findSymlinks(File outputFolder) {
-    File cygwinOutputFolder = new File(outputFolder, ".babun/cygwin")
-    String bashExe = cygwinOutputFolder.absolutePath + "/bin/bash.exe"
-    String findSymlinksSh = "/etc/postinstall/symlinks_find.sh"
-    String shellCmd = "${bashExe} --norc --noprofile "
-    String findCmd = "\"${findSymlinksSh}\""    
-    executeCmd(shellCmd + findCmd, 10)
-    // delete finder script
-    File findSymlinksFile = new File(cygwinOutputFolder, findSymlinksSh)
-    findSymlinksFile.delete()
 }
 
 def zipBabun(File outputFolder) {

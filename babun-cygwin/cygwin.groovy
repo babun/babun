@@ -4,13 +4,18 @@ import static java.lang.System.*
 execute()
 
 def execute() {
-    File repoFolder, outputFolder, cygwinFolder
+    File repoFolder, inputFolder, outputFolder, cygwinFolder
     try {
         checkArguments()
-        (repoFolder, outputFolder, cygwinFolder) = initEnvironment()
+        (repoFolder, inputFolder, outputFolder, cygwinFolder) = initEnvironment()
+        // install cygwin
         File cygwinInstaller = downloadCygwinInstaller(outputFolder)
         installCygwin(cygwinInstaller, repoFolder, cygwinFolder)
         cygwinInstaller.delete()
+
+        // handle symlinks
+        copySymlinksScripts(inputFolder, cygwinFolder)
+        findSymlinks(cygwinFolder)        
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()
@@ -19,15 +24,16 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 2) {
-        error("Usage: cygwin.groovy <repo_folder> <output_folder>")
+    if (this.args.length != 3) {
+        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder>")
         exit(-1)
     }
 }
 
 def initEnvironment() {
     File repoFolder = new File(this.args[0])
-    File outputFolder = new File(this.args[1])
+    File inputFolder = new File(this.args[1])
+    File outputFolder = new File(this.args[2])
     if (outputFolder.exists()) {
         println "Deleting output folder ${outputFolder.getAbsolutePath()}"
         outputFolder.deleteDir()
@@ -35,7 +41,7 @@ def initEnvironment() {
     outputFolder.mkdir()
     File cygwinFolder = new File(outputFolder, "cygwin")
     cygwinFolder.mkdir()
-    return [repoFolder, outputFolder, cygwinFolder]
+    return [repoFolder, inputFolder, outputFolder, cygwinFolder]
 }
 
 def downloadCygwinInstaller(File outputFolder) {
@@ -63,6 +69,16 @@ def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder) {
 //      new File(cygwinFolder.absolutePath, "cygwin.output").createNewFile()
 }
 
+def copySymlinksScripts(File inputFolder, File cygwinFolder) {
+    new AntBuilder().copy(todir: "${cygwinFolder.absolutePath}/etc/postinstall", quiet: true) {
+        fileset(dir: "${inputFolder.absolutePath}/symlinks")
+    }    
+}
+
+def findSymlinks(File cygwinFolder) {
+    String findSymlinksCmd = "${cygwinFolder.absolutePath}/bin/bash.exe --norc --noprofile \"/etc/postinstall/symlinks_find.sh\""
+    executeCmd(findSymlinksCmd, 10)
+}
 
 def executeCmd(String command, int timeout) {
     def process = command.execute()

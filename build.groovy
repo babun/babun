@@ -72,9 +72,10 @@ def executeBabunCygwin() {
     String module = "babun-cygwin"
     if (shouldSkipModule(module)) return
     File workingDir = new File(getRoot(), module);
+    String input = workingDir.absolutePath
     String repo = new File(getTarget(), "babun-packages").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "cygwin.groovy", repo, out]
+    def command = ["groovy", "cygwin.groovy", repo, input, out]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 

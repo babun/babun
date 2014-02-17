@@ -1,1 +1,22 @@
-export JAVA_OPTS="-Xms128m -Xmxm"
+export JAVA_OPTS="-Xms128m -Xmx256m"
+
+# Uncomment these lines to the set your machine's default locale (and comment out the UTF-8 ones)
+# export LANG=$(locale -uU)
+# export LC_CTYPE=$(locale -uU)
+# export LC_ALL=$(locale -uU)
+
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+export CYGWIN_VERSION=x86
+export CYGWIN="${CYGWIN} nodosfilewarning mintty"
+export TERM=xterm-256color
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+PS1='\[\033[01;32m\]\u\[\033[01;34m\]::\[\033[01;31m\]\h \[\033[00;34m\]{ \[\033[01;34m\]\w \[\033[00;34m\]}\[\033[01;32m\]-> \[\033[00m\]'
+

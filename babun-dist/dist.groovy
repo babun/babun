@@ -16,7 +16,7 @@ def execute() {
         // prepare Dist
         zipBabun(outputFolder)
         copyInstallScripts(inputFolder, outputFolder)
-        createBabunDist(outputFolder, version)
+        createBabunDist(outputFolder, version)        
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()

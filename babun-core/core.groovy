@@ -74,7 +74,7 @@ int executeCmd(String command, int timeout) {
     addShutdownHook { process.destroy() }
     process.consumeProcessOutput(out, err)
     process.waitForOrKill(timeout * 60000)
-    return process.exitValue()
+    assert process.exitValue() == 0
 }
 
 def error(String message, boolean noPrefix = false) {

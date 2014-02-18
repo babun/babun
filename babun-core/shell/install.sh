@@ -5,12 +5,17 @@ set -f
 
 babun="/usr/local/etc/babun"
 src="$babun/babun-core/shell/src/"
-dest="~/"
+
+homedir=~
+eval homedir=$homedir
+dest="$homedir/"
 
 for src_file in $(find "$src" -type f); 
 do
 	src_filename="${src_file#$src}"
 	target_file="$dest/$src_filename"
+	echo "[$src_file] [$src_filename] [$target_filename]" 
+	
 	if [ -f "$target_file" ]; then
 		if [ ! cmp -s "$src_file" "$target_file"] ; then
     		echo "Backing up $target_file" 
@@ -18,4 +23,4 @@ do
 		fi		
 	fi    
 done
-/cp -rf "$src" "$dest" 
+/bin/cp -rf "$src/." "$dest" 

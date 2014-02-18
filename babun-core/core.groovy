@@ -39,7 +39,7 @@ def initEnvironment() {
 
 def copyCygwin(File cygwinFolder, File outputFolder) {
     new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin", quiet: true ) {
-      fileset( dir: "${cygwinFolder.absolutePath}" )
+      fileset( dir: "${cygwinFolder.absolutePath}", defaultexcludes:"no" )
     }
 }
 

@@ -71,7 +71,7 @@ def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder) {
 
 def copySymlinksScripts(File inputFolder, File cygwinFolder) {
     new AntBuilder().copy(todir: "${cygwinFolder.absolutePath}/etc/postinstall", quiet: true) {
-        fileset(dir: "${inputFolder.absolutePath}/symlinks")
+        fileset(dir: "${inputFolder.absolutePath}/symlinks", defaultexcludes:"no")
     }    
 }
 

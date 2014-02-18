@@ -46,7 +46,7 @@ def initEnvironment() {
 
 def copyCygwin(File cygwinFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/cygwin", quiet: true) {
-        fileset(dir: "${cygwinFolder.absolutePath}") {
+        fileset(dir: "${cygwinFolder.absolutePath}", defaultexcludes:"no") {
             exclude(name: "Cygwin.bat")
             exclude(name: "Cygwin.ico")
             exclude(name: "Cygwin-Terminal.ico")
@@ -56,19 +56,19 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
 
 def copyTools(File inputFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/tools", quiet: true) {
-        fileset(dir: "${inputFolder.absolutePath}/tools")
+        fileset(dir: "${inputFolder.absolutePath}/tools", defaultexcludes:"no")
     }
 }
 
 def copyStartScripts(File inputFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun", quiet: true) {
-        fileset(dir: "${inputFolder.absolutePath}/start")
+        fileset(dir: "${inputFolder.absolutePath}/start", defaultexcludes:"no")
     }
 }
 
 def zipBabun(File outputFolder) {
     new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/dist/babun.zip", level: 9) {
-        fileset(dir: "${outputFolder.absolutePath}") {
+        fileset(dir: "${outputFolder.absolutePath}", defaultexcludes:"no") {
             include(name: '.babun/**')
         }
     }
@@ -76,7 +76,7 @@ def zipBabun(File outputFolder) {
 
 def copyInstallScripts(File inputFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/dist", quiet: true) {
-        fileset(dir: "${inputFolder.absolutePath}/install")
+        fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no")
     }
 }
 
@@ -88,7 +88,7 @@ def createBabunDist(File outputFolder, String version) {
 
     // zip dist folder
     new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip", level: 3) {
-        fileset(dir: "${outputFolder.absolutePath}") {
+        fileset(dir: "${outputFolder.absolutePath}", defaultexcludes:"no") {
             include(name: "babun-${version}/**")
         }
     }

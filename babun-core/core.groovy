@@ -68,7 +68,7 @@ def installCore(File outputFolder) {
 }
 
 
-int executeCmd(String command, int timeout) {
+def executeCmd(String command, int timeout) {
     println "Executing: ${command}"
     def process = command.execute()
     addShutdownHook { process.destroy() }

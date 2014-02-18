@@ -4,7 +4,7 @@ set -e
 set -f
 
 babun="/usr/local/etc/babun"
-src="$babun/babun-core/src"
+src="$babun/babun-core/pact/src"
 dest="~/.pact"
 
 \cp -rf $src/pact /usr/local/bin

@@ -5,7 +5,7 @@ set -f
 
 babun="/usr/local/etc/babun"
 src="$babun/babun-core/pact/src"
-dest="~/.pact"
+dest=~"/.pact"
 
 \cp -rf $src/pact /usr/local/bin
 chmod 755 /usr/local/bin/pact

@@ -46,7 +46,11 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
 def installCore(File rootFolder, File outputFolder) {
     println "Installing babun core"
     new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin/usr/local/etc/babun", quiet: true ) {
-      fileset( dir: "${rootFolder.absolutePath}" )
+      fileset( dir: "${rootFolder.absolutePath}" ) {
+            exclude(name: "target")
+            exclude(name: "*.log")
+            exclude(name: "*.full")
+        }
     }
 }
 

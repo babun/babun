@@ -57,13 +57,13 @@ def copyBabunToEtc(File rootFolder, File outputFolder) {
 def installCore(File outputFolder) {
     String bash = "${outputFolder.absolutePath}/cygwin/bin/bash.exe -l"
     // remove windows new line feeds
-    String dos2unix = "find /usr/local/etc/babun -type f -exec dos2unix {} \;"
-    executeCmd("${bash} -c \"${dos2unix}\"")
+    String dos2unix = "find /usr/local/etc/babun/babun-core -type f -exec dos2unix {} \\;"
+    executeCmd("${bash} -c \"${dos2unix}\"", 5)
     // make installer executable
-    String chmod = "find /usr/local/etc/babun -type f -exec chmod 755 {} \;"
-    executeCmd("${bash} -c \"${chmod}\"")
+    String chmod = "find /usr/local/etc/babun/babun-core -type f -regex '.*sh' -exec chmod 755 {} \\;"
+    executeCmd("${bash} -c \"${chmod}\"", 5)
     // run installer - yay!
-    executeCmd("${bash} \"/usr/local/etc/babun/babun-core/install.sh\"")
+    executeCmd("${bash} \"/usr/local/etc/babun/babun-core/install.sh\"", 5)
 
 }
 

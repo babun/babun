@@ -3,3 +3,4 @@ setup*.log.*
 babun.log
 out
 target
+.DS_Store

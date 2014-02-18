@@ -9,8 +9,8 @@ def execute() {
         checkArguments()
         (rootFolder, cygwinFolder, outputFolder) = initEnvironment()
         copyCygwin(cygwinFolder, outputFolder)
-        installCore(rootFolder, outputFolder)
-
+        copyBabunToEtc(rootFolder, outputFolder)
+        installCore(outputFolder)    
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()
@@ -43,7 +43,7 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
     }
 }
 
-def installCore(File rootFolder, File outputFolder) {
+def copyBabunToEtc(File rootFolder, File outputFolder) {
     println "Installing babun core"
     new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin/usr/local/etc/babun", quiet: true ) {
       fileset( dir: "${rootFolder.absolutePath}", defaultexcludes:"no" ) {
@@ -54,8 +54,22 @@ def installCore(File rootFolder, File outputFolder) {
     }
 }
 
+def installCore(File outputFolder) {
+    String bash = "${outputFolder.absolutePath}/cygwin/bin/bash.exe -l"
+    // remove windows new line feeds
+    String dos2unix = "find /usr/local/etc/babun -type f -exec dos2unix {} \;"
+    executeCmd("${bash} -c \"${dos2unix}\"")
+    // make installer executable
+    String chmod = "find /usr/local/etc/babun -type f -exec chmod 755 {} \;"
+    executeCmd("${bash} -c \"${chmod}\"")
+    // run installer - yay!
+    executeCmd("${bash} \"/usr/local/etc/babun/babun-core/install.sh\"")
+
+}
+
 
 int executeCmd(String command, int timeout) {
+    println "Executing: ${command}"
     def process = command.execute()
     addShutdownHook { process.destroy() }
     process.consumeProcessOutput(out, err)

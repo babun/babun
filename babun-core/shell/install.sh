@@ -4,7 +4,7 @@ set -e
 set -f
 
 babun="/usr/local/etc/babun"
-src="$babun/babun-core/src/"
+src="$babun/babun-core/shell/src/"
 dest="~/"
 
 for src_file in $(find "$src" -type f); 

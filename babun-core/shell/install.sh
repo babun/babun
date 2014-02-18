@@ -17,7 +17,7 @@ do
 	echo "[$src_file] [$src_filename] [$target_filename]" 
 	
 	if [ -f "$target_file" ]; then
-		if [ ! cmp -s "$src_file" "$target_file"] ; then
+		if [ ! cmp -s "$src_file" "$target_file" ]; then
     		echo "Backing up $target_file" 
 			mv -f "$target_file" "$target_file.backup"	 
 		fi		

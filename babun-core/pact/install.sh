@@ -5,9 +5,12 @@ set -f
 
 babun="/usr/local/etc/babun"
 src="$babun/babun-core/pact/src"
-dest=~"/.pact"
 
-\cp -rf $src/pact /usr/local/bin
+homedir=~
+eval homedir=$homedir
+dest="$homedir/.pact"
+
+/bin/cp -rf $src/pact /usr/local/bin
 chmod 755 /usr/local/bin/pact
 
 if [ ! -d "$dest" ]; then
@@ -15,5 +18,5 @@ if [ ! -d "$dest" ]; then
 fi
 
 if [ ! -f "$dest/pact.repo" ]; then
-    cp "$src/pact.repo" "$dest"
+    /bin/cp "$src/pact.repo" "$dest"
 fi

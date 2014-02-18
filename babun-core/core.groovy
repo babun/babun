@@ -4,12 +4,12 @@ import static java.lang.System.*
 execute()
 
 def execute() {
-    File cygwinFolder, outputFolder
+    File rootFolder, cygwinFolder, outputFolder
     try {
         checkArguments()
-        (cygwinFolder, outputFolder) = initEnvironment()
+        (rootFolder, cygwinFolder, outputFolder) = initEnvironment()
         copyCygwin(cygwinFolder, outputFolder)
-        installCore(outputFolder)
+        installCore(rootFolder, outputFolder)
 
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
@@ -19,21 +19,22 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 2) {
-        error("Usage: core.groovy <cygwin_folder> <output_folder>")
+    if (this.args.length != 3) {
+        error("Usage: core.groovy <babun_root> <cygwin_folder> <output_folder>")
         exit(-1)
     }
 }
 
 def initEnvironment() {
-    File cygwinFolder = new File(this.args[0])
-    File outputFolder = new File(this.args[1])
+    File rootFolder = new File(this.args[0])
+    File cygwinFolder = new File(this.args[1])
+    File outputFolder = new File(this.args[2])
     if (outputFolder.exists()) {
         println "Deleting output folder ${outputFolder.getAbsolutePath()}"
         outputFolder.deleteDir()
     }
     outputFolder.mkdir()
-    return [cygwinFolder, outputFolder]
+    return [rootFolder, cygwinFolder, outputFolder]
 }
 
 def copyCygwin(File cygwinFolder, File outputFolder) {
@@ -42,8 +43,11 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
     }
 }
 
-def installCore(File outputFolder) {
-    println "Installing babun core -> TODO"
+def installCore(File rootFolder, File outputFolder) {
+    println "Installing babun core"
+    new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin/usr/local/etc/babun", quiet: true ) {
+      fileset( dir: "${rootFolder.absolutePath}" )
+    }
 }
 
 

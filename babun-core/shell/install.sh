@@ -3,16 +3,19 @@ set -o pipefail
 set -e
 set -f
 
-src="~/.babun/babun-core/src/"
+babun="/usr/local/etc/babun"
+src="$babun/babun-core/src/"
 dest="~/"
 
-for path in $(find "$src" -type f); 
+for src_file in $(find "$src" -type f); 
 do
-	file="${path#$src}"
-	target="$dest/$file"
-	if [ -f "$target" ]; then
-		echo "Backing up $target" 
-		mv -f "$target" "$target.backup"	 
+	src_filename="${src_file#$src}"
+	target_file="$dest/$src_filename"
+	if [ -f "$target_file" ]; then
+		if [ ! cmp -s "$src_file" "$target_file"] ; then
+    		echo "Backing up $target_file" 
+			mv -f "$target_file" "$target_file.backup"	 
+		fi		
 	fi    
 done
 /cp -rf "$src" "$dest" 

@@ -75,7 +75,8 @@ def executeBabunCygwin() {
     String input = workingDir.absolutePath
     String repo = new File(getTarget(), "babun-packages").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "cygwin.groovy", repo, input, out]
+    String pkgs = new File(getRoot(), "babun-packages/conf/cygwin.x86.packages")
+    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 

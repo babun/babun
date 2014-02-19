@@ -4,13 +4,13 @@ import static java.lang.System.*
 execute()
 
 def execute() {
-    File repoFolder, inputFolder, outputFolder, cygwinFolder
+    File repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile
     try {
         checkArguments()
-        (repoFolder, inputFolder, outputFolder, cygwinFolder) = initEnvironment()
+        (repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile) = initEnvironment()
         // install cygwin
         File cygwinInstaller = downloadCygwinInstaller(outputFolder)
-        installCygwin(cygwinInstaller, repoFolder, cygwinFolder)
+        installCygwin(cygwinInstaller, repoFolder, cygwinFolder, pkgsFile)
         cygwinInstaller.delete()
 
         // handle symlinks
@@ -24,8 +24,8 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 3) {
-        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder>")
+    if (this.args.length != 4) {
+        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder> <pkgs_file>")
         exit(-1)
     }
 }
@@ -34,6 +34,7 @@ def initEnvironment() {
     File repoFolder = new File(this.args[0])
     File inputFolder = new File(this.args[1])
     File outputFolder = new File(this.args[2])
+    File pkgsFile = new File(this.args[3])
     if (outputFolder.exists()) {
         println "Deleting output folder ${outputFolder.getAbsolutePath()}"
         outputFolder.deleteDir()
@@ -41,7 +42,7 @@ def initEnvironment() {
     outputFolder.mkdir()
     File cygwinFolder = new File(outputFolder, "cygwin")
     cygwinFolder.mkdir()
-    return [repoFolder, inputFolder, outputFolder, cygwinFolder]
+    return [repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile]
 }
 
 def downloadCygwinInstaller(File outputFolder) {
@@ -53,8 +54,10 @@ def downloadCygwinInstaller(File outputFolder) {
     return cygwinInstaller
 }
 
-def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder) {
+def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder, File pkgsFile) {    
     println "Installing cygwin"
+    String pkgs = pkgsFile.text.trim().replace("\n", ",")    
+    println "Packages to install: ${pkgs}"
     String installCommand = "\"${cygwinInstaller.absolutePath}\" " +
             "--quiet-mode " +
             "--local-install " +
@@ -63,10 +66,9 @@ def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder) {
             "--no-shortcuts " +
             "--no-startmenu " +
             "--no-desktop " +
-            "--packages shutdown,openssh,ncurses,vim,nano,unzip,curl,rsync,ping,links,wget,time,zsh"
+            "--packages " + pkgs
     println installCommand
     executeCmd(installCommand, 10)
-//      new File(cygwinFolder.absolutePath, "cygwin.output").createNewFile()
 }
 
 def copySymlinksScripts(File inputFolder, File cygwinFolder) {

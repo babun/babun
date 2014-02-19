@@ -18,6 +18,8 @@ do
 done < "$filename"
 
 # set DOS SYSTEM flag on the symlink files
+rootfolder=$(/bin/cygpath --windows /)
+echo "Root folder -> $rootfolder"
 for path in "${array[@]}"
 do
   echo "Fixing symlink -> $path"

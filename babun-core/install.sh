@@ -8,6 +8,9 @@ babun="/usr/local/etc/babun"
 mkdir "$babun/home"
 mkdir "$babun/external"
 
+echo "Executing cacert/install.sh"
+bash "$babun/source/babun-core/cacert/install.sh"
+
 echo "Executing pact/install.sh"
 bash "$babun/source/babun-core/pact/install.sh"
 

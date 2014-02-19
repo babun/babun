@@ -4,11 +4,8 @@ set -e
 set -f
 
 babun="/usr/local/etc/babun"
-src="$babun/babun-core/shell/src/"
-
-homedir=~
-eval homedir=$homedir
-dest="$homedir/"
+src="$babun/source/babun-core/shell/src/"
+dest="$babun/home/"
 
 for src_file in $(find "$src" -type f); 
 do

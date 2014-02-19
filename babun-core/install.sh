@@ -5,9 +5,13 @@ set -f
 
 babun="/usr/local/etc/babun"
 
+mkdir "$babun/home
+
 echo "Executing pact/install.sh"
-bash "$babun/babun-core/pact/install.sh"
+bash "$babun/source/babun-core/pact/install.sh"
 
 echo "Executing shell/install.sh"
-bash "$babun/babun-core/shell/install.sh"
+bash "$babun/source/babun-core/shell/install.sh"
 
+echo "Executing babun/install.sh"
+bash "$babun/source/babun-core/babun/install.sh"

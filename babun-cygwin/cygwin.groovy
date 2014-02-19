@@ -56,7 +56,7 @@ def downloadCygwinInstaller(File outputFolder) {
 
 def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder, File pkgsFile) {    
     println "Installing cygwin"
-    String pkgs = pkgsFile.text.trim().replaceAll("\\s", ",")    
+    String pkgs = pkgsFile.text.trim().replaceAll("(\\s)+", ",")    
     println "Packages to install: ${pkgs}"
     String installCommand = "\"${cygwinInstaller.absolutePath}\" " +
             "--quiet-mode " +

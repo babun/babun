@@ -4,11 +4,8 @@ set -e
 set -f
 
 babun="/usr/local/etc/babun"
-src="$babun/babun-core/pact/src"
-
-homedir=~
-eval homedir=$homedir
-dest="$homedir/.pact"
+src="$babun/source/babun-core/pact/src"
+dest="$babun/home/.pact"
 
 /bin/cp -rf $src/pact /usr/local/bin
 chmod 755 /usr/local/bin/pact

@@ -45,7 +45,7 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
 
 def copyBabunToEtc(File rootFolder, File outputFolder) {
     println "Installing babun core"
-    new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin/usr/local/etc/babun", quiet: true ) {
+    new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin/usr/local/etc/babun/source", quiet: true ) {
       fileset( dir: "${rootFolder.absolutePath}", defaultexcludes:"no" ) {
             exclude(name: "target/**")
             exclude(name: "*.log")
@@ -62,7 +62,7 @@ def installCore(File outputFolder) {
     // make installer executable
     String chmod = "find /usr/local/etc/babun/babun-core -type f -regex '.*sh' -exec chmod 755 {} \\;"
     executeCmd("${bash} -c \"${chmod}\"", 5)
-    // run installer - yay!
+    // run babun installer - yay!
     executeCmd("${bash} \"/usr/local/etc/babun/babun-core/install.sh\"", 5)
 
 }

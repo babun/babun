@@ -5,8 +5,8 @@ set -f
 
 babun="/usr/local/etc/babun"
 
-mkdir "$babun/home"
-mkdir "$babun/external"
+mkdir -p "$babun/home"
+mkdir -p "$babun/external"
 
 echo "Fixing symlinks for the installation"
 dos2unix "/etc/postinstall/symlinks_repair.sh"
@@ -33,6 +33,6 @@ profiles=("/etc/profile" "/etc/zprofile" "/etc/defaults/etc/profile")
 for profile in "${profiles[@]}"; do	
 	if ! grep -Fxq "Installing babun" "$profile" ;then
 		echo "  -> $profile"
-		sed -i 's/if mkdir -p "${HOME}"; then/if mkdir -p "${HOME}"; then\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/install.sh/' "$profile"
+		sed -i 's/if mkdir -p "${HOME}"; then/if mkdir -p "${HOME}"; then\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/home.sh/' "$profile"
 	fi
 done

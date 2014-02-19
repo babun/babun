@@ -55,7 +55,7 @@ ECHO [babun] Fixing broken symlinks. It may take a while...
 
 :FIXUSERPROFILE
 ECHO [babun] Fixing user profile.
-%CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/bin/mkpasswd.exe -l -c >> /etc/passwd; /bin/mkgroup -l -c >> /etc/group" || goto :ERROR
+%CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/bin/rm -rf /home/* /bin/mkpasswd.exe -l -c >> /etc/passwd; /bin/mkgroup -l -c >> /etc/group" || goto :ERROR
 
 :RUN
 ECHO [babun] Starting babun

@@ -39,7 +39,7 @@ def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
     def repositories = new File(confFolder, "cygwin.repositories").readLines().findAll() { it }
     def processed = [] as Set
     for (repo in repositories) {
-        String setupIni = downloadSetupIni(repo, bitVersion)
+        String setupIni = downloadSetupIni(repo, bitVersion, outputFolder)
         for (String rootPkg : rootPackages) {
             if (processed.contains(rootPkg.trim())) continue
             def processedInStep = downloadRootPackage(repo, setupIni, rootPkg.trim(), processed, outputFolder)
@@ -54,9 +54,11 @@ def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
     }
 }
 
-def downloadSetupIni(String repository, String bitVersion) {
+def downloadSetupIni(String repository, String bitVersion, File outputFolder) {
     println "Downloading [setup.ini] from repository [${repository}]"
     String setupIniUrl = "${repository}/${bitVersion}/setup.ini"
+    String downloadSetupIni = "wget -l 2 -r -np -q --cut-dirs=3 -P " + outputFolder.getAbsolutePath() + " " + setupIniUrl    
+    executeCmd(downloadSetupIni, 5)
     return setupIniUrl.toURL().text
 }
 
@@ -123,7 +125,7 @@ def parsePackagePath(String pkgInfo) {
 
 def downloadPackage(String repositoryUrl, String packagePath, File outputFolder) {
     String packageUrl = repositoryUrl + packagePath
-    String downloadCommand = "wget -l 2 -r -np -q --cut-dirs=2 -P " + outputFolder.getAbsolutePath() + " " + packageUrl
+    String downloadCommand = "wget -l 2 -r -np -q --cut-dirs=3 -P " + outputFolder.getAbsolutePath() + " " + packageUrl
     if (executeCmd(downloadCommand, 5) != 0) {
         println "Could not download " + packageUrl
         return false

@@ -27,3 +27,12 @@ bash "$babun/source/babun-core/babun/install.sh"
 
 echo "Executing oh-my-zsh/install.sh"
 bash "$babun/source/babun-core/oh-my-zsh/install.sh"
+
+echo "Adding babun home folder auto-install"
+profiles=("/etc/profile" "/etc/zprofile" "/etc/defaults/etc/profile")
+for profile in "${profiles[@]}"; do	
+	if ! grep -Fxq "Installing babun" "$profile" ;then
+		echo "  -> $profile"
+		sed -i 's/if mkdir -p "${HOME}"; then/if mkdir -p "${HOME}"; then\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/install.sh/' "$profile"
+	fi
+done

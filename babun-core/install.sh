@@ -8,6 +8,11 @@ babun="/usr/local/etc/babun"
 mkdir "$babun/home"
 mkdir "$babun/external"
 
+echo "Fixing symlinks for the installation"
+dos2unix "/etc/postinstall/symlinks_repair.sh"
+chmod 755 "/etc/postinstall/symlinks_repair.sh"
+bash "/etc/postinstall/symlinks_repair.sh"
+
 echo "Executing cacert/install.sh"
 bash "$babun/source/babun-core/cacert/install.sh"
 

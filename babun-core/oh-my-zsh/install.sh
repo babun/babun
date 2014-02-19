@@ -8,9 +8,7 @@ src="$babun/external/oh-my-zsh"
 dest="$babun/home/.oh-my-zsh"
 
 if [ ! -d "$src" ]; then
-	clone="PATH=/usr/bin git clone https://github.com/robbyrussell/oh-my-zsh.git \"$src\""
-	clone || echo "git clone error - repeating!"
-	if ! [ $? -eq 0 ]; then clone ; fi	
+	PATH=/usr/bin git clone https://github.com/robbyrussell/oh-my-zsh.git "$src" 
 fi
 
 if [ ! -d "$dest" ]; then

@@ -33,6 +33,6 @@ profiles=("/etc/profile" "/etc/zprofile" "/etc/defaults/etc/profile")
 for profile in "${profiles[@]}"; do	
 	if ! grep -Fxq "Installing babun" "$profile" ;then
 		echo "  -> $profile"
-		sed -i 's/if mkdir -p "${HOME}"; then/if mkdir -p "${HOME}"; then\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/home.sh/' "$profile"
+		sed -i 's/unset fDest/unset fDest\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/home.sh/' "$profile"
 	fi
 done

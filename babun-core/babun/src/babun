@@ -1,0 +1,6 @@
+#!/bin/bash
+set -o pipefail
+set -e
+set -f
+
+echo "Babun works!!!"

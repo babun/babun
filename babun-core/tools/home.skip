@@ -1,0 +1,11 @@
+#!/bin/bash
+set -o pipefail
+set -e
+set -f
+
+declare -A skip
+
+# location as they reside in the exploded home!
+skip[".pact/pact.repo"]=true
+skip[".babunrc"]=true
+

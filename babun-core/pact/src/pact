@@ -25,7 +25,7 @@
 # THE SOFTWARE.
 # 
 set -o pipefail
-set -e
+#set -e
 set -f
 
 source ~/.babunrc
@@ -58,7 +58,6 @@ function usage()
   echo "  \"pact packageof <commands or files>\" to locate parent packages"
   echo "Options:"
   echo "  --mirror, -m <url> : set mirror"
-  echo "  --file, -f <file>  : read package names from file"
   echo "  --update, -u       : force update setup.ini from mirror"
   echo "  --help"
   echo "  --version"
@@ -142,7 +141,6 @@ function checkpackages()
 noscripts=0
 update=0
 file=""
-dofile=0
 command=""
 filepackages=""
 packages=""
@@ -176,17 +174,6 @@ do
       exit 0
     ;;
 
-    --file|-f)
-      if ! test "-$2-" = "--"
-      then
-        file="$2"
-        dofile=1
-        shift
-      else
-        echo 1>&2 No file name provided, ignoring $1
-      fi
-      shift
-    ;;
 
     update|show|find|describe|packageof|install|remove)
       if test "-$command-" = "--"
@@ -207,19 +194,6 @@ do
 
   esac
 done
-
-
-if test $dofile = 1
-then
-  if test -f "$file"
-  then
-    filepackages="$filepackages `cat "$file" | awk '{printf "%s ", $0}'`"
-  else
-    echo File $file not found, skipping
-  fi
-  packages="$packages $filepackages"
-fi
-
 
 case "$command" in
 

@@ -4,8 +4,9 @@ set -e
 set -f
 
 # plugin descriptor
-name=oh-my-zsh
-version=1
+plugin_name=oh-my-zsh
+plugin_version=1
+should_install_plugin
 
 
 babun="/usr/local/etc/babun"

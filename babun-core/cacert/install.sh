@@ -4,8 +4,9 @@ set -e
 set -f
 
 # plugin descriptor
-name=cacert
-version=1
+plugin_name=cacert
+plugin_version=1
+should_install_plugin
 
 
 cd /usr/ssl/certs

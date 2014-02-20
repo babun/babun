@@ -28,17 +28,11 @@ ECHO [babun] Unzipping
 "%UNZIPPER%" "%BABUN_ZIP%" -d "%USERPROFILE%"
 if not exist "%BABUN_HOME%/*.*" (GOTO ERROR)
 
-:FIXSYMLINKS
-ECHO [babun] Fixing broken symlinks. It may take a while...
+:POSTINSTALL
+ECHO [babun] Running post-installation scripts. It may take a while...
 %CYGWIN_HOME%\bin\dash.exe -c "/usr/bin/rebaseall" || goto :ERROR
-%CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/bin/dos2unix.exe /etc/postinstall/symlinks_repair.sh" || goto :ERROR
-%CYGWIN_HOME%\bin\bash.exe --norc --noprofile "/etc/postinstall/symlinks_repair.sh" || goto :ERROR
-%CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/bin/mv.exe /etc/postinstall/symlinks_repair.sh /etc/postinstall/symlinks_repair.sh.done" || goto :ERROR
-
-:FIXUSERPROFILE
-ECHO [babun] Fixing user profile.
-%CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/bin/rm -rf /home/*; /bin/mkpasswd.exe -l -c >> /etc/passwd; /bin/mkgroup -l -c >> /etc/group" || goto :ERROR
-rem execute any command with -l (login) to run the installation scripts
+%CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/usr/local/etc/babun/source/babun-core/tools/post_extract.sh" || goto :ERROR
+rem execute any command with -l (login) to run the post-installation scripts
 %CYGWIN_HOME%\bin\bash.exe -l -c "date" || goto :ERROR
 
 :PATH

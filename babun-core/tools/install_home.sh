@@ -4,7 +4,7 @@ set -e
 set -f
 
 babun="/usr/local/etc/babun"
-source "$babun/source/babun-core/tools/home.skip"
+source "$babun/source/babun-core/tools/install_home.skip"
 
 homedir=~
 eval homedir=$homedir

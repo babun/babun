@@ -7,6 +7,7 @@ babun="/usr/local/etc/babun"
 
 mkdir -p "$babun/home"
 mkdir -p "$babun/external"
+mkdir -p "$babun/installed"
 
 echo "Fixing symlinks for the installation"
 dos2unix "/etc/postinstall/symlinks_repair.sh"

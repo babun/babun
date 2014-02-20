@@ -3,6 +3,11 @@ set -o pipefail
 set -e
 set -f
 
+# plugin descriptor
+name=oh-my-zsh
+version=1
+
+
 babun="/usr/local/etc/babun"
 src="$babun/external/oh-my-zsh"
 dest="$babun/home/.oh-my-zsh"

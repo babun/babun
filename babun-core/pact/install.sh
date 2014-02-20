@@ -4,8 +4,9 @@ set -e
 set -f
 
 # plugin descriptor
-name=pact
-version=1
+plugin_name=pact
+plugin_version=1
+should_install_plugin
 
 
 babun="/usr/local/etc/babun"

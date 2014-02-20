@@ -20,10 +20,16 @@ for src_file in $(find "$src" -name ".oh-my-zsh" -prune -o -type f -print );
 do
 	src_filename="$( basename "$src_file" )"
 	src_relfile="${src_file#$src}"	
-	src_relpath="${src_relfile#$src_filename}"
+	src_relpath="${src_relfile%$src_filename}"
 	
 	target_path="$dest/$src_relpath"
 	target_file="$target_path/$src_filename"
+
+	#echo "---------------"
+	#echo $src_file
+	#echo "$src_filename === $src_relfile === $src_relpath"
+	#echo "$target_path -> $target_file"	
+	#echo "---------------"
 		
 	if [ -f "$target_file" ] && [ "${skip["$src_relfile"]}" == "true" ]; then
 		echo "Skipping $src_relfile" 
@@ -41,5 +47,5 @@ do
 done
 
 # fixing oh-my-zsh
-zsh -c "source ~/.zshrc; rm -f \"$homedir/.zcompdump\"; compinit -u &> /dev/null" 
-zsh -c "source ~/.zshrc; cat \"$homedir/.zcompdump\" > \"$homedir/.zcompdump-\"*"
+zsh -c "source ~/.zshrc; rm -f \"$homedir/.zcompdump\"; compinit -u" &> /dev/null
+zsh -c "source ~/.zshrc; cat \"$homedir/.zcompdump\" > \"$homedir/.zcompdump-\"*" &> /dev/null

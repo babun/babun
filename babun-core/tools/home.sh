@@ -9,30 +9,37 @@ source "$babun/source/babun-core/tools/home.skip"
 homedir=~
 eval homedir=$homedir
 
-src="$babun/home"
+src="$babun/home/"
 dest="$homedir"
 
-for src_file in $(find "$src" -type f); 
+if [ ! -d "$dest/.oh-my-zsh" ]; then
+    /bin/cp -rf "$src/.oh-my-zsh" "$dest/.oh-my-zsh" 
+fi
+
+for src_file in $(find "$src" -name ".oh-my-zsh" -prune -o -type f -print ); 
 do
-	src_filename="${src_file#$src}"
-	target_file="$dest/$src_filename"
+	src_filename="$( basename "$src_file" )"
+	src_relfile="${src_file#$src}"	
+	src_relpath="${src_relfile#$src_filename}"
+	
+	target_path="$dest/$src_relpath"
+	target_file="$target_path/$src_filename"
 		
-	if [ ! skip["$src_filename"] ]; then
-		echo "Installing $src_filename" 
-		if [ -f "$target_file" ]; then
-			if [ ! cmp -s "$src_file" "$target_file" ]; then
-	    		echo "Backing up $target_file" 
-				mv -f "$target_file" "$target_file.backup"	 
-			fi		
-		fi    		
-		/bin/cp -rf "$src_file" "$target_file"
+	echo $src_relfile
+	if [ "${skip["$src_relfile"]}" == "true" ]; then
+		echo "Skipping $src_relfile" 
 	else 
-		echo "Skipping $src_filename" 
+		echo "Installing $src_relfile" 
+		if [ -f "$target_file" ]; then
+			if ! cmp -s "$src_file" "$target_file"; then
+	    		echo "Backing up $target_file" 
+				mv -f "$target_file" "$target_file.babun-backup"	 
+			fi		
+		fi    
+		mkdir -p "$target_path" 		
+		/bin/cp -rf "$src_file" "$target_file"	
 	fi
 done
-
-
-
 
 # fixing oh-my-zsh
 zsh -c "source ~/.zshrc; rm -f \"$homedir/.zcompdump\"; compinit -u"

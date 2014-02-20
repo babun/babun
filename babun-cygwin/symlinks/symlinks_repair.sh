@@ -23,7 +23,7 @@ echo "Root folder -> $winroot"
 for path in "${array[@]}"
 do
   echo "Fixing symlink -> $path"
-  winpath="$winroot$path"
+  winpath=$(/bin/cygpath --windows "$path")
   normpath=${winpath//\\//}
   cmd /c "attrib" "+s" "$normpath"
 done

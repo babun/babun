@@ -58,7 +58,7 @@ if not exist "%LINK_SCRIPT%" (
 cscript //Nologo "%LINK_SCRIPT%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 
 :INSTALLED
-ECHO [babun] Babun installed successfully. You can delete the the installer.
+ECHO [babun] Babun installed successfully. You can delete the the installer now.
 
 :RUN
 ECHO [babun] Starting babun

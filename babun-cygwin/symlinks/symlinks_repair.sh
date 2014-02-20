@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 filename="/etc/postinstall/symlinks_broken.txt"
 
 # verify if the file exist
@@ -8,7 +8,7 @@ if [ ! -f $filename ]; then
 fi
 
 # read the content of the file
-# cannot invoke attrib within the read loop
+# cannot invoke attrib within the first read loop
 # somehow the loop breaks after the first invocation of attrib
 i=0
 while read -r line

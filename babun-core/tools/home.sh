@@ -25,8 +25,7 @@ do
 	target_path="$dest/$src_relpath"
 	target_file="$target_path/$src_filename"
 		
-	echo $src_relfile
-	if [ "${skip["$src_relfile"]}" == "true" ]; then
+	if [ -f "$target_file" ] && [ "${skip["$src_relfile"]}" == "true" ]; then
 		echo "Skipping $src_relfile" 
 	else 
 		echo "Installing $src_relfile" 

@@ -3,6 +3,11 @@ set -o pipefail
 set -e
 set -f
 
+# plugin descriptor
+name=pact
+version=1
+
+
 babun="/usr/local/etc/babun"
 src="$babun/source/babun-core/pact/src"
 dest="$babun/home/.pact"

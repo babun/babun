@@ -41,5 +41,5 @@ do
 done
 
 # fixing oh-my-zsh
-zsh -c "source ~/.zshrc; rm -f \"$homedir/.zcompdump\"; compinit -u"
+zsh -c "source ~/.zshrc; rm -f \"$homedir/.zcompdump\"; compinit -u &> /dev/null" 
 zsh -c "source ~/.zshrc; cat \"$homedir/.zcompdump\" > \"$homedir/.zcompdump-\"*"

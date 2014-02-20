@@ -58,9 +58,8 @@ function usage()
   echo "  \"pact packageof <commands or files>\" to locate parent packages"
   echo "Options:"
   echo "  --mirror, -m <url> : set mirror"
-  echo "  --cache, -c <dir>  : set cache"
   echo "  --file, -f <file>  : read package names from file"
-  echo "  --noupdate, -u     : don't update setup.ini from mirror"
+  echo "  --update, -u       : force update setup.ini from mirror"
   echo "  --help"
   echo "  --version"
 }
@@ -80,20 +79,13 @@ function findworkspace()
   # default working directory and mirror
   
   mirror=$PACT_REPO
+  if [[ -z $mirror ]]; then
+  echo "WARNINIG! ~/.pact/pact.repo does not contains \$PACT_REPO mirror address. Using the default one!"
+  mirror=http://mirrors.kernel.org/sourceware/cygwin/
+  fi
   cache=/setup
   
   # work wherever setup worked last, if possible
-  
-  if test -e /etc/setup/last-cache
-  then
-    tmp="`head -1 /etc/setup/last-cache`"
-    cache="`cygpath -au "$tmp"`"
-  fi
-  
-  if test -e /etc/setup/last-mirror
-  then
-    mirror="`head -1 /etc/setup/last-mirror`"
-  fi
   mirrordir="`echo "$mirror" | sed -e "s/:/%3a/g" -e "s:/:%2f:g"`"
   
   echo Working directory is $cache
@@ -105,26 +97,32 @@ function findworkspace()
 
 function getsetup() 
 {
-  if test "$noscripts" == "0" -a "$noupdate" == "0"
+#
+  currdir="$(pwd)"
+  if test "$noscripts" == "0"
   then
+    if test "$update" == "0" && [ -s "$currdir/setup.ini" ] && [ -s "$currdir/setup.ini-save" ] && [ $(find "$currdir" -mtime 0 -type f -regex '.*setup.ini-save' 2>/dev/null) ] && cmp -s "$currdir/setup.ini" "$currdir/setup.ini-save" ; then
+    echo "setup.ini taken from the cache"
+  else
     touch setup.ini
     mv setup.ini setup.ini-save
-    wget -U "$user_agent" -N $mirror/$cygwin_version/setup.bz2
+    wget -U "$user_agent" -N $mirror/$CYGWIN_VERSION/setup.bz2
     if test -e setup.bz2 && test $? -eq 0
     then
       bunzip2 setup.bz2
       mv setup setup.ini
       echo Updated setup.ini
     else
-      wget -U "$user_agent" -N $mirror/$cygwin_version/setup.ini
+      wget -U "$user_agent" -N $mirror/$CYGWIN_VERSION/setup.ini
       if test -e setup.ini && test $? -eq 0
       then
-        echo Updated setup.ini
+      echo Updated setup.ini
       else
-        mv setup.ini-save setup.ini
-        echo Error updating setup.ini, reverting
+      mv setup.ini-save setup.ini
+      echo Error updating setup.ini, reverting
       fi
     fi
+  fi
   fi
 }
 
@@ -142,7 +140,7 @@ function checkpackages()
 # process options
 
 noscripts=0
-noupdate=0
+update=0
 file=""
 dofile=0
 command=""
@@ -158,18 +156,13 @@ do
       shift ; shift
     ;;
 
-    --cache|-c)
-      cygpath -aw "$2" > /etc/setup/last-cache
-      shift ; shift
-    ;;
-
     --noscripts)
       noscripts=1
       shift
     ;;
 
-    --noupdate|-u)
-      noupdate=1
+    --update|-u)
+      update=1
       shift
     ;;
 
@@ -231,7 +224,8 @@ fi
 case "$command" in
 
   update)
-
+  
+  update=1
     findworkspace
     getsetup
 
@@ -364,16 +358,14 @@ case "$command" in
     fi
     
     echo "Unpacking..."
-    if [[ "$file" == "*.bz2" ]]
-    then 
-        cat $file | bunzip2 | tar > "/etc/setup/$pkg.lst" xvf - -C /
-    elif [[ "$file" == "*.xz" ]] 
-        cat $file | unxz | tar > "/etc/setup/$pkg.lst" xvf - -C /
+    if [[ "$file" == "*.bz2" ]] ; then 
+        cat $file | bunzip2 | tar > "/etc/setup/$pkg.lst" xvf - -C gzip -f "/etc/setup/$pkg.lst"
+    elif [[ "$file" == "*.xz" ]] ; then
+        cat $file | unxz | tar > "/etc/setup/$pkg.lst" xvf - -C gzip -f "/etc/setup/$pkg.lst"
     else 
         echo "Don't know how to unpack $file"
         exit 1
     fi
-    gzip -f "/etc/setup/$pkg.lst"
     cd ../..
     
     

@@ -1,0 +1,8 @@
+export CYGWIN_VERSION=x86
+export CYGWIN="${CYGWIN} nodosfilewarning mintty"
+export TERM=xterm-256color
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'

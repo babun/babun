@@ -20,6 +20,7 @@ if [ ! -d "$src" ]; then
 fi
 
 if [ ! -d "$dest" ]; then
+	mkdir -p "$dest"
     /bin/cp -rf "$src/." "$dest"
     /bin/cp "$dest/templates/zshrc.zsh-template" "$babun/home/.zshrc"
 fi

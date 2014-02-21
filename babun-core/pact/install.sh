@@ -19,7 +19,7 @@ dest="$babun/home/pact/.pact"
 chmod 755 /usr/local/bin/pact
 
 if [ ! -d "$dest" ]; then
-    mkdir "$dest"
+    mkdir -p "$dest"
 fi
 
 if [ ! -f "$dest/pact.repo" ]; then

@@ -1,0 +1,7 @@
+Thanks for downloading babun - "Windows shell you will love!"
+
+In order to install babun just run install.bat
+
+--
+Tom Bujok 
+https://twitter.com/tombujok

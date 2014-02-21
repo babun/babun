@@ -8,8 +8,8 @@ set BABUN_HOME=%USERPROFILE%\.babun
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 
 set INSTALLER_PATH=
-set BABUN_ZIP=%SCRIPT_PATH%/babun.zip
-set UNZIPPER=%SCRIPT_PATH%/unzip.exe
+set BABUN_ZIP=%SCRIPT_PATH%/dist/babun.zip
+set UNZIPPER=%SCRIPT_PATH%/dist/unzip.exe
 
 set SETPATH_SCRIPT=%BABUN_HOME%\tools\setpath.vbs
 set LINK_SCRIPT=%BABUN_HOME%\tools\link.vbs

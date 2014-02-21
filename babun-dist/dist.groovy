@@ -67,7 +67,7 @@ def copyStartScripts(File inputFolder, File outputFolder) {
 }
 
 def zipBabun(File outputFolder) {
-    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/dist/babun.zip", level: 9) {
+    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/dist/dist/babun.zip", level: 9) {
         fileset(dir: "${outputFolder.absolutePath}", defaultexcludes:"no") {
             include(name: '.babun/**')
         }
@@ -75,8 +75,11 @@ def zipBabun(File outputFolder) {
 }
 
 def copyInstallScripts(File inputFolder, File outputFolder) {
+    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/dist/dist", quiet: true) {
+        fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no") { include(name: "unzip.exe") }
+    }
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/dist", quiet: true) {
-        fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no")
+        fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no") { include(name: "install.bat") }
     }
 }
 

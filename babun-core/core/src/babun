@@ -3,4 +3,97 @@ set -o pipefail
 set -e
 set -f
 
-echo "Babun works!!!"
+function usage()
+{
+  echo babun: Manages the instance of babun.
+  echo "  \"babun update\" to fetch the newest version of babun"  
+  echo "  \"babun check\" to check if the installation is correct"  
+  echo "Options:"
+  echo "  --help"
+  echo "  --version"
+}
+
+function version()
+{
+  echo "babun version 1.0.0"
+  echo "Created and maintained by Tom Bujok (@tombujok)"
+  echo "Copyright (c) 2014. Released under the MIT."
+}
+
+# process options
+
+noscripts=0
+update=0
+file=""
+command=""
+filepackages=""
+packages=""
+
+while test $# -gt 0
+do
+  case "$1" in
+
+    --help)
+      usage
+      exit 0
+    ;;
+
+    --version)
+      version
+      exit 0
+    ;;
+
+
+    update|check)
+      if test "-$command-" = "--"
+      then
+        command=$1     
+      fi
+      shift
+
+    ;;
+
+    *)
+	  usage
+	  exit 1
+
+    ;;
+
+  esac
+done
+
+
+
+
+case "$command" in
+
+  update)
+  
+  	update
+  ;;
+
+
+  check)
+
+    check
+  ;;
+
+
+  *)
+
+    usage
+
+  ;;
+
+esac
+
+
+function update() 
+{
+	echo "Updating"
+}
+
+function check() 
+{
+	echo "Checking"
+}

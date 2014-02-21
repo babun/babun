@@ -15,4 +15,5 @@ should_install_plugin
 src="$babun/source/babun-core/shell/src/"
 dest="$babun/home/shell/"
 
+mkdir -p "$dest"
 /bin/cp -rf "$src/." "$dest" 

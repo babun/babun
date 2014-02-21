@@ -13,7 +13,7 @@ should_install_plugin
 
 
 src="$babun/external/oh-my-zsh"
-dest="$babun/home/.oh-my-zsh"
+dest="$babun/home/oh-my-zsh/.oh-my-zsh"
 
 if [ ! -d "$src" ]; then
 	PATH=/usr/bin git clone https://github.com/robbyrussell/oh-my-zsh.git "$src" 

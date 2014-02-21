@@ -6,6 +6,8 @@ set -f
 function usage()
 {
   echo babun: Manages the instance of babun.
+  echo ""
+  echo "Usage:"
   echo "  \"babun update\" to fetch the newest version of babun"  
   echo "  \"babun check\" to check if the installation is correct"  
   echo "Options:"

@@ -24,6 +24,8 @@ fi
 function usage()
 {
   echo pact: Installs and removes Cygwin packages.
+  echo ""
+  echo "Usage:"
   echo "  \"pact install <package names>\" to install packages"
   echo "  \"pact remove <package names>\" to remove packages"
   echo "  \"pact update\" to update setup.ini"

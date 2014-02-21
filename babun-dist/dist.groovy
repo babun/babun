@@ -79,7 +79,7 @@ def copyInstallScripts(File inputFolder, File outputFolder) {
         fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no") { include(name: "unzip.exe") }
     }
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/dist", quiet: true) {
-        fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no") { include(name: "install.bat") }
+        fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no") { include(name: "install.*") }
     }
 }
 

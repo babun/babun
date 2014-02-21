@@ -13,6 +13,6 @@ should_install_plugin
 
 
 src="$babun/source/babun-core/shell/src/"
-dest="$babun/home/"
+dest="$babun/home/shell/"
 
 /bin/cp -rf "$src/." "$dest" 

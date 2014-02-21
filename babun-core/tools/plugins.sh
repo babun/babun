@@ -1,3 +1,5 @@
+homedir=~
+eval homedir="$homedir"
 
 function should_install_plugin {
 

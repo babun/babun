@@ -13,7 +13,7 @@ should_install_plugin
 
 
 src="$babun/source/babun-core/pact/src"
-dest="$babun/home/.pact"
+dest="$babun/home/pact/.pact"
 
 /bin/cp -rf $src/pact /usr/local/bin
 chmod 755 /usr/local/bin/pact

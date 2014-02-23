@@ -65,6 +65,15 @@ do
 done
 
 
+function update() 
+{
+  echo "Updating"
+}
+
+function check() 
+{
+  echo "Checking"
+}
 
 
 case "$command" in
@@ -90,12 +99,3 @@ case "$command" in
 esac
 
 
-function update() 
-{
-	echo "Updating"
-}
-
-function check() 
-{
-	echo "Checking"
-}

@@ -24,3 +24,4 @@ if [ ! -d "$dest" ]; then
     /bin/cp -rf "$src/." "$dest"
     /bin/cp "$dest/templates/zshrc.zsh-template" "$babun/home/.zshrc"
 fi
+

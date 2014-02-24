@@ -19,11 +19,14 @@ function version()
 {
   echo "babun version 1.0.0"
   echo "Created and maintained by Tom Bujok (@tombujok)"
-  echo "Copyright (c) 2014. Released under the MIT."
+  echo "Copyright (c) 2014."
 }
 
-# process options
 
+#babun
+core="/usr/local/etc/babun/source/babun-core"
+
+# process options
 noscripts=0
 update=0
 file=""
@@ -67,12 +70,16 @@ done
 
 function update() 
 {
-  echo "Updating"
+  echo "Updating babun!"
+  "$core"/tools/upgrade_source.sh
+  "$core"/tools/install.sh
+  "$core"/tools/install_home.sh
 }
 
 function check() 
 {
-  echo "Checking"
+  echo "Checking the instance of babun!"
+  echo "TODO - not implemented yet! Let's hope everything is fine :)"
 }
 
 

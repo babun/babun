@@ -81,7 +81,7 @@ def findSymlinks(File cygwinFolder) {
     String symlinksFindScript = "/etc/postinstall/symlinks_find.sh"
     String findSymlinksCmd = "${cygwinFolder.absolutePath}/bin/bash.exe --norc --noprofile \"${symlinksFindScript}\""
     executeCmd(findSymlinksCmd, 10)
-    new File(cygwinFolder, symlinksFindScript).delete()
+    new File(cygwinFolder, symlinksFindScript).renameTo(new File(cygwinFolder, symlinksFindScript + ".done"))
 }
 
 def executeCmd(String command, int timeout) {

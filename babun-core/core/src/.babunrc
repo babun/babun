@@ -1,5 +1,7 @@
+# JVM options
 export JAVA_OPTS="-Xms128m -Xmx256m"
 
+# Modify these lines to set your locale 
 export LANG="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -8,3 +10,12 @@ export LC_ALL="en_US.UTF-8"
 # export LANG=$(locale -uU)
 # export LC_CTYPE=$(locale -uU)
 # export LC_ALL=$(locale -uU)
+
+# Uncomment this to disable bi-weekly auto-update checks
+# export DISABLE_AUTO_UPDATE="false"
+
+# Uncomment this lines to set up your proxy
+# export http_proxy=
+# export https_proxy=$http_proxy
+# export ftp_proxy=$http_proxy
+

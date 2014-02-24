@@ -6,3 +6,8 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+
+export BABUN_BRANCH=master
+
+# Uncomment this to disable bi-weekly auto-update checks
+export DISABLE_AUTO_UPDATE="false"

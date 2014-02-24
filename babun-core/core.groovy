@@ -56,7 +56,7 @@ def copyBabunToEtc(File rootFolder, File outputFolder) {
 
 def installCore(File outputFolder) {
     // rebase dll's
-    executeCmd("${outputFolder.absolutePath}/cygwin/bin/dash.exe -c '/usr/bin/rebaseall'")
+    executeCmd("${outputFolder.absolutePath}/cygwin/bin/dash.exe -c '/usr/bin/rebaseall'", 5)
     
     // remove windows new line feeds
     String bash = "${outputFolder.absolutePath}/cygwin/bin/bash.exe -l"

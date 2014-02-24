@@ -21,6 +21,9 @@ chmod 755 /usr/local/bin/babun
 /bin/cp -rf $src/babun.bash /usr/local/etc
 /bin/cp -rf $src/babun.zsh /usr/local/etc
 
+mkdir -p "$babun/home/core"
+/bin/cp -rf $src/.babunrc "$babun/home/core/.babunrc"
+
 
 # instrument the shells with the babun config
 profiles=("/etc/profile" "/etc/zprofile" "/etc/defaults/etc/profile")
@@ -38,7 +41,7 @@ for profile in "${profiles[@]}"; do
 
 	if ! grep -Fxq "source ~/.babunrc" "$profile" ;then
 		echo "Supplementing shell with local .babunrc -> $profile"
-		echo "source ~/.babunrc" >> "$profile"
+		echo "test -f ~/.babunrc && source ~/.babunrc" >> "$profile"
 	fi
 
 done

@@ -15,5 +15,12 @@ should_install_plugin
 src="$babun/source/babun-core/shell/src/"
 dest="$babun/home/shell/"
 
+
+/bin/cp -rf $src/minttyrc /etc/minttyrc
+/bin/cp -rf $src/nanorc /etc/nanorc
+/bin/cp -rf $src/vimrc /etc/vimrc
+
+
 mkdir -p "$dest"
-/bin/cp -rf "$src/." "$dest" 
+/bin/cp -rf "$src/.vim" "$dest/.vim" 
+

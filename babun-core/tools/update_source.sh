@@ -9,7 +9,8 @@ if [[ -z "$BABUN_BRANCH" ]]; then
 	export BABUN_BRANCH=master
 fi
 
-# echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
+echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
+
 # for remote in `git --git-dir="$babun/source/.git" branch -r`; do
     # git branch --track $remote
 # done

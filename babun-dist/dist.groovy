@@ -67,7 +67,7 @@ def copyStartScripts(File inputFolder, File outputFolder) {
 }
 
 def zipBabun(File outputFolder) {
-    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/dist/dist/babun.zip", level: 1) {
+    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/dist/dist/babun.zip", level: 9) {
         fileset(dir: "${outputFolder.absolutePath}", defaultexcludes:"no") {
             include(name: '.babun/**')
         }
@@ -90,7 +90,7 @@ def createBabunDist(File outputFolder, String version) {
     dist.renameTo(distWithVersion)
 
     // zip dist folder
-    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip", level: 9) {
+    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip", level: 3) {
         fileset(dir: "${outputFolder.absolutePath}", defaultexcludes:"no") {
             include(name: "babun-${version}/**")
         }

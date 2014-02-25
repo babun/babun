@@ -15,7 +15,7 @@ echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
 installed=$( cat "$babun/source/babun.version" )
 github=$( curl https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version )
 
-echo "$installed vs $github !!!"
+echo "$installed vs $github "
 
 
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" fetch --all

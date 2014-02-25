@@ -17,7 +17,7 @@ echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
 
 git --git-dir="$babun/source/.git" fetch --all
 git --git-dir="$babun/source/.git" pull --all
-git --git-dir="$babun/source/.git" reset --hard
+# git --git-dir="$babun/source/.git" reset --hard
 git --git-dir="$babun/source/.git" checkout $BABUN_BRANCH
 git --git-dir="$babun/source/.git" clean -d -x -f -f
 

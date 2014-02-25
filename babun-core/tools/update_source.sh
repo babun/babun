@@ -11,9 +11,12 @@ fi
 
 echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
 
-# for remote in `git --git-dir="$babun/source/.git" branch -r`; do
-    # git branch --track $remote
-# done
+
+installed=$( cat "$babun/source/babun.version" )
+github=$( curl https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version )
+
+echo "$installed vs $github"
+
 
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" fetch --all
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" pull --all

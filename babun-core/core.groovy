@@ -64,7 +64,7 @@ def installCore(File outputFolder) {
     String bash = "${outputFolder.absolutePath}/cygwin/bin/bash.exe -l"
     
     // checkout babun
-    executeCmd("${bash} -c \"git clone https://github.com/babun/babun.git /usr/local/etc/babun/source\"", 5)
+    executeCmd("${bash} -c \"git config --global http.sslverify 'false'; git clone https://github.com/babun/babun.git /usr/local/etc/babun/source\"", 5)
     
     // remove windows new line feeds
     String dos2unix = "find /usr/local/etc/babun/source/babun-core -type f -exec dos2unix {} \\;"

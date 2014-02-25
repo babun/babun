@@ -9,7 +9,7 @@ def execute() {
         checkArguments()
         (rootFolder, cygwinFolder, outputFolder) = initEnvironment()
         copyCygwin(cygwinFolder, outputFolder)
-        copyBabunToEtc(rootFolder, outputFolder)
+        // copyBabunToEtc(rootFolder, outputFolder)
         installCore(outputFolder)    
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
@@ -43,6 +43,7 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
     }
 }
 
+/*
 def copyBabunToEtc(File rootFolder, File outputFolder) {
     println "Installing babun core"
     new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin/usr/local/etc/babun/source", quiet: true ) {
@@ -53,13 +54,19 @@ def copyBabunToEtc(File rootFolder, File outputFolder) {
         }
     }
 }
+*/
 
 def installCore(File outputFolder) {
     // rebase dll's
     executeCmd("${outputFolder.absolutePath}/cygwin/bin/dash.exe -c '/usr/bin/rebaseall'", 5)
+
+    // setup bash invoked
+    String bash = "${outputFolder.absolutePath}/cygwin/bin/bash.exe -l"
+    
+    // checkout babun
+    executeCmd("${bash} -c \"git clone https://github.com/babun/babun.git /usr/local/etc/babun/source\"", 5)
     
     // remove windows new line feeds
-    String bash = "${outputFolder.absolutePath}/cygwin/bin/bash.exe -l"
     String dos2unix = "find /usr/local/etc/babun/source/babun-core -type f -exec dos2unix {} \\;"
     executeCmd("${bash} -c \"${dos2unix}\"", 5)
 

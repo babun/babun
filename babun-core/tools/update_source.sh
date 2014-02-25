@@ -13,7 +13,7 @@ echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
 
 
 installed=$( cat "$babun/source/babun.version" )
-github=$( curl https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version )
+github=$( wget -q -O - https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version )
 
 echo "$installed vs $github "
 

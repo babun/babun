@@ -18,4 +18,4 @@ export LC_ALL="en_US.UTF-8"
 # export http_proxy=
 # export https_proxy=$http_proxy
 # export ftp_proxy=$http_proxy
-
+# export no_proxy=localhost

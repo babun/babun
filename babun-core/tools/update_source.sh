@@ -11,11 +11,19 @@ fi
 
 echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
 
+installed_version=$( cat "$babun/source/babun.version" )
+newest_version=$( wget -q -O - https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version )
 
-installed=$( cat "$babun/source/babun.version" )
-github=$( wget -q -O - https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version )
+if [[ -z "$var" ]]; then 
+	echo "Cannot fetch the newest version from github. Are you behind a proxy? Check settings in ~/.babunrc"
+fi
 
-echo "$installed vs $github "
+if ! [[ $newest_version -gt $installed_version ]]; then
+	echo "Skipping babun update -> installed_version=[$installed_version] newest_version=[$newest_version]"
+	exit 0
+fi
+
+echo "Updating babun -> installed_version=[$installed_version] newest_version=[$newest_version]"
 
 
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" reset --hard

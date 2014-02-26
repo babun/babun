@@ -70,7 +70,6 @@ done
 
 function update() 
 {
-  echo "Updating babun!"
   "$core"/tools/update_source.sh
 }
 

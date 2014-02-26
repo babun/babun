@@ -6,7 +6,7 @@ set -f
 babun="/usr/local/etc/babun"
 
 if [[ -z "$BABUN_BRANCH" ]]; then
-	export BABUN_BRANCH=master
+	export BABUN_BRANCH=release
 fi
 
 echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
@@ -24,7 +24,7 @@ git --git-dir="$babun/source/.git" --work-tree="$babun/source" clean -d -x -f -f
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" fetch --all
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" pull --all
 
-git --git-dir="$babun/source/.git" --work-tree="$babun/source" checkout $BABUN_BRANCH
+git --git-dir="$babun/source/.git" --work-tree="$babun/source" checkout origin/$BABUN_BRANCH
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" clean -d -x -f -f
 
 

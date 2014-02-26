@@ -11,3 +11,6 @@ export BABUN_BRANCH=master
 
 # Uncomment this to disable bi-weekly auto-update checks
 export DISABLE_AUTO_UPDATE="false"
+
+# otherwise vim will not find /etc/vimrc
+export VIM=/etc

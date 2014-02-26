@@ -54,7 +54,7 @@ def installCore(File outputFolder, String babunBranch) {
     String sslVerify = "git config --global http.sslverify"
     String src = "/usr/local/etc/babun/source"
     String clone = "git clone https://github.com/babun/babun.git ${src}"
-    String checkout = "git --git-dir='${src}/.git' --work-tree='${src}' checkout origin/${babunBranch}"
+    String checkout = "git --git-dir='${src}/.git' --work-tree='${src}' checkout ${babunBranch}"
     executeCmd("${bash} -c \"${sslVerify} 'false'; ${clone}; ${checkout}; ${sslVerify} 'true';\"", 5)
     
     // remove windows new line feeds

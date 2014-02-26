@@ -72,8 +72,6 @@ function update()
 {
   echo "Updating babun!"
   "$core"/tools/update_source.sh
-  "$core"/tools/install.sh
-  "$core"/tools/install_home.sh
 }
 
 function check() 

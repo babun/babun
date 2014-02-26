@@ -25,7 +25,7 @@ def checkArguments() {
 }
 
 def initEnvironment() {
-    File rootFolder = new File(this.args[0])
+    File rootFolder = new File(this.args[0]) 
     File cygwinFolder = new File(this.args[1])
     File outputFolder = new File(this.args[2])
     String babunBranch = this.args[3]

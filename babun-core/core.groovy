@@ -7,10 +7,9 @@ def execute() {
     File rootFolder, cygwinFolder, outputFolder
     try {
         checkArguments()
-        (rootFolder, cygwinFolder, outputFolder) = initEnvironment()
+        (rootFolder, cygwinFolder, outputFolder, babunBranch) = initEnvironment()
         copyCygwin(cygwinFolder, outputFolder)
-        // copyBabunToEtc(rootFolder, outputFolder)
-        installCore(outputFolder)    
+        installCore(outputFolder, babunBranch)    
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()
@@ -19,8 +18,8 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 3) {
-        error("Usage: core.groovy <babun_root> <cygwin_folder> <output_folder>")
+    if (this.args.length != 4) {
+        error("Usage: core.groovy <babun_root> <cygwin_folder> <output_folder> <babun_branch>")
         exit(-1)
     }
 }
@@ -29,12 +28,13 @@ def initEnvironment() {
     File rootFolder = new File(this.args[0])
     File cygwinFolder = new File(this.args[1])
     File outputFolder = new File(this.args[2])
+    String babunBranch = this.args[3]
     if (outputFolder.exists()) {
         println "Deleting output folder ${outputFolder.getAbsolutePath()}"
         outputFolder.deleteDir()
     }
     outputFolder.mkdir()
-    return [rootFolder, cygwinFolder, outputFolder]
+    return [rootFolder, cygwinFolder, outputFolder, babunBranch]
 }
 
 def copyCygwin(File cygwinFolder, File outputFolder) {
@@ -43,28 +43,19 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
     }
 }
 
-/*
-def copyBabunToEtc(File rootFolder, File outputFolder) {
-    println "Installing babun core"
-    new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin/usr/local/etc/babun/source", quiet: true ) {
-      fileset( dir: "${rootFolder.absolutePath}", defaultexcludes:"no" ) {
-            exclude(name: "target/**")
-            exclude(name: "*.log")
-            exclude(name: "*.full")
-        }
-    }
-}
-*/
-
-def installCore(File outputFolder) {
+def installCore(File outputFolder, String babunBranch) {
     // rebase dll's
     executeCmd("${outputFolder.absolutePath}/cygwin/bin/dash.exe -c '/usr/bin/rebaseall'", 5)
 
     // setup bash invoked
     String bash = "${outputFolder.absolutePath}/cygwin/bin/bash.exe -l"
-    
+
     // checkout babun
-    executeCmd("${bash} -c \"git config --global http.sslverify 'false'; git clone https://github.com/babun/babun.git /usr/local/etc/babun/source\"", 5)
+    String sslVerify = "git config --global http.sslverify"
+    String src = "/usr/local/etc/babun/source"
+    String clone = "git clone https://github.com/babun/babun.git ${src}"
+    String checkout = "git --git-dir='${src}/.git' --work-tree='${src}' checkout origin/${babunBranch}"
+    executeCmd("${bash} -c \"${sslVerify} 'false'; ${clone}; ${checkout}; ${sslVerify} 'true';\"", 5)
     
     // remove windows new line feeds
     String dos2unix = "find /usr/local/etc/babun/source/babun-core -type f -exec dos2unix {} \\;"

@@ -11,8 +11,11 @@ export LC_ALL="en_US.UTF-8"
 # export LC_CTYPE=$(locale -uU)
 # export LC_ALL=$(locale -uU)
 
-# Uncomment this to disable bi-weekly auto-update checks
-# export DISABLE_AUTO_UPDATE="false"
+# Uncomment this to disable daily auto-update checks
+# export DISABLE_AUTO_UPDATE="true"
+
+# Uncomment this to disable daily auto-update checks
+# export DISABLE_PROXY_CHECK="true"
 
 # Uncomment this lines to set up your proxy
 # export http_proxy=http://user:password@server:port

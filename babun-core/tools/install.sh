@@ -19,3 +19,6 @@ bash "$babun/source/babun-core/pact/install.sh"
 bash "$babun/source/babun-core/cacert/install.sh"
 bash "$babun/source/babun-core/shell/install.sh"
 bash "$babun/source/babun-core/oh-my-zsh/install.sh"
+
+# setting the installed version
+cat "$babun/source/babun.version" > "$babun/installed/babun"

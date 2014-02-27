@@ -11,11 +11,11 @@ fi
 
 echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
 
-installed_version=$( cat "$babun/installed/babun" || echo "0" )
+installed_version=$( cat "$babun/installed/babun" 2> /dev/null || echo "0" )
 newest_version=$( curl --silent --connect-timeout 8 https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version || echo "" )
 
 
-if [[ -z "$var" ]]; then 
+if [[ -z "$newest_version" ]]; then 
 	echo "ERROR: Cannot fetch the newest version from github. Are you behind a proxy? Check settings in ~/.babunrc"
 	exit -1
 fi
@@ -44,11 +44,12 @@ find "$babun/source/babun-core" -type f -exec dos2unix -q {} \;
 echo "Making core scripts executable"
 find "$babun/source/babun-core" -type f -regex '.*sh' -exec chmod 755 {} \;
 
+core=
 # install/update plugins
-"$core"/tools/install.sh || { echo "ERROR: Could not update babun!"; exit -2; }
+"$babun"/source/babun-core/tools/install.sh || { echo "ERROR: Could not update babun!"; exit -2; }
  
 # install/update home folder
-"$core"/tools/install_home.sh || { echo "ERROR: Could not update home folder!"; exit -3; }
+"$babun"/source/babun-core/tools/install_home.sh || { echo "ERROR: Could not update home folder!"; exit -3; }
 
 # set the newest version marker
 cat "$babun/source/babun.version" > "$babun/installed/babun"

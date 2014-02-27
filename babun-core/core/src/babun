@@ -79,7 +79,7 @@ function update()
 function check() 
 {
   echo "Checking the instance of babun!"
-  echo "TODO - not implemented yet! Let's hope everything is fine :)"
+  "$core"/tools/check_proxy.sh  
 }
 
 

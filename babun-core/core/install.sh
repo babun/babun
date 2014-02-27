@@ -39,11 +39,6 @@ for profile in "${profiles[@]}"; do
 		echo "source /usr/local/etc/babun.rc" >> "$profile"
 	fi
 
-	if ! grep -Fxq "source ~/.babunrc" "$profile" ;then
-		echo "Supplementing shell with local .babunrc -> $profile"
-		echo "test -f ~/.babunrc && source ~/.babunrc" >> "$profile"
-	fi
-
 done
 
 profiles=("/etc/profile" "/etc/defaults/etc/profile")

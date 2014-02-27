@@ -9,8 +9,20 @@ alias fgrep='fgrep --color=auto'
 
 export BABUN_BRANCH=master
 
-# Uncomment this to disable bi-weekly auto-update checks
+# Uncomment this to disable daily auto-update checks
 export DISABLE_AUTO_UPDATE="false"
+
+# Uncomment this to disable daily auto-update checks
+export DISABLE_PROXY_CHECK="false"
 
 # otherwise vim will not find /etc/vimrc
 export VIM=/etc
+
+# overwrite values with user's local settings
+test -f ~/.babunrc && source ~/.babunrc
+
+# invoke update check logic
+# TODO
+
+# invoke proxy check logic
+# TODO

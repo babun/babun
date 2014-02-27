@@ -5,6 +5,9 @@ set -f
 
 source ~/.pact/pact.repo
 
+source /usr/local/etc/babun/source/babun-core/tools/procps.sh
+check_only_one_running "/usr/local/bin/pact"
+
 # this script requires some packages
 
 WGET=`which wget 2> /dev/null`

@@ -3,6 +3,9 @@ set -o pipefail
 set -e
 set -f
 
+source /usr/local/etc/babun/source/babun-core/tools/procps.sh
+check_only_one_running "/usr/local/bin/babun"
+
 function usage()
 {
   echo babun: Manages the instance of babun.

@@ -25,7 +25,7 @@ function babun_check {
 	fi
 
 	local current_version=$(get_current_version)
-	if [[ $newest_version -gt $installed_version ]]; then
+	if [[ $newest_version -gt $current_version ]]; then
 		echo -e "Hint: your version is outdated. Execute 'babun update'"	
 	fi
 	

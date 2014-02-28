@@ -20,6 +20,7 @@ ECHO [babun] Installing babun
 if exist "%BABUN_HOME%/*.*" (
  	ECHO [babun] Babun home alread exist: %BABUN_HOME%"
 	ECHO [babun] Delete the old folder in order to proceed. Terminating!
+	pause
  	EXIT /b 255
 )
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%" || goto :ERROR)
@@ -38,16 +39,14 @@ rem execute any command with -l (login) to run the post-installation scripts
 :PATH
 ECHO [babun] Adding babun to the system PATH variable
 if not exist "%SETPATH_SCRIPT%" (
-    ECHO [babun] Cannot add babun to the system PATH variable. Script not found!
-    EXIT /b 255
+    ECHO [babun] ERROR: Cannot add babun to the system PATH variable. Script not found!
 )
 cscript //Nologo "%SETPATH_SCRIPT%" "%BABUN_HOME%"
 
 :LINK
 ECHO [babun] Creating a desktop link
 if not exist "%LINK_SCRIPT%" (
-    ECHO [babun] Cannot create a desktop link. Script not found!
-    EXIT /b 255
+    ECHO [babun] ERROR: Cannot create a desktop link. Script not found!
 )
 cscript //Nologo "%LINK_SCRIPT%" "%USERPROFILE%\Desktop\babun.lnk" "%CYGWIN_HOME%\bin\mintty.exe" " - "
 

@@ -17,6 +17,7 @@ function usage()
   echo "Options:"
   echo "  --help"
   echo "  --version"
+  echo "  --welcome"
 }
 
 function version()
@@ -26,6 +27,26 @@ function version()
   echo "Copyright (c) 2014."
 }
 
+function welcome()
+{
+  echo "Welcome to babun - the Windows shell you will love!"
+  echo "You have got a lot of things under the hood here!"
+  echo ""
+  echo "\t pact -> a package manager that handles installation and removal of cygwin packages"
+  echo "\t\t pact install tar -> will install tar package on your system"
+  echo "\t\t pact remove tar -> will remove tar package from your system"
+  echo ""
+  echo "\t babun -> a script that manages babun and enables auto-update"
+  echo "\t\t babun check -> will check the configuration of babun together with proxy and internet connection"
+  echo "\t\t babun update -> will update babun to the newest version"
+  echo ""
+  echo "Babun has a plugin architecture. There's a couple of plugins installed by default among with oh-my-zsh for example."
+  echo "If you would like to contribute, code up a plugin or report an issue just go to: https://github.com/babun/babun"
+  echo ""
+  echo "If you like the project star it on github and follow me on twitter :)"
+  echo "This project is created and maintained by Tom Bujok (@tombujok)"
+  echo "Copyright (c) 2014."
+}
 
 #babun
 core="/usr/local/etc/babun/source/babun-core"
@@ -49,6 +70,11 @@ do
 
     --version)
       version
+      exit 0
+    ;;
+
+    --welcome)
+      welcome
       exit 0
     ;;
 

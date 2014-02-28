@@ -7,7 +7,11 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-export BABUN_BRANCH=master
+export BABUN_BRANCH=release
+
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 
 # Uncomment this to disable daily auto-update & proxy checks on startup (not recommended!)
 export DISABLE_CHECK_ON_STARTUP="false"

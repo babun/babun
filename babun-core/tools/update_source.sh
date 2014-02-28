@@ -3,8 +3,8 @@ set -o pipefail
 set -e
 set -f
 
-source /usr/local/etc/babun/source/babun-core/tools/procps.sh
-check_only_one_running "/tmp/update_check.sh"
+# source /usr/local/etc/babun/source/babun-core/tools/procps.sh
+# check_only_one_running "/tmp/update_check.sh"
 
 babun="/usr/local/etc/babun"
 source /usr/local/etc/babun/source/babun-core/tools/check.sh

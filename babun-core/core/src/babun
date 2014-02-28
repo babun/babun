@@ -74,11 +74,13 @@ done
 
 function update() 
 {
+  echo "Executing babun update"
   "$core"/tools/update_source.sh
 }
 
 function check() 
 {
+    echo "Executing babun check"
     babun_check
 }
 

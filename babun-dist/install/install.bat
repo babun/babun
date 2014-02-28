@@ -34,7 +34,7 @@ ECHO [babun] Running post-installation scripts. It may take a while...
 %CYGWIN_HOME%\bin\dash.exe -c "/usr/bin/rebaseall" || goto :ERROR
 %CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/usr/local/etc/babun/source/babun-core/tools/post_extract.sh" || goto :ERROR
 rem execute any command with -l (login) to run the post-installation scripts
-%CYGWIN_HOME%\bin\bash.exe -l -c "date" || goto :ERROR
+%CYGWIN_HOME%\bin\bash.exe -l -c "date; rm /usr/local/etc/babun/stamps/check; rm /usr/local/etc/babun/stamps/welcome;" || goto :ERROR
 
 :PATH
 ECHO [babun] Adding babun to the system PATH variable
@@ -56,7 +56,7 @@ ECHO [babun] Enjoy! @tombujok
 
 :RUN
 ECHO [babun] Starting babun
-start %CYGWIN_HOME%\bin\mintty.exe - || goto :ERROR
+start %CYGWIN_HOME%\bin\mintty.exe --size 100,35 - || goto :ERROR
 GOTO END
 
 :ERROR

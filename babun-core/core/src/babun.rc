@@ -19,6 +19,9 @@ export VIM=/etc
 # overwrite values with user's local settings
 test -f ~/.babunrc && source ~/.babunrc
 
+# println babun welcome message
+/usr/local/etc/babun/source/babun-core/tools/welcome.sh
+
 if ! [[ "$DISABLE_CHECK_ON_STARTUP" == "true" ]]; then
 	source /usr/local/etc/babun/source/babun-core/tools/check.sh
 	guarded_babun_check

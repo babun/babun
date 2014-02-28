@@ -48,7 +48,6 @@ function welcome()
   echo -e ""
   echo -e "If you like the project star it on github and follow me on twitter!"
   echo -e "This project is created and maintained by Tom Bujok (@tombujok)"
-  echo -e "Copyright (c) 2014."
 }
 
 #babun

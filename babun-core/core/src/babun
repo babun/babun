@@ -103,7 +103,8 @@ done
 function update() 
 {
   echo "Executing babun update"
-  exec "$core"/tools/update_source.sh
+  cp "$core"/tools/update_source.sh /tmp/update_source.sh
+  exec /tmp/update_source.sh
   exit 0
 }
 

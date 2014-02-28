@@ -7,7 +7,7 @@ function get_current_version {
 }
 
 function get_newest_version {
-	local newest_version=$( curl --silent --connect-timeout 8 https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version || echo "" )
+	local newest_version=$( curl --silent --connect-timeout $CHECK_TIMEOUT_IN_SECS https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version || echo "" )
 	echo "$newest_version"
 }
 

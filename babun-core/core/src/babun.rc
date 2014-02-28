@@ -11,6 +11,7 @@ export BABUN_BRANCH=master
 
 # Uncomment this to disable daily auto-update & proxy checks on startup (not recommended!)
 export DISABLE_CHECK_ON_STARTUP="false"
+export CHECK_TIMEOUT_IN_SECS=4
 
 # otherwise vim will not find /etc/vimrc
 export VIM=/etc

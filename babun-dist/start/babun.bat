@@ -9,8 +9,11 @@ if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
 if not exist "%CYGWIN_HOME%\bin\mintty.exe" goto NOTFOUND
 
 :RUN
+ECHO [babun] Registering temporary fonts
+%BABUN_HOME%\fonts\RegisterFont.exe add "%BABUN_HOME%\fonts\Meslo LG L DZ Regular for Powerline.otf" "%BABUN_HOME%\fonts\Meslo LG L Regular for Powerline.otf" "%BABUN_HOME%\fonts\Meslo LG M DZ Regular for Powerline.otf" "%BABUN_HOME%\fonts\Meslo LG M Regular for Powerline.otf" "%BABUN_HOME%\fonts\Meslo LG S DZ Regular for Powerline.otf" "%BABUN_HOME%\fonts\Meslo LG S Regular for Powerline.otf"
+
 ECHO [babun] Starting babun
-start %CYGWIN_HOME%\bin\mintty.exe - || goto :ERROR
+start %CYGWIN_HOME%\bin\mintty.exe -o Font='Meslo LG M Regular for Powerline' - || goto :ERROR
 GOTO END
 
 :NOTFOUND

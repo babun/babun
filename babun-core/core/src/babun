@@ -4,6 +4,7 @@ set -e
 set -f
 
 source /usr/local/etc/babun/source/babun-core/tools/procps.sh
+source /usr/local/etc/babun/source/babun-core/tools/check.sh
 check_only_one_running "/usr/local/bin/babun"
 
 function usage()
@@ -78,8 +79,7 @@ function update()
 
 function check() 
 {
-  echo "Checking the instance of babun!"
-  "$core"/tools/check_proxy.sh  
+    babun_check
 }
 
 

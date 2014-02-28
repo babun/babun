@@ -9,11 +9,8 @@ alias fgrep='fgrep --color=auto'
 
 export BABUN_BRANCH=master
 
-# Uncomment this to disable daily auto-update checks
-export DISABLE_AUTO_UPDATE="false"
-
-# Uncomment this to disable daily auto-update checks
-export DISABLE_PROXY_CHECK="false"
+# Uncomment this to disable daily auto-update & proxy checks on startup (not recommended!)
+export DISABLE_CHECK_ON_STARTUP="false"
 
 # otherwise vim will not find /etc/vimrc
 export VIM=/etc
@@ -21,8 +18,7 @@ export VIM=/etc
 # overwrite values with user's local settings
 test -f ~/.babunrc && source ~/.babunrc
 
-# invoke update check logic
-# TODO
-
-# invoke proxy check logic
-# TODO
+if ! [[ "$DISABLE_CHECK_ON_STARTUP" == "true" ]]; then
+	source /usr/local/etc/babun/source/babun-core/tools/check.sh
+	guarded_babun_check
+fi

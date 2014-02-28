@@ -33,9 +33,9 @@ function babun_check {
 
 function guarded_babun_check {
 	local babun="/usr/local/etc/babun"
-	local check_stamp="$babun/stamps/check"
-
+	local check_stamp="$babun/stamps/check"	
 	if ! [ $(find "$babun/stamps" -mtime 0 -type f -name 'check' 2>/dev/null) ]; then
+		echo "Executing daily babun check:"
 		babun_check
 		echo "$(date)" > "$check_stamp"
 	fi

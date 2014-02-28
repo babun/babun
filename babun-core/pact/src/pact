@@ -4,9 +4,7 @@ set -o pipefail
 set -f
 
 source ~/.pact/pact.repo
-
 source /usr/local/etc/babun/source/babun-core/tools/procps.sh
-check_only_one_running "/usr/local/bin/pact"
 
 # this script requires some packages
 
@@ -174,6 +172,8 @@ do
   esac
 done
 
+test $noscripts -eq 0 && check_only_one_running "/usr/local/bin/pact"
+
 case "$command" in
 
   update)
@@ -311,14 +311,13 @@ case "$command" in
     fi
     
     echo "Unpacking..."
-    if [[ "$file" == "*.bz2" ]] ; then 
-        cat $file | bunzip2 | tar > "/etc/setup/$pkg.lst" xvf - -C gzip -f "/etc/setup/$pkg.lst"
-    elif [[ "$file" == "*.xz" ]] ; then
-        cat $file | unxz | tar > "/etc/setup/$pkg.lst" xvf - -C gzip -f "/etc/setup/$pkg.lst"
-    else 
-        echo "Don't know how to unpack $file"
-        exit 1
+    #determine file type
+    if [ "${file##*.}" == "xz" ]; then
+      cat $file | tar > "/etc/setup/$pkg.lst" xvJf - -C /
+    else
+      cat $file | bunzip2 | tar > "/etc/setup/$pkg.lst" xvf - -C /
     fi
+    gzip -f "/etc/setup/$pkg.lst"
     cd ../..
     
     

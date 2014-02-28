@@ -23,5 +23,7 @@ if [ ! -d "$dest" ]; then
 	mkdir -p "$dest"
     /bin/cp -rf "$src/." "$dest"
     /bin/cp "$dest/templates/zshrc.zsh-template" "$babun/home/.zshrc"
+    /bin/sed -i 's/ZSH_THEME=".*"/ZSH_THEME="kennethreitz"/' "$babun/home/.zshrc"
+    /bin/chsh -s /bin/zsh
 fi
 

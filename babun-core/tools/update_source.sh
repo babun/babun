@@ -4,19 +4,20 @@ set -e
 set -f
 
 babun="/usr/local/etc/babun"
+source /usr/local/etc/babun/source/babun-core/tools/check.sh
 
 if [[ -z "$BABUN_BRANCH" ]]; then
 	export BABUN_BRANCH=release
 fi
 
-echo "Fetching the newest version of babun from [$BABUN_BRANCH]"
+echo "Fetching the newest babun version from [$BABUN_BRANCH]"
 
-installed_version=$( cat "$babun/installed/babun" 2> /dev/null || echo "0" )
-newest_version=$( curl --silent --connect-timeout 8 https://raw.github.com/babun/babun/$BABUN_BRANCH/babun.version || echo "" )
+installed_version=$( get_current_version )
+newest_version=$( get_newest_version )
 
 
 if [[ -z "$newest_version" ]]; then 
-	echo "ERROR: Cannot fetch the newest version from github. Are you behind a proxy? Check settings in ~/.babunrc"
+	echo "ERROR: Cannot fetch the newest version from github. Are you behind a proxy? Execute 'babun check' to find out."
 	exit -1
 fi
 

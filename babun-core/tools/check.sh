@@ -15,13 +15,13 @@ function babun_check {
 
 	local newest_version=$(get_newest_version)
 	if [[ -z "$newest_version" ]]; then 
-		echo -e "Connection check\t[FAILED]"
-		echo -e "Update check\t[FAILED]"
+		echo -e "Connection check  [FAILED]"
+		echo -e "Update check      [FAILED]"
 		echo -e "Hint: adjust proxy settings in ~/.babunrc and execute 'source ~/.babunrc'"
 		return
 	else 
-		echo -e "Connection check\t[OK]"
-		echo -e "Update check\t[OK]"
+		echo -e "Connection check  [OK]"
+		echo -e "Update check      [OK]"
 	fi
 
 	local current_version=$(get_current_version)

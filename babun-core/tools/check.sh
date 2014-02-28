@@ -1,3 +1,4 @@
+babun="/usr/local/etc/babun"
 source "$babun/source/babun-core/tools/stamps.sh"
 
 function get_current_version {

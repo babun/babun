@@ -18,6 +18,7 @@ src="$babun/source/babun-core/core/src"
 chmod 755 /usr/local/bin/babun
 
 /bin/cp -rf $src/babun.rc /usr/local/etc
+source /usr/local/etc/babun.rc
 /bin/cp -rf $src/babun.bash /usr/local/etc
 /bin/cp -rf $src/babun.zsh /usr/local/etc
 

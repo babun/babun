@@ -13,6 +13,7 @@ def execute() {
         copyCygwin(cygwinFolder, outputFolder)
         copyTools(inputFolder, outputFolder)
         copyStartScripts(inputFolder, outputFolder)
+        copyFonts(inputFolder, outputFolder)
         // prepare Dist
         zipBabun(outputFolder)
         copyInstallScripts(inputFolder, outputFolder)
@@ -57,6 +58,12 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
 def copyTools(File inputFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/tools", quiet: true) {
         fileset(dir: "${inputFolder.absolutePath}/tools", defaultexcludes:"no")
+    }
+}
+
+def copyFonts(File inputFolder, File outputFolder) {
+    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/fonts", quiet: true) {
+        fileset(dir: "${inputFolder.absolutePath}/fonts", defaultexcludes:"no")
     }
 }
 

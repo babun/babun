@@ -23,6 +23,7 @@ editrights
 findutils
 gawk
 gcc
+gcc-core
 git
 gnutls
 grep
@@ -32,8 +33,11 @@ ipc-utils
 keychain
 less
 libevent2.0_5
+libevent-devel
+libncurses-devel
 links
 login
+make
 man
 mc
 mintty
@@ -46,6 +50,7 @@ openssl
 pcre
 perl
 ping
+pkg-config
 procps
 readline
 rebase

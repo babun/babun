@@ -15,7 +15,6 @@ function get_newest_version {
 }
 
 function babun_check {
-
 	local newest_version=$(get_newest_version)
 	if [[ -z "$newest_version" ]]; then 
 		echo -e "Connection check  [FAILED]"
@@ -30,8 +29,7 @@ function babun_check {
 	local current_version=$(get_current_version)
 	if [[ $newest_version -gt $current_version ]]; then
 		echo -e "Hint: your version is outdated. Execute 'babun update'"	
-	fi
-	
+	fi	
 }
 
 function guarded_babun_check {

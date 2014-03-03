@@ -44,6 +44,10 @@ if not exist "%SETPATH_SCRIPT%" (
 cscript //Nologo "%SETPATH_SCRIPT%" "%BABUN_HOME%"
 
 :LINK
+if exist "%USERPROFILE%\Desktop\babun.lnk" (
+    ECHO [babun] Deleting old desktop link
+    DEL /F /Q "%USERPROFILE%\Desktop\babun.lnk"
+)
 ECHO [babun] Creating a desktop link
 if not exist "%LINK_SCRIPT%" (
     ECHO [babun] ERROR: Cannot create a desktop link. Script not found!

@@ -27,7 +27,7 @@ git_branch=$( git branch | awk '/\*/ { print $2; }' )
 #  fi
 
 #  echo " [$git_color$git_branch${c_reset}]"
-echo " [$git_branch]"
+echo " ($git_branch)"
 }
 
 

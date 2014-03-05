@@ -27,7 +27,7 @@ mkdir -p "$babun/home/core"
 
 
 # instrument the shells with the babun config
-profiles=("/etc/profile" "/etc/zprofile" "/etc/defaults/etc/profile")
+profiles=("/etc/bash.bashrc" "/etc/zprofile")
 for profile in "${profiles[@]}"; do	
 	
 	if ! grep -Fxq "Installing babun" "$profile" ;then
@@ -42,7 +42,7 @@ for profile in "${profiles[@]}"; do
 
 done
 
-profiles=("/etc/profile" "/etc/defaults/etc/profile")
+profiles=("/etc/bash.bashrc")
 for profile in "${profiles[@]}"; do	
 	if ! grep -Fxq "source /usr/local/etc/babun.bash" "$profile" ;then
 		echo "Supplementing bash -> $profile"

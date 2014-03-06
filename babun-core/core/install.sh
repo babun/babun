@@ -27,23 +27,22 @@ mkdir -p "$babun/home/core"
 
 
 # instrument the shells with the babun config
-profiles=("/etc/bash.bashrc" "/etc/zprofile")
+profiles=("/etc/profile" "/etc/zprofile")
 for profile in "${profiles[@]}"; do	
-	
 	if ! grep -Fxq "Installing babun" "$profile" ;then
 		echo "Adding babun auto-install  -> $profile"
 		sed -i 's/unset fDest/unset fDest\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/tools\/install_home.sh/' "$profile"
-	fi
-
-	if ! grep -Fxq "source /usr/local/etc/babun.rc" "$profile" ;then
-		echo "Supplementing shell with babun.rc -> $profile"
-		echo "source /usr/local/etc/babun.rc" >> "$profile"
 	fi
 
 done
 
 profiles=("/etc/bash.bashrc")
 for profile in "${profiles[@]}"; do	
+	if ! grep -Fxq "source /usr/local/etc/babun.rc" "$profile" ;then
+		echo "Supplementing shell with babun.rc -> $profile"
+		echo "source /usr/local/etc/babun.rc" >> "$profile"
+	fi
+
 	if ! grep -Fxq "source /usr/local/etc/babun.bash" "$profile" ;then
 		echo "Supplementing bash -> $profile"
 		echo "source /usr/local/etc/babun.bash" >> "$profile"
@@ -52,6 +51,11 @@ done
 
 profiles=("/etc/zprofile")
 for profile in "${profiles[@]}"; do	
+	if ! grep -Fxq "source /usr/local/etc/babun.rc" "$profile" ;then
+		echo "Supplementing shell with babun.rc -> $profile"
+		echo "source /usr/local/etc/babun.rc" >> "$profile"
+	fi
+
 	if ! grep -Fxq "source /usr/local/etc/babun.bash" "$profile" ;then
 		echo "Supplementing zsh -> $profile"
 		echo "source /usr/local/etc/babun.zsh" >> "$profile"

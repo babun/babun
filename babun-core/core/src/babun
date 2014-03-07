@@ -58,8 +58,7 @@ noscripts=0
 update=0
 file=""
 command=""
-filepackages=""
-packages=""
+args=""
 
 while test $# -gt 0
 do
@@ -81,7 +80,7 @@ do
     ;;
 
 
-    update|check)
+    update|check|shell)
       if test "-$command-" = "--"
       then
         command=$1     
@@ -91,8 +90,8 @@ do
     ;;
 
     *)
-	  usage
-	  exit 1
+      args="$args $1"
+      shift
 
     ;;  
 
@@ -114,6 +113,16 @@ function check()
     babun_check
 }
 
+function shell() 
+{
+    if [[ $args == "" ]]; then
+        currshell=$( awk "/$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
+        echo "$USERNAME's current shell is: $currshell"
+    else 
+        echo "Setting $USERNAME's shell to $args"
+    fi
+}
+
 
 case "$command" in
 
@@ -126,6 +135,11 @@ case "$command" in
   check)
 
     check
+  ;;
+
+  shell)
+
+    shell
   ;;
 
 

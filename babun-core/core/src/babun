@@ -101,6 +101,7 @@ done
 
 function update() 
 {
+  if ! [[ $args == "" ]]; then usage; exit 1; fi
   echo "Executing babun update"
   cp "$core"/tools/update_source.sh /tmp/update_source.sh
   /tmp/update_source.sh
@@ -109,6 +110,7 @@ function update()
 
 function check() 
 {
+    if ! [[ $args == "" ]]; then usage; exit 1; fi
     echo "Executing babun check"
     babun_check
 }
@@ -117,9 +119,13 @@ function shell()
 {
     if [[ $args == "" ]]; then
         currshell=$( awk "/$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
-        echo "$USERNAME's current shell is: $currshell"
+        echo "The current shell of $USERNAME is $currshell"
     else 
-        echo "Setting $USERNAME's shell to $args"
+        if ! [ -f $args ]; then 
+           echo "ERROR: Cannot set shell to $args. Shell does not exist!"
+           exit 1
+        fi 
+        echo "Setting the current shell of $USERNAME to $args"
     fi
 }
 

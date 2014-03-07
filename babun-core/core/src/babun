@@ -90,9 +90,8 @@ do
     ;;
 
     *)
-      args="$args $1"
+      if [[ $args == "" ]]; then args="$1"; else args="$args $1"; fi      
       shift
-
     ;;  
 
   esac
@@ -101,7 +100,7 @@ done
 
 function update() 
 {
-  if ! [[ $args == "" ]]; then usage; exit 1; fi
+  if ! [[ $args == "" ]]; then echo "ERROR: Wrong argument $args"; exit 1; fi
   echo "Executing babun update"
   cp "$core"/tools/update_source.sh /tmp/update_source.sh
   /tmp/update_source.sh
@@ -110,22 +109,24 @@ function update()
 
 function check() 
 {
-    if ! [[ $args == "" ]]; then usage; exit 1; fi
+    if ! [[ $args == "" ]]; then echo "ERROR: Wrong argument $args"; exit 1; fi
     echo "Executing babun check"
     babun_check
 }
 
 function shell() 
 {
-    if [[ $args == "" ]]; then
+    newshell=$args
+    if [[ $newshell == "" ]]; then
         currshell=$( awk "/$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
         echo "The current shell of $USERNAME is $currshell"
     else 
-        if ! [ -f $args ]; then 
-           echo "ERROR: Cannot set shell to $args. Shell does not exist!"
+        if ! [ -f $newshell ]; then 
+           echo "ERROR: Cannot set shell to $newshell. Shell does not exist!"
            exit 1
         fi 
-        echo "Setting the current shell of $USERNAME to $args"
+        echo "Setting the current shell of $USERNAME to $newshell"
+        sed -i "/^$USERNAME/s/\/bin\/.*sh/$newshell/" "/etc/passwd"
     fi
 }
 

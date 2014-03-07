@@ -114,22 +114,21 @@ function check()
     babun_check
 }
 
-function shell() 
+function shell()
 {
     newshell=$args
     if [[ $newshell == "" ]]; then
-        currshell=$( awk "/$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
+        currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
         echo "The current shell of $USERNAME is $currshell"
-    else 
-        if ! [ -f $newshell ]; then 
+    else
+        if ! [ -f $newshell ]; then
            echo "ERROR: Cannot set shell to $newshell. Shell does not exist!"
            exit 1
-        fi 
+        fi
         echo "Setting the current shell of $USERNAME to $newshell"
-        sed -i "/^$USERNAME/s/\/bin\/.*sh/$newshell/" "/etc/passwd"
+        sed -i "/^$USERNAME/s|/bin/.*sh|$newshell|" "/etc/passwd"
     fi
 }
-
 
 case "$command" in
 

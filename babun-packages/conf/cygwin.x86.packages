@@ -6,7 +6,6 @@ automake
 base-cygwin
 base-files
 bash
-bash-completion
 bc
 bzip2
 coreutils

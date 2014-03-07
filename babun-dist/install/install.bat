@@ -68,4 +68,4 @@ ECHO [babun] Terminating due to internal error #%errorlevel%
 EXIT /b %errorlevel%
 
 :END 
-
+pause

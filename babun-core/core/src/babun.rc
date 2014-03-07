@@ -1,3 +1,8 @@
+# IMPORTANT NOTE!
+# DO NOT MODIFY THIS FILE -> IT WILL BE OVERWRITTEN ON UPDATE
+# If you want to some options modify the following file: ~/.babunrc
+
+
 export CYGWIN_VERSION=x86
 export CYGWIN="${CYGWIN} nodosfilewarning mintty detect_bloda"
 export TERM=xterm-256color

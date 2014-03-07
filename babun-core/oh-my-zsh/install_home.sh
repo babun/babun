@@ -10,11 +10,7 @@ src="$babun/home/oh-my-zsh"
 
 if [ ! -d "$homedir/.oh-my-zsh" ]; then		
 	# installing oh-my-zsh
-    /bin/cp -rf "$src/.oh-my-zsh" "$homedir/.oh-my-zsh" 	
-    # setting zsh as the default shell    	
-    if grep -q "/bin/bash" "/etc/passwd"; then
-   		sed -i 's/\/bin\/bash/\/bin\/zsh/' "/etc/passwd"
- 	fi
+    /bin/cp -rf "$src/.oh-my-zsh" "$homedir/.oh-my-zsh" 	    
 fi
 
 

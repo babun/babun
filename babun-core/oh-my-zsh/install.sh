@@ -26,4 +26,3 @@ if [ ! -d "$dest" ]; then
     /bin/sed -i 's/ZSH_THEME=".*"/ZSH_THEME="babun"/' "$babun/home/.zshrc"
     /bin/cp -rf "$babun/source/babun-core/oh-my-zsh/src/babun.zsh-theme" "$dest/themes"
 fi
-

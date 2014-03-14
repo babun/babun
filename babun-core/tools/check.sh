@@ -15,6 +15,18 @@ function get_newest_version {
 }
 
 function babun_check {
+	# check git prompt speed
+	ts=$(date +%s%N) ; 
+	git --git-dir="$babun/source/.git" --work-tree="$babun/source" branch > /dev/null 2>&1 ; 
+	time_taken=$((($(date +%s%N) - $ts)/1000000)) ;	
+
+	if [[ $time_taken -lt 150 ]]; then
+		echo -e "Prompt speed      [OK]"
+	else 
+		echo -e "Prompt speed      [SLOW]"
+		echo -e "Hint: your prompt is very slow. Check the installed 'BLODA' software."	
+	fi	
+
 	local newest_version=$(get_newest_version)
 	if [[ -z "$newest_version" ]]; then 
 		echo -e "Connection check  [FAILED]"
@@ -29,18 +41,6 @@ function babun_check {
 	local current_version=$(get_current_version)
 	if [[ $newest_version -gt $current_version ]]; then
 		echo -e "Hint: your version is outdated. Execute 'babun update'"	
-	fi	
-
-	# check git prompt speed
-	ts=$(date +%s%N) ; 
-	git --git-dir="$babun/source/.git" --work-tree="$babun/source" branch > /dev/null 2>&1 ; 
-	time_taken=$((($(date +%s%N) - $ts)/1000000)) ;	
-
-	if [[ $time_taken -lt 150 ]]; then
-		echo -e "Prompt speed      [OK]"
-	else 
-		echo -e "Prompt speed      [SLOW]"
-		echo -e "Hint: your prompt is very slow. Check the installed 'BLODA' software."	
 	fi	
 }
 

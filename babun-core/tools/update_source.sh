@@ -48,12 +48,5 @@ find "$babun/source/babun-core" -type f -exec dos2unix -q {} \;
 echo "Making core scripts executable"
 find "$babun/source/babun-core" -type f -regex '.*sh' -exec chmod 755 {} \;
 
-core=
-# install/update plugins
-"$babun"/source/babun-core/tools/install.sh || { echo "ERROR: Could not update babun!"; exit -2; }
- 
-# install/update home folder
-"$babun"/source/babun-core/tools/install_home.sh || { echo "ERROR: Could not update home folder!"; exit -3; }
 
-# set the newest version marker
-cat "$babun/source/babun.version" > "$babun/installed/babun"
+"$babun"/source/babun-core/tools/update_exec.sh

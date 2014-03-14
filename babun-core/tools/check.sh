@@ -30,6 +30,18 @@ function babun_check {
 	if [[ $newest_version -gt $current_version ]]; then
 		echo -e "Hint: your version is outdated. Execute 'babun update'"	
 	fi	
+
+	# check git prompt speed
+	ts=$(date +%s%N) ; 
+	git --git-dir="$babun/source/.git" --work-tree="$babun/source" branch > /dev/null 2>&1 ; 
+	time_taken=$((($(date +%s%N) - $ts)/1000000)) ;	
+
+	if [[ $time_taken -lt 200 ]]; then
+		echo -e "Prompt speed      [OK]"
+	else 
+		echo -e "Prompt speed      [SLOW]"
+		echo -e "Hint: your prompt is very slow. Check the installed 'BLODA' software."	
+	fi	
 }
 
 function guarded_babun_check {

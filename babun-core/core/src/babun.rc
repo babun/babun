@@ -31,9 +31,6 @@ export CHECK_TIMEOUT_IN_SECS=4
 # otherwise vim will not find /etc/vimrc
 export VIM=/etc
 
-# overwrite values with user's local settings
-test -f ~/.babunrc && source ~/.babunrc
-
 # println babun welcome message
 /usr/local/etc/babun/source/babun-core/tools/welcome.sh
 

@@ -49,7 +49,12 @@ for profile in "${profiles[@]}"; do
 	fi
 done
 
-profiles=("/etc/zprofile")
+if ! [ -f /etc/zshrc ]; then
+	touch /etc/zshrc
+	chmod 755 /etc/zshrc
+fi
+
+profiles=("/etc/zshrc")
 for profile in "${profiles[@]}"; do	
 	if ! grep -Fxq "source /usr/local/etc/babun.rc" "$profile" ;then
 		echo "Supplementing shell with babun.rc -> $profile"

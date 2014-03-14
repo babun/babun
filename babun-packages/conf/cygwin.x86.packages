@@ -24,6 +24,7 @@ gawk
 gcc
 gcc-core
 git
+git-svn
 gnutls
 grep
 groff

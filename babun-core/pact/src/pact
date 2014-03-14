@@ -20,7 +20,10 @@ then
   exit 1
 fi
 
-
+if [ -z "$USER_AGENT" ]; then
+  USER_AGENT="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"
+fi
+  
 function usage()
 {
   echo pact: Installs and removes Cygwin packages.
@@ -82,14 +85,14 @@ function getsetup()
   else
     touch setup.ini
     mv setup.ini setup.ini-save
-    wget -N $mirror/$CYGWIN_VERSION/setup.bz2
+    wget --user-agent="$USER_AGENT" -N $mirror/$CYGWIN_VERSION/setup.bz2
     if test -e setup.bz2 && test $? -eq 0
     then
       bunzip2 setup.bz2
       mv setup setup.ini
       echo Updated setup.ini
     else
-      wget -N $mirror/$CYGWIN_VERSION/setup.ini
+      wget --user-agent="$USER_AGENT" -N $mirror/$CYGWIN_VERSION/setup.ini
       if test -e setup.ini && test $? -eq 0
       then
       echo Updated setup.ini
@@ -299,7 +302,7 @@ case "$command" in
 
     file=`basename $install`
     cd "release/$pkg"
-    wget -nc $mirror/$install
+    wget --user-agent="$USER_AGENT" -nc $mirror/$install
     
     # check the md5
     digest=`cat "desc" | awk '/^install: / { print $4; exit }'` 

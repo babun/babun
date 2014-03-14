@@ -14,6 +14,8 @@ function usage()
   echo "Usage:"
   echo "  \"babun update\" to fetch the newest version of babun"  
   echo "  \"babun check\" to check if the installation is correct"  
+  echo "  \"babun shell\" to display the name of the current user's shell"  
+  echo "  \"babun shell <new_shell>\" to set the current user's shell to new_shell"  
   echo "Options:"
   echo "  --help"
   echo "  --version"
@@ -117,16 +119,17 @@ function check()
 function shell()
 {
     newshell=$args
-    if [[ $newshell == "" ]]; then
-        currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
-        echo "The current shell of $USERNAME is $currshell"
+    currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
+    if [[ $newshell == "" ]]; then        
+        echo "$currshell"
     else
         if ! [ -f $newshell ]; then
-           echo "ERROR: Cannot set shell to $newshell. Shell does not exist!"
+           echo "ERROR: Cannot set shell to $newshell. Specified shell does not exist!"
            exit 1
         fi
-        echo "Setting the current shell of $USERNAME to $newshell"
-        sed -i "/^$USERNAME/s|/bin/.*sh|$newshell|" "/etc/passwd"
+        echo "$currshell"
+        echo "$newshell"        
+        sed -i "/^$USERNAME/s|/bin/.*sh|$newshell|" "/etc/passwd" || "ERROR: Changing shell to $newshell failed"
     fi
 }
 

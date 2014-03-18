@@ -19,6 +19,10 @@ function babun_check {
 	ts=$(date +%s%N) ; 
 	git --git-dir="$babun/source/.git" --work-tree="$babun/source" branch > /dev/null 2>&1 ; 
 	time_taken=$((($(date +%s%N) - $ts)/1000000)) ;	
+	if [[ $time_taken -gt 200 ]]; then
+		# evaluate once more
+		time_taken=$((($(date +%s%N) - $ts)/1000000)) ;
+	fi	
 
 	if [[ $time_taken -lt 200 ]]; then
 		echo -e "Prompt speed      [OK]"

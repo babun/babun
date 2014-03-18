@@ -47,6 +47,11 @@ for profile in "${profiles[@]}"; do
 		echo "Supplementing bash -> $profile"
 		echo "source /usr/local/etc/babun.bash" >> "$profile"
 	fi
+
+	if ! grep -Fxq "source /usr/local/etc/babun.start" "$profile" ;then
+		echo "Adding startup script -> $profile"
+		echo "source /usr/local/etc/babun.start" >> "$profile"
+	fi
 done
 
 if ! [ -f /etc/zshrc ]; then
@@ -64,5 +69,10 @@ for profile in "${profiles[@]}"; do
 	if ! grep -Fxq "source /usr/local/etc/babun.bash" "$profile" ;then
 		echo "Supplementing zsh -> $profile"
 		echo "source /usr/local/etc/babun.zsh" >> "$profile"
+	fi
+
+	if ! grep -Fxq "source /usr/local/etc/babun.start" "$profile" ;then
+		echo "Adding startup script -> $profile"
+		echo "source /usr/local/etc/babun.start" >> "$profile"
 	fi
 done

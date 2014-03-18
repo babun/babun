@@ -2,7 +2,7 @@ babun="/usr/local/etc/babun"
 source "$babun/source/babun-core/tools/stamps.sh"
 
 function get_current_version {
-	local current_version=$( cat "$babun/installed/babun" 2> /dev/null || echo "0" )
+	local current_version=$( cat "$babun/installed/babun" 2> /dev/null || echo "0.0.0" )
 	echo "$current_version"
 }
 
@@ -17,12 +17,12 @@ function get_newest_version {
 function get_version_as_number {
 	version_string=$1
 	# first digit
-	major=$(( ${v%%.*}*100000 ))
+	major=$(( ${version_string%%.*}*100000 ))
 	# second digit (almost)
-	minor_tmp=${v%.*}
+	minor_tmp=${version_string%.*}
 	minor=$(( ${minor_tmp#*.}*1000 ))
 	# third digit
-	revision=$(( ${v##*.} ))
+	revision=$(( ${version_string##*.} ))
 	version_number=$(( $major + $minor + $revision ))
 	echo "$version_number"
 }

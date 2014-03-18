@@ -44,7 +44,7 @@ function babun_check {
 		echo -e "Hint: your prompt is very slow. Check the installed 'BLODA' software."	
 	fi	
 
-	local newest_version=$(get_newest_version)
+	local newest_version=$( get_newest_version )
 	if [[ -z "$newest_version" ]]; then 
 		echo -e "Connection check  [FAILED]"
 		echo -e "Update check      [FAILED]"
@@ -55,8 +55,11 @@ function babun_check {
 		echo -e "Update check      [OK]"
 	fi
 
-	local current_version=$(get_current_version)
-	if [[ $newest_version -gt $current_version ]]; then
+	local current_version=$( get_current_version )
+        local current_version_number=$( get_version_as_number $current_version )
+        local newest_version_number=$( get_version_as_number $newest_version )
+        if [[ $newest_version_number -gt $current_version_number ]]; then
+
 		echo -e "Hint: your version is outdated. Execute 'babun update'"	
 	fi	
 }

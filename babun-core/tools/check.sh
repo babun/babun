@@ -14,6 +14,18 @@ function get_newest_version {
 	echo "$newest_version"
 }
 
+function get_version_as_number {
+	version_string=$1
+	# first digit
+	major=$(( ${v%%.*}*100000 ))
+	# second digit (almost)
+	minor=$(( ${${v%.*}##*.}*1000 ))
+	# third digit
+	revision=$(( ${v##*.} ))
+	version_number=$(( $major + $minor + $revision ))
+	echo "$version_number"
+}
+
 function babun_check {
 	# check git prompt speed
 	ts=$(date +%s%N) ; 

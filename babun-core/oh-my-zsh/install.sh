@@ -24,5 +24,5 @@ if [ ! -d "$dest" ]; then
     /bin/cp -rf "$src/." "$dest"
     /bin/cp "$dest/templates/zshrc.zsh-template" "$babun/home/.zshrc"
     /bin/sed -i 's/ZSH_THEME=".*"/ZSH_THEME="babun"/' "$babun/home/.zshrc"
-    /bin/cp -rf "$babun/source/babun-core/oh-my-zsh/src/babun.zsh-theme" "$dest/themes"
+    /bin/cp -rf "$babun/source/babun-core/oh-my-zsh/src/babun.zsh-theme" "$dest/custom"
 fi

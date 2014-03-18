@@ -25,5 +25,7 @@ if [ ! -f "$homedir/.zshrc" ]; then
 	# fixing oh-my-zsh components
 	zsh -c "source ~/.zshrc; rm -f \"$homedir/.zcompdump\"; compinit -u" &> /dev/null
 	zsh -c "source ~/.zshrc; cat \"$homedir/.zcompdump\" > \"$homedir/.zcompdump-\"*" &> /dev/null	
+
+	git --git-dir="$src/.oh-my-zsh/.git" --work-tree="$src/.oh-my-zsh" reset --hard
 fi
 

@@ -19,7 +19,8 @@ function get_version_as_number {
 	# first digit
 	major=$(( ${v%%.*}*100000 ))
 	# second digit (almost)
-	minor=$(( ${${v%.*}##*.}*1000 ))
+	minor_tmp=${v%.*}
+	minor=$(( ${minor_tmp#*.}*1000 ))
 	# third digit
 	revision=$(( ${v##*.} ))
 	version_number=$(( $major + $minor + $revision ))

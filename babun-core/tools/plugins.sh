@@ -16,7 +16,7 @@ function should_install_plugin {
 		fi		
 	fi
 
-	if [ -z "$installed_version"]; then
+	if [[ -z "$installed_version" ]]; then
 		installed_version="none"
 	fi
 

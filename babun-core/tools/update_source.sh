@@ -13,7 +13,7 @@ if [[ -z "$BABUN_BRANCH" ]]; then
 	export BABUN_BRANCH=release
 fi
 
-echo "Fetching the newest babun version from [$BABUN_BRANCH]"
+echo "  upstream  [$BABUN_BRANCH]"
 
 installed_version_string=$( get_current_version )
 newest_version_string=$( get_newest_version )
@@ -26,13 +26,15 @@ fi
 installed_version=$( get_version_as_number "$installed_version_string" )
 newest_version=$( get_version_as_number "$newest_version_string" )
 
+echo "  installed [$installed_version_string]"
+echo "  newest    [$installed_version_string]"
+
 if ! [[ $newest_version -gt $installed_version ]]; then
-	echo "Skipping babun update -> installed_version=[$installed_version_string] newest_version=[$newest_version_string]"
+	echo "Skipping babun update"
 	exit 0
 fi
 
-echo "Updating babun -> installed_version=[$installed_version_string] newest_version=[$newest_version_string]"
-
+echo "Executing babun update"
 
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" reset --hard
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" clean -d -x -f -f

@@ -6,7 +6,7 @@ function should_install_plugin {
 	installed="/usr/local/etc/babun/installed/$plugin_name"
 	if [ -f "$installed" ]; then		
 		typeset -i installed_version
-		installed_version=$(cat "$installed") || installed_version=0	
+		installed_version=$(cat "$installed" || echo "0") 	
 		
 		if ! [[ $plugin_version -gt $installed_version ]]; then
 			echo "  installed '$installed_version'"

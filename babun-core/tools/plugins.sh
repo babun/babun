@@ -16,6 +16,10 @@ function should_install_plugin {
 		fi		
 	fi
 
+	if ! [ -z "$installed_version"]; then
+		installed_version="0"
+	fi
+
 	echo "$plugin_version" > "$installed"
 
 	echo "  installed '$installed_version'"

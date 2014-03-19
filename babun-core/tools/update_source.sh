@@ -30,11 +30,9 @@ echo "  installed [$installed_version_string]"
 echo "  newest    [$newest_version_string]"
 
 if ! [[ $newest_version -gt $installed_version ]]; then
-	echo "Skipping babun update"
+	echo "Babun is up to date"
 	exit 0
 fi
-
-echo "Executing babun update"
 
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" reset --hard
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" clean -d -x -f -f

@@ -2,10 +2,9 @@ homedir=~
 eval homedir="$homedir"
 
 function should_install_plugin {
-
+	echo "$plugin_name"		
 	installed="/usr/local/etc/babun/installed/$plugin_name"
-	if [ -f "$installed" ]; then
-		echo "$plugin_name"		
+	if [ -f "$installed" ]; then		
 		typeset -i installed_version=$(cat "$installed") || installed_version=0	
 
 		if ! [[ $plugin_version -gt $installed_version ]]; then

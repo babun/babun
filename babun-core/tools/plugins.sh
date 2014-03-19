@@ -9,20 +9,20 @@ function should_install_plugin {
 		installed_version=$(cat "$installed" || echo "0") 	
 		
 		if ! [[ $plugin_version -gt $installed_version ]]; then
-			echo "  installed '$installed_version'"
-			echo "  newest    '$plugin_version'"
-			echo "  action    'skip'"
+			echo "  installed [$installed_version]"
+			echo "  newest    [$plugin_version]"
+			echo "  action    [skip]"
 			exit 0
 		fi		
 	fi
 
 	if [ -z "$installed_version"]; then
-		installed_version="0"
+		installed_version="none"
 	fi
 
 	echo "$plugin_version" > "$installed"
 
-	echo "  installed '$installed_version'"
-	echo "  newest    '$plugin_version'"
-	echo "  action    'execute'"
+	echo "  installed [$installed_version]"
+	echo "  newest    [$plugin_version]"
+	echo "  action    [execute]"
 }

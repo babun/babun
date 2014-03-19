@@ -27,7 +27,7 @@ installed_version=$( get_version_as_number "$installed_version_string" )
 newest_version=$( get_version_as_number "$newest_version_string" )
 
 echo "  installed [$installed_version_string]"
-echo "  newest    [$installed_version_string]"
+echo "  newest    [$newest_version_string]"
 
 if ! [[ $newest_version -gt $installed_version ]]; then
 	echo "Skipping babun update"

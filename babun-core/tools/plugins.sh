@@ -12,11 +12,11 @@ function should_install_plugin {
 		echo "  newest    [$plugin_version]"
 
 		if ! [[ $plugin_version -gt $installed_version ]]; then
-			echo "  action [skip]"
+			echo "  action   [skip]"
 			exit 0
 		fi	
 	fi
 	echo "$plugin_version" > "$installed"
-	echo "  action [update]"
+	echo "  action    [update]"
 
 }

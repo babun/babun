@@ -60,7 +60,7 @@ ECHO [babun] Enjoy! @tombujok
 
 :RUN
 ECHO [babun] Starting babun
-start %BABUN_HOME%\babun.bat || goto :ERROR
+%BABUN_HOME%\babun.bat || goto :ERROR
 GOTO END
 
 :ERROR

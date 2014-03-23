@@ -1,0 +1,11 @@
+RegisterFont.exe downloaded from:
+http://tsukasa.jidder.de/blog/wp-content/uploads/2008/04/registerfont.rar
+
+Blog post describing RegisterFont: 
+http://blog.tsukasa.eu/2008/04/18/temporarily-register-fonts-using-a-normal-user-account
+and
+http://some1pulak.blogspot.ch/2010/03/how-to-install-fonts-without-admin.html
+
+
+Fonts downloaded from:
+https://github.com/Lokaltog/powerline-fonts

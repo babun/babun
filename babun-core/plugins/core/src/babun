@@ -1,0 +1,163 @@
+#!/bin/bash
+set -o pipefail
+set -e
+set -f
+
+source /usr/local/etc/babun/source/babun-core/tools/procps.sh
+source /usr/local/etc/babun/source/babun-core/tools/check.sh
+check_only_one_running "/usr/local/bin/babun"
+
+function usage()
+{
+  echo babun: Manages the instance of babun.
+  echo ""
+  echo "Usage:"
+  echo "  \"babun update\" to fetch the newest version of babun"  
+  echo "  \"babun check\" to check if the installation is correct"  
+  echo "  \"babun shell\" to display the name of the current user's shell"  
+  echo "  \"babun shell <new_shell>\" to set the current user's shell to new_shell"  
+  echo "Options:"
+  echo "  --help"
+  echo "  --version"
+  echo "  --welcome"
+}
+
+function version()
+{
+  echo "babun version 1.0.0"
+  echo "Created and maintained by Tom Bujok (@tombujok)"
+  echo "Copyright (c) 2014."
+}
+
+function welcome()
+{
+  echo -e "Welcome to babun - the Windows shell you will love!"
+  echo -e "You have got a lot of things under the hood here!"
+  echo -e ""
+  echo -e "   pact -> a package manager that handles installation of babun packages"
+  echo -e "      pact install tar -> will install tar package on your system"
+  echo -e "      pact remove tar -> will remove tar package from your system"
+  echo -e ""
+  echo -e "   babun -> a script that manages babun and enables auto-update"
+  echo -e "      babun check -> will check the configuration (proxy, connection, etc)"
+  echo -e "      babun update -> will update babun to the newest version"
+  echo -e "      babun --welcome -> will display this message again"
+  echo -e ""
+  echo -e "There is a couple of plugins installed by default: oh-my-zsh, pact, cacert, etc."
+  echo -e "There is also a lot of dev tools such as git, svn, unix utils, etc"
+  echo -e "If you would like to contribute, code up a plugin or report an issue just"
+  echo -e "go to github: https://github.com/babun/babun"
+  echo -e ""
+  echo -e "If you like the project star it on github and follow me on twitter!"
+  echo -e "This project is created and maintained by Tom Bujok (@tombujok)"
+}
+
+#babun
+core="/usr/local/etc/babun/source/babun-core"
+
+# process options
+noscripts=0
+update=0
+file=""
+command=""
+args=""
+
+while test $# -gt 0
+do
+  case "$1" in
+
+    --help)
+      usage
+      exit 0
+    ;;
+
+    --version)
+      version
+      exit 0
+    ;;
+
+    --welcome)
+      welcome
+      exit 0
+    ;;
+
+
+    update|check|shell)
+      if test "-$command-" = "--"
+      then
+        command=$1     
+      fi
+      shift
+
+    ;;
+
+    *)
+      if [[ $args == "" ]]; then args="$1"; else args="$args $1"; fi      
+      shift
+    ;;  
+
+  esac
+done
+
+
+function update() 
+{
+  if ! [[ $args == "" ]]; then echo "ERROR: Wrong argument $args"; exit 1; fi
+  echo "Executing babun update"
+  cp "$core"/tools/update_source.sh /tmp/update_source.sh
+  /tmp/update_source.sh
+  exit 0
+}
+
+function check() 
+{
+    if ! [[ $args == "" ]]; then echo "ERROR: Wrong argument $args"; exit 1; fi
+    echo "Executing babun check"
+    babun_check
+}
+
+function shell()
+{
+    newshell=$args
+    currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
+    if [[ $newshell == "" ]]; then        
+        echo "$currshell"
+    else
+        if ! [ -f $newshell ]; then
+           echo "ERROR: Cannot set shell to $newshell. Specified shell does not exist!"
+           exit 1
+        fi
+        echo "$currshell"
+        echo "$newshell"        
+        sed -i "/^$USERNAME/s|/bin/.*sh|$newshell|" "/etc/passwd" || "ERROR: Changing shell to $newshell failed"
+    fi
+}
+
+case "$command" in
+
+  update)
+  
+  	update
+  ;;
+
+
+  check)
+
+    check
+  ;;
+
+  shell)
+
+    shell
+  ;;
+
+
+  *)
+
+    usage
+
+  ;;
+
+esac
+
+

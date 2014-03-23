@@ -62,11 +62,11 @@ def installCore(File outputFolder, String babunBranch) {
     executeCmd("${bash} -c \"${dos2unix}\"", 5)
 
     // make installer executable
-    String chmod = "find /usr/local/etc/babun/source/babun-core -type f -regex '.*sh' -exec chmod 755 {} \\;"
+    String chmod = "find /usr/local/etc/babun/source/babun-core -type f -regex '.*sh' -exec chmod u+x {} \\;"
     executeCmd("${bash} -c \"${chmod}\"", 5)
 
     // run babun installer - yay!
-    executeCmd("${bash} \"/usr/local/etc/babun/source/babun-core/tools/install.sh\"", 5)
+    executeCmd("${bash} \"/usr/local/etc/babun/source/babun-core/plugins/install.sh\"", 5)
 }
 
 

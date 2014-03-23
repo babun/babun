@@ -4,6 +4,7 @@ set -f
 
 declare -A gitconfig
 declare -A gitalias
+declare -A gitmerge
 
 # general config
 gitconfig['color.ui']='true'
@@ -12,16 +13,21 @@ gitconfig['credential.helper']='cache --timeout=3600'
 
 # alias config
 gitalias['alias.cp']='cherry-pick'
-gitalias['alias.st']='status -s'
+gitalias['alias.st']='status -sb'
 gitalias['alias.cl']='clone'
 gitalias['alias.ci']='commit'
 gitalias['alias.co']='checkout'
 gitalias['alias.br']='branch'
 gitalias['alias.dc']='diff --cached'
-gitalias['alias.lg']='log --graph --decorate --format=oneline --abbrev-commit --all'
+gitalias['alias.lg']="log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all"
 gitalias['alias.last']='git log -1 --stat'
 
-#TODO configure merge tool
+# git mergetool config
+gitmerge['merge.tool']='vimdiff'
+gitmerge['mergetool.prompt']='false'
+gitmerge['mergetool.trustExitCode']='false'
+gitmerge['mergetool.keepBackups']='false'
+gitmerge['mergetool.keepTemporaries']='false'
 
 function apply_git_config {
 	eval "declare -A configMap="${1#*=}
@@ -37,4 +43,5 @@ function apply_git_config {
 }
 
 apply_git_config "$(declare -p gitconfig)"
+apply_git_config "$(declare -p gitmerge)"
 apply_git_config "$(declare -p gitalias)"

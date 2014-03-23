@@ -1,15 +1,16 @@
 #!/bin/bash
 set -o pipefail
+set -f
 
 declare -A gitconfig
 declare -A gitalias
 
-# git config
+# general config
 gitconfig['color.ui']='true'
 gitconfig['core.editor']='vim'
 gitconfig['credential.helper']='cache --timeout=3600'
 
-# git config alias
+# alias config
 gitalias['alias.cp']='cherry-pick'
 gitalias['alias.st']='status -s'
 gitalias['alias.cl']='clone'
@@ -23,13 +24,14 @@ gitalias['alias.last']='git log -1 --stat'
 #TODO configure merge tool
 
 function apply_git_config {
-	eval "declare -A map="${1#*=}
+	eval "declare -A configMap="${1#*=}
 	
-	for item in "${!map[@]}"
+	for configKey in "${!configMap[@]}"
 	do
-		git config --list | grep -q "$item"
+		git config --list | grep -q "$configKey"
 		if [ $? -ne 0 ]; then
-			git config --global $item "${map[$item]}"
+			configValue="${configMap[$configKey]}"
+			git config --global "$configKey" "$configValue"
 		fi
 	done
 }

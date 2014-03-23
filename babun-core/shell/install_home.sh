@@ -9,7 +9,7 @@ source "$babun/source/babun-core/tools/plugins.sh"
 src="$babun/home/shell/"
 
 
-# if pact not installed
+# if vim not installed
 if [ ! -d "$homedir/.vim" ]; then
 	/bin/cp -rf "$src/.vim" "$homedir/.vim"	
 fi

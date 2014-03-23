@@ -12,7 +12,7 @@ src="$babun/home/pact"
 # if pact not installed
 if [ ! -d "$homedir/.pact" ]; then	
 	
-	# installing oh-my-zsh
+	# installing pact
     /bin/cp -rf "$src/.pact" "$homedir/.pact" 
 	
 fi

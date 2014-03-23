@@ -12,7 +12,7 @@ plugin_version=1
 should_install_plugin
 
 
-src="$babun/source/babun-core/pact/src"
+src="$babun/source/babun-core/plugins/pact/src"
 dest="$babun/home/pact/.pact"
 
 /bin/cp -rf $src/pact /usr/local/bin

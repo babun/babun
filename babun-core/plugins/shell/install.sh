@@ -12,7 +12,7 @@ plugin_version=1
 should_install_plugin
 
 
-src="$babun/source/babun-core/shell/src/"
+src="$babun/source/babun-core/plugins/shell/src/"
 dest="$babun/home/shell/"
 
 

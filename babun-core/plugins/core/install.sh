@@ -12,7 +12,7 @@ plugin_version=1
 should_install_plugin
 
 
-src="$babun/source/babun-core/core/src"
+src="$babun/source/babun-core/plugins/core/src"
 
 /bin/cp -rf $src/babun /usr/local/bin
 chmod 755 /usr/local/bin/babun

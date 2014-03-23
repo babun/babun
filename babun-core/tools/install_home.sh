@@ -10,4 +10,5 @@ bash "$babun/source/babun-core/core/install_home.sh"
 bash "$babun/source/babun-core/pact/install_home.sh"
 bash "$babun/source/babun-core/shell/install_home.sh"
 bash "$babun/source/babun-core/oh-my-zsh/install_home.sh"
+bash "$babun/source/babun-core/git/install_home.sh"
 

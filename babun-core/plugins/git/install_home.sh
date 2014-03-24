@@ -38,7 +38,6 @@ function apply_git_config {
 	do
 		git config --list | grep -q "$configKey"
 		if [ $? -ne 0 ]; then
-			echo "setting up $configKey"
 			configValue="${configMap[$configKey]}"
 			git config --global "$configKey" "$configValue"
 		fi

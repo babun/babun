@@ -32,7 +32,7 @@ profiles=("/etc/profile" "/etc/zprofile")
 for profile in "${profiles[@]}"; do	
 	if ! grep -Fxq "Installing babun" "$profile" ;then
 		echo "Adding babun auto-install  -> $profile"
-		sed -i 's/unset fDest/unset fDest\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/tools\/install_home.sh/' "$profile"
+		sed -i 's/unset fDest/unset fDest\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/plugins\/install_home.sh/' "$profile"
 	fi
 
 done

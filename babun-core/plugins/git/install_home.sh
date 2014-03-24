@@ -9,6 +9,7 @@ declare -A gitmerge
 # general config
 gitconfig['color.ui']='true'
 gitconfig['core.editor']='vim'
+gitconfig['core.filemode']='false'
 gitconfig['credential.helper']='cache --timeout=3600'
 
 # alias config
@@ -21,6 +22,7 @@ gitalias['alias.br']='branch'
 gitalias['alias.dc']='diff --cached'
 gitalias['alias.lg']="log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all"
 gitalias['alias.last']='git log -1 --stat'
+gitalias['alias.unstage']='reset HEAD --'
 
 # git mergetool config
 gitmerge['merge.tool']='vimdiff'
@@ -36,6 +38,7 @@ function apply_git_config {
 	do
 		git config --list | grep -q "$configKey"
 		if [ $? -ne 0 ]; then
+			echo "setting up $configKey"
 			configValue="${configMap[$configKey]}"
 			git config --global "$configKey" "$configValue"
 		fi

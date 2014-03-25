@@ -119,7 +119,7 @@ function check()
 function shell()
 {
     passwd=$( sort -u /etc/passwd )
-    if ! [[ -z "$passwd"]]; then
+    if ! [[ -z "$passwd" ]]; then
         echo "$passwd" > /etc/passwd
     fi
     newshell=$args

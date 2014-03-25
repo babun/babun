@@ -118,6 +118,10 @@ function check()
 
 function shell()
 {
+    passwd=$( sort -u /etc/passwd )
+    if ! [[ -z "$passwd"]]; then
+        echo "$passwd" > /etc/passwd
+    fi
     newshell=$args
     currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
     if [[ $newshell == "" ]]; then        

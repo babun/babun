@@ -5,7 +5,7 @@ set -f
 
 source /usr/local/etc/babun/source/babun-core/tools/procps.sh
 source /usr/local/etc/babun/source/babun-core/tools/check.sh
-check_only_one_running "/usr/local/bin/babun"
+check_only_one_running "babun"
 
 function usage()
 {

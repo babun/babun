@@ -175,7 +175,7 @@ do
   esac
 done
 
-test $noscripts -eq 0 && check_only_one_running "/usr/local/bin/pact"
+test $noscripts -eq 0 && check_only_one_running "pact"
 
 case "$command" in
 

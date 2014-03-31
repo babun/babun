@@ -133,6 +133,26 @@ groovy build.groovy release
 ```
 The release goal expects the following environment variables: bintray_user and bintray_secret
 
+##### Developing a plugin
+
+Every plugins has to consist of two main files:
+* install.sh - a file that will be invoke during the creation of the babun's distribution
+* install_home.sh - a file that will be invoked during the installation of babun to the user's home folder 
+
+Have a look at the pact plugin - it's a perfect example of a relatively small plugin.
+
+###### install.sh
+
+Its main responsibility is to install the plugin - for example to copy the plugin files to, e.g. /usr/local/etc or /usr/local/bin directories. install.sh script is also responsbile for preparing the user's home folder template. The template files have to be copied to the /usr/local/babun/home/<plugin_name> folder.
+
+install.sh will be invoked many times - on every plugin update if the plugin version is higher than the version of the installed plugin - thus it's logic has to work in an incremental way.
+
+###### install_home.sh
+
+Its main responsbility is to configure the user's home folder with the plugin releated stuff, if necessarycopy. For example, it may copy the files from the /usr/local/babun/home/<plugin_name> folder to the user's home folder.
+It is also responsible for any other things that may be necessary during the user's home configuration process.
+
+install_home.sh will be invoked many times - on every plugin update if the plugin version is higher than the version of the installed plugin - thus it's logic has to work in an incremental way.
 
 ### Contribute
 

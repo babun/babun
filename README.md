@@ -3,6 +3,11 @@
 Would you like to use a linux-like console on a Windows host without a lot of fuzz? Do you like oh-my-zsh?
 Stop hating Windows and try out babun - you will simply love it!
 
+### Installation
+
+Just download the dist file from TODO, unzip it and run the install.bat script.
+It's as simple as it gets!
+
 ### Features in 10 seconds
 
 Babun features the following:
@@ -73,11 +78,6 @@ Babun contains an auto-update feature which enables updating both the microkerne
 ##### Installer
 
 Babun features an silent command-line installation script that may be executed without admin rights on Windows hosts.
-
-### Installation
-
-Just download the dist file from TODO, unzip it and run the install.bat script.
-It's as simple as it gets!
 
 ### Project Sturcture
 

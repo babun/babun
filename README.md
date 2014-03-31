@@ -85,9 +85,37 @@ TODO
 
 ### Project Sturcture
 
+The project consists of four main modules.
+
+##### babun-packages
+##### babun-cygwin
+##### babun-babun-core
+##### babun-dist
+
 TODO
 
-### Contributors
+
+### Development
+
+The project is regularly build on Jenkins, on a Windows node. Windows is required to fully build the dist package, as one of the goals invokes native Cygwin installer. Artifact produced by each module are cached in the target folder (and this mechanism is not intelligent to calculate the diffs). If you would like to rebuild a module, make sure to invoke the "clean" goal beforehand. 
+
+In order to build the dist package invoke:
+```
+groovy build.groovy package 
+```
+
+In order to clean the project target folder invoke:
+```
+groovy build.groovy clean 
+```
+
+In order to publish the release version to bintray invoke:
+```
+groovy build.groovy release
+```
+The release goal expects the following environment variables: bintray_user and bintray_secret
+
+### Contribute
 
 We are looking for new contributors, so if you fancy bash progamming and if you would like to contribute a patch or a code up a new plugin give us a shout!
 

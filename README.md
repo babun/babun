@@ -79,25 +79,43 @@ Babun features an silent command-line installation script that may be executed w
 Just download the dist file from TODO, unzip it and run the install.bat script.
 It's as simple as it gets!
 
-### Architecture
-
-TODO
-
 ### Project Sturcture
 
 The project consists of four main modules.
 
 ##### babun-packages
+
+The main goal of the babun-packages module is to download the cygwin packages listed in the conf/cygwin.x86.packages file.
+The mentioned packages will be downloaded together with the whole dependency tree. Repositories which the packages are downloaded from are listed in the conf/cygwin.repositories file. At the beginning the first repository is taken, if a package is not available in this repo the second repo is used, etc. The process continues untill all packages have been downloaded. 
+
+All downloaded packages are stored in the target/babun-packages folder.
+
 ##### babun-cygwin
-##### babun-babun-core
+
+The main goal of the babun-cygwin module is to download and invoke the native cygwin.exe installer. The packages downloaded by the babun-packages module are used as the input - all of them will be installed in the offline cygwin installation. 
+
+It is not trivial to install and zip a local instance of Cygwin - there are problems with the symlinks as the symlink-file-flags are lost during the compresion proces. Babun can work it around though. At first, just after the installaion, the symlinks_find.sh script is invoked in order to store the list of all cygwin's symlinks. This file is delivered in the babun's core. Then, after babun is installed from the zip file on the user's host the symlinks_repair.sh script is invoked - it will correct all the broken symlinks listed in the abovementioned file.
+
+Preinstalled cygwin is located in the target/babun-cygwin folder.
+
+##### babun-core
+
+The main goal of the babun-core module is to install babun's core along with all the plugins. install.sh script is invoked during the creation of the distribution package in order to preinstall the plugins. Whenver babun is installed on the user's host the install_home.sh script is invoke in order to install the babun-related files to the cygwin-user's home folder.
+
+Preinstalled cygwin with installed babun is located in the target/babun-cygwin folder.
+
 ##### babun-dist
 
-TODO
+The main goal of the babun-dist module is to zip the ready-made instance of babun and copy some installation scripts on the top.
+After the build has finished babun zip distribution is ready!
 
+Distribution package is located in the target/babun-dist folder.
 
 ### Development
 
-The project is regularly build on Jenkins, on a Windows node. Windows is required to fully build the dist package, as one of the goals invokes native Cygwin installer. Artifact produced by each module are cached in the target folder (and this mechanism is not intelligent to calculate the diffs). If you would like to rebuild a module, make sure to invoke the "clean" goal beforehand. 
+##### Building from source
+
+The project is regularly build on Jenkins, on a slave node running Windows. The Windows OS is required to fully build the distribution package as one of the goals invokes the native Cygwin installer. The artifacts created by each module are cached in the target folder after a successful build. This mechanism is not intelligent to calculate the diffs so if you would like to fully rebuild a module make sure to invoke the "clean" goal before the "package" goal. For now it's not possible to invoke a build of a selective modules only. 
 
 In order to build the dist package invoke:
 ```
@@ -114,6 +132,7 @@ In order to publish the release version to bintray invoke:
 groovy build.groovy release
 ```
 The release goal expects the following environment variables: bintray_user and bintray_secret
+
 
 ### Contribute
 

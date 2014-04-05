@@ -334,6 +334,7 @@ We are looking for new contributors, so if you fancy bash progamming and if you 
 
 === Meet the team
 
-@tombujok and @jlupi
+https://twitter.com/tombujok
+https://twitter.com/lukaszpielak
 
 image::https://d2weczhvl823v0.cloudfront.net/reficio/babun/trend.png["Bitdeli Badge", link="https://bitdeli.com/free"]

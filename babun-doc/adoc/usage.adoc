@@ -86,10 +86,17 @@ To setup proxy uncomment following lines in the +.babunrc+ file +(%USER_HOME%\.b
 # export no_proxy=localhost
 ----
 
-==== Installing new packages
+==== Setting up git
+Babun has a pre-configured git. The only thing you should do after the installation is to add your name and email to the git config:
+----
+git config --global user.name "your name"
+git config --global user.email "your@email.com"
+----
+
+==== Installing / Removing packages
 Babun is shipped with +pact+ - a Linux like package manager. It uses the cygwin repository for downloading packages:
 ----
-{ ~ } » pact install arj                                                                     ~ 1
+{ ~ } » pact install arj                                                                      ~ 
 Working directory is /setup
 Mirror is http://mirrors.kernel.org/sourceware/cygwin/
 setup.ini taken from the cache
@@ -111,18 +118,46 @@ Unpacking...
 Package arj installed
 ----
 
-==== Using git
-Babun has a pre-configured git. The only thing you should do after installation is to add your name and email to the git config:
+Here's the list of all pact's features:
 ----
-git config --global user.name "your name"
-git config --global user.email "your@email.com"
+{ ~ }  » pact --help                                                                         ~
+pact: Installs and removes Cygwin packages.
+
+Usage:
+  "pact install <package names>" to install packages
+  "pact remove <package names>" to remove packages
+  "pact update" to update setup.ini
+  "pact show" to show installed packages
+  "pact find <patterns>" to find packages matching patterns
+  "pact describe <patterns>" to describe packages matching patterns
+  "pact packageof <commands or files>" to locate parent packages
+Options:
+  --mirror, -m <url> : set mirror
+  --update, -u       : force update setup.ini from mirror
+  --help
+  --version
 ----
 
-==== .oh-my-zsh
-Babun has an integrated +.oh-my-zsh+ plugin. The zsh is the default shell in babun. You can still change it to bash if you wish.
-TODO - explain how to setup default shell
 
-==== Updates
+==== Changing the default shell
+The zsh (with .oh-my-zsh) is the default babun's shell.
+
+Executing the following command will output your default shell:
+----
+{ ~ } » babun shell                                                                          ~ 
+/bin/zsh
+----
+
+In order to change your default shell execute:
+----
+{ ~ } » babun shell /bin/bash                                                                ~ 
+/bin/zsh
+/bin/bash
+----
+The output contains two lines: the previous default shell and the new default shell
+
+
+==== Checking the instance of babun
 Babun checks every time at start up if a new version is available. You can also enforce it by typing:
 ----
 babun check

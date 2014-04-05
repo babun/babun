@@ -1,5 +1,3 @@
-
-
 == Installation
 
 Just download the dist file from TODO, unzip it and run the install.bat script.
@@ -110,8 +108,7 @@ Preinstalled cygwin with installed babun is located in the +target/babun-cygwin+
 The main goal of the +babun-dist+ module is to zip the ready-made instance of babun and copy some installation scripts on the top.
 After the build has finished babun zip distribution is ready!
 
-Distribution package is located in the +target/babun-dist+ folder.
-== Development
+Distribution package is located in the +target/babun-dist+ folder.== Development
 
 === Building from source
 

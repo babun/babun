@@ -93,7 +93,21 @@ git config --global user.name "your name"
 git config --global user.email "your@email.com"
 ----
 
-==== Installing / Removing packages
+There's a lot of great git aliases provided by the git plugin:
+----
+gitalias['alias.cp']='cherry-pick'
+gitalias['alias.st']='status -sb'
+gitalias['alias.cl']='clone'
+gitalias['alias.ci']='commit'
+gitalias['alias.co']='checkout'
+gitalias['alias.br']='branch'
+gitalias['alias.dc']='diff --cached'
+gitalias['alias.lg']="log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all"
+gitalias['alias.last']='git log -1 --stat'
+gitalias['alias.unstage']='reset HEAD --'
+----
+
+==== Installing and removing packages
 Babun is shipped with +pact+ - a Linux like package manager. It uses the cygwin repository for downloading packages:
 ----
 { ~ } » pact install arj                                                                      ~ 
@@ -137,7 +151,6 @@ Options:
   --help
   --version
 ----
-
 
 ==== Changing the default shell
 The zsh (with .oh-my-zsh) is the default babun's shell.

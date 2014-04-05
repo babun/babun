@@ -9,8 +9,8 @@ Babun features the following:
 * HTTP(s) proxying support
 * Plugin-oriented architecture
 * Pre-configured git and shell
-* Integrated .oh-my-zsh
-* Auto update
+* Integrated oh-my-zsh
+* Auto update feature
 
 == Features in 3 minutes
 

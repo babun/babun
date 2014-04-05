@@ -1,8 +1,8 @@
 = Babun - a Windows shell you will love!
 
-Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun - you will simply love it!
+Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun!
 
 == Installation
 
-Just download the dist file from TODO, unzip it and run the install.bat script.
-It's as simple as it gets!
+Just download the dist file from the following link, unzip it and run the install.bat script.
+LINK: TODO

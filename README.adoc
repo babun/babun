@@ -27,7 +27,7 @@ Babun features the following:
 * Users with limited or no admin rights
 * Windows users looking for a powerful console
 * Cygwin users
-* Everybody who needs/wants a really cool shell on Windows
+* Everybody who needs a really cool shell on Windows
 
 === Features in 3 minutes
 
@@ -87,6 +87,68 @@ Babun contains an auto-update feature which enables updating both the microkerne
 ==== Installer
 
 Babun features an silent command-line installation script that may be executed without admin rights on any Windows hosts.
+
+
+=== Using babun
+
+==== Setting up proxy
+To setup proxy uncomment following lines in the +.babunrc+ file +(%USER_HOME%\.babun\cygwin\home\USER\.babunrc)+
+----
+# Uncomment this lines to set up your proxy
+# export http_proxy=http://user:password@server:port
+# export https_proxy=$http_proxy
+# export ftp_proxy=$http_proxy
+# export no_proxy=localhost
+----
+
+==== Installing new packages
+Babun is shipped with +pact+ - a Linux like package manager. It uses the cygwin repository for downloading packages:
+----
+{ ~ } » pact install arj                                                                     ~ 1
+Working directory is /setup
+Mirror is http://mirrors.kernel.org/sourceware/cygwin/
+setup.ini taken from the cache
+
+Installing arj
+Found package arj
+--2014-03-30 19:34:38--  http://mirrors.kernel.org/sourceware/cygwin//x86/release/arj/arj-3.10.22-1.tar.bz2
+Resolving mirrors.kernel.org (mirrors.kernel.org)... 149.20.20.135, 149.20.4.71, 2001:4f8:1:10:0:1994:3:14, ...
+Connecting to mirrors.kernel.org (mirrors.kernel.org)|149.20.20.135|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 189944 (185K) [application/x-bzip2]
+Saving to: `arj-3.10.22-1.tar.bz2'
+
+100%[==========================================================>] 189,944      193K/s   in 1.0s
+
+2014-03-30 19:34:39 (193 KB/s) - `arj-3.10.22-1.tar.bz2' saved [189944/189944]
+
+Unpacking...
+Package arj installed
+----
+
+==== Using git
+Babun has a pre-configured git. The only thing you should do after installation is to add your name and email to the git config:
+----
+git config --global user.name "your name"
+git config --global user.email "your@email.com"
+----
+
+==== .oh-my-zsh
+Babun has an integrated +.oh-my-zsh+ plugin. The zsh is the default shell in babun. You can still change it to bash if you wish.
+TODO - explain how to setup default shell
+
+==== Updates
+Babun checks every time at start up if a new version is available. You can also enforce it by typing:
+----
+babun check
+----
+
+To update babun to a newest version type:
+----
+babun update
+----
+Please note that your local configuration files will not be overwritten. 
+
 
 == Development
 

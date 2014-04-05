@@ -179,6 +179,8 @@ Connection check  [OK]
 Update check      [OK]
 ----
 
+It will check if there are problems with the speed of the git prompt, if there's access to the Internet or finally if you are running the newest version of babun.
+
 The command will output hints if problems occur:
 ----
 { ~ } » babun check                                                                          ~ 
@@ -189,9 +191,11 @@ Connection check  [OK]
 Update check      [OK]
 ----
 
-==== Tweaking the local config
+On each startup, but only every 24 hours, babun will execute this check automatically. You can disable the automatic check in the ~/.babunrc file.
 
-You can tweak some config options in the ~/.babunrc file. Here's the full list variables that may be modified:
+==== Tweaking the configuration
+
+You can tweak some config options in the ~/.babunrc file. Here's the full list of variables that may be modified:
 ----
 # JVM options
 export JAVA_OPTS="-Xms128m -Xmx256m"
@@ -221,12 +225,7 @@ export LC_ALL="en_US.UTF-8"
 
 ==== Updating babun
 
-Babun checks every time at start up if a new version is available. You can also enforce it by typing:
-----
-babun check
-----
-
-To update babun to a newest version type:
+To update babun to the newest version execute:
 ----
 babun update
 ----

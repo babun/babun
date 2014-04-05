@@ -2,7 +2,7 @@
 import static java.lang.System.*
 import static java.lang.System.getenv
 
-VERSION = "1.0.0"
+VERSION = new File("${getRoot()}/babun.version").text
 TEN_MINUTES = 10
 TWENTY_MINUTES = 20
 

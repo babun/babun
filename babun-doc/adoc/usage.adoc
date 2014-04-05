@@ -1,4 +1,3 @@
-
 == Installation
 
 Just download the dist file from TODO, unzip it and run the install.bat script.

@@ -73,7 +73,6 @@ Babun contains an auto-update feature which enables updating both the microkerne
 
 Babun features an silent command-line installation script that may be executed without admin rights on any Windows hosts.
 
-
 === Using babun
 
 ==== Setting up proxy
@@ -169,8 +168,59 @@ In order to change your default shell execute:
 ----
 The output contains two lines: the previous default shell and the new default shell
 
+==== Checking the configuration
 
-==== Checking the instance of babun
+Execute the following command the check the configuration:
+----
+{ ~ } » babun check                                                                          ~ 
+Executing babun check
+Prompt speed      [OK]
+Connection check  [OK]
+Update check      [OK]
+----
+
+The command will output hints if problems occur:
+----
+{ ~ } » babun check                                                                          ~ 
+Executing babun check
+Prompt speed      [SLOW]
+Hint: your prompt is very slow. Check the installed 'BLODA' software.
+Connection check  [OK]
+Update check      [OK]
+----
+
+==== Tweaking the local config
+
+You can tweak some config options in the ~/.babunrc file. Here's the full list variables that may be modified:
+----
+# JVM options
+export JAVA_OPTS="-Xms128m -Xmx256m"
+
+# Modify these lines to set your locale
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# Uncomment these lines to the set your machine's default locale (and comment out the UTF-8 ones)
+# export LANG=$(locale -uU)
+# export LC_CTYPE=$(locale -uU)
+# export LC_ALL=$(locale -uU)
+
+# Uncomment this to disable daily auto-update & proxy checks on startup (not recommended!)
+# export DISABLE_CHECK_ON_STARTUP="true"
+
+# Uncomment to increase/decrease the check connection timeout
+# export CHECK_TIMEOUT_IN_SECS=4
+
+# Uncomment this lines to set up your proxy
+# export http_proxy=http://user:password@server:port
+# export https_proxy=$http_proxy
+# export ftp_proxy=$http_proxy
+# export no_proxy=localhost
+----
+
+==== Updating babun
+
 Babun checks every time at start up if a new version is available. You can also enforce it by typing:
 ----
 babun check

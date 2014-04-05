@@ -1,6 +1,6 @@
 
 
-== Contribute
+=== Contribute
 
 Babun is oppen source and driven by the community. There are many ways to contribute:
 
@@ -11,9 +11,8 @@ Babun is oppen source and driven by the community. There are many ways to contri
 
 We are looking for new contributors, so if you fancy bash progamming and if you would like to contribute a patch or a code up a new plugin give us a shout!
 
-== Meet the team
+=== Meet the team
 
-@tombujok
-@jlupi
+@tombujok and @jlupi
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/reficio/babun/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+image::https://d2weczhvl823v0.cloudfront.net/reficio/babun/trend.png["Bitdeli Badge", link="https://bitdeli.com/free"]

@@ -1,0 +1,5 @@
+=== Licence
+
+The source code located in the babun's repository is published under the Apache License, Version 2.0, January 2004 if not stated otherwise. 
+
+Since the distribution (zip) package contains the Cygwin's DLLs the distribution package is licensed under the GPLv3+ licence to satisfy the Cygwin's licensing terms (http://cygwin.com/licensing.html).

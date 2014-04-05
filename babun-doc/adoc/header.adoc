@@ -4,5 +4,5 @@ Would you like to use a linux-like console on a Windows host without a lot of fu
 
 == Installation
 
-Just download the dist file from the following link, unzip it and run the install.bat script.
-LINK: TODO
+Just download the dist file from HERE, unzip it and run the install.bat script. After a few minutes babun starts automatically.
+The application will be installed to the +%USER_HOME%\.babun+ directory.

@@ -3,6 +3,7 @@
 === Features in 10 seconds
 
 Babun features the following:
+
 * Pre-configured Cygwin with a lot of addons
 * Silent command-line installer, no admin rights required
 * pact - advanced package manager (like apt-get or yum)
@@ -14,6 +15,7 @@ Babun features the following:
 * Auto update feature
 
 === Audience
+
 * Mac's or Linux's users who 'have to' work on Windows 
 * Users with limited or no admin rights
 * Windows users looking for a powerful console
@@ -33,6 +35,7 @@ Babun provides a package manager called +pact+. It is similar to 'apt-get' or 'y
 ==== Shell
 
 Babun's shell is tweaked in order to provide the best possible user-experience. There are two shell types that are pre-configured and avaiable right away - bash and zsh (zsh is the default one). Babun's shell features:
+
 * syntax highlighting
 * unix tools
 * software development tools
@@ -60,6 +63,7 @@ Babun provides many packages, convenience tools and scripts that make your life 
 ==== Plugin architecture
 
 Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit of a convention) and a plugin architecture on the top of it. It means that almost everything is a plugin in the babun's world! Not only does it structure babun in a clean way, but also enables others to contribute small chunks of code. Currently, babun comprises of six plugins:
+
 * cacert
 * core
 * git

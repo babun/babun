@@ -14,14 +14,6 @@ Babun features the following:
 * Integrated oh-my-zsh
 * Auto update feature
 
-=== Audience
-
-* Mac's or Linux's users who 'have to' work on Windows 
-* Users with limited or no admin rights
-* Windows users looking for a powerful console
-* Cygwin users
-* Everybody who needs a really cool shell on Windows
-
 === Features in 3 minutes
 
 ==== Cygwin

@@ -2,7 +2,7 @@
 
 == Development
 
-=== Project Sturcture
+=== Project structure
 
 The project consists of four main modules.
 
@@ -69,9 +69,31 @@ Its main responsibility is to install the plugin - for example to copy the plugi
 
 install.sh will be invoked many times - on every plugin update if the plugin version is higher than the version of the installed plugin - thus it's logic has to work in an incremental way.
 
+The script has to begin with the following statement:
+----
+source "$babun/source/babun-core/tools/plugins.sh"
+
+# plugin descriptor
+plugin_name=new_plugin_name
+plugin_version=1
+should_install_plugin
+----
+
+It will make sure to run the install.sh script only if a newer version of the plugin has been released.
+
 ==== install_home.sh
 
 Its main responsbility is to configure the user's home folder with the plugin releated stuff, if necessarycopy. For example, it may copy the files from the +/usr/local/babun/home/<plugin_name>+ folder to the user's home folder.
 It is also responsible for any other things that may be necessary during the user's home configuration process.
 
 install_home.sh will be invoked many times - on every plugin update if the plugin version is higher than the version of the installed plugin - thus it's logic has to work in an incremental way.
+
+
+=== Branches
+
+TODO
+
+=== Folder structure
+
+TODO
+

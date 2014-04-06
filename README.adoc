@@ -10,7 +10,7 @@ The application will be installed to the +%USER_HOME%\.babun+ directory.
 === Features in 10 seconds
 
 Babun features the following:
-----
+
 - Pre-configured Cygwin with a lot of addons
 - Silent command-line installer, no admin rights required
 - pact - advanced package manager (like apt-get or yum)
@@ -20,7 +20,7 @@ Babun features the following:
 - Pre-configured git and shell
 - Integrated oh-my-zsh
 - Auto update feature
-----
+
 === Features in 3 minutes
 
 ==== Cygwin

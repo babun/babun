@@ -11,6 +11,8 @@ Babun is oppen source and driven by the community. There are many ways to contri
 
 We are looking for new contributors, so if you fancy bash progamming and if you would like to contribute a patch or a code up a new plugin give us a shout!
 
+Visit the http://babun.github.io/development/[development] section to find out how to create plugins and extensions.
+
 === Meet the team
 
 https://twitter.com/tombujok

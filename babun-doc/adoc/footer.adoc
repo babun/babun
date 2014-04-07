@@ -2,7 +2,7 @@
 
 === Contribute
 
-Babun is oppen source and driven by the community. There are many ways to contribute:
+Babun is open source and driven by the community. There are many ways to contribute:
 
 * Use it and tell us what you think
 * Recommend it to your friends

@@ -364,7 +364,7 @@ Windows Azure provided a free Windows Hosting (a free, renewable MSDN subscripti
 
 image::http://www.azure.microsoft.com/css/images/logo.png["Windows Azure", link="http://www.azure.microsoft.com/en-us/", window="_blank", align="center"]
 
-_Microsoft and Windows are registered trademarks of Microsoft Corporation in the United States of America and other countries. Windows Azure is a trademark of Microsoft Corporation. _
+_Microsoft and Windows are registered trademarks of Microsoft Corporation in the United States of America and other countries. Windows Azure is a trademark of Microsoft Corporation._
 
 === Contribute
 

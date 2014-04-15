@@ -349,7 +349,7 @@ Since the distribution (zip) package contains the Cygwin's DLLs the distribution
 
 Special thanks go to companies who provided free hosting! 
 
-==== XCLOUD
+===== XCLOUD
 
 XCLOUD.ME provided a free OSX hosting (a free Mac MINI Server subscription). It works like a charm! Thank you!
 
@@ -358,7 +358,7 @@ image::http://ml.xcloud.me/wp-content/uploads/2012/06/Logo-Beta7.png["XCLOUD", l
 
 _XCLOUD is a trademark of Microsoft Corporation._
 
-==== Windows Azure
+===== Windows Azure
 
 Windows Azure provided a free Windows Hosting (a free, renewable MSDN subscription). Everything was organised by @bureado. Thank you!
 

@@ -351,7 +351,7 @@ Special thanks go to companies who provided free hosting!
 
 ===== XCLOUD
 
-XCLOUD.ME provided a free OSX hosting (a free Mac MINI Server subscription). It works like a charm! Thank you!
+http://xcloud.me/[XCLOUD.ME] provided a free OSX hosting (a free Mac MINI Server subscription). It works like a charm! Thank you!
 
 image::http://ml.xcloud.me/wp-content/uploads/2012/06/Logo-Beta7.png["XCLOUD", link="http://xcloud.me/", window="_blank"]
 "OSX Mavericks Server. The server for everyone in the cloud."
@@ -360,9 +360,9 @@ _XCLOUD is a trademark of Microsoft Corporation._
 
 ===== Windows Azure
 
-Windows Azure provided a free Windows Hosting (a free, renewable MSDN subscription). Everything was organised by @bureado. Thank you!
+http://www.azure.microsoft.com[Windows Azure] provided a free Windows Hosting (a free, renewable MSDN subscription). Everything was organised by @bureado. Thank you!
 
-image::http://www.azure.microsoft.com/css/images/logo.png["Windows Azure", link="http://www.azure.microsoft.com/en-us/", window="_blank"]
+image::http://www.azure.microsoft.com/css/images/logo.png["Windows Azure", link="http://www.azure.microsoft.com", window="_blank"]
 
 _Microsoft and Windows are registered trademarks of Microsoft Corporation in the United States of America and other countries. Windows Azure is a trademark of Microsoft Corporation._
 

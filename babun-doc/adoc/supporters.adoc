@@ -1,17 +1,18 @@
 
+
 === Supporters
 
-We would like to thank our supporters who greately contributed to the project by providing free hosting! 
+Special thanks go to companies who provided free hosting! 
 
 ==== XCLOUD
 
-XCLOUD.ME provided a free OSX hosting (a free Mac MINI Server subscription). It works like a charm! Thank you!
+XCLOUD.ME (R) provided a free OSX hosting (a free Mac MINI Server subscription). It works like a charm! Thank you!
 
 image::http://ml.xcloud.me/wp-content/uploads/2012/06/Logo-Beta7.png["XCLOUD", link="http://xcloud.me/", window="_blank", align="center"]
 "OSX Mavericks Server. The server for everyone in the cloud."
 
 ==== Windows Azure
 
-Windows Azure (R) provided a free Windows Hosting (a free, renewable MSDN subscription). Everything was organised by @bureado. Thank you!
+Windows Azure provided a free Windows Hosting (a free, renewable MSDN subscription). Everything was organised by @bureado. Thank you!
 
 image::http://www.azure.microsoft.com/css/images/logo.png["Windows Azure", link="http://www.azure.microsoft.com/en-us/", window="_blank", align="center"]

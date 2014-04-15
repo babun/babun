@@ -359,7 +359,7 @@ image::http://ml.xcloud.me/wp-content/uploads/2012/06/Logo-Beta7.png["XCLOUD", l
 
 Windows Azure (R) provided a free Windows Hosting (a free, renewable MSDN subscription). Everything was organised by @bureado. Thank you!
 
-image::http://gigaom2.files.wordpress.com/2010/10/windows_azure.jpg?w=200["Windows Azure", link="http://www.azure.microsoft.com/en-us/", window="_blank", align="center"]
+image::http://www.azure.microsoft.com/css/images/logo.png["Windows Azure", link="http://www.azure.microsoft.com/en-us/", window="_blank", align="center"]
 
 === Contribute
 

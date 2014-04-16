@@ -356,7 +356,7 @@ http://xcloud.me/[XCLOUD.ME] provided a free OSX hosting (a free Mac MINI Server
 image::http://ml.xcloud.me/wp-content/uploads/2012/06/Logo-Beta7.png["XCLOUD", link="http://xcloud.me/", window="_blank"]
 "OSX Mavericks Server. The server for everyone in the cloud."
 
-_XCLOUD is a trademark of Microsoft Corporation._
+_XCLOUD is a trademark of innofield GmbH._
 
 ===== Windows Azure
 

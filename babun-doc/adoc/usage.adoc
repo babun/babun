@@ -112,7 +112,7 @@ gitalias['alias.unstage']='reset HEAD --'
 ==== Installing and removing packages
 Babun is shipped with +pact+ - a Linux like package manager. It uses the cygwin repository for downloading packages:
 ----
-{ ~ } » pact install arj                                                                      ~ 
+{ ~ } » pact install arj                                                                     ~ 
 Working directory is /setup
 Mirror is http://mirrors.kernel.org/sourceware/cygwin/
 setup.ini taken from the cache

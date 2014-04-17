@@ -14,6 +14,8 @@ Babun features the following:
 * Integrated oh-my-zsh
 * Auto update feature
 
+SCREENSHOT: TODO
+
 === Features in 3 minutes
 
 ==== Cygwin

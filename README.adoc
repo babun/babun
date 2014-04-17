@@ -2,6 +2,8 @@
 
 Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun!
 
+SCREENCAST: TODO
+
 === Installation
 
 Just download the dist file from HERE, unzip it and run the install.bat script. After a few minutes babun starts automatically.
@@ -20,6 +22,8 @@ Babun features the following:
 * Pre-configured git and shell
 * Integrated oh-my-zsh
 * Auto update feature
+
+SCREENSHOT: TODO
 
 === Features in 3 minutes
 

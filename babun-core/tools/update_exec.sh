@@ -1,9 +1,6 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
-
-babun="/usr/local/etc/babun"
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
 # install/update plugins
 "$babun"/source/babun-core/plugins/install.sh || { echo "ERROR: Could not update babun!"; exit -2; }

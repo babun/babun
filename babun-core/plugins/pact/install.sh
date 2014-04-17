@@ -1,16 +1,6 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
-
-babun="/usr/local/etc/babun"
-source "$babun/source/babun-core/tools/plugins.sh"
-
-# plugin descriptor
-plugin_name=pact
-plugin_version=1
-should_install_plugin
-
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
 src="$babun/source/babun-core/plugins/pact/src"
 dest="$babun/home/pact/.pact"

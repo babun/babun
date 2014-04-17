@@ -1,3 +1,6 @@
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
+
 function check_only_one_running {
     if ! [ -d /var/lock ]; then
         mkdir -p /var/lock

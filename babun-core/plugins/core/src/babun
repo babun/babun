@@ -1,10 +1,10 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
-source /usr/local/etc/babun/source/babun-core/tools/procps.sh
-source /usr/local/etc/babun/source/babun-core/tools/check.sh
+source "$babun/source/babun-core/tools/procps.sh"
+source "$babun/source/babun-core/tools/check.sh"
+
 check_only_one_running "babun"
 
 function usage()

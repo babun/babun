@@ -1,16 +1,6 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
-
-babun="/usr/local/etc/babun"
-source "$babun/source/babun-core/tools/plugins.sh"
-
-# plugin descriptor
-plugin_name=core
-plugin_version=1
-should_install_plugin
-
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
 src="$babun/source/babun-core/plugins/core/src"
 
@@ -77,3 +67,4 @@ for profile in "${profiles[@]}"; do
 		echo "source /usr/local/etc/babun.start" >> "$profile"
 	fi
 done
+

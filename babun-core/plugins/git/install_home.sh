@@ -1,6 +1,6 @@
 #!/bin/bash
-set -o pipefail
-set -f
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
 declare -A gitconfig
 declare -A gitalias

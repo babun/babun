@@ -1,16 +1,6 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
-
-babun="/usr/local/etc/babun"
-source "$babun/source/babun-core/tools/plugins.sh"
-
-# plugin descriptor
-plugin_name=cacert
-plugin_version=1
-should_install_plugin
-
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
 cd /usr/ssl/certs
 curl http://curl.haxx.se/ca/cacert.pem | awk 'split_after==1{n++;split_after=0} /-----END CERTIFICATE-----/ {split_after=1} {print > "cert" n ".pem"}'

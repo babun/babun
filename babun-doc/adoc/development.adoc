@@ -4,7 +4,7 @@
 
 === Project structure
 
-The project consists of four main modules.
+The project consists of five modules.
 
 ==== babun-packages
 
@@ -33,6 +33,12 @@ The main goal of the +babun-dist+ module is to zip the ready-made instance of ba
 After the build has finished babun zip distribution is ready!
 
 Distribution package is located in the +target/babun-dist+ folder.
+
+==== babun-doc
+
+This module contains documentation written in ASCIIDOC.
+
+
 
 === Building from source
 

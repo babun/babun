@@ -1,12 +1,4 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
-babun="/usr/local/etc/babun"
-source "$babun/source/babun-core/tools/plugins.sh"
-
-# plugin descriptor
-plugin_name=git
-plugin_version=1
-should_install_plugin

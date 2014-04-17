@@ -1,16 +1,6 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
-
-babun="/usr/local/etc/babun"
-source "$babun/source/babun-core/tools/plugins.sh"
-
-# plugin descriptor
-plugin_name=oh-my-zsh
-plugin_version=1
-should_install_plugin
-
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
 src="$babun/external/oh-my-zsh"
 dest="$babun/home/oh-my-zsh/.oh-my-zsh"

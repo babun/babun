@@ -1,10 +1,6 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
-
-babun="/usr/local/etc/babun"
-source "$babun/source/babun-core/tools/plugins.sh"
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
 src="$babun/home/oh-my-zsh"
 

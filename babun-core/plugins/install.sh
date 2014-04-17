@@ -1,10 +1,7 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
-
-babun="/usr/local/etc/babun"
-plugins="$babun/source/babun-core/plugins"
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
+source "$babun/source/babun-core/tools/plugins.sh"
 
 # prepare the environment
 mkdir -p "$babun/home"
@@ -15,12 +12,12 @@ mkdir -p "$babun/installed"
 bash "$babun/source/babun-core/tools/fix_symlinks.sh"
 
 # install plugins
-bash "$plugins/core/install.sh"
-bash "$plugins/pact/install.sh"
-bash "$plugins/cacert/install.sh"
-bash "$plugins/shell/install.sh"
-bash "$plugins/oh-my-zsh/install.sh"
-bash "$plugins/git/install.sh"
+plugin_install "core"
+plugin_install "pact"
+plugin_install "cacert"
+plugin_install "shell"
+plugin_install "oh-my-zsh"
+plugin_install "git"
 
-# setting the installed version
+# set the installed version
 cat "$babun/source/babun.version" > "$babun/installed/babun"

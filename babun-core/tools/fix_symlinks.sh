@@ -1,7 +1,6 @@
 #!/bin/bash
-set -o pipefail
-set -e
-set -f
+set -e -f -o pipefail
+source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
 if ! [ -f "/etc/postinstall/symlinks_repair.sh.done" ]; then
 	echo "Fixing symlinks for the installation"

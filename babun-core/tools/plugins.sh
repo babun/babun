@@ -1,7 +1,7 @@
 set -e -f -o pipefail
 source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
-local homedir=~
+homedir=~
 eval homedir="$homedir"
 
 function plugin_should_install {

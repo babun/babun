@@ -1,3 +1,4 @@
+#!/bin/bash
 trap 'catch_err ${LINENO}' ERR
 
 function catch_err() {

@@ -1,3 +1,4 @@
+#!/bin/bash
 stamps="/usr/local/etc/babun/stamps"
 
 if ! [ -d "$stamps" ]; then 

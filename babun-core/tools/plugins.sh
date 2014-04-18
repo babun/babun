@@ -1,15 +1,16 @@
 set -e -f -o pipefail
 source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 
-homedir=~
+local homedir=~
 eval homedir="$homedir"
 
 function plugin_should_install {
+	local plugin_name="$1"
 	echo "$plugin_name"		
-	installed="/usr/local/etc/babun/installed/$plugin_name"
+	local installed="/usr/local/etc/babun/installed/$plugin_name"
 	if [ -f "$installed" ]; then		
 		typeset -i installed_version
-		installed_version=$(cat "$installed" || echo "0") 	
+		local installed_version=$(cat "$installed" || echo "0") 	
 		
 		if ! [[ $plugin_version -gt $installed_version ]]; then
 			echo "  installed [$installed_version]"
@@ -21,15 +22,16 @@ function plugin_should_install {
 }
 
 function plugin_installed_ok {
+	local plugin_name="$1"
 	echo "$plugin_name"		
-	installed="/usr/local/etc/babun/installed/$plugin_name"
+	local installed="/usr/local/etc/babun/installed/$plugin_name"
 	if [ -f "$installed" ]; then		
 		typeset -i installed_version
-		installed_version=$(cat "$installed" || echo "0") 	
+		local installed_version=$(cat "$installed" || echo "0") 	
 	fi
 
 	if [[ -z "$installed_version" ]]; then
-		installed_version="none"
+		local installed_version="none"
 	fi
 
 	echo "$plugin_version" > "$installed"
@@ -39,8 +41,8 @@ function plugin_installed_ok {
 }
 
 function plugin_install {
-	plugin_name=$1
-	plugin_desc="/usr/local/etc/babun/source/$plugin_name/plugin.desc"
+	local plugin_name="$1"
+	local plugin_desc="/usr/local/etc/babun/source/$plugin_name/plugin.desc"
 	if [ -f "$plugin_desc" ]; then	
 		echo " Cannot find plugin descriptor [$plugin_name]"	
 		exit 1
@@ -51,7 +53,7 @@ function plugin_install {
 	
 	# checks the version, installas only if the version is newer
 	# uses the plugin descriptor variables
-	plugin_should_install
+	plugin_should_install "$plugin_name"
 
 	# execute plugin's install.sh in a separate shell
 	install_script="/usr/local/etc/babun/source/$plugin_name/install.sh" 
@@ -61,12 +63,12 @@ function plugin_install {
 
 	# sets the version to the newest one
 	# uses the plugin descriptor variables
-	plugin_installed_ok
+	plugin_installed_ok "$plugin_name"
 }
 
 function plugin_install_home {
-	plugin_name=$1
-	plugin_desc="/usr/local/etc/babun/source/$plugin_name/plugin.desc"
+	local plugin_name="$1"
+	local plugin_desc="/usr/local/etc/babun/source/$plugin_name/plugin.desc"
 	if [ -f "$plugin_desc" ]; then	
 		echo " Cannot find plugin descriptor [$plugin_name]"	
 		exit 1
@@ -76,8 +78,10 @@ function plugin_install_home {
 	source "$plugin_desc"
 	
 	# execute plugin's install_home.sh in a separate shell
-	install_home_script="/usr/local/etc/babun/source/$plugin_name/install_home.sh" 
+	local install_home_script="/usr/local/etc/babun/source/$plugin_name/install_home.sh" 
 	if [ -f "$install_home_script" ]; then
 		bash "$install_home_script"	
 	fi
 }
+
+

@@ -3,7 +3,8 @@ set -f -o pipefail
 # disabled for now, script is not compatible with this option
 # set -e 
 
-source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
+source "/usr/local/etc/babun.instance"
+source "$babun_tools/script.sh"
 source ~/.pact/pact.repo
 
 # this script requires some packages

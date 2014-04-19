@@ -1,5 +1,7 @@
-readme="../README.adoc"
+#!/bin/bash
+set -e -f -o pipefail
 
+readme="../README.adoc"
 cat /dev/null > "$readme"
 
 cat adoc/header.adoc >> "$readme"

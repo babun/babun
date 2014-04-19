@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e -f -o pipefail
-source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
+source "/usr/local/etc/babun.instance"
+source "$babun_tools/script.sh"
 
-src="$babun/source/babun-core/plugins/shell/src/"
+src="$babun_source/babun-core/plugins/shell/src/"
 dest="$babun/home/shell/"
 
 /bin/cp -rf $src/minttyrc /etc/minttyrc

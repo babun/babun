@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e -f -o pipefail
-source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
-source "$babun/source/babun-core/tools/check.sh"
+source "/usr/local/etc/babun.instance"
+source "$babun_tools/script.sh"
+source "$babun_tools/check.sh"
 
 if [[ -z "$BABUN_BRANCH" ]]; then
 	export BABUN_BRANCH=release

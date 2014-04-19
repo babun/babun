@@ -1,5 +1,7 @@
 #!/bin/bash
-stamps="/usr/local/etc/babun/stamps"
+source "/usr/local/etc/babun.instance"
+source "$babun_tools/script.sh"
+stamps="$babun/stamps"
 
 if ! [ -d "$stamps" ]; then 
 	mkdir -p "$stamps"

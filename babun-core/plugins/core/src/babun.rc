@@ -3,7 +3,6 @@
 # DO NOT MODIFY THIS FILE -> IT WILL BE OVERWRITTEN ON UPDATE
 # If you want to some options modify the following file: ~/.babunrc
 
-
 export CYGWIN_VERSION=x86
 export CYGWIN="nodosfilewarning mintty detect_bloda"
 export TERM=xterm-256color
@@ -31,7 +30,6 @@ export LANG="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-# Uncomment this to disable daily auto-update & proxy checks on startup (not recommended!)
 export DISABLE_CHECK_ON_STARTUP="false"
 export CHECK_TIMEOUT_IN_SECS=4
 

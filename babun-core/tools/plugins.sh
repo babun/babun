@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e -f -o pipefail
-source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
+source "/usr/local/etc/babun.instance"
+source "$babun_tools/script.sh"
 
 homedir=~
 eval homedir="$homedir"
@@ -8,7 +9,7 @@ eval homedir="$homedir"
 function plugin_should_install {
 	local plugin_name="$1"
 	echo "$plugin_name"		
-	local installed="/usr/local/etc/babun/installed/$plugin_name"
+	local installed="$babun/installed/$plugin_name"
 	if [ -f "$installed" ]; then		
 		typeset -i installed_version
 		local installed_version=$(cat "$installed" || echo "0") 	
@@ -25,7 +26,7 @@ function plugin_should_install {
 function plugin_installed_ok {
 	local plugin_name="$1"
 	echo "$plugin_name"		
-	local installed="/usr/local/etc/babun/installed/$plugin_name"
+	local installed="$babun/installed/$plugin_name"
 	if [ -f "$installed" ]; then		
 		typeset -i installed_version
 		local installed_version=$(cat "$installed" || echo "0") 	
@@ -43,7 +44,7 @@ function plugin_installed_ok {
 
 function plugin_install {
 	local plugin_name="$1"
-	local plugin_desc="/usr/local/etc/babun/source/$plugin_name/plugin.desc"
+	local plugin_desc="$babun/source/$plugin_name/plugin.desc"
 	if [ -f "$plugin_desc" ]; then	
 		echo " Cannot find plugin descriptor [$plugin_name]"	
 		exit 1
@@ -57,7 +58,7 @@ function plugin_install {
 	plugin_should_install "$plugin_name"
 
 	# execute plugin's install.sh in a separate shell
-	install_script="/usr/local/etc/babun/source/$plugin_name/install.sh" 
+	install_script="$babun/source/$plugin_name/install.sh" 
 	if [ -f "$install_script" ]; then
 		bash "$install_script"	
 	fi
@@ -69,7 +70,7 @@ function plugin_install {
 
 function plugin_install_home {
 	local plugin_name="$1"
-	local plugin_desc="/usr/local/etc/babun/source/$plugin_name/plugin.desc"
+	local plugin_desc="$babun/source/$plugin_name/plugin.desc"
 	if [ -f "$plugin_desc" ]; then	
 		echo " Cannot find plugin descriptor [$plugin_name]"	
 		exit 1
@@ -79,7 +80,7 @@ function plugin_install_home {
 	source "$plugin_desc"
 	
 	# execute plugin's install_home.sh in a separate shell
-	local install_home_script="/usr/local/etc/babun/source/$plugin_name/install_home.sh" 
+	local install_home_script="$babun/source/$plugin_name/install_home.sh" 
 	if [ -f "$install_home_script" ]; then
 		bash "$install_home_script"	
 	fi

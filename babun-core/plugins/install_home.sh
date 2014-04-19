@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e -f -o pipefail
-source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
-source "$babun/source/babun-core/tools/plugins.sh"
+source "/usr/local/etc/babun.instance"
+source "$babun_tools/script.sh"
+source "$babun_tools/plugins.sh"
 
 # install home folder content
 plugin_install_home "cacert"

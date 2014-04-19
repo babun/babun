@@ -43,7 +43,12 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
     }
 }
 
-def installCore(File outputFolder, String babunBranch) {
+// -----------------------------------------------------
+// TODO - EXTERNALIZE THE INSTALLATION OF THE BABUN CORE
+// THIS SHOULD BE A SEPARATE SHELL SCRIPT
+// IT WILL ENABLE INSTALLING THE CORE ON OSX!!!
+// -----------------------------------------------------
+def installCore(File outputFolder, String babunBranch) {    
     // rebase dll's
     executeCmd("${outputFolder.absolutePath}/cygwin/bin/dash.exe -c '/usr/bin/rebaseall'", 5)
 
@@ -54,7 +59,7 @@ def installCore(File outputFolder, String babunBranch) {
     String sslVerify = "git config --global http.sslverify"
     String src = "/usr/local/etc/babun/source"
     String clone = "git clone https://github.com/babun/babun.git ${src}"
-    String checkout = "git --git-dir='${src}/.git' --work-tree='${src}' checkout ${babunBranch}"
+    String checkout = "git --git-dir='${src}/.git' --work-tree='${src}' checkout ${babunBranch}"    
     executeCmd("${bash} -c \"${sslVerify} 'false'; ${clone}; ${checkout}; ${sslVerify} 'true';\"", 5)
     
     // remove windows new line feeds
@@ -64,6 +69,9 @@ def installCore(File outputFolder, String babunBranch) {
     // make installer executable
     String chmod = "find /usr/local/etc/babun/source/babun-core -type f -regex '.*sh' -exec chmod u+x {} \\;"
     executeCmd("${bash} -c \"${chmod}\"", 5)
+
+    // invoke init.sh
+    executeCmd("${bash} \"/usr/local/etc/babun/source/babun-core/tools/init.sh\"", 5)
 
     // run babun installer - yay!
     executeCmd("${bash} \"/usr/local/etc/babun/source/babun-core/plugins/install.sh\"", 5)

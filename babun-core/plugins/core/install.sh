@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e -f -o pipefail
-source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
+source "/usr/local/etc/babun.instance"
 
-src="$babun/source/babun-core/plugins/core/src"
+source "$babun_tools/script.sh"
+src="$babun_source/babun-core/plugins/core/src"
 
 /bin/cp -rf $src/babun /usr/local/bin
 chmod 755 /usr/local/bin/babun

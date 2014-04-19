@@ -1,3 +1,3 @@
 #!/bin/bash
-babun="/usr/local/etc/babun"
+source "/usr/local/etc/babun.instance"
 source "$babun/source/babun-core/tools/trap.sh"

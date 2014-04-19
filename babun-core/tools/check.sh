@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e -f -o pipefail
-source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
-source "$babun/source/babun-core/tools/stamps.sh"
+source "/usr/local/etc/babun.instance"
+source "$babun_tools/script.sh"
+source "$babun_tools/stamps.sh"
 
 function get_current_version {
 	local current_version=$( cat "$babun/installed/babun" 2> /dev/null || echo "0.0.0" )
@@ -67,7 +68,6 @@ function babun_check {
 }
 
 function guarded_babun_check {
-	local babun="/usr/local/etc/babun"
 	local check_stamp="$babun/stamps/check"	
 	if ! [ $(find "$babun/stamps" -mtime 0 -type f -name 'check' 2>/dev/null) ]; then
 		echo "Executing daily babun check:"

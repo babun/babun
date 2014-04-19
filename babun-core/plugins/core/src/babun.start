@@ -1,8 +1,9 @@
 #!/bin/bash
 # println babun welcome message
-/usr/local/etc/babun/source/babun-core/tools/welcome.sh
+source "/usr/local/etc/babun.instance"
+"$babun_tools/welcome.sh"
 
 if ! [[ "$DISABLE_CHECK_ON_STARTUP" == "true" ]]; then
-	source /usr/local/etc/babun/source/babun-core/tools/check.sh
+	source "$babun_tools/check.sh"
 	guarded_babun_check
 fi

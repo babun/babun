@@ -2,7 +2,7 @@
 import static java.lang.System.*
 import static java.lang.System.getenv
 
-VERSION = new File("${getRoot()}/babun.version").text
+VERSION = new File("${getRoot()}/babun.version").text.trim()
 TEN_MINUTES = 10
 TWENTY_MINUTES = 20
 

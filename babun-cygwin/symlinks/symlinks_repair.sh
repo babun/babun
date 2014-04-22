@@ -1,5 +1,5 @@
 ﻿#!/bin/bash
-set -e -f -o pipefail
+#set -e -f -o pipefail -> don't use it
 filename="/etc/postinstall/symlinks_broken.txt"
 
 # verify if the file exist

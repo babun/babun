@@ -7,8 +7,7 @@ homedir=~
 eval homedir="$homedir"
 
 function plugin_should_install {
-	local plugin_name="$1"
-	echo "$plugin_name"		
+	local plugin_name="$1"	
 	local installed="$babun/installed/$plugin_name"
 	if [ -f "$installed" ]; then		
 		typeset -i installed_version
@@ -24,8 +23,7 @@ function plugin_should_install {
 }
 
 function plugin_installed_ok {
-	local plugin_name="$1"
-	echo "$plugin_name"		
+	local plugin_name="$1"	
 	local installed="$babun/installed/$plugin_name"
 	if [ -f "$installed" ]; then		
 		typeset -i installed_version

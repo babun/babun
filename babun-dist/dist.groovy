@@ -98,9 +98,10 @@ def createBabunDist(File outputFolder, String version) {
 
     // zip dist folder
     new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip", level: 3) {
-        fileset(dir: "${outputFolder.absolutePath}", defaultexcludes:"no") {
-            include(name: "babun-${version}/**")
-        }
+        fileset(dir: "${outputFolder.absolutePath}", defaultexcludes:"no") 
+        // {
+        //    include(name: "babun-${version}/**")
+        //}
     }
 }
 

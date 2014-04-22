@@ -45,9 +45,9 @@ function plugin_installed_ok {
 function plugin_install {	
 	local plugin_name="$1"
 	echo "Installing plugin [$plugin_name]"
-	local plugin_desc="$babun/source/$plugin_name/plugin.desc"
+	local plugin_desc="$babun/source/babun-core/plugins/$plugin_name/plugin.desc"
 	if [ ! -f "$plugin_desc" ]; then	
-		echo " Cannot find plugin descriptor [$plugin_name]"	
+		echo " Cannot find plugin descriptor [$plugin_name] [$plugin_desc]"	
 		exit 1
 	fi	
 
@@ -59,7 +59,7 @@ function plugin_install {
 	plugin_should_install "$plugin_name"
 
 	# execute plugin's install.sh in a separate shell
-	install_script="$babun/source/$plugin_name/install.sh" 
+	install_script="$babun/source/babun-core/plugins/$plugin_name/install.sh" 
 	if [ -f "$install_script" ]; then
 		bash "$install_script"	
 	fi
@@ -71,9 +71,10 @@ function plugin_install {
 
 function plugin_install_home {
 	local plugin_name="$1"
-	local plugin_desc="$babun/source/$plugin_name/plugin.desc"
+	echo "Installing plugin's home [$plugin_name]"
+	local plugin_desc="$babun/source/babun-core/plugins/$plugin_name/plugin.desc"
 	if [ -f "$plugin_desc" ]; then	
-		echo " Cannot find plugin descriptor [$plugin_name]"	
+		echo " Cannot find plugin descriptor [$plugin_name] [$plugin_desc]"	
 		exit 1
 	fi	
 

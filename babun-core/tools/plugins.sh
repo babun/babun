@@ -42,10 +42,11 @@ function plugin_installed_ok {
 	echo "  action    [execute]"
 }
 
-function plugin_install {
+function plugin_install {	
 	local plugin_name="$1"
+	echo "Installing plugin [$plugin_name]"
 	local plugin_desc="$babun/source/$plugin_name/plugin.desc"
-	if [ -f "$plugin_desc" ]; then	
+	if [ ! -f "$plugin_desc" ]; then	
 		echo " Cannot find plugin descriptor [$plugin_name]"	
 		exit 1
 	fi	

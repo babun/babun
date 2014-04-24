@@ -1,17 +1,16 @@
 
-
 === Supporters
 
 Special thanks go to companies who provided free hosting! 
 
 ===== XCLOUD
 
-http://xcloud.me/[XCLOUD.ME] provided a free OSX hosting (a free Mac MINI Server subscription). It works like a charm! Thank you!
+http://xcloud.me/[XCLOUD.ME] provided a free hosted OS X instance (a free Xcloud Mini Server subscription). It works like a charm! Thank you!
 
 image::http://ml.xcloud.me/wp-content/uploads/2012/06/Logo-Beta7.png["XCLOUD", link="http://xcloud.me/", window="_blank"]
-"OSX Mavericks Server. The server for everyone in the cloud."
+"Run, manage and scale your virtual dedicated OS X Server in the Cloud."
 
-_XCLOUD is a trademark of innofield GmbH._
+_XCLOUD is a trademark of AG from Switzerland._
 
 ===== Windows Azure
 

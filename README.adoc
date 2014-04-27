@@ -27,6 +27,8 @@ Babun features the following:
 
 SCREENSHOT: TODO_LINK
 
+image::https://github.com/babun/babun.github.io/blob/master/images/screen_vim.png
+
 === Features in 3 minutes
 
 ==== Cygwin

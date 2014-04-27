@@ -5,6 +5,7 @@ NOTE: RELEASE TILL THE END OF APRIL!
 Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun!
 
 SCREENCAST: TODO_LINK
+video::VOHIYhbRIq0[youtube, width=560, height=315, align="center"]
 
 === Installation
 

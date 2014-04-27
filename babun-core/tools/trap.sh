@@ -11,3 +11,5 @@ function catch_err() {
     echo "Error on or near line ${PARENT_LINENO};"
   fi
 }
+
+

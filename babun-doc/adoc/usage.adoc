@@ -14,7 +14,9 @@ Babun features the following:
 * Integrated oh-my-zsh
 * Auto update feature
 
-SCREENSHOT: TODO_LINK
+Have a look at a sample screenshot!
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
 
 === Features in 3 minutes
 

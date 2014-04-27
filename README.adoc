@@ -1,12 +1,17 @@
-== Babun - a Windows shell you will love!
+= Babun - a windows shell you will love
 
 NOTE: RELEASE TILL THE END OF APRIL!
 
 Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun!
 
-SCREENCAST: TODO_LINK
 
-video::VOHIYhbRIq0[youtube, width=560, height=315, align="center"]
+Have a look at a 1-minute long screencast:
+
+TODO: Enable screencast
+
+// video::VOHIYhbRIq0[youtube, width=560, height=315, align="center"]
+
+// https://www.youtube.com/watch?v=VOHIYhbRIq0
 
 === Installation
 
@@ -26,6 +31,8 @@ Babun features the following:
 * Pre-configured git and shell
 * Integrated oh-my-zsh
 * Auto update feature
+
+Have a look at a sample screenshot!
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
 
@@ -398,19 +405,18 @@ The folder contains folders named like plugins. If a plugin needs to install som
 The source code located in the babun's repository is published under the Apache License, Version 2.0, January 2004 if not stated otherwise. 
 
 Since the distribution (zip) package contains the Cygwin's DLLs the distribution package is licensed under the GPLv3+ licence to satisfy the Cygwin's licensing terms (http://cygwin.com/licensing.html).
-
 === Supporters
 
 Special thanks go to companies who provided free hosting! 
 
 ===== XCLOUD
 
-http://xcloud.me/[XCLOUD.ME] provided a free OSX hosting (a free Mac MINI Server subscription). It works like a charm! Thank you!
+http://xcloud.me/[XCLOUD.ME] provided a free hosted OS X instance (a free Xcloud Mini Server subscription). It works like a charm! Thank you!
 
 image::http://ml.xcloud.me/wp-content/uploads/2012/06/Logo-Beta7.png["XCLOUD", link="http://xcloud.me/", window="_blank"]
-"OSX Mavericks Server. The server for everyone in the cloud."
+"Run, manage and scale your virtual dedicated OS X Server in the Cloud."
 
-_XCLOUD is a trademark of innofield GmbH._
+_XCLOUD is a trademark of AG from Switzerland._
 
 ===== Windows Azure
 
@@ -419,6 +425,7 @@ http://www.azure.microsoft.com[Windows Azure] provided a free Windows Hosting (a
 image::http://www.azure.microsoft.com/css/images/logo.png["Windows Azure", link="http://www.azure.microsoft.com", window="_blank"]
 
 _Microsoft and Windows are registered trademarks of Microsoft Corporation in the United States of America and other countries. Windows Azure is a trademark of Microsoft Corporation._
+
 
 === Contribute
 

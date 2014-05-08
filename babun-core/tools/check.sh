@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e -f -o pipefail
+set -e -f 
+#-o pipefail -> no pipe fail as there is not pipe in this 'cking script :)
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 source "$babun_tools/stamps.sh"
@@ -69,7 +70,7 @@ function babun_check {
 
 function guarded_babun_check {
 	local check_stamp="$babun/stamps/check"	
-	if ! [ $(find "$babun/stamps" -mtime 0 -type f -name 'check' 2>/dev/null || true) ]; then
+	if ! [ $(find "$babun/stamps" -mtime 0 -type f -name 'check' 2>/dev/null || true ) ]; then
 		echo "Executing daily babun check:"
 		babun_check
 		echo "$(date)" > "$check_stamp"

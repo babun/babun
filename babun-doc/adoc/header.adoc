@@ -1,5 +1,5 @@
 = Babun - a windows shell you will love
 
-NOTE: RELEASE TILL THE END OF APRIL!
+NOTE: RELEASE TILL MID MAY - WE ARE DOING OUR BEST!
 
 Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun!

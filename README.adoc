@@ -255,6 +255,53 @@ babun update
 Please note that your local configuration files will not be overwritten. 
 
 
+=== Screenshots
+
+==== After installation
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_babun_install.png[babun - a Windows shell you will love!, align="center"]
+
+==== Startup screen
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_welcome.png[babun - a Windows shell you will love!, align="center"]
+
+==== Pact => package installation
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_install.png[babun - a Windows shell you will love!, align="center"]
+
+==== Pact => package installed
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_installed.png[babun - a Windows shell you will love!, align="center"]
+
+==== VIM syntax highlighting 
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
+
+==== Nano syntax highlighting
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_nano.png[babun - a Windows shell you will love!, align="center"]
+
+==== Git aliases => git lg
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_lg.png[babun - a Windows shell you will love!, align="center"]
+
+==== Git aliases => git st
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_st.png[babun - a Windows shell you will love!, align="center"]
+
+==== Shell prompt
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_shell.png[babun - a Windows shell you will love!, align="center"]
+
+==== Babun update
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_update.png[babun - a Windows shell you will love!, align="center"]
+
+==== Babun oh-my-zsh update
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_zsh_update.png[babun - a Windows shell you will love!, align="center"]
+
+
 == Development
 
 === Project structure
@@ -398,53 +445,6 @@ The folder contains external resources, like cloned repos of other projects (for
 ==== home
 
 The folder contains folders named like plugins. If a plugin needs to install something to user's folder this content has to be copied to "home/<plugin_name>" folder. It's just a store of the user's home files, so that whenver a new user's account is created babun can install user's home related content to the user's home folder (it's the plugin install_home.sh script's responsibility, however, to copy this content to the actual user's home folder). 
-
-
-=== Screenshots
-
-==== After installation
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_babun_install.png[babun - a Windows shell you will love!, align="center"]
-
-==== Startup screen
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_welcome.png[babun - a Windows shell you will love!, align="center"]
-
-==== Pact => package installation
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_install.png[babun - a Windows shell you will love!, align="center"]
-
-==== Pact => package installed
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_installed.png[babun - a Windows shell you will love!, align="center"]
-
-==== VIM syntax highlighting 
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
-
-==== Nano syntax highlighting
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_nano.png[babun - a Windows shell you will love!, align="center"]
-
-==== Git aliases => git lg
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_lg.png[babun - a Windows shell you will love!, align="center"]
-
-==== Git aliases => git st
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_st.png[babun - a Windows shell you will love!, align="center"]
-
-==== Shell prompt
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_shell.png[babun - a Windows shell you will love!, align="center"]
-
-==== Babun update
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_update.png[babun - a Windows shell you will love!, align="center"]
-
-==== Babun oh-my-zsh update
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_zsh_update.png[babun - a Windows shell you will love!, align="center"]
 
 
 === Licence

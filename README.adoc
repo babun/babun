@@ -257,10 +257,6 @@ Please note that your local configuration files will not be overwritten.
 
 === Screenshots
 
-==== After installation
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_babun_install.png[babun - a Windows shell you will love!, align="center"]
-
 ==== Startup screen
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_welcome.png[babun - a Windows shell you will love!, align="center"]

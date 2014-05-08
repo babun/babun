@@ -2,28 +2,46 @@
 
 === Screenshots
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_welcome.png[babun - a Windows shell you will love!, align="center"]
+==== After installation
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_babun_install.png[babun - a Windows shell you will love!, align="center"]
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_lg.png[babun - a Windows shell you will love!, align="center"]
+==== Startup screen
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_st.png[babun - a Windows shell you will love!, align="center"]
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_welcome.png[babun - a Windows shell you will love!, align="center"]
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_nano.png[babun - a Windows shell you will love!, align="center"]
+==== Pact => package installation
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_install.png[babun - a Windows shell you will love!, align="center"]
 
+==== Pact => package installed
+
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_installed.png[babun - a Windows shell you will love!, align="center"]
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_shell.png[babun - a Windows shell you will love!, align="center"]
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_update.png[babun - a Windows shell you will love!, align="center"]
+==== VIM syntax highlighting 
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_welcome.png[babun - a Windows shell you will love!, align="center"]
+==== Nano syntax highlighting
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_nano.png[babun - a Windows shell you will love!, align="center"]
+
+==== Git aliases => git lg
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_lg.png[babun - a Windows shell you will love!, align="center"]
+
+==== Git aliases => git st
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_st.png[babun - a Windows shell you will love!, align="center"]
+
+==== Shell prompt
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_shell.png[babun - a Windows shell you will love!, align="center"]
+
+==== Babun update
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_update.png[babun - a Windows shell you will love!, align="center"]
+
+==== Babun oh-my-zsh update
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_zsh_update.png[babun - a Windows shell you will love!, align="center"]

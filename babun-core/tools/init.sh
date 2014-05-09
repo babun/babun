@@ -8,3 +8,8 @@ echo 'babun=/usr/local/etc/babun' >> "$babun_instance"
 echo 'babun_source="$babun/source"' >> "$babun_instance"
 echo 'babun_plugins="$babun/source/babun-core/plugins"' >> "$babun_instance"
 echo 'babun_tools="$babun/source/babun-core/tools"' >> "$babun_instance"
+
+echo 'homedir=~' >> "$babun_instance"
+echo 'eval homedir="$homedir"' >> "$babun_instance"
+
+

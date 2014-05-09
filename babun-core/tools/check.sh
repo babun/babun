@@ -1,5 +1,7 @@
 #!/bin/bash
-set -e -f 
+set -f 
+# FIX_RELEASE
+# -e 
 #-o pipefail -> no pipe fail as there is not pipe in this 'cking script :)
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"

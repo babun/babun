@@ -37,7 +37,7 @@ function apply_git_config {
 	
 	for configKey in "${!configMap[@]}"
 	do
-		git config --list | grep -q "$configKey"
+		git config --list | grep -q "$configKey" || true
 		if [ $? -ne 0 ]; then
 			configValue="${configMap[$configKey]}"
 			git config --global "$configKey" "$configValue"

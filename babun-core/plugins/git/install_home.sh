@@ -28,17 +28,18 @@ gitalias['alias.unstage']='reset HEAD --'
 # git mergetool config
 gitmerge['merge.tool']='vimdiff'
 gitmerge['mergetool.prompt']='false'
-gitmerge['mergetool.trustExitCode']='false'
-gitmerge['mergetool.keepBackups']='false'
-gitmerge['mergetool.keepTemporaries']='false'
+gitmerge['mergetool.trustexitcode']='false'
+gitmerge['mergetool.keepbackups']='false'
+gitmerge['mergetool.keeptemporaries']='false'
 
 function apply_git_config {
 	eval "declare -A configMap="${1#*=}
 	
+	gitcfg=$(git config --list)
+	
 	for configKey in "${!configMap[@]}"
 	do
-		git config --list | grep -q "$configKey" || true
-		if [ $? -ne 0 ]; then
+		if [[ $gitcfg != *$configKey* ]]; then
 			configValue="${configMap[$configKey]}"
 			git config --global "$configKey" "$configValue"
 		fi

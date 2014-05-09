@@ -80,10 +80,13 @@ function plugin_install_home {
 	source "$plugin_desc"
 	
 	# execute plugin's install_home.sh in a separate shell
-	local install_home_script="$babun/source/$plugin_name/install_home.sh" 
-	if [[ -f "$install_home_script" ]]; then
-		bash "$install_home_script"	
+	local install_home_script="$babun/source/babun-core/plugins/$plugin_name/install_home.sh" 
+	
+	if [[ ! -f "$install_home_script" ]]; then
+		echo " Cannot find plugin install_home.sh script [$plugin_name] [$install_home_script]"	
+		exit 1		
 	fi
+	bash "$install_home_script"	
 }
 
 

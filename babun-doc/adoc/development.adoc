@@ -120,9 +120,42 @@ In order to check babun update agains other branch (for example during a develop
 An instance of babun installed in Cygwin is located in the +/usr/local/etc/babun+ folder.
 The folder structure looks like this:
 ----
- TODO
- tree TODO
-----
+├── babun
+│   ├── external
+│   │   └── oh-my-zsh
+│   ├── home
+│   │   ├── core
+│   │   ├── oh-my-zsh
+│   │   ├── pact
+│   │   └── shell
+│   ├── installed
+│   │   ├── babun
+│   │   ├── cacert
+│   │   ├── core
+│   │   ├── git
+│   │   ├── oh-my-zsh
+│   │   ├── pact
+│   │   └── shell
+│   ├── source
+│   │   ├── babun.version
+│   │   ├── babun-core
+│   │   ├── babun-cygwin
+│   │   ├── babun-dist
+│   │   ├── babun-doc
+│   │   ├── babun-packages
+│   │   ├── build.groovy
+│   │   └── README.adoc
+│   └── stamps
+│       ├── check
+│       └── welcome
+├── babun.bash
+├── babun.instance
+├── babun.rc
+├── babun.start
+└── babun.zsh
+
+16 directories, 17 files
+---
 
 ==== source
 

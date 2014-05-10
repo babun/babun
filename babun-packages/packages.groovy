@@ -68,12 +68,13 @@ def downloadSetupIni(String repository, String bitVersion, File outputFolder, St
 
 def adjustSetupVersion(File outputFolder, String newSetupVersion) {
     outputFolder.eachFileRecurse(FILES) { File file -> 
-    if(file.name == ('setup.ini')) {
-        println "Adjusting setup-version of [${file.getAbsolutePath}]"
-        String content = file.text
-        String adjustedContent = content.replaceAll("setup-version: .*", "setup-version: ${newSetupVersion}");
-        def fileWriter = file.newWriter()
-        fileWriter << adjustedContent
+        if(file.name == ('setup.ini')) {
+            println "Adjusting setup-version of [${file.getAbsolutePath}]"
+            String content = file.text
+            String adjustedContent = content.replaceAll("setup-version: .*", "setup-version: ${newSetupVersion}")
+            def fileWriter = file.newWriter()
+            fileWriter << adjustedContent
+        }
     }
 }
 

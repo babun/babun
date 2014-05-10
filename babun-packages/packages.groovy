@@ -1,5 +1,6 @@
 #!/usr/bin/env groovy
 import static java.lang.System.*
+import static groovy.io.FileType.*
 
 execute()
 

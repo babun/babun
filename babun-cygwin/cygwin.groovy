@@ -49,7 +49,7 @@ def downloadCygwinInstaller(File outputFolder) {
     println "Downloading cygwin"
     File cygwinInstaller = new File(outputFolder, "setup-x86.exe")
     use(FileBinaryCategory) {
-        cygwinInstaller << "http://cygwin.com/setup-x86.exe".toURL()
+        cygwinInstaller << "https://raw.githubusercontent.com/babun/cygwin-releases/master/1.7.28/setup-x86.exe".toURL()
     }
     return cygwinInstaller
 }

@@ -1,8 +1,10 @@
 #!/bin/bash
-set -f 
-# FIX_RELEASE
-# -e 
-#-o pipefail -> no pipe fail as there is not pipe in this 'cking script :)
+
+# FIX_RELEASE 
+# set (the following commands do not work at all)
+# -f (does not work with oh-my-zsh)
+# -e (does not work )
+# -o pipefail (no pipe fail as there is not pipe in this 'cking script :))
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 source "$babun_tools/stamps.sh"

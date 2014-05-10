@@ -453,7 +453,7 @@ The folder structure looks like this:
 └── babun.zsh
 
 16 directories, 17 files
----
+----
 
 ==== source
 

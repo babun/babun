@@ -6,6 +6,9 @@ VERSION = new File("${getRoot()}/babun.version").text.trim()
 TEN_MINUTES = 10
 TWENTY_MINUTES = 20
 
+CYGWIN_VERSION="1.9.28"
+CYGWIN_SETUP_VERSION="2.831"
+
 execute()
 
 def execute() {
@@ -64,7 +67,7 @@ def executeBabunPackages() {
     File workingDir = new File(getRoot(), module);
     String conf = new File(getRoot(), "${module}/conf/").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "packages.groovy", conf, out]
+    def command = ["groovy", "packages.groovy", conf, out, CYGWIN_SETUP_VERSION]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
@@ -76,7 +79,7 @@ def executeBabunCygwin() {
     String repo = new File(getTarget(), "babun-packages").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     String pkgs = new File(getRoot(), "babun-packages/conf/cygwin.x86.packages")
-    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs]
+    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, CYGWIN_VERSION]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 

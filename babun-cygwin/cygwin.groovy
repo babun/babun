@@ -5,11 +5,12 @@ execute()
 
 def execute() {
     File repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile
+    String cygwinVersion
     try {
         checkArguments()
-        (repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile) = initEnvironment()
+        (repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, cygwinVersion) = initEnvironment()
         // install cygwin
-        File cygwinInstaller = downloadCygwinInstaller(outputFolder)
+        File cygwinInstaller = downloadCygwinInstaller(outputFolder, cygwinVersion)
         installCygwin(cygwinInstaller, repoFolder, cygwinFolder, pkgsFile)
         cygwinInstaller.delete()
 
@@ -24,8 +25,8 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 4) {
-        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder> <pkgs_file>")
+    if (this.args.length != 5) {
+        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder> <pkgs_file> <cygwin_version>")
         exit(-1)
     }
 }
@@ -35,6 +36,7 @@ def initEnvironment() {
     File inputFolder = new File(this.args[1])
     File outputFolder = new File(this.args[2])
     File pkgsFile = new File(this.args[3])
+    String cyginVersion = this.args[4]
     if (outputFolder.exists()) {
         println "Deleting output folder ${outputFolder.getAbsolutePath()}"
         outputFolder.deleteDir()
@@ -42,14 +44,14 @@ def initEnvironment() {
     outputFolder.mkdir()
     File cygwinFolder = new File(outputFolder, "cygwin")
     cygwinFolder.mkdir()
-    return [repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile]
+    return [repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, cyginVersion]
 }
 
-def downloadCygwinInstaller(File outputFolder) {
+def downloadCygwinInstaller(File outputFolder, String cygwinVersion) {
     println "Downloading cygwin"
     File cygwinInstaller = new File(outputFolder, "setup-x86.exe")
     use(FileBinaryCategory) {
-        cygwinInstaller << "https://raw.githubusercontent.com/babun/cygwin-releases/master/1.7.28/setup-x86.exe".toURL()
+        cygwinInstaller << "https://raw.githubusercontent.com/babun/cygwin-releases/master/${cygwinVersion}/setup-x86.exe".toURL()
     }
     return cygwinInstaller
 }

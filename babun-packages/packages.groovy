@@ -5,10 +5,11 @@ execute()
 
 def execute() {
     File confFolder, outputFolder
+    String setupVersion
     try {
         checkArguments()
-        (confFolder, outputFolder) = initEnvironment()
-        downloadPackages(confFolder, outputFolder, "x86")
+        (confFolder, outputFolder, setupVersion) = initEnvironment()
+        downloadPackages(confFolder, outputFolder, "x86", setupVersion)
     } catch (Exception ex) {
         error("Unexpected error occurred: " + ex + " . Quitting!")
         ex.printStackTrace()
@@ -17,8 +18,8 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 2) {
-        error("Usage: packages.groovy <conf_folder> <output_folder>", true)
+    if (this.args.length != 3) {
+        error("Usage: packages.groovy <conf_folder> <output_folder> <setup_version>", true)
         exit(-1)
     }
 }
@@ -26,20 +27,21 @@ def checkArguments() {
 def initEnvironment() {
     File confFolder = new File(this.args[0])
     File outputFolder = new File(this.args[1])
+    String setupVersion = this.args[2]
     if (outputFolder.exists()) {
         println "Deleting output folder ${outputFolder.getAbsolutePath()}"
         outputFolder.deleteDir()
     }
     outputFolder.mkdir()
-    return [confFolder, outputFolder]
+    return [confFolder, outputFolder, setupVersion]
 }
 
-def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
+def downloadPackages(File confFolder, File outputFolder, String bitVersion, String setupVersion) {
     def rootPackages = new File(confFolder, "cygwin.${bitVersion}.packages").readLines().findAll() { it }
     def repositories = new File(confFolder, "cygwin.repositories").readLines().findAll() { it }
     def processed = [] as Set
     for (repo in repositories) {
-        String setupIni = downloadSetupIni(repo, bitVersion, outputFolder)
+        String setupIni = downloadSetupIni(repo, bitVersion, outputFolder, setupVersion)
         for (String rootPkg : rootPackages) {
             if (processed.contains(rootPkg.trim())) continue
             def processedInStep = downloadRootPackage(repo, setupIni, rootPkg.trim(), processed, outputFolder)
@@ -54,22 +56,27 @@ def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
     }
 }
 
-def downloadSetupIni(String repository, String bitVersion, File outputFolder) {
+def downloadSetupIni(String repository, String bitVersion, File outputFolder, String setupVersion) {
     println "Downloading [setup.ini] from repository [${repository}]"
     String setupIniUrl = "${repository}/${bitVersion}/setup.ini"
     String downloadSetupIni = "wget -l 2 -r -np -q --cut-dirs=3 -P " + outputFolder.getAbsolutePath() + " " + setupIniUrl    
     executeCmd(downloadSetupIni, 5)
-
-    // 2.831 instead of 2.850
     String setupIniContent = setupIniUrl.toURL().text
-    setupIniContent = setupIniContent.replaceAll("setup-version: 2.850", "setup-version: 2.831");
-    File setupIni = new File(outputFolder, "setup.ini")
-    def setupIniWriter = setupIni.newWriter()
-    // setupIni.delete()
-    // setupIni.createNewFile()
-    setupIniWriter << setupIniContent
+    adjustSetupVersion(outputFolder, setupVersion)
     return setupIniContent
 }
+
+def adjustSetupVersion(File outputFolder, String newSetupVersion) {
+    outputFolder.eachFileRecurse(FILES) { File file -> 
+    if(file.name == ('setup.ini')) {
+        println "Adjusting setup-version of [${file.getAbsolutePath}]"
+        String content = file.text
+        String adjustedContent = content.replaceAll("setup-version: .*", "setup-version: ${newSetupVersion}");
+        def fileWriter = file.newWriter()
+        fileWriter << adjustedContent
+    }
+}
+
 
 def downloadRootPackage(String repo, String setupIni, String rootPkg, Set<String> processed, File outputFolder) {
     def processedInStep = [] as Set

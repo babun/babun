@@ -6,7 +6,7 @@ VERSION = new File("${getRoot()}/babun.version").text.trim()
 TEN_MINUTES = 10
 TWENTY_MINUTES = 20
 
-CYGWIN_VERSION="1.9.28"
+CYGWIN_VERSION="1.7.28"
 CYGWIN_SETUP_VERSION="2.831"
 
 execute()

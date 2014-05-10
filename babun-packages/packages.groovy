@@ -63,7 +63,7 @@ def downloadSetupIni(String repository, String bitVersion, File outputFolder, St
     String downloadSetupIni = "wget -l 2 -r -np -q --cut-dirs=3 -P " + outputFolder.getAbsolutePath() + " " + setupIniUrl    
     executeCmd(downloadSetupIni, 5)
     String setupIniContent = setupIniUrl.toURL().text
-    adjustSetupVersion(outputFolder, setupVersion)
+    // adjustSetupVersion(outputFolder, setupVersion)
     return setupIniContent
 }
 

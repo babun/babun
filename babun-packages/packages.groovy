@@ -63,10 +63,11 @@ def downloadSetupIni(String repository, String bitVersion, File outputFolder) {
     // 2.831 instead of 2.850
     String setupIniContent = setupIniUrl.toURL().text
     setupIniContent = setupIniContent.replaceAll("setup-version: 2.850", "setup-version: 2.831");
-    File setupIni = new File(outputFolder.getAbsolutePath(), setupIniUrl)
-    setupIni.delete()
-    setupIni.createNewFile()
-    setupIni << setupIniContent
+    File setupIni = new File(outputFolder, "setup.ini")
+    def setupIniWriter = setupIni.newWriter()
+    // setupIni.delete()
+    // setupIni.createNewFile()
+    setupIniWriter << setupIniContent
     return setupIniContent
 }
 

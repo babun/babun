@@ -59,7 +59,15 @@ def downloadSetupIni(String repository, String bitVersion, File outputFolder) {
     String setupIniUrl = "${repository}/${bitVersion}/setup.ini"
     String downloadSetupIni = "wget -l 2 -r -np -q --cut-dirs=3 -P " + outputFolder.getAbsolutePath() + " " + setupIniUrl    
     executeCmd(downloadSetupIni, 5)
-    return setupIniUrl.toURL().text
+
+    // 2.831 instead of 2.850
+    String setupIniContent = setupIniUrl.toURL().text
+    setupIniContent = setupIniContent.replaceAll("setup-version: 2.850", "setup-version: 2.831");
+    File setupIni = new File(outputFolder.getAbsolutePath(), setupIniUrl)
+    setupIni.delete()
+    setupIni.createNewFile()
+    setupIni << setupIniContent
+    return setupIniContent
 }
 
 def downloadRootPackage(String repo, String setupIni, String rootPkg, Set<String> processed, File outputFolder) {

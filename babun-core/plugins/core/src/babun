@@ -103,10 +103,10 @@ done
 
 function update() 
 {
-  if ! [[ $args == "" ]]; then echo "ERROR: Wrong argument $args"; exit 1; fi
+  if [ "$args" != "" ] && [ "$args" != "--force" ]; then echo "ERROR: Wrong argument $args"; exit 1; fi
   echo "Executing babun update"
   cp "$core"/tools/update_source.sh /tmp/update_source.sh
-  /tmp/update_source.sh
+  /tmp/update_source.sh "$args"
   exit 0
 }
 

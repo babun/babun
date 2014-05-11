@@ -82,7 +82,6 @@ def executeBabunPackages() {
 def executeBabunCygwin(boolean downloadOnly = false) {
     String module = "babun-cygwin"
     log "EXEC ${module}"
-    if (shouldSkipModule(module)) return
     File workingDir = new File(getRoot(), module);
     String input = workingDir.absolutePath
     String repo = new File(getTarget(), "babun-packages").absolutePath

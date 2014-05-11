@@ -16,6 +16,7 @@ function usage()
   echo "  \"babun check\" to check if the installation is correct"  
   echo "  \"babun shell\" to display the name of the current user's shell"  
   echo "  \"babun shell <new_shell>\" to set the current user's shell to new_shell"  
+  echo "  \"babun install\" to (re)install babun to the current user's home folder"  
   echo "Options:"
   echo "  --help"
   echo "  --version"
@@ -82,7 +83,7 @@ do
     ;;
 
 
-    update|check|shell)
+    update|check|shell|install)
       if test "-$command-" = "--"
       then
         command=$1     
@@ -106,6 +107,14 @@ function update()
   echo "Executing babun update"
   cp "$core"/tools/update_source.sh /tmp/update_source.sh
   /tmp/update_source.sh
+  exit 0
+}
+
+function install() 
+{
+  if ! [[ $args == "" ]]; then echo "ERROR: Wrong argument $args"; exit 1; fi
+  echo "Executing babun install"
+  "$core"/plugins/install-home.sh 
   exit 0
 }
 
@@ -154,6 +163,12 @@ case "$command" in
 
     shell
   ;;
+
+  install)
+
+    install
+  ;;
+
 
 
   *)

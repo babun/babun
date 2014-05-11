@@ -63,7 +63,7 @@ def uploadContent(def client, String user, String repo, String pkg, String versi
     def putClient = client
     String zip = "application/zip"
     String url = "content/${user}/${repo}/${pkg}/${version}/${file.name};".toString()
-    String options = "publish=1;explode=0;"
+    String options = "publish=0;explode=0;"
     String path = url + options
     assert file.exists()
     putClient.encoder.putAt(zip, this.&encodeZipFile)

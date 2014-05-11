@@ -51,10 +51,10 @@ def initEnvironment() {
     return [repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, downloadOnly]
 }
 
-def downloadCygwinInstaller(File outputFolder) {
-    println "Downloading cygwin"
+def downloadCygwinInstaller(File outputFolder) {    
     File cygwinInstaller = new File(outputFolder, "setup-x86.exe")
     if(!cygwinInstaller.exists()) {
+        println "Downloading Cygwin installer"
         use(FileBinaryCategory) {
             cygwinInstaller << "http://cygwin.com/setup-x86.exe".toURL()
         }

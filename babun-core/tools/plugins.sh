@@ -3,11 +3,9 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 
-homedir=~
-eval homedir="$homedir"
-
 function plugin_should_install {
 	local plugin_name="$1"	
+	local __result=$2
 	local installed="$babun/installed/$plugin_name"
 	if [[ -f "$installed" ]]; then		
 		typeset -i installed_version
@@ -17,9 +15,11 @@ function plugin_should_install {
 			echo "  installed [$installed_version]"
 			echo "  newest    [$plugin_version]"
 			echo "  action    [skip]"
-			exit 0
+			eval $__result="0"
+			return 0
 		fi		
 	fi
+	eval $__result="1"
 }
 
 function plugin_installed_ok {
@@ -45,7 +45,7 @@ function plugin_install {
 	echo "Installing plugin [$plugin_name]"
 	local plugin_desc="$babun/source/babun-core/plugins/$plugin_name/plugin.desc"
 	if [[ ! -f "$plugin_desc" ]]; then	
-		echo " Cannot find plugin descriptor [$plugin_name] [$plugin_desc]"	
+		echo "ERROR: Cannot find plugin descriptor [$plugin_name] [$plugin_desc]"	
 		exit 1
 	fi	
 
@@ -54,12 +54,15 @@ function plugin_install {
 	
 	# checks the version, installas only if the version is newer
 	# uses the plugin descriptor variables
-	plugin_should_install "$plugin_name"
-
+	plugin_should_install "$plugin_name" result
+	if [[ "$result" -eq "0" ]]; then
+		return 0
+	fi
+		
 	# execute plugin's install.sh in a separate shell
 	install_script="$babun/source/babun-core/plugins/$plugin_name/install.sh" 
 	if [[ -f "$install_script" ]]; then
-		bash "$install_script"	
+		bash "$install_script"
 	fi
 
 	# sets the version to the newest one
@@ -72,7 +75,7 @@ function plugin_install_home {
 	echo "Installing plugin's home [$plugin_name]"
 	local plugin_desc="$babun/source/babun-core/plugins/$plugin_name/plugin.desc"
 	if [[ ! -f "$plugin_desc" ]]; then	
-		echo " Cannot find plugin descriptor [$plugin_name] [$plugin_desc]"	
+		echo "ERROR: Cannot find plugin descriptor [$plugin_name] [$plugin_desc]"	
 		exit 1
 	fi	
 
@@ -83,10 +86,8 @@ function plugin_install_home {
 	local install_home_script="$babun/source/babun-core/plugins/$plugin_name/install_home.sh" 
 	
 	if [[ ! -f "$install_home_script" ]]; then
-		echo " Cannot find plugin install_home.sh script [$plugin_name] [$install_home_script]"	
-		exit 1		
+		echo "ERROR: Cannot find plugin install_home.sh script [$plugin_name] [$install_home_script]"	
+		exit 1	
 	fi
 	bash "$install_home_script"	
 }
-
-

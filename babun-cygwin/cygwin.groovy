@@ -11,7 +11,10 @@ def execute() {
         (repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, downloadOnly) = initEnvironment()
         // install cygwin
         File cygwinInstaller = downloadCygwinInstaller(outputFolder)
-        if(downloadOnly) return
+        if(downloadOnly) {
+            println "downloadOnly flag set to true - Cygwin installation skipped.";
+            return
+        }
         installCygwin(cygwinInstaller, repoFolder, cygwinFolder, pkgsFile)
         cygwinInstaller.delete()
 
@@ -38,7 +41,6 @@ def initEnvironment() {
     File outputFolder = new File(this.args[2])
     File pkgsFile = new File(this.args[3]) 
     boolean downloadOnly =  this.args[4] as Boolean
-    println downloadOnly
     if (!outputFolder.exists()) {
         outputFolder.mkdir()
     }    

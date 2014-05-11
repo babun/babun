@@ -88,6 +88,7 @@ def executeBabunCygwin(boolean downloadOnly = false) {
     String out = new File(getTarget(), "${module}").absolutePath
     String pkgs = new File(getRoot(), "babun-packages/conf/cygwin.x86.packages")
     String downOnly = downloadOnly as String
+    println "Download only flag set to: ${downOnly}"
     def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, downOnly]
     executeCmd(command, workingDir, TEN_MINUTES)
 }

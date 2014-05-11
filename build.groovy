@@ -67,7 +67,10 @@ def executeBabunPackages() {
     String module = "babun-packages"
     log "EXEC ${module}"
     if (shouldSkipModule(module)) return
+    exit(-1)
+    exit(-1)
     File workingDir = new File(getRoot(), module);
+    exit(-1)
     String conf = new File(getRoot(), "${module}/conf/").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     def command = ["groovy", "packages.groovy", conf, out, CYGWIN_SETUP_VERSION]

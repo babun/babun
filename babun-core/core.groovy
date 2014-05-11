@@ -29,11 +29,9 @@ def initEnvironment() {
     File cygwinFolder = new File(this.args[1])
     File outputFolder = new File(this.args[2])
     String babunBranch = this.args[3]
-    if (outputFolder.exists()) {
-        println "Deleting output folder ${outputFolder.getAbsolutePath()}"
-        outputFolder.deleteDir()
-    }
-    outputFolder.mkdir()
+    if (!outputFolder.exists()) {
+        outputFolder.mkdir()
+    }    
     return [rootFolder, cygwinFolder, outputFolder, babunBranch]
 }
 

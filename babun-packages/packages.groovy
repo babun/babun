@@ -10,7 +10,7 @@ def execute() {
     try {
         checkArguments()
         (confFolder, outputFolder, setupVersion) = initEnvironment()
-        downloadPackages(confFolder, outputFolder, "x86", setupVersion)
+        downloadPackages(confFolder, outputFolder, "x86")
     } catch (Exception ex) {
         error("Unexpected error occurred: " + ex + " . Quitting!")
         ex.printStackTrace()
@@ -19,8 +19,8 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 3) {
-        error("Usage: packages.groovy <conf_folder> <output_folder> <setup_version>", true)
+    if (this.args.length != 2) {
+        error("Usage: packages.groovy <conf_folder> <output_folder>", true)
         exit(-1)
     }
 }
@@ -28,21 +28,18 @@ def checkArguments() {
 def initEnvironment() {
     File confFolder = new File(this.args[0])
     File outputFolder = new File(this.args[1])
-    String setupVersion = this.args[2]
-    if (outputFolder.exists()) {
-        println "Deleting output folder ${outputFolder.getAbsolutePath()}"
-        outputFolder.deleteDir()
-    }
-    outputFolder.mkdir()
-    return [confFolder, outputFolder, setupVersion]
+    if (!outputFolder.exists()) {
+        outputFolder.mkdir()
+    }    
+    return [confFolder, outputFolder]
 }
 
-def downloadPackages(File confFolder, File outputFolder, String bitVersion, String setupVersion) {
+def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
     def rootPackages = new File(confFolder, "cygwin.${bitVersion}.packages").readLines().findAll() { it }
     def repositories = new File(confFolder, "cygwin.repositories").readLines().findAll() { it }
     def processed = [] as Set
     for (repo in repositories) {
-        String setupIni = downloadSetupIni(repo, bitVersion, outputFolder, setupVersion)
+        String setupIni = downloadSetupIni(repo, bitVersion, outputFolder)
         for (String rootPkg : rootPackages) {
             if (processed.contains(rootPkg.trim())) continue
             def processedInStep = downloadRootPackage(repo, setupIni, rootPkg.trim(), processed, outputFolder)
@@ -57,7 +54,7 @@ def downloadPackages(File confFolder, File outputFolder, String bitVersion, Stri
     }
 }
 
-def downloadSetupIni(String repository, String bitVersion, File outputFolder, String setupVersion) {
+def downloadSetupIni(String repository, String bitVersion, File outputFolder) {
     println "Downloading [setup.ini] from repository [${repository}]"
     String setupIniUrl = "${repository}/${bitVersion}/setup.ini"
     String downloadSetupIni = "wget -l 2 -r -np -q --cut-dirs=3 -P " + outputFolder.getAbsolutePath() + " " + setupIniUrl    
@@ -67,6 +64,7 @@ def downloadSetupIni(String repository, String bitVersion, File outputFolder, St
     return setupIniContent
 }
 
+// not used - turned out to be problematic
 def adjustSetupVersion(File outputFolder, String newSetupVersion) {
     outputFolder.eachFileRecurse(FILES) { File file -> 
         if(file.name == ('setup.ini')) {

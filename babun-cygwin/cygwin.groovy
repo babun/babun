@@ -5,12 +5,13 @@ execute()
 
 def execute() {
     File repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile
-    String cygwinVersion
+    boolean downloadOnly
     try {
         checkArguments()
-        (repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, cygwinVersion) = initEnvironment()
+        (repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, downloadOnly) = initEnvironment()
         // install cygwin
-        File cygwinInstaller = downloadCygwinInstaller(outputFolder, cygwinVersion)
+        File cygwinInstaller = downloadCygwinInstaller(outputFolder)
+        if(downloadOnly) return
         installCygwin(cygwinInstaller, repoFolder, cygwinFolder, pkgsFile)
         cygwinInstaller.delete()
 
@@ -26,7 +27,7 @@ def execute() {
 
 def checkArguments() {
     if (this.args.length != 5) {
-        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder> <pkgs_file> <cygwin_version>")
+        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder> <pkgs_file> <download_only>")
         exit(-1)
     }
 }
@@ -35,23 +36,23 @@ def initEnvironment() {
     File repoFolder = new File(this.args[0])
     File inputFolder = new File(this.args[1])
     File outputFolder = new File(this.args[2])
-    File pkgsFile = new File(this.args[3])
-    String cyginVersion = this.args[4]
-    if (outputFolder.exists()) {
-        println "Deleting output folder ${outputFolder.getAbsolutePath()}"
-        outputFolder.deleteDir()
-    }
-    outputFolder.mkdir()
+    File pkgsFile = new File(this.args[3]) 
+    boolean downloadOnly =  this.args[4] as boolean
+    if (!outputFolder.exists()) {
+        outputFolder.mkdir()
+    }    
     File cygwinFolder = new File(outputFolder, "cygwin")
     cygwinFolder.mkdir()
-    return [repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, cyginVersion]
+    return [repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, downloadOnly]
 }
 
-def downloadCygwinInstaller(File outputFolder, String cygwinVersion) {
+def downloadCygwinInstaller(File outputFolder) {
     println "Downloading cygwin"
     File cygwinInstaller = new File(outputFolder, "setup-x86.exe")
-    use(FileBinaryCategory) {
-        cygwinInstaller << "https://raw.githubusercontent.com/babun/cygwin-releases/master/${cygwinVersion}/setup-x86.exe".toURL()
+    if(!cygwinInstaller.exists()) {
+        use(FileBinaryCategory) {
+            cygwinInstaller << "http://cygwin.com/setup-x86.exe".toURL()
+        }
     }
     return cygwinInstaller
 }

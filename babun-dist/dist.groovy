@@ -37,11 +37,9 @@ def initEnvironment() {
     File inputFolder = new File(this.args[1])
     File outputFolder = new File(this.args[2])
     String version = this.args[3] as String
-    if (outputFolder.exists()) {
-        println "Deleting output folder ${outputFolder.getAbsolutePath()}"
-        outputFolder.deleteDir()
-    }
-    outputFolder.mkdir()
+    if (!outputFolder.exists()) {
+        outputFolder.mkdir()
+    }    
     return [cygwinFolder, inputFolder, outputFolder, version]
 }
 

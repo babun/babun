@@ -17,6 +17,8 @@ def execute() {
     String mode = this.args[0]
     if (mode == "clean") {
         doClean()
+    if (mode == "cygwin") {
+        doCygwin()
     } else if (mode == "package") {
         doPackage()
     } else if (mode == "release") {
@@ -26,8 +28,8 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 1 || !this.args[0].matches("clean|package|release")) {
-        err.println "Usage: build.groovy <clean|package|release>"
+    if (this.args.length != 1 || !this.args[0].matches("clean|cygwin|package|release")) {
+        err.println "Usage: build.groovy <clean|cygwin|package|release>"
         exit(-1)
     }
 }
@@ -50,11 +52,17 @@ def doClean() {
 }
 
 def doPackage() {
-    log "EXEC package"
-    executeBabunPackages()
+    log "EXEC package"  
+    executeBabunPackages()  
     executeBabunCygwin()
     executeBabunCore()
     executeBabunDist()
+}
+
+def doCygwin() {    
+    executeBabunPackages()    
+    boolean downloadOnly=true
+    executeBabunCygwin(downloadOnly)
 }
 
 def doRelease() {
@@ -67,17 +75,14 @@ def executeBabunPackages() {
     String module = "babun-packages"
     log "EXEC ${module}"
     if (shouldSkipModule(module)) return
-    exit(-1)
-    exit(-1)
     File workingDir = new File(getRoot(), module);
-    exit(-1)
     String conf = new File(getRoot(), "${module}/conf/").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     def command = ["groovy", "packages.groovy", conf, out, CYGWIN_SETUP_VERSION]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
-def executeBabunCygwin() {
+def executeBabunCygwin(boolean downloadOnly=false) {
     String module = "babun-cygwin"
     log "EXEC ${module}"
     if (shouldSkipModule(module)) return
@@ -86,7 +91,7 @@ def executeBabunCygwin() {
     String repo = new File(getTarget(), "babun-packages").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     String pkgs = new File(getRoot(), "babun-packages/conf/cygwin.x86.packages")
-    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, CYGWIN_VERSION]
+    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, CYGWIN_VERSION, downloadOnly]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 

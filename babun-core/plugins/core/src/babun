@@ -114,7 +114,7 @@ function install()
 {
   if ! [[ $args == "" ]]; then echo "ERROR: Wrong argument $args"; exit 1; fi
   echo "Executing babun install"
-  "$core"/plugins/install-home.sh 
+  "$core"/plugins/install_home.sh 
   exit 0
 }
 

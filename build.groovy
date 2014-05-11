@@ -79,7 +79,7 @@ def executeBabunPackages() {
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
-def executeBabunCygwin(boolean downloadOnly=false) {
+def executeBabunCygwin(boolean downloadOnly = false) {
     String module = "babun-cygwin"
     log "EXEC ${module}"
     if (shouldSkipModule(module)) return
@@ -88,7 +88,8 @@ def executeBabunCygwin(boolean downloadOnly=false) {
     String repo = new File(getTarget(), "babun-packages").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
     String pkgs = new File(getRoot(), "babun-packages/conf/cygwin.x86.packages")
-    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, downloadOnly]
+    String downOnly = downloadOnly as String
+    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, downOnly]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 

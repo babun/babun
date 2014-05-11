@@ -38,7 +38,7 @@ def initEnvironment() {
 }
 
 def doClean() {
-    println "EXEC clean"
+    log "EXEC clean"
     File target = getTarget()
     if (target.exists()) {
         if (!target.deleteDir()) {
@@ -48,7 +48,7 @@ def doClean() {
 }
 
 def doPackage() {
-    println "EXEC package"
+    log "EXEC package"
     executeBabunPackages()
     executeBabunCygwin()
     executeBabunCore()
@@ -56,13 +56,14 @@ def doPackage() {
 }
 
 def doRelease() {
-    println "EXEC release"
+    log "EXEC release"
     doPackage()
     executeRelease()
 }
 
-def executeBabunPackages() {
+def executeBabunPackages() {    
     String module = "babun-packages"
+    log "EXEC ${module}"
     if (shouldSkipModule(module)) return
     File workingDir = new File(getRoot(), module);
     String conf = new File(getRoot(), "${module}/conf/").absolutePath
@@ -73,6 +74,7 @@ def executeBabunPackages() {
 
 def executeBabunCygwin() {
     String module = "babun-cygwin"
+    log "EXEC ${module}"
     if (shouldSkipModule(module)) return
     File workingDir = new File(getRoot(), module);
     String input = workingDir.absolutePath
@@ -85,6 +87,7 @@ def executeBabunCygwin() {
 
 def executeBabunCore() {
     String module = "babun-core"
+    log "EXEC ${module}"
     if (shouldSkipModule(module)) return
     File workingDir = new File(getRoot(), module);
     String root = getRoot().absolutePath
@@ -98,6 +101,7 @@ def executeBabunCore() {
 
 def executeBabunDist() {
     String module = "babun-dist"
+    log "EXEC ${module}"
     if (shouldSkipModule(module)) return
     File workingDir = new File(getRoot(), module);
     String input = workingDir.absolutePath
@@ -108,6 +112,7 @@ def executeBabunDist() {
 }
 
 def executeRelease() {
+    log "EXEC release"
     assert getenv("bintray_user") != null
     assert getenv("bintray_secret") != null
     File artifact = new File(getTarget(), "babun-dist/babun-${VERSION}-dist.zip")
@@ -119,10 +124,10 @@ def executeRelease() {
 def shouldSkipModule(String module) {
     File out = new File(getTarget(), module)
     if (out.exists()) {
-        println "SKIP ${module}"
+        log "SKIP ${module}"
         return true
     }
-    println "EXEC ${module}"
+    log "EXEC ${module}"
     return false
 }
 
@@ -146,4 +151,8 @@ def executeCmd(List<String> command, File workingDir, int timeout) {
 
 def getReleaseScript() {
     new File(getRoot(), "release.groovy")
+}
+
+def log(String msg) {
+    println "[${new Date()}] ${msg}"
 }

@@ -17,7 +17,7 @@ def execute() {
     String mode = this.args[0]
     if (mode == "clean") {
         doClean()
-    if (mode == "cygwin") {
+    } else if (mode == "cygwin") {
         doCygwin()
     } else if (mode == "package") {
         doPackage()

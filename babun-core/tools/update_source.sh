@@ -4,7 +4,7 @@ source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 source "$babun_tools/check.sh"
 
-local option="$1"
+option="$1"
 
 if [[ -z "$BABUN_BRANCH" ]]; then
 	export BABUN_BRANCH=release

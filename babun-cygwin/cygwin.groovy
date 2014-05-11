@@ -37,7 +37,8 @@ def initEnvironment() {
     File inputFolder = new File(this.args[1])
     File outputFolder = new File(this.args[2])
     File pkgsFile = new File(this.args[3]) 
-    boolean downloadOnly =  this.args[4] as boolean
+    boolean downloadOnly =  this.args[4] as Boolean
+    println downloadOnly
     if (!outputFolder.exists()) {
         outputFolder.mkdir()
     }    
@@ -57,7 +58,10 @@ def downloadCygwinInstaller(File outputFolder) {
         use(FileBinaryCategory) {
             cygwinInstaller << "http://cygwin.com/setup-x86.exe".toURL()
         }
+    } else {
+        println "Cygwin installer alread exists, skipping the download!";
     }
+
     return cygwinInstaller
 }
 

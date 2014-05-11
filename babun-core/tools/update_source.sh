@@ -11,8 +11,9 @@ if [[ -z "$BABUN_BRANCH" ]]; then
 fi
 echo "  upstream  [$BABUN_BRANCH]"
 
-if [[ "$option" != "--force" ]]; then
-	installed_version_string=$( get_current_version )
+
+installed_version_string=$( get_current_version )
+if [[ "$option" != "--force" ]]; then	
 	newest_version_string=$( get_newest_version )
 
 	if [[ -z "$newest_version_string" ]]; then 
@@ -30,7 +31,11 @@ if [[ "$option" != "--force" ]]; then
 		echo "Babun is up to date"
 		exit 0
 	fi
+else 
+	echo "  installed [$installed_version_string]"
+	echo "  newest    [FORCE]"
 fi
+
 
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" reset --hard
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" clean -d -x -f -f

@@ -12,6 +12,7 @@ CYGWIN_SETUP_VERSION="2.831"
 execute()
 
 def execute() {
+    log "EXEC"
     checkArguments()
     String mode = this.args[0]
     if (mode == "clean") {
@@ -21,6 +22,7 @@ def execute() {
     } else if (mode == "release") {
         doRelease()
     }
+    log "FINISHED"
 }
 
 def checkArguments() {

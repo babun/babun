@@ -133,7 +133,7 @@ def executeRelease() {
 
 def shouldSkipModule(String module) {
     File out = new File(getTarget(), module)
-    log "Checking if skip module ${module} -> folder ${out.absolutePath} exists=${out.exists}"
+    log "Checking if skip module ${module} -> folder ${out.absolutePath}"
     if (out.exists()) {
         log "SKIP ${module}"
         return true

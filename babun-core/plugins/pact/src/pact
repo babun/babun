@@ -4,13 +4,9 @@ set -f -o pipefail
 # set -e 
 
 source "/usr/local/etc/babun.instance"
-source "$babun_tools/script.sh"
+# source "$babun_tools/script.sh"
 source "$babun_tools/procps.sh"
 source ~/.pact/pact.repo
-
-# remove trap as not all commands finish with 0
-trap - DEBUG ERR
-trap
 
 # this script requires some packages
 

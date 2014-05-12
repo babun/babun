@@ -51,9 +51,10 @@ Babun supports HTTP proxying out of the box. Just add the address and the creden
 
 Babun provides many packages, convenience tools and scripts that make your life much easier. The long list of features includes:
 
-* programming languages (python, perl, groovy, etc.)
+* programming languages (python, perl, etc.)
 * git (with a wide variety of aliases and tweaks)
 * unix tools (grep, wget, curl, etc.)
+* vcs (svn, git)
 * oh-my-zsh
 * custom scripts (pbcopy, pbpaste, babun, etc.)
 

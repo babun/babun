@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e -f -o pipefail
+# set -e -f -o pipefail
 source "/usr/local/etc/babun.instance"
 # does not work with pact - it's unnecessary anyway
 # source "$babun_tools/script.sh"

@@ -49,6 +49,7 @@ openssh
 openssl
 pcre
 perl
+perl_vendor
 ping
 pkg-config
 procps

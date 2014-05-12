@@ -4,6 +4,12 @@ Have a look at a 1-minute long screencast:
 
 TODO: Enable screencast
 
+video::95045348[vimeo, width=560, height=315, align="center"]
+
+http://vimeo.com/95045348
+
+// https://www.youtube.com/watch?v=_h1wJJO0Ukw&vq=hd720
+
 // video::VOHIYhbRIq0[youtube, width=560, height=315, align="center"]
 
 // https://www.youtube.com/watch?v=VOHIYhbRIq0

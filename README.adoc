@@ -9,13 +9,19 @@ Have a look at a 1-minute long screencast:
 
 TODO: Enable screencast
 
+video::95045348[vimeo, width=560, height=315, align="center"]
+
+http://vimeo.com/95045348
+
+// https://www.youtube.com/watch?v=_h1wJJO0Ukw&vq=hd720
+
 // video::VOHIYhbRIq0[youtube, width=560, height=315, align="center"]
 
 // https://www.youtube.com/watch?v=VOHIYhbRIq0
 
 === Installation
 
-Just download the dist file from HERE, unzip it and run the install.bat script. After a few minutes babun starts automatically.
+Just download the dist file from http://dl.bintray.com/tombujok/babun/babun-dist/1.0.0/babun-1.0.0-dist.zip[HERE], unzip it and run the install.bat script. After a few minutes babun starts automatically.
 The application will be installed to the +%USER_HOME%\.babun+ directory.
 
 === Features in 10 seconds
@@ -69,9 +75,10 @@ Babun supports HTTP proxying out of the box. Just add the address and the creden
 
 Babun provides many packages, convenience tools and scripts that make your life much easier. The long list of features includes:
 
-* programming languages (python, perl, groovy, etc.)
+* programming languages (python, perl, etc.)
 * git (with a wide variety of aliases and tweaks)
 * unix tools (grep, wget, curl, etc.)
+* vcs (svn, git)
 * oh-my-zsh
 * custom scripts (pbcopy, pbpaste, babun, etc.)
 
@@ -261,13 +268,18 @@ Please note that your local configuration files will not be overwritten.
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_welcome.png[babun - a Windows shell you will love!, align="center"]
 
-==== Pact => package installation
+==== Pact - package installation
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_install.png[babun - a Windows shell you will love!, align="center"]
 
-==== Pact => package installed
+==== Pact - package installed
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_installed.png[babun - a Windows shell you will love!, align="center"]
+
+==== Babun oh-my-zsh - auto-update
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_zsh_update.png[babun - a Windows shell you will love!, align="center"]
+
 
 ==== VIM syntax highlighting 
 
@@ -277,11 +289,11 @@ image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/scr
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_nano.png[babun - a Windows shell you will love!, align="center"]
 
-==== Git aliases => git lg
+==== Git aliases - git lg
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_lg.png[babun - a Windows shell you will love!, align="center"]
 
-==== Git aliases => git st
+==== Git aliases - git st
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_st.png[babun - a Windows shell you will love!, align="center"]
 
@@ -293,9 +305,6 @@ image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/scr
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_update.png[babun - a Windows shell you will love!, align="center"]
 
-==== Babun oh-my-zsh update
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_zsh_update.png[babun - a Windows shell you will love!, align="center"]
 
 
 == Development

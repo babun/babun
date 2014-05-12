@@ -1,12 +1,8 @@
 
 
-Have a look at a 1-minute long screencast:
-
-TODO: Enable screencast
+Have a look at a 1-minute long screencast: http://vimeo.com/95045348
 
 video::95045348[vimeo, width=560, height=315, align="center"]
-
-http://vimeo.com/95045348
 
 // https://www.youtube.com/watch?v=_h1wJJO0Ukw&vq=hd720
 

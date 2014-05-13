@@ -22,7 +22,7 @@ image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/scr
 
 ==== Cygwin
 
-The core of Babun consists of a pre-configured Cygwin. Cygwin is a great tool, but there's a lot of quirks and tricks that makes you loose a lot of time to make it actually 'usable'. Not only does babun solve most of these problems, but also contains a lot of vital packages, so that you can be productive from the very first minute. 
+The core of Babun consists of a pre-configured Cygwin. Cygwin is a great tool, but there's a lot of quirks and tricks that makes you lose a lot of time to make it actually 'usable'. Not only does babun solve most of these problems, but also contains a lot of vital packages, so that you can be productive from the very first minute. 
 
 ==== Package manager
 
@@ -60,7 +60,7 @@ Babun provides many packages, convenience tools and scripts that make your life 
 
 ==== Plugin architecture
 
-Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit of a convention) and a plugin architecture on the top of it. It means that almost everything is a plugin in the babun's world! Not only does it structure babun in a clean way, but also enables others to contribute small chunks of code. Currently, babun comprises of six plugins:
+Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit of a convention) and a plugin architecture on the top of it. It means that almost everything is a plugin in the babun's world! Not only does it structure babun in a clean way, but also enables others to contribute small chunks of code. Currently, babun comprises six plugins:
 
 * cacert
 * core
@@ -71,7 +71,7 @@ Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit o
 
 ==== Auto-update
 
-Self-update is at the very heart of babun! Many Cygwin tools are simple bash scripts - once you install them there is no chance of getting the newer version in a smooth way. You either delete the older version or overwrite it with the newest one loosing all the changes you have made in between.
+Self-update is at the very heart of babun! Many Cygwin tools are simple bash scripts - once you install them there is no chance of getting the newer version in a smooth way. You either delete the older version or overwrite it with the newest one losing all the changes you have made in between.
 
 Babun contains an auto-update feature which enables updating both the microkernel and the plugins. Files located in your home folder will not be delted nor overwritten which preserves your local config and customizations.
 

@@ -2,5 +2,5 @@
 
 === Installation
 
-Just download the http://dl.bintray.com/tombujok/babun/babun-dist/1.0.0/babun-1.0.0-dist.zip[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
+Just download the http://projects.reficio.org/babun/babun-dist.zip[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
 The application will be installed to the +%USER_HOME%\.babun+ directory.

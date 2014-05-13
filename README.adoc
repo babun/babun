@@ -5,7 +5,7 @@ Would you like to use a linux-like console on a Windows host without a lot of fu
 
 Have a look at a 1-minute long screencast: http://vimeo.com/95045348
 
-video::95045348[vimeo, width=560, height=315, align="center"]
+video::95045348[vimeo, width=827, height=465, align="center"]
 
 // https://www.youtube.com/watch?v=_h1wJJO0Ukw&vq=hd720
 
@@ -15,8 +15,9 @@ video::95045348[vimeo, width=560, height=315, align="center"]
 
 === Installation
 
-Just download the dist file from http://dl.bintray.com/tombujok/babun/babun-dist/1.0.0/babun-1.0.0-dist.zip[HERE], unzip it and run the install.bat script. After a few minutes babun starts automatically.
+Just download the http://projects.reficio.org/babun/babun-dist.zip[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
 The application will be installed to the +%USER_HOME%\.babun+ directory.
+
 
 === Features in 10 seconds
 

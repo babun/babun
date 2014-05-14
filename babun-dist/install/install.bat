@@ -65,6 +65,7 @@ GOTO END
 
 :ERROR
 ECHO [babun] Terminating due to internal error #%errorlevel%
+pause
 EXIT /b %errorlevel%
 
 :END 

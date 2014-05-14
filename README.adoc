@@ -18,6 +18,11 @@ video::95045348[vimeo, width=827, height=465, align="center"]
 Just download the http://projects.reficio.org/babun/babun-dist.zip[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
 The application will be installed to the +%USER_HOME%\.babun+ directory.
 
+=== IMPORTANT: Known issues
+
+WARNING: Do not install babun if you already have Cygwin (it may not always work) - uninstall Cygwin and then install babun.
+WARNING: Do not install babun if you have a "whitespace" in username or userprofile - a fix is coming.
+
 
 === Features in 10 seconds
 
@@ -36,6 +41,8 @@ Babun features the following:
 Have a look at a sample screenshot!
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
+
+Do you like it? Follow babun on Twitter @babunshell[https://twitter.com/babunshell]
 
 === Features in 3 minutes
 

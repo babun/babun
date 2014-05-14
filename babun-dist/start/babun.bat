@@ -1,10 +1,18 @@
 @echo off
 setlocal enableextensions enabledelayedexpansion
+set CONFIG_FILE=custom_install.config
 
+if not "%BABUN_HOME%" == "" (
+	set CONFIG_FILE=%BABUN_HOME%\%CONFIG_FILE%
+)
+if exist "%CONFIG_FILE%" (
+	set /p BABUN_HOME=<custom_install.config
+	goto BEGIN
+)
 set BABUN_HOME=%USERPROFILE%\.babun
-set CYGWIN_HOME=%BABUN_HOME%\cygwin
 
 :BEGIN
+set CYGWIN_HOME=%BABUN_HOME%\cygwin
 if exist "%CYGWIN_HOME%\bin\mintty.exe" goto RUN
 if not exist "%CYGWIN_HOME%\bin\mintty.exe" goto NOTFOUND
 

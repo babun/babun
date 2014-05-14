@@ -1,6 +1,6 @@
 
 
-Have a look at a 2 minutes long screencast: http://vimeo.com/95045348
+Have a look at a 2 minutes long screencast by https://twitter.com/tombujok[@tombujok]: http://vimeo.com/95045348
 
 video::95045348[vimeo, width=827, height=465, align="center"]
 

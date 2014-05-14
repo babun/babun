@@ -43,7 +43,7 @@ Have a look at a sample screenshot!
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
 
-Do you like it? Follow babun on Twitter https://twitter.com/babunshell[@babunshell]
+Do you like it? Follow babun on Twitter https://twitter.com/babunshell[@babunshell] or https://twitter.com/tombujok[@tombujok].
 
 === Features in 3 minutes
 

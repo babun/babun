@@ -15,7 +15,7 @@ rem %BABUN_HOME%\fonts\RegisterFont.exe add "%BABUN_HOME%\fonts\Menlo\Menlo Bold
 
 ECHO [babun] Starting babun
 rem start %CYGWIN_HOME%\bin\mintty.exe --size 100,35 -o Font='Menlo Regular for Powerline' - || goto :ERROR
-start %CYGWIN_HOME%\bin\mintty.exe --size 100,35 -o Font='Lucida Console' - || goto :ERROR
+start %CYGWIN_HOME%\bin\mintty.exe - || goto :ERROR
 GOTO END
 
 :NOTFOUND

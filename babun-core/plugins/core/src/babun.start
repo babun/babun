@@ -2,6 +2,7 @@
 # println babun welcome message
 source "/usr/local/etc/babun.instance"
 "$babun_tools/welcome.sh"
+"$babun_tools/symlink_drives.sh"
 
 if ! [[ "$DISABLE_CHECK_ON_STARTUP" == "true" ]]; then
 	source "$babun_tools/check.sh"

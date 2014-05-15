@@ -133,6 +133,9 @@ do
 
     --mirror|-m)
       echo "$2" > /etc/setup/last-mirror
+      #make use of passed mirror for this session of pact
+      PACT_REPO="$2"
+      echo "repo forced to $PACT_REPO"
       shift ; shift
     ;;
 

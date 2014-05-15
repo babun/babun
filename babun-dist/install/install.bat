@@ -18,7 +18,7 @@ set LOG_FILE=%SCRIPT_PATH%/installer.log
 :UNZIP
 ECHO [babun] Installing babun
 if exist "%BABUN_HOME%/*.*" (
- 	ECHO [babun] Babun home alread exist: %BABUN_HOME%"
+ 	ECHO [babun] Babun home already exist: %BABUN_HOME%"
 	ECHO [babun] Delete the old folder in order to proceed. Terminating!
 	pause
  	EXIT /b 255

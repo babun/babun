@@ -41,6 +41,18 @@ pause
 EXIT /b 255
 
 :CHECKSIZE
+set /a count=0
+for %%x in (%BABUN_HOME%) do set /a count+=1
+if %count% gtr 1 (
+	ECHO [babun] ERROR: Destination directory contains spaces or illegal characters
+	ECHO [babun] %BABUN_HOME%
+	ECHO [babun] Please use another destination with the command:
+	ECHO [babun] install.bat /target "x:/your_custom_directory"
+	ECHO [babun] Retry with a different target. Terminating!
+	pause
+	EXIT /b 255
+)
+
 set DRIVE_LETTER=%BABUN_HOME:~0,2%
 set /a freeSpace=0
 for /f "skip=1 tokens=1,2" %%A in ('wmic volume where "driveLetter='%DRIVE_LETTER%'" get freespace') do (

@@ -55,7 +55,7 @@ if not exist "%LINK_SCRIPT%" (
 cscript //Nologo "%LINK_SCRIPT%" "%USERPROFILE%\Desktop\babun.lnk" "%BABUN_HOME%\babun.bat"
 
 :INSTALLED
-ECHO [babun] Babun installed successfully. You can delete the the installer now.
+ECHO [babun] Babun installed successfully. You can delete the installer now.
 ECHO [babun] Enjoy! @tombujok
 
 :RUN

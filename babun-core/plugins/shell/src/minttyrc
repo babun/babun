@@ -1,4 +1,7 @@
 BoldAsFont=no
+Columns=100
+Rows=35
+Font=Lucida Console
 FontHeight=10
 ForegroundColour=208,208,208
 BackgroundColour=28,28,28

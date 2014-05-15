@@ -1,14 +1,17 @@
 #!/bin/bash
 
-for d in /*
+for root_dir in /*
 do
-	if [[ "${#d}" -eq "2" ]]; then
-		rm $d
+	link_target=$(readlink $root_dir)
+
+	if [[ "$link_target" =~ ^\/cygdrive\/.$ ]]; then
+		rm "$root_dir"
 	fi
 done
 
-for d in /cygdrive/*
+for cygdrive_dir in /cygdrive/*
 do
-	dirname=$(basename $d)
-	ln -s "$d" "/$dirname"
+	drive_name=$(basename $cygdrive_dir)
+
+	ln -s "$cygdrive_dir" "/$drive_name"
 done

@@ -35,3 +35,5 @@ export CHECK_TIMEOUT_IN_SECS=4
 
 # otherwise vim will not find /etc/vimrc
 export VIM=/etc
+
+alias vi=vim

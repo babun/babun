@@ -1,7 +1,7 @@
 
 === Frequent Asked Questions
 
-==== I cloned babun from github but when i try to start it I get some weird error messages.
+==== I cloned Babun from github but when i try to start it I get some weird error messages.
 
 You have to download the distribution package from http://projects.reficio.org/babun/babun-dist.zip[here].
 On github we only host raw source files. The dist package is enriched by cygwin and some other stuff you need to be able to run Babun.

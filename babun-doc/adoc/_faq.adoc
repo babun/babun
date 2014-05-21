@@ -1,0 +1,10 @@
+
+=== Frequent Asked Questions
+
+[qanda]
+I cloned babun from github but when i try to start it I get some weird error message::
+You have to download the distribution package from http://projects.reficio.org/babun/babun-dist.zip[here].
+On github we only host raw source files. The dist package is enriched by cygwin and some other stuff you need to run Babun.
+
+When I run git status in git shell and in babun I get different results::
+It is probably an end-of-line issue. Execute +git config --list+ both in cmd and in babun and compare the core.autocrlf value. If your cmd prints +core.autocrlf = true+ execute +git config --global core.autocrlf true+ in Babun.

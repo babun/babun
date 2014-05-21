@@ -1,7 +1,7 @@
 
 === Frequent Asked Questions
 
-==== I cloned babun from github but when i try to start it I get some weird error messages
+==== I cloned babun from github but when i try to start it I get some weird error messages.
 
 You have to download the distribution package from http://projects.reficio.org/babun/babun-dist.zip[here].
 On github we only host raw source files. The dist package is enriched by cygwin and some other stuff you need to be able to run Babun.
@@ -24,7 +24,7 @@ But when you execute +babun check+ it is usually ok again. In such case you can 
 
 Put +export CYGWIN="nodosfilewarning mintty"+ in the +~/.babunrc+ file.
 
-==== I often get following error message: "bash 2216 child_info_fork::abort: data segment start"
+==== I often get following error message: "bash 2216 child_info_fork::abort: data segment start".
 
 This is a known cygwin issue. It may be caused by BLODA software. Sometimes +rebaseall+ resolves this issue. Follow this http://stackoverflow.com/questions/9300722/cygwin-error-bash-fork-retry-resource-temporarily-unavailable[link].
 
@@ -39,7 +39,7 @@ This is a known cygwin issue. It may be caused by BLODA software. Sometimes +reb
 
 Babun is available in the "Create new console" menu.
 
-==== How do I pin Babun to the taskbar in Windows 7/8
+==== How do I pin Babun to the taskbar in Windows 7/8?
 
 Sometimes it happens that Babun does not start if it was previously pined from the running window and sometimes it
 shows different icon in the taskbar.
@@ -52,7 +52,7 @@ This is how you can get around this problem:
 * Click apply and you should now have a working taskbar item that runs Babun.
 
 
-==== Old version of Git doesn't like my .gitconfig
+==== Old version of Git doesn't like my .gitconfig.
 
 ----
 git clone git@github.com:Painted-Fox/docker-postgresql.git
@@ -64,7 +64,7 @@ fatal: bad config file line 11 in /cygdrive/c/Users/ryan.seto/.gitconfig
 
 The fix for the error above was described http://stackoverflow.com/questions/14330050/how-to-get-git-1-8-in-cygwin[here].
 
-==== When I run git status in git shell and in Babun I get different results
+==== When I run git status in git shell and in Babun I get different results.
 
 It is probably an end-of-line issue. Execute +git config --list+ both in cmd and in Babun and compare the
 +core.autocrlf+ values. If your cmd prints +core.autocrlf = true+ execute +git config --global core.autocrlf true+ in Babun.

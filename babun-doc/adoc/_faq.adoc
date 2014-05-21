@@ -1,22 +1,58 @@
 
 === Frequent Asked Questions
 
-==== I cloned babun from github but when i try to start it I get some weird error message
+==== I cloned babun from github but when i try to start it I get some weird error messages
 
 You have to download the distribution package from http://projects.reficio.org/babun/babun-dist.zip[here].
-On github we only host raw source files. The dist package is enriched by cygwin and some other stuff you need to run Babun.
+On github we only host raw source files. The dist package is enriched by cygwin and some other stuff you need to be able to run Babun.
 
 ==== How can I uninstall Babun?
 
-Why would you :-) Seriously, just delete the .babun folder (by default installed in %USER_HOME%).
+Why would you? :-) Seriously, just delete the .babun folder (by default installed in %USER_HOME%).
 
-==== The daily babun check sometimes complains that 'my prompt is very slow'
+==== What is BLODA software?
 
-Sometimes the prompt is slow when you start babun as the initialization and loading of dll's take time. You are find with that.
+BLODA is a list of applications that may interfere with cygwin. This could be for example an anty virus program or
+a graphics card driver. See the https://cygwin.com/faq/faq.html#faq.using.bloda[cygwin page] for more details.
+
+==== When I run Babun I can see: 'Your prompt is very slow. Check the installed BLODA software'. How to fix that?
+
+Sometimes the prompt is slow when you start Babun as the initialization and loading of dll's take time.
+But when you execute +babun check+ it is usually ok again. In such case you can ignore this message.
+
+==== How to disable BLODA warnings?
+
+Put +export CYGWIN="nodosfilewarning mintty"+ in the +~/.babunrc+ file.
+
+==== I often get following error message: "bash 2216 child_info_fork::abort: data segment start"
+
+This is a known cygwin issue. It may be caused by BLODA software. Sometimes +rebaseall+ resolves this issue. Follow this http://stackoverflow.com/questions/9300722/cygwin-error-bash-fork-retry-resource-temporarily-unavailable[link].
+
+==== How do I integrate Babun with ConEmu?
+
+* Update to the latest ConEmu
+* In ConEmu
+** Go to Settings>Startup>Tasks
+** Create a new task
+*** Task parameters - /icon "%userprofile%.babun\cygwin\bin\mintty.exe" /dir "%userprofile%"
+*** Commands %userprofile%.babun\cygwin\bin\mintty.exe -
+
+Babun is available in the "Create new console" menu.
+
+==== How do I pin Babun to the taskbar in Windows 7/8
+
+Sometimes it happens that Babun does not start if it was previously pined from the running window and sometimes it
+shows different icon in the taskbar.
+
+This is how you can get around this problem:
+
+* Right click on the icon in the taskbar, right click on terminal and select properties
+* In properties set the target to +C:\Users\<user>\.babun\babun.bat+ (where <user> is your windows username)
+* Set the icon to be the same as +MinTTY.exe+ found in +C:\Users\<user>\.babun\cygwin\bin\MinTTY.exe+ (you will need to click the dropdown and select Programs (*.exe) so you can see MinTTY.exe
+* Click apply and you should now have a working taskbar item that runs Babun.
+
 
 ==== Old version of Git doesn't like my .gitconfig
-
-If you run git in Babun and get error like this
 
 ----
 git clone git@github.com:Painted-Fox/docker-postgresql.git
@@ -26,14 +62,19 @@ error: Must be one of nothing, matching, tracking or current.
 fatal: bad config file line 11 in /cygdrive/c/Users/ryan.seto/.gitconfig
 ----
 
-The fix is described http://stackoverflow.com/questions/14330050/how-to-get-git-1-8-in-cygwin[here].
+The fix for the error above was described http://stackoverflow.com/questions/14330050/how-to-get-git-1-8-in-cygwin[here].
 
-==== When I run git status in git shell and in babun I get different results
+==== When I run git status in git shell and in Babun I get different results
 
-It is probably an end-of-line issue. Execute +git config --list+ both in cmd and in babun and compare the core.autocrlf value. If your cmd prints +core.autocrlf = true+ execute +git config --global core.autocrlf true+ in Babun.
+It is probably an end-of-line issue. Execute +git config --list+ both in cmd and in Babun and compare the
++core.autocrlf+ values. If your cmd prints +core.autocrlf = true+ execute +git config --global core.autocrlf true+ in Babun.
 
-==== How do I install gvm tool
+==== How do I install gvm tool?
 
 * download gvmtool: +curl -s get.gvmtool.net | bash+
 * edit .bash_profile, .bashrc and .zshrc and replace all occurrences of +/c/Users/...+ with +/cygdrive/c/Users/...+
 * restart babun
+
+==== How do I install ruby?
+
+If you can live with ruby 1.9.3 then just install it via +pact install ruby+. If you need a newer version have a look at this https://github.com/babun/babun/issues/93[link].

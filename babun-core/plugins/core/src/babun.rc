@@ -2,6 +2,7 @@
 # IMPORTANT NOTE!
 # DO NOT MODIFY THIS FILE -> IT WILL BE OVERWRITTEN ON UPDATE
 # If you want to some options modify the following file: ~/.babunrc
+source "/usr/local/etc/babun.instance"
 
 export CYGWIN_VERSION=x86
 export CYGWIN="nodosfilewarning mintty detect_bloda"
@@ -42,7 +43,7 @@ alias vi=vim
 # IMPORTANT -> THIS HAS TO BE LOCATED AT THE END OF THIS SCRIPT
 # install babun to user's home folder if it does not exist
 #
-if [[ ! -f ~/.babunrc ]]; then
+if [[ ! -f "$homedir/.babunrc" ]]; then
 	echo "Installing babun to user home"
 	babun install
 fi

@@ -10,3 +10,4 @@ source "$babun_tools/script.sh"
 /bin/rm -rf /home
 /bin/mkpasswd.exe -l -c >> /etc/passwd
 /bin/mkgroup -l -c >> /etc/group
+

@@ -18,16 +18,6 @@ mkdir -p "$babun/home/core"
 /bin/cp -rf $src/.babunrc "$babun/home/core/.babunrc"
 
 
-# instrument the shells with the babun config
-profiles=("/etc/profile" "/etc/zprofile")
-for profile in "${profiles[@]}"; do	
-	if ! grep -Fxq "Installing babun" "$profile" ;then
-		echo "Adding babun auto-install  -> $profile"
-		sed -i 's/unset fDest/unset fDest\n    echo "Installing babun"\n    \/usr\/local\/etc\/babun\/source\/babun-core\/plugins\/install_home.sh/' "$profile"
-	fi
-
-done
-
 profiles=("/etc/bash.bashrc")
 for profile in "${profiles[@]}"; do	
 	if ! grep -Fxq "source /usr/local/etc/babun.rc" "$profile" ;then

@@ -22,3 +22,10 @@ export LC_ALL="en_US.UTF-8"
 # export https_proxy=$http_proxy
 # export ftp_proxy=$http_proxy
 # export no_proxy=localhost
+
+# User Agent section
+# List of user agents: http://www.useragentstring.com/pages/useragentstring.php
+# export USER_AGENT="Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))"
+
+# Uncomment and increase the timeout period if you get errors/timeouts on babun check
+# export CHECK_TIMEOUT_IN_SECS=4

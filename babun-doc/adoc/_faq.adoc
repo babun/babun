@@ -3,7 +3,7 @@
 
 ==== I cloned Babun from github but when i try to start it I get some weird error messages.
 
-You have to download the distribution package from http://projects.reficio.org/babun/babun-dist.zip[here].
+You have to download the distribution package from http://babun.github.io.
 On github we only host raw source files. The dist package is enriched by cygwin and some other stuff you need to be able to run Babun.
 
 ==== How can I uninstall Babun?
@@ -41,16 +41,7 @@ Babun is available in the "Create new console" menu.
 
 ==== How do I pin Babun to the taskbar in Windows 7/8?
 
-Sometimes it happens that Babun does not start if it was previously pined from the running window and sometimes it
-shows different icon in the taskbar.
-
-This is how you can get around this problem:
-
-* Right click on the icon in the taskbar, right click on terminal and select properties
-* In properties set the target to +C:\Users\<user>\.babun\babun.bat+ (where <user> is your windows username)
-* Set the icon to be the same as +MinTTY.exe+ found in +C:\Users\<user>\.babun\cygwin\bin\MinTTY.exe+ (you will need to click the dropdown and select Programs (*.exe) so you can see MinTTY.exe
-* Click apply and you should now have a working taskbar item that runs Babun.
-
+Have a look https://github.com/babun/babun/issues/90[here].
 
 ==== Old version of Git doesn't like my .gitconfig.
 
@@ -66,12 +57,30 @@ The fix for the error above was described http://stackoverflow.com/questions/143
 
 ==== I get 'error while loading shared libraries' when I execute git commands.
 
-Install gettext, libsasl2 and ca-certificates using pact.
+Install +gettext+, +libsasl2+ and +ca-certificates+ using pact.
 
 ==== When I run git status in git shell and in Babun I get different results.
 
 It is probably an end-of-line issue. Execute +git config --list+ both in cmd and in Babun and compare the
 +core.autocrlf+ values. If your cmd prints +core.autocrlf = true+ execute +git config --global core.autocrlf true+ in Babun.
+
+
+==== How can I change the default fonts and size of Babun's (mintty) window on startup.
+
+Add / edit +~/.minttyrc+
+
+==== Babun cannot connect to the Internet.
+
+Babun supports HTTP(s) proxying, but corporate firewalls can be tricky... Have a look at this thread: https://github.com/babun/babun/issues/95[#95]
+
+==== Cannot copy/paste into VIM.
+
+Follow this https://github.com/babun/babun/issues/97[link].
+
+==== How could I install and update babun on a computer not directly connected to the internet?
+
+You can install Babun without any problems while being offline. Just download the ZIP file with the distro.
+You need to be online in order to update Babun - you can configure a proxy if that's your case.
 
 ==== How do I install gvm tool?
 

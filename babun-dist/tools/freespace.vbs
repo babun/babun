@@ -3,5 +3,5 @@
 		drive = Wscript.Arguments(0)
 		Set objWMIService = GetObject("winmgmts:")
 		Set objLogicalDisk = objWMIService.Get("Win32_LogicalDisk.DeviceID='"+drive+"'")
-		Wscript.Echo objLogicalDisk.FreeSpace
+		Wscript.Echo Int(objLogicalDisk.FreeSpace/1048576)
 	End If  

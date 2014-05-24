@@ -9,6 +9,10 @@ set BABUN_ZIP=%SCRIPT_PATH%/dist/babun.zip
 set UNZIPPER=%SCRIPT_PATH%/dist/unzip.exe
 set LOG_FILE=%SCRIPT_PATH%/installer.log
 
+set SETPATH_SCRIPT=%BABUN_HOME%\tools\setpath.vbs
+set LINK_SCRIPT=%BABUN_HOME%\tools\link.vbs
+set FREESPACE_SCRIPT=C:\Users\Soham\babun\babun-dist\tools\freespace.vbs
+
 ECHO [babun] Installing babun
 
 if %1.==. (
@@ -55,25 +59,18 @@ if %count% gtr 1 (
 
 :CHECKFREESPACE
 set DRIVE_LETTER=%BABUN_HOME:~0,2%
-cscript //Nologo "%FREESPACE_SCRIPT%" "%DRIVE_LETTER%"
-FOR /F "usebackq tokens=*" %%r in (`CSCRIPT "MyVBS.vbs"`) DO SET FREE_SPACE=%%r
-ECHO %FREE_SPACE%
-
-if FREE_SPACE lss 1024 (
-	ECHO [babun] ERROR: There is not enough space on your destination drive
-	ECHO [babun] Babun requires at least 1024 MB of free space to operate properly
-	ECHO [babun] Drive: %DRIVE_LETTER%
-	ECHO [babun] Free Space: %FREE_SPACE% MB
-	ECHO [babun] Please install babun to another destination:
+FOR /F "usebackq tokens=*" %%r in (`cscript //Nologo "%FREESPACE_SCRIPT%" "%DRIVE_LETTER%"`) DO SET FREE_SPACE=%%r
+if %FREE_SPACE% lss 1024 (
+	ECHO [babun] ERROR: There is not enough space on your destination drive %DRIVE_LETTER%
+	ECHO [babun] Babun requires at least 1024 MB to operate properly
+	ECHO [babun] Free Space on %DRIVE_LETTER% %FREE_SPACE% MB
+	ECHO [babun] Please install babun to another destination using the /target option:
 	ECHO [babun] install.bat /target "x:/your_custom_directory"
-	pause
+	pause	
 	EXIT /b 255
 )
 
 :UNZIP
-set SETPATH_SCRIPT=%BABUN_HOME%\tools\setpath.vbs
-set LINK_SCRIPT=%BABUN_HOME%\tools\link.vbs
-set FREESPACE_SCRIPT=%BABUN_HOME%\tools\freespace.vbs
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 
 if exist "%BABUN_HOME%/*.*" (

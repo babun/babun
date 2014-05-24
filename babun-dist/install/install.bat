@@ -14,7 +14,7 @@ ECHO [babun] Installing babun
 if %1.==. (
 	set BABUN_HOME=%USERPROFILE%\.babun
 	set TARGET=%USERPROFILE%
-	GOTO CHECKSIZE
+	GOTO CHECKTARGET
 )	
 if "%1"=="/t" GOTO TARGET
 if "%1"=="/target" (GOTO TARGET || GOTO UNKNOWNFLAG)
@@ -31,57 +31,49 @@ set TARGET=%~2
 set CUSTOM=true
 ECHO [babun] Target flag set
 ECHO [babun] Installing to: "%BABUN_HOME%"
-GOTO CHECKSIZE
+GOTO CHECKTARGET
 
 :NOTARGET
 ECHO [babun] Target flag set but no target provided:
-ECHO [babun] install.bat /target "D:\your_custom_directory"
+ECHO [babun] install.bat /target "D:/target_folder"
 ECHO [babun] Retry with a target specified. Terminating!
 pause
 EXIT /b 255
 
-:CHECKSIZE
+:CHECKTARGET
 set /a count=0
 for %%x in (%BABUN_HOME%) do set /a count+=1
 if %count% gtr 1 (
 	ECHO [babun] ERROR: Destination directory contains spaces or illegal characters
 	ECHO [babun] %BABUN_HOME%
 	ECHO [babun] Please use another destination with the command:
-	ECHO [babun] install.bat /target "x:/your_custom_directory"
+	ECHO [babun] install.bat /target "x:/target_folder"
 	ECHO [babun] Retry with a different target. Terminating!
 	pause
 	EXIT /b 255
 )
 
+:CHECKFREESPACE
 set DRIVE_LETTER=%BABUN_HOME:~0,2%
-set /a freeSpace=0
-for /f "skip=1 tokens=1,2" %%A in ('wmic volume where "driveLetter='%DRIVE_LETTER%'" get freespace') do (
-	if "%%B" neq "" for /f %%N in ('powershell !freeSpace!+%%A/1048576') do (
-		set freeSpace=%%N
-	)
-)
+cscript //Nologo "%FREESPACE_SCRIPT%" "%DRIVE_LETTER%"
+FOR /F "usebackq tokens=*" %%r in (`CSCRIPT "MyVBS.vbs"`) DO SET FREE_SPACE=%%r
+ECHO %FREE_SPACE%
 
-if freeSpace lss 800 (
+if FREE_SPACE lss 1024 (
 	ECHO [babun] ERROR: There is not enough space on your destination drive
-	ECHO [babun] Babun requires 800MB of free space to complete installation
+	ECHO [babun] Babun requires at least 1024 MB of free space to operate properly
 	ECHO [babun] Drive: %DRIVE_LETTER%
-	ECHO [babun] Free Space: %freeSpace%MB
-	ECHO [babun] Please use another destination with the command:
+	ECHO [babun] Free Space: %FREE_SPACE% MB
+	ECHO [babun] Please install babun to another destination:
 	ECHO [babun] install.bat /target "x:/your_custom_directory"
-	ECHO [babun] Retry with a different target. Terminating!
 	pause
 	EXIT /b 255
 )
-echo [babun] There is %freeSpace% MB of Free Space Available on %DRIVE_LETTER%
-echo [babun] Babun takes up approx. 650MB
-set /p answer=Do you wish to proceed (Y / N)? 
-if "%answer:~0,1%"=="Y" GOTO UNZIP
-if "%answer:~0,1%"=="y" GOTO UNZIP
-EXIT /b 255
 
 :UNZIP
 set SETPATH_SCRIPT=%BABUN_HOME%\tools\setpath.vbs
 set LINK_SCRIPT=%BABUN_HOME%\tools\link.vbs
+set FREESPACE_SCRIPT=%BABUN_HOME%\tools\freespace.vbs
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 
 if exist "%BABUN_HOME%/*.*" (

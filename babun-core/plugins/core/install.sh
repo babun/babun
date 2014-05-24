@@ -13,6 +13,7 @@ source /usr/local/etc/babun.rc
 /bin/cp -rf $src/babun.bash /usr/local/etc
 /bin/cp -rf $src/babun.zsh /usr/local/etc
 /bin/cp -rf $src/babun.start /usr/local/etc
+/bin/cp -rf $src/babun.instance /usr/local/etc
 
 mkdir -p "$babun/home/core"
 /bin/cp -rf $src/.babunrc "$babun/home/core/.babunrc"

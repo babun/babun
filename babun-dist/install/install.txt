@@ -2,6 +2,9 @@ Thanks for downloading babun - the "Windows shell you will love!"
 
 In order to install babun just run the install.bat script
 
+To install in a different directory, just use the /t switch (or /target)
+e.g install.bat /t "D:\Custom_Install_Directory"
+
 Enjoy!
 
 --

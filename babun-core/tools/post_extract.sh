@@ -16,5 +16,7 @@ source "$babun_tools/script.sh"
 # remove spaces in username and user home folder (sic!)
 xuser=${USERNAME//[[:space:]]}
 xhome="\/home\/"
-sed -e "s/$USERNAME/$xuser/" -e "s/$xhome$USERNAME/$xhome$xuser/" -i /etc/passwd
+/bin/sed -e "s/$USERNAME/$xuser/" -e "s/$xhome$USERNAME/$xhome$xuser/" -i /etc/passwd
 
+# fix file permissions
+/bin/sed -e "s/binary,/binary,noacl,/" -i /etc/fstab

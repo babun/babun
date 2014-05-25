@@ -7,11 +7,8 @@ set CUSTOM=false
 set INSTALLER_PATH=
 set BABUN_ZIP=%SCRIPT_PATH%/dist/babun.zip
 set UNZIPPER=%SCRIPT_PATH%/dist/unzip.exe
+set FREESPACE_SCRIPT=%SCRIPT_PATH%/dist/freespace.vbs
 set LOG_FILE=%SCRIPT_PATH%/installer.log
-
-set SETPATH_SCRIPT=%BABUN_HOME%\tools\setpath.vbs
-set LINK_SCRIPT=%BABUN_HOME%\tools\link.vbs
-set FREESPACE_SCRIPT=C:\Users\Soham\babun\babun-dist\tools\freespace.vbs
 
 ECHO [babun] Installing babun
 
@@ -108,6 +105,9 @@ ECHO [babun] Unzipping
 if not exist "%BABUN_HOME%/*.*" (GOTO ERROR)
 
 :POSTINSTALL
+set SETPATH_SCRIPT=%BABUN_HOME%\tools\setpath.vbs
+set LINK_SCRIPT=%BABUN_HOME%\tools\link.vbs
+
 ECHO [babun] Running post-installation scripts. It may take a while...
 %CYGWIN_HOME%\bin\dash.exe -c "/usr/bin/rebaseall" || goto :ERROR
 %CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/usr/local/etc/babun/source/babun-core/tools/post_extract.sh" || goto :ERROR

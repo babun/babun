@@ -81,8 +81,11 @@ def zipBabun(File outputFolder) {
 
 def copyInstallScripts(File inputFolder, File outputFolder) {
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/dist/dist", quiet: true) {
-        fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no") { include(name: "unzip.exe") }
+        fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no") { include(name: "unzip.exe") }        
     }
+    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/dist/dist", quiet: true) {
+        fileset(dir: "${inputFolder.absolutePath}/tools", defaultexcludes:"no") { include(name: "freespace.vbs") }
+    }    
     new AntBuilder().copy(todir: "${outputFolder.absolutePath}/dist", quiet: true) {
         fileset(dir: "${inputFolder.absolutePath}/install", defaultexcludes:"no") { include(name: "install.*") }
     }

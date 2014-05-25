@@ -19,9 +19,9 @@ if [[ ! "$HOME" == /cygdrive* ]]; then
 	/bin/mkpasswd.exe -l -c > /etc/passwd	
 
 	# remove spaces in username and user home folder (sic!)
-	xuser=${USERNAME//[[:space:]]}
-	xhome="\/home\/"
-	/bin/sed -e "s/$USERNAME/$xuser/" -e "s/$xhome$USERNAME/$xhome$xuser/" -i /etc/passwd
+	# xuser=${USERNAME//[[:space:]]}
+	# xhome="\/home\/"
+	# /bin/sed -e "s/$USERNAME/$xuser/" -e "s/$xhome$USERNAME/$xhome$xuser/" -i /etc/passwd
 else
 	echo "[babun] Running mkpasswd for WINDOWS home"
 	# regenerate users' info using windows paths

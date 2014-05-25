@@ -33,13 +33,12 @@ if %2.==. GOTO NOTARGET
 set BABUN_HOME=%~2\.babun
 set TARGET=%~2
 set CUSTOM=true
-ECHO [babun] Target flag set
 ECHO [babun] Installing to: "%BABUN_HOME%"
 GOTO CHECKTARGET
 
 :NOTARGET
 ECHO [babun] Target flag set but no target provided:
-ECHO [babun] install.bat /target "D:/target_folder"
+ECHO [babun] install.bat /target "D:\target_folder"
 ECHO [babun] Retry with a target specified. Terminating!
 pause
 EXIT /b 255
@@ -51,13 +50,13 @@ if %count% gtr 1 (
 	ECHO [babun] ERROR: Destination directory contains spaces or illegal characters
 	ECHO [babun] %BABUN_HOME%
 	ECHO [babun] Please use another destination with the command:
-	ECHO [babun] install.bat /target "x:/target_folder"
+	ECHO [babun] install.bat /target "D:\target_folder"
 	ECHO [babun] Retry with a different target. Terminating!
 	pause
 	EXIT /b 255
 )
 
-:CHECKFREESPACE
+:CHECKFREESPACE	
 set DRIVE_LETTER=%BABUN_HOME:~0,2%
 FOR /F "usebackq tokens=*" %%r in (`cscript //Nologo "%FREESPACE_SCRIPT%" "%DRIVE_LETTER%"`) DO SET FREE_SPACE=%%r
 if %FREE_SPACE% lss 1024 (
@@ -65,7 +64,7 @@ if %FREE_SPACE% lss 1024 (
 	ECHO [babun] Babun requires at least 1024 MB to operate properly
 	ECHO [babun] Free Space on %DRIVE_LETTER% %FREE_SPACE% MB
 	ECHO [babun] Please install babun to another destination using the /target option:
-	ECHO [babun] install.bat /target "x:/your_custom_directory"
+	ECHO [babun] install.bat /target "D:\target_folder"
 	pause	
 	EXIT /b 255
 )

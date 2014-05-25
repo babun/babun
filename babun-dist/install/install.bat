@@ -69,6 +69,28 @@ if %FREE_SPACE% lss 1024 (
 	EXIT /b 255
 )
 
+:CHECKHOME
+IF "%HOME%"=="" (
+	ECHO [babun] HOME variable not set
+	GOTO UNZIP
+)
+
+IF "%NOCHECK%"=="true" (
+	ECHO [babun] WARN: NOCHECK set to true	
+	GOTO UNZIP
+)
+
+:HOMESET	
+ECHO [babun] WARN: Windows HOME environment variable is set to: %HOME%
+ECHO [babun] WARN: It means that your babun home folder will be located there
+ECHO [babun] WARN: It is recommended to have a separate home folder
+ECHO [babun] WARN: To have a separate babun home folder remove the HOME variable
+SET /p answer="Do you wish to proceed (Y / N)?" 
+IF "%answer:~0,1%"=="Y" GOTO UNZIP
+IF "%answer:~0,1%"=="y" GOTO UNZIP
+ECHO [babun] Terminating - Remove the HOME variable and start again!
+EXIT /b 255	 
+
 :UNZIP
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 

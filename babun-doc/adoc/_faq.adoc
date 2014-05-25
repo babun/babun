@@ -28,6 +28,8 @@ Put +export CYGWIN="nodosfilewarning mintty"+ in the +~/.babunrc+ file.
 
 This is a known cygwin issue. It may be caused by BLODA software. Sometimes +rebaseall+ resolves this issue. Follow this http://stackoverflow.com/questions/9300722/cygwin-error-bash-fork-retry-resource-temporarily-unavailable[link].
 
+Also, have a look at this https://github.com/babun/babun/issues/143[thread].
+
 ==== How do I integrate Babun with ConEmu?
 
 * Update to the latest ConEmu

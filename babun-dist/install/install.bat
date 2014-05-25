@@ -41,16 +41,7 @@ pause
 EXIT /b 255
 
 :CHECKTARGET
-set /a count=0
-for %%x in (%BABUN_HOME%) do set /a count+=1
-if %count% gtr 1 (
-	ECHO [babun] ERROR: Destination directory contains spaces or illegal characters
-	ECHO [babun] ERROR: %BABUN_HOME%
-	ECHO [babun] ERROR: Please use another destination with the command:
-	ECHO [babun] install.bat /target "D:\target_folder"	
-	pause
-	EXIT /b 255
-)
+rem NOTHING FOR NOW
 
 :CHECKFREESPACE	
 set DRIVE_LETTER=%BABUN_HOME:~0,2%
@@ -69,18 +60,6 @@ if %FREE_SPACE% lss 1024 (
 IF "%HOME%"=="" (
 	ECHO [babun] HOME variable not set
 	GOTO UNZIP
-)
-
-:CHECKHOMEFORSPACES
-set /a count=0
-for %%x in (%HOME%) do set /a count+=1
-if %count% gtr 1 (
-	ECHO [babun] ERROR: Windows HOME environment variable is set to: %HOME%
-	ECHO [babun] ERROR: HOME directory contains spaces or illegal characters
-	ECHO [babun] ERROR: Spaces in HOME directory are not allowed by cygwin
-	ECHO [babun] ERROR: Please modify HOME or unset it and retry	
-	pause
-	EXIT /b 255
 )
 
 :SKIPHOMESET
@@ -110,7 +89,6 @@ if exist "%BABUN_HOME%/*.*" (
  	EXIT /b 255
 )
 if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%" || goto :ERROR)
-if "%CUSTOM%"=="true" ECHO %BABUN_HOME%>%BABUN_HOME%\custom_install.config
 ECHO [babun] Unzipping 
 
 "%UNZIPPER%" "%BABUN_ZIP%" -d "%TARGET%"
@@ -121,10 +99,10 @@ set SETPATH_SCRIPT=%BABUN_HOME%\tools\setpath.vbs
 set LINK_SCRIPT=%BABUN_HOME%\tools\link.vbs
 
 ECHO [babun] Running post-installation scripts. It may take a while...
-%CYGWIN_HOME%\bin\dash.exe -c "/usr/bin/rebaseall" || goto :ERROR
-%CYGWIN_HOME%\bin\bash.exe --norc --noprofile -c "/usr/local/etc/babun/source/babun-core/tools/post_extract.sh" || goto :ERROR
+"%CYGWIN_HOME%"\bin\dash.exe -c "/usr/bin/rebaseall" || goto :ERROR
+"%CYGWIN_HOME%"\bin\bash.exe --norc --noprofile -c "/usr/local/etc/babun/source/babun-core/tools/post_extract.sh" || goto :ERROR
 rem execute any command with -l (login) to run the post-installation scripts
-%CYGWIN_HOME%\bin\bash.exe -l -c "date; rm -rf /usr/local/etc/babun/stamps/check; rm -rf /usr/local/etc/babun/stamps/welcome;" || goto :ERROR
+"%CYGWIN_HOME%"\bin\bash.exe -l -c "date; rm -rf /usr/local/etc/babun/stamps/check; rm -rf /usr/local/etc/babun/stamps/welcome;" || goto :ERROR
 
 :PATH
 ECHO [babun] Adding babun to the system PATH variable
@@ -150,7 +128,7 @@ ECHO [babun] Enjoy! @tombujok
 
 :RUN
 ECHO [babun] Starting babun
-%BABUN_HOME%\babun.bat || goto :ERROR
+"%BABUN_HOME%"\babun.bat || goto :ERROR
 GOTO END
 
 :ERROR

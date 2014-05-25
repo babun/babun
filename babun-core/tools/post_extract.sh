@@ -11,7 +11,10 @@ source "$babun_tools/script.sh"
 # regenerate user/group information
 /bin/rm -rf /home
 
-if [[ ! -z "$HOME" ]]; then
+echo "[babun] HOME set to $HOME"
+
+if [[ ! "$HOME" == /cygdrive* ]]; then
+	echo "[babun] Running mkpasswd for CYGWIN home"
 	# regenerate users' info
 	/bin/mkpasswd.exe -l -c > /etc/passwd	
 
@@ -20,8 +23,9 @@ if [[ ! -z "$HOME" ]]; then
 	xhome="\/home\/"
 	/bin/sed -e "s/$USERNAME/$xuser/" -e "s/$xhome$USERNAME/$xhome$xuser/" -i /etc/passwd
 else
+	echo "[babun] Running mkpasswd for WINDOWS home"
 	# regenerate users' info using windows paths
-	mkpasswd -l -p "$(cygpath -H)" > /etc/passwd
+	/bin/mkpasswd -l -p "$(/bin/cygpath -H)" > /etc/passwd
 fi
 /bin/mkgroup -l -c > /etc/group
 

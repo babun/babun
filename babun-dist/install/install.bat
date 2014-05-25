@@ -45,10 +45,9 @@ set /a count=0
 for %%x in (%BABUN_HOME%) do set /a count+=1
 if %count% gtr 1 (
 	ECHO [babun] ERROR: Destination directory contains spaces or illegal characters
-	ECHO [babun] %BABUN_HOME%
-	ECHO [babun] Please use another destination with the command:
-	ECHO [babun] install.bat /target "D:\target_folder"
-	ECHO [babun] Retry with a different target. Terminating!
+	ECHO [babun] ERROR: %BABUN_HOME%
+	ECHO [babun] ERROR: Please use another destination with the command:
+	ECHO [babun] install.bat /target "D:\target_folder"	
 	pause
 	EXIT /b 255
 )
@@ -58,9 +57,9 @@ set DRIVE_LETTER=%BABUN_HOME:~0,2%
 FOR /F "usebackq tokens=*" %%r in (`cscript //Nologo "%FREESPACE_SCRIPT%" "%DRIVE_LETTER%"`) DO SET FREE_SPACE=%%r
 if %FREE_SPACE% lss 1024 (
 	ECHO [babun] ERROR: There is not enough space on your destination drive %DRIVE_LETTER%
-	ECHO [babun] Babun requires at least 1024 MB to operate properly
-	ECHO [babun] Free Space on %DRIVE_LETTER% %FREE_SPACE% MB
-	ECHO [babun] Please install babun to another destination using the /target option:
+	ECHO [babun] ERROR: Babun requires at least 1024 MB to operate properly
+	ECHO [babun] ERROR: Free Space on %DRIVE_LETTER% %FREE_SPACE% MB
+	ECHO [babun] ERROR: Please install babun to another destination using the /target option:
 	ECHO [babun] install.bat /target "D:\target_folder"
 	pause	
 	EXIT /b 255
@@ -72,6 +71,19 @@ IF "%HOME%"=="" (
 	GOTO UNZIP
 )
 
+:CHECKHOMEFORSPACES
+set /a count=0
+for %%x in (%HOME%) do set /a count+=1
+if %count% gtr 1 (
+	ECHO [babun] ERROR: Windows HOME environment variable is set to: %HOME%
+	ECHO [babun] ERROR: HOME directory contains spaces or illegal characters
+	ECHO [babun] ERROR: Spaces in HOME directory are not allowed by cygwin
+	ECHO [babun] ERROR: Please modify HOME or unset it and retry	
+	pause
+	EXIT /b 255
+)
+
+:SKIPHOMESET
 IF "%NOCHECK%"=="true" (
 	ECHO [babun] WARN: NOCHECK set to true	
 	GOTO UNZIP

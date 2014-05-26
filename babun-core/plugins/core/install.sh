@@ -11,8 +11,10 @@ installed_version=$(echo "$1" || echo "0")
 /bin/cp -rf $src/babun /usr/local/bin
 chmod 755 /usr/local/bin/babun
 
+/bin/cp -rf /usr/local/etc/babun.rc /usr/local/etc/babun.rc.old || echo ""
 /bin/cp -rf $src/babun.rc /usr/local/etc
 source /usr/local/etc/babun.rc
+
 /bin/cp -rf $src/babun.bash /usr/local/etc
 /bin/cp -rf $src/babun.zsh /usr/local/etc
 /bin/cp -rf $src/babun.start /usr/local/etc
@@ -84,10 +86,6 @@ if [[ "$installed_version" -le 1 ]]; then
 	# fix permissions in /usr/local
 	echo "Fixing permissions in /usr/local"
 	/bin/chmod 755 -R /usr/local
-
-	# disable bloda detection
-	echo "Disabling detect_bloda - it may be enabled manually in ~/.babunrc"
-	/bin/sed -i 's/detect_bloda//' "/usr/local/etc/babun.rc"
 
 	# fix mintty problem in the babun.bat launcher (best effort)
 	if [[ -f "$BABUN_HOME/babun.bat"]]; then

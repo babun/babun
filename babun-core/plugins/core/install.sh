@@ -6,7 +6,7 @@ source "$babun_tools/script.sh"
 src="$babun_source/babun-core/plugins/core/src"
 
 typeset -i installed_version
-local installed_version=$(echo "$1" || echo "0") 
+installed_version=$(echo "$1" || echo "0") 
 
 /bin/cp -rf $src/babun /usr/local/bin
 chmod 755 /usr/local/bin/babun
@@ -65,8 +65,9 @@ done
 
 # COMPATIBILITY FIXES
 # INSTALLED_VERSION=1
-if [[ "$installed_version" -le 1 ]]; then
-	
+if [[ "$installed_version" -le 1 ]]; then	
+	echo "Compatibility fixes [core] version=[$installed_version]"
+
 	# fix permissions on cygdrive
 	echo "Fixing /etc/fstab permissions on /cygdrive"
 	/bin/sed -e "s/binary,posix/binary,noacl,posix/" -i /etc/fstab

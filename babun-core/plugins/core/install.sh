@@ -88,7 +88,7 @@ if [[ "$installed_version" -le 1 ]]; then
 	/bin/chmod 755 -R /usr/local
 
 	# fix mintty problem in the babun.bat launcher (best effort)
-	if [[ -f "$BABUN_HOME/babun.bat"]]; then
+	if [[ -f "$BABUN_HOME/babun.bat" ]]; then
 		echo "Trying to fix babun.bat launcher"
 		/bin/sed -i "s/--size 100,35 -o Font='Lucida Console'//" "$BABUN_HOME/babun.bat"
 	fi

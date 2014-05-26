@@ -53,7 +53,7 @@ apply_git_config "$(declare -p gitalias)"
 # COMPATIBILITY FIX
 # BUG FIX -> aliast.last
 gitlast=$(git config --global alias.last || echo "")
-if [[ "gitlast" == "git log -1 --stat" ]]; then
+if [[ "$gitlast" == "git log -1 --stat" ]]; then
 	echo "Fixing broken alias.last"
 	git config --global "alias.last" "log -1 --stat"
 fi

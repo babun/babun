@@ -42,6 +42,7 @@ function plugin_installed_ok {
 
 function plugin_install {	
 	local plugin_name="$1"
+	local installed_version=$(cat "$babun/installed/$plugin_name" || echo "0") 
 	echo "Installing plugin [$plugin_name]"
 	local plugin_desc="$babun/source/babun-core/plugins/$plugin_name/plugin.desc"
 	if [[ ! -f "$plugin_desc" ]]; then	
@@ -67,11 +68,12 @@ function plugin_install {
 
 	# sets the version to the newest one
 	# uses the plugin descriptor variables
-	plugin_installed_ok "$plugin_name"
+	plugin_installed_ok "$plugin_name" "$installed_version"
 }
 
 function plugin_install_home {
 	local plugin_name="$1"
+	local installed_version=$(cat "$babun/installed/$plugin_name" || echo "0") 
 	echo "Installing plugin's home [$plugin_name]"
 	local plugin_desc="$babun/source/babun-core/plugins/$plugin_name/plugin.desc"
 	if [[ ! -f "$plugin_desc" ]]; then	
@@ -89,5 +91,5 @@ function plugin_install_home {
 		echo "ERROR: Cannot find plugin install_home.sh script [$plugin_name] [$install_home_script]"	
 		exit 1	
 	fi
-	bash "$install_home_script"	
+	bash "$install_home_script"	"$installed_version"
 }

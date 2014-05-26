@@ -5,6 +5,9 @@ source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 src="$babun_source/babun-core/plugins/core/src"
 
+typeset -i installed_version
+local installed_version=$(echo "$1" || echo "0") 
+
 /bin/cp -rf $src/babun /usr/local/bin
 chmod 755 /usr/local/bin/babun
 
@@ -60,3 +63,24 @@ for profile in "${profiles[@]}"; do
 	fi
 done
 
+# COMPATIBILITY FIXES
+# INSTALLED_VERSION=1
+if [[ "$installed_version" -le 1 ]]; then
+	
+	# fix permissions on cygdrive
+	echo "Fixing /etc/fstab permissions on /cygdrive"
+	/bin/sed -e "s/binary,posix/binary,noacl,posix/" -i /etc/fstab
+
+	# fix /etc/passwd in case the $HOME variable is set to the user's Windows HOME folder
+	if [[ "$HOME" == /cygdrive* ]]; then
+		echo "Fixing /etc/passwd for a Windows based home folder"
+		/bin/mkpasswd -l -p "$(/bin/cygpath -H)" > /etc/passwd
+		/bin/mkgroup -l -c > /etc/group
+		#setting default shell back to /bin/zsh
+		/bin/sed -i 's/\/bin\/bash/\/bin\/zsh/' "/etc/passwd"
+	else
+
+	# fix permissions in /usr/local
+	/bin/chmod 755 -R /usr/local
+
+fi

@@ -29,6 +29,5 @@ else
 fi
 /bin/mkgroup -l -c > /etc/group
 
-# fix file permissions
+# fix file permissions in /usr/local
 /bin/chmod 755 -R /usr/local
-/bin/sed -e "s/binary,/binary,noacl,/" -i /etc/fstab

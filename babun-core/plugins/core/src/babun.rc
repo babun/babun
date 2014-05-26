@@ -16,8 +16,9 @@ alias fgrep='fgrep --color=auto'
 # User Agent section -> especially for @aalmiray :)
 # List of user agents: http://www.useragentstring.com/pages/useragentstring.php
 export USER_AGENT="Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))"
-alias wget="wget --user-agent='$USER_AGENT'"
-alias curl="curl -A '$USER_AGENT'"
+
+alias wget='wget --user-agent="$USER_AGENT"'
+alias curl='curl -A "$USER_AGENT"'
 
 # clipboard handling
 if [ -e /dev/clipboard ]; then

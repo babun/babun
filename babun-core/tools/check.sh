@@ -18,7 +18,7 @@ function get_newest_version {
 	if [[ -z $CHECK_TIMEOUT_IN_SECS ]]; then 
 		CHECK_TIMEOUT_IN_SECS=4
 	fi
-	local newest_version=$( curl --silent --connect-timeout $CHECK_TIMEOUT_IN_SECS --location https://raw.githubusercontent.com/babun/babun/$BABUN_BRANCH/babun.version || echo "" )
+	local newest_version=$( curl --silent --insecure --user-agent "$USER_AGENT" --connect-timeout $CHECK_TIMEOUT_IN_SECS --location https://raw.githubusercontent.com/babun/babun/$BABUN_BRANCH/babun.version || echo "" )
 	echo "$newest_version"
 }
 

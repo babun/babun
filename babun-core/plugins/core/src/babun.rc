@@ -5,7 +5,7 @@
 source "/usr/local/etc/babun.instance"
 
 export CYGWIN_VERSION=x86
-export CYGWIN="nodosfilewarning mintty detect_bloda"
+export CYGWIN="nodosfilewarning mintty"
 export TERM=xterm-256color
 
 alias ls='ls --color=auto'

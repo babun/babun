@@ -82,6 +82,11 @@ if [[ "$installed_version" -le 1 ]]; then
 	fi
 
 	# fix permissions in /usr/local
+	echo "Fixing permissions in /usr/local"
 	/bin/chmod 755 -R /usr/local
+
+	# disable bloda detection
+	echo "Disabling detect_bloda - it may be enabled manually in ~/.babunrc"
+	/bin/sed -i 's/detect_bloda//' "/usr/local/etc/babun.rc"
 
 fi

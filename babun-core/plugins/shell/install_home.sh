@@ -10,3 +10,7 @@ if [[ ! -d "$homedir/.vim" ]]; then
 	/bin/cp -rf "$src/.vim" "$homedir/.vim"	
 	tar -C "$homedir/.vim" -xf "$src/.vim/colors.tar" 
 fi
+
+if [[ ! -f "$homedir/.minttyrc" ]]; then
+	touch "$homedir/.minttyrc"
+fi

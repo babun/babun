@@ -89,4 +89,11 @@ if [[ "$installed_version" -le 1 ]]; then
 	echo "Disabling detect_bloda - it may be enabled manually in ~/.babunrc"
 	/bin/sed -i 's/detect_bloda//' "/usr/local/etc/babun.rc"
 
+	# fix mintty problem in the babun.bat launcher (best effort)
+	if [[ -f "$BABUN_HOME/babun.bat"]]; then
+		echo "Trying to fix babun.bat launcher"
+		/bin/sed -i "s/--size 100,35 -o Font='Lucida Console'//" "$BABUN_HOME/babun.bat"
+	fi
+	
+
 fi

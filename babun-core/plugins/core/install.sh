@@ -79,7 +79,7 @@ if [[ "$installed_version" -le 1 ]]; then
 		/bin/mkgroup -l -c > /etc/group
 		#setting default shell back to /bin/zsh
 		/bin/sed -i 's/\/bin\/bash/\/bin\/zsh/' "/etc/passwd"
-	else
+	fi
 
 	# fix permissions in /usr/local
 	/bin/chmod 755 -R /usr/local

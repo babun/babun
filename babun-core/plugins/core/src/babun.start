@@ -9,3 +9,4 @@ if ! [[ "$DISABLE_CHECK_ON_STARTUP" == "true" ]]; then
 	trap - DEBUG ERR
 	trap	
 fi
+

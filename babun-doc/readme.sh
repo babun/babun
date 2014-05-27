@@ -4,6 +4,8 @@ set -e -f -o pipefail
 readme="../README.adoc"
 cat /dev/null > "$readme"
 
+cat adoc/_header.adoc >> "// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n"
+
 cat adoc/_header.adoc >> "$readme"
 cat adoc/_screencast.adoc >> "$readme"
 cat adoc/_installation.adoc >> "$readme"

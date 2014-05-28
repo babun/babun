@@ -2,6 +2,7 @@
 set -e -f -o pipefail
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
+source "$babun_tools/git.sh"
 
 src="$babun/home/oh-my-zsh"
 

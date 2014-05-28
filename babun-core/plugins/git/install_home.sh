@@ -12,7 +12,7 @@ gitconfig['color.ui']='true'
 gitconfig['core.editor']='vim'
 gitconfig['core.filemode']='false'
 gitconfig['credential.helper']='cache --timeout=3600'
-gitconfig['push.default']=''
+gitconfig['push.default']='matching'
 
 # alias config
 gitalias['alias.cp']='cherry-pick'

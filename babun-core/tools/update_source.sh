@@ -3,6 +3,7 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 source "$babun_tools/check.sh"
+source "$babun_tools/git.sh"
 
 option="$1"
 

@@ -70,10 +70,15 @@ IF "%NOCHECK%"=="true" (
 
 :HOMESET	
 ECHO [babun] WARN: Windows HOME environment variable is set to: %HOME%
-ECHO [babun] WARN: It means that your babun home folder will be located there
-ECHO [babun] WARN: It is recommended to have a separate home folder
-ECHO [babun] WARN: To have a separate babun home folder remove the HOME variable
-SET /p answer="Do you wish to proceed (Y / N)?" 
+ECHO [babun] WARN: It means that your babun home folder will be located there too
+ECHO [babun] WARN: ---------------------------------------------------------------
+ECHO [babun] WARN: FULL COMPATIBILITY CANNOT BE GUARANTEED WHEN 'HOME' IS SET
+ECHO [babun] WARN: IT IS NOT RECOMMENDED TO PROCEED - BABUN INSTALLATION MAY FAIL!
+ECHO [babun] WARN: YOU MAY RUN INTO MANY ISSUES THAT CANNOT BE FORESEEN... 
+ECHO [babun] WARN: ---------------------------------------------------------------
+ECHO [babun] WARN: It's recommended to remove the HOME variable and try again.
+ECHO [babun] WARN: If you are running the installer from a cmd.exe - restart it.
+SET /p answer="Do you really wish to proceed (Y / N)?" 
 IF "%answer:~0,1%"=="Y" GOTO UNZIP
 IF "%answer:~0,1%"=="y" GOTO UNZIP
 ECHO [babun] Terminating - Remove the HOME variable and start again!

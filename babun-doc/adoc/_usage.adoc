@@ -110,7 +110,7 @@ gitalias['alias.co']='checkout'
 gitalias['alias.br']='branch'
 gitalias['alias.dc']='diff --cached'
 gitalias['alias.lg']="log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all"
-gitalias['alias.last']='git log -1 --stat'
+gitalias['alias.last']='log -1 --stat'
 gitalias['alias.unstage']='reset HEAD --'
 ----
 

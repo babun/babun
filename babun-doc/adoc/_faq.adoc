@@ -3,7 +3,7 @@
 
 ==== Why was babun created? Cygwin was already there...
 
-Cygwin is a great tool, but there's a lot of quirks and tricks that makes you lose a lot of time to make it actually 'usable'. 
+Cygwin is a great tool, but there are a lot of quirks and tricks that make you lose a lot of time to make it actually 'usable'. 
 Did you see a bare Cygwin console after installation...? grep - oops not found, curl - oops again, 16-color prompt? Wow! and so on... 
 
 You probably know that it is not that easy to install certain unix packages on Cygwin - let's take rvm for example. Did you manage to do it?
@@ -24,9 +24,9 @@ Footnote: If it does not convince you. if you love tweaking Cygwin, if want to i
 
 No, there is not.
 
-==== Will I face problems if I have a "whitespace" characted in my username
+==== Will I face problems if I have a "whitespace" character in my username
 
-No, you will not, but it's not recommended, see Cygwin's https://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
+No, you will not, but it's not recommended. See Cygwin's https://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
 
 ==== How can I install babun to a custom folder
 

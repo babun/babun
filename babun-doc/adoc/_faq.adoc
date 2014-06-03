@@ -3,25 +3,24 @@
 
 ==== Why was babun created? Cygwin was already there...
 
-Yes, Cygwin was already there - among with many other tools like apt-cyg, oh-my-cygwin, etc.
 Cygwin is a great tool, but there's a lot of quirks and tricks that makes you lose a lot of time to make it actually 'usable'. 
 Did you see a bare Cygwin console after installation...? grep - oops not found, curl - oops again, 16-color prompt? Wow! and so on... 
 
-We have been using Cygwin for many years and thought that it would be great to share our configuration - that's how babun was born.
-It offers a preconfigured Cygwin distribution where everything should work out of the box.
-It is not that easy with BLODA, Windows and Cygwin quirks, firewalls, etc - but we are doing our best to provide the bes possible user experience. 
-
-You probably know that it is not that easy to install certain unix things on Cygwin - let's take rvm for example. Did you manage to do it?
+You probably know that it is not that easy to install certain unix packages on Cygwin - let's take rvm for example. Did you manage to do it?
 How would you like to share it to the others? Maybe a blog entry that will be outdated in a couple of months?
 In babun you can just code up an rvm plugin and enable thousands of users to enjoy seamless rvm installation. 
-There's a newer version of rvm, just update your plugin and again thousands of users will enjoy a seamless update.
+Does a newer version or rvm get released, just update your plugin and again thousands of users will enjoy an automatic update.
 Isn't that great?
+
+We have been using Cygwin for many years and thought that it would be great to share our configuration - that's how babun was born.
+It offers a preconfigured Cygwin distribution where everything should work out of the box. 
+It is not that easy with BLODA, Windows and Cygwin quirks, firewalls, etc - but we are doing our best to provide the best possible user experience. 
 
 The response of the community has been outstanding - around 1K github stars and 10K downloads in the first week only!
 
-Footnote: If it does not convince you. if you love tweaking Cygwin, if want to install everything manually and if you want to spend a lot of time updating every single thing you once installed let's say it: babun is not for you - just use Cygwin in this case!
+Footnote: If it does not convince you. if you love tweaking Cygwin, if want to install everything manually and if you want to spend a lot of time updating every single thing you once installed let's say it: babun is not for you - just use bare Cygwin in this case!
 
-==== Is there an intereference with Cygwin that I have already had
+==== Is there an intereference with an existing Cygwin installation that I have already had
 
 No, there is not.
 

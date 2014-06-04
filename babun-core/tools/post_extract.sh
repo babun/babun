@@ -31,3 +31,4 @@ fi
 
 # fix file permissions in /usr/local
 /bin/chmod 755 -R /usr/local
+/bin/chmod u+rwx -R /etc

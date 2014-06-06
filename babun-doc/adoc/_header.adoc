@@ -4,3 +4,4 @@ Would you like to use a linux-like console on a Windows host without a lot of fu
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n

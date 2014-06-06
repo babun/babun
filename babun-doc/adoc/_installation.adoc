@@ -7,4 +7,4 @@ The application will be installed to the +%USER_HOME%\.babun+ directory. Use the
 
 NOTE: There is no inteference with existing Cygwin installation
 
-NOTE: You may "whitespace" chars in your username - it is not recommende by Cygwin though http://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
+NOTE: You may have "whitespace" chars in your username - it is not recommende by Cygwin though http://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]

@@ -2,6 +2,7 @@
 
 Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun!
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 
 
 Have a look at a 2 minutes long screencast by https://twitter.com/tombujok[@tombujok]: http://vimeo.com/95045348
@@ -19,9 +20,9 @@ video::95045348[vimeo, width=827, height=465, align="center"]
 Just download the http://projects.reficio.org/babun/babun-dist.zip[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
 The application will be installed to the +%USER_HOME%\.babun+ directory. Use the '/target' option to install babun to a custom directory.
 
-INFO: There is no inteference with existing Cygwin installation
+NOTE: There is no inteference with existing Cygwin installation
 
-INFO: You may have as many "spaces" in your username as you like - it is not recommende by Cygwin though http://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
+NOTE: You may have as many "spaces" in your username as you like - it is not recommende by Cygwin though http://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
 
 
 === Features in 10 seconds

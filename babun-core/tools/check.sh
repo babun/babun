@@ -10,6 +10,7 @@ source "$babun_tools/script.sh"
 source "$babun_tools/stamps.sh"
 
 function get_current_version {
+	dos2unix $babun/installed/babun 2> /dev/null
 	local current_version=$( cat "$babun/installed/babun" 2> /dev/null || echo "0.0.0" )
 	echo "$current_version"
 }

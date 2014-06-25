@@ -12,6 +12,7 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+alias emacs=emacs-nox
 
 # User Agent section -> especially for @aalmiray :)
 # List of user agents: http://www.useragentstring.com/pages/useragentstring.php

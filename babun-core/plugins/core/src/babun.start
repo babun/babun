@@ -3,7 +3,6 @@
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/git.sh"
 "$babun_tools/welcome.sh"
-"$babun_tools/symlink_drives.sh"
 
 if ! [[ "$DISABLE_CHECK_ON_STARTUP" == "true" ]]; then
 	source "$babun_tools/check.sh"
@@ -12,3 +11,4 @@ if ! [[ "$DISABLE_CHECK_ON_STARTUP" == "true" ]]; then
 	trap	
 fi
 
+﻿find "$babun_plugins" -name 'start.sh' -exec bash '{}' || echo "Could not start " '{}' \;

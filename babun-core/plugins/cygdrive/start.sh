@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e -f -o pipefail
+source "/usr/local/etc/babun.instance"
+source "$babun_tools/script.sh"
 
 for root_dir in /*
 do

@@ -23,6 +23,7 @@ findutils
 gawk
 gcc
 gcc-core
+gettext
 git
 git-svn
 gnutls

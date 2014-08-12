@@ -106,6 +106,10 @@ plugin_version=1
 
 Every time the plugin is changed the version has to be incremented. Otherwise the newest version will not be installed.
 
+==== start.sh (optional)
+
+The start.sh is an optional script for plugins that require triggering certain actions on every startup of the application (for example update check).
+
 === Branches
 
 The babun's repository contains three main branches:

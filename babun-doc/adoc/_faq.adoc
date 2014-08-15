@@ -128,3 +128,7 @@ You need to be online in order to update Babun - you can configure a proxy if th
 ==== How do I install ruby?
 
 If you can live with ruby 1.9.3 then just install it via +pact install ruby+. If you need a newer version have a look at this https://github.com/babun/babun/issues/93[link].
+
+==== Why multtiple shells share the same history?
+
+This is a feature of zsh. oh-my-zsh has +INC_APPEND_HISTORY+ on as default. To disable this put this in your .zshrc: + setopt APPEND_HISTORY+

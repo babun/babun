@@ -67,8 +67,8 @@ Also, have a look at this https://github.com/babun/babun/issues/143[thread].
 * In ConEmu
 ** Go to Settings>Startup>Tasks
 ** Create a new task
-*** Task parameters - /icon "%userprofile%.babun\cygwin\bin\mintty.exe" /dir "%userprofile%"
-*** Commands %userprofile%.babun\cygwin\bin\mintty.exe -
+*** Task parameters - /icon "%userprofile%\.babun\cygwin\bin\mintty.exe" /dir "%userprofile%"
+*** Commands %userprofile%\.babun\cygwin\bin\mintty.exe -
 
 Babun is available in the "Create new console" menu.
 

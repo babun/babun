@@ -20,7 +20,7 @@ The response of the community has been outstanding - around 1K github stars and 
 
 Footnote: If it does not convince you. if you love tweaking Cygwin, if want to install everything manually and if you want to spend a lot of time updating every single thing you once installed let's say it: babun is not for you - just use bare Cygwin in this case!
 
-==== Is there an intereference with an existing Cygwin installation that I have already had
+==== Is there an interference with an existing Cygwin installation that I have already had
 
 No, there is not.
 
@@ -43,7 +43,7 @@ Why would you? :-) Seriously, just delete the .babun folder (by default installe
 
 ==== What is BLODA software?
 
-BLODA is a list of applications that may interfere with cygwin. This could be for example an anty virus program or
+BLODA is a list of applications that may interfere with cygwin. This could be for example an anti virus program or
 a graphics card driver. See the https://cygwin.com/faq/faq.html#faq.using.bloda[cygwin page] for more details.
 
 ==== When I run Babun I can see: 'Your prompt is very slow. Check the installed BLODA software'. How to fix that?
@@ -116,7 +116,7 @@ Yes, it is. It diverged a bit, some functions have been changed, some things hav
 
 ==== How could I install and update babun on a computer not directly connected to the internet?
 
-You can install Babun without any problems while being offline. Just download the ZIP file with the distro.
+You can install Babun without any problems while being offline. Just download the ZIP file with the distribution.
 You need to be online in order to update Babun - you can configure a proxy if that's your case.
 
 ==== How do I install gvm tool?

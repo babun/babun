@@ -132,3 +132,65 @@ If you can live with ruby 1.9.3 then just install it via +pact install ruby+. If
 ==== Why multtiple shells share the same history?
 
 This is a feature of zsh. oh-my-zsh has +INC_APPEND_HISTORY+ on as default. To disable this put this in your .zshrc: + setopt APPEND_HISTORY+
+
+==== I tried to run python scripts but get 'modules not found'
+
+See https://github.com/babun/babun/issues/104[Issue 104]
+
+==== How to run an X-Server
+
+See https://github.com/babun/babun/issues/105[Issue 105]
+
+==== I have a problem with Windows line endings
+
+Try running dos2unix on these files.
+
+==== No display name and no $DISPLAY environment variable
+
+See https://github.com/babun/babun/issues/130[Issue 130]
+
+==== How to install virtualenvwrapper
+
+See https://github.com/babun/babun/issues/147[Issue 147]
+
+==== chmod does not work as expected
+
+See 
+
+http://superuser.com/questions/397288/using-cygwin-in-windows-8-chmod-600-does-not-work-as-expected
+
+http://superuser.com/questions/348694/bad-owner-or-permissions-error-using-cygwins-ssh-exe
+
+==== I see: compdef: unknown command or service: git
+
+Execute:
+
+----
+$ compinit
+$ cp .zcompdump .zcompdump-$HOSTNAME-5.0.2
+----
+
+==== ps option -U and -o unknown
+
+See https://github.com/babun/babun/issues/172[Issue 172]
+
+==== zsh: command not found: emacs
+
+Try emacs-nox
+
+
+==== "C:\" as target directory on installation fails
+
+use C:\\
+
+Note two back-slashe marks
+
+==== How to use sshfs command
+
+Use Dokan sshfs. Free and open source.
+
+==== Use SSH id_rsa key from Windows
+
+see https://github.com/babun/babun/issues/208[Issue 208]
+
+

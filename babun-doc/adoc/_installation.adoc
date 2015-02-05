@@ -5,6 +5,6 @@
 Just download the http://projects.reficio.org/babun/babun-dist.zip[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
 The application will be installed to the +%USER_HOME%\.babun+ directory. Use the '/target' option to install babun to a custom directory.
 
-NOTE: There is no inteference with existing Cygwin installation
+NOTE: There is no interference with existing Cygwin installation
 
-NOTE: You may have "whitespace" chars in your username - it is not recommende by Cygwin though http://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
+NOTE: You may have "whitespace" chars in your username - it is not recommended by Cygwin though http://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]

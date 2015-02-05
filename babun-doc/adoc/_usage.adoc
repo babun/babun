@@ -32,10 +32,10 @@ Babun provides a package manager called +pact+. It is similar to 'apt-get' or 'y
 
 ==== Shell
 
-Babun's shell is tweaked in order to provide the best possible user-experience. There are two shell types that are pre-configured and avaiable right away - bash and zsh (zsh is the default one). Babun's shell features:
+Babun's shell is tweaked in order to provide the best possible user-experience. There are two shell types that are pre-configured and available right away - bash and zsh (zsh is the default one). Babun's shell features:
 
 * syntax highlighting
-* unix tools
+* UNIX tools
 * software development tools
 * git-aware prompt 
 * custom scripts and aliases
@@ -53,9 +53,9 @@ Babun supports HTTP proxying out of the box. Just add the address and the creden
 
 Babun provides many packages, convenience tools and scripts that make your life much easier. The long list of features includes:
 
-* programming languages (python, perl, etc.)
+* programming languages (Python, Perl, etc.)
 * git (with a wide variety of aliases and tweaks)
-* unix tools (grep, wget, curl, etc.)
+* UNIX tools (grep, wget, curl, etc.)
 * vcs (svn, git)
 * oh-my-zsh
 * custom scripts (pbcopy, pbpaste, babun, etc.)
@@ -75,7 +75,7 @@ Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit o
 
 Self-update is at the very heart of babun! Many Cygwin tools are simple bash scripts - once you install them there is no chance of getting the newer version in a smooth way. You either delete the older version or overwrite it with the newest one losing all the changes you have made in between.
 
-Babun contains an auto-update feature which enables updating both the microkernel and the plugins. Files located in your home folder will not be delted nor overwritten which preserves your local config and customizations.
+Babun contains an auto-update feature which enables updating both the microkernel and the plugins. Files located in your home folder will not be deleted nor overwritten which preserves your local config and customizations.
 
 ==== Installer
 

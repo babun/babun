@@ -27,7 +27,7 @@ function version()
 {
   echo "babun version $(cat $babun/installed/babun 2> /dev/null || echo '1.0.1 ???')"
   echo "Created and maintained by Tom Bujok (@tombujok)"
-  echo "Copyright (c) 2014."
+  echo "Copyright (c) 2014-2015."
 }
 
 function welcome()

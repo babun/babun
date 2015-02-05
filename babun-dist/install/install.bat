@@ -36,7 +36,7 @@ GOTO CHECKTARGET
 :NOTARGET
 ECHO [babun] Target flag set but no target provided:
 ECHO [babun] install.bat /target "D:\target_folder"
-ECHO [babun] Retry with a target specified. Terminating!
+ECHO [babun] Retry with a specified target. Terminating!
 pause
 EXIT /b 255
 
@@ -75,7 +75,7 @@ ECHO [babun] WARN: FULL COMPATIBILITY CANNOT BE GUARANTEED WHEN 'HOME' IS SET
 ECHO [babun] WARN: YOU MAY RUN INTO MANY ISSUES THAT CANNOT BE FORESEEN... 
 ECHO [babun] WARN: ---------------------------------------------------------------
 ECHO [babun] WARN: It's recommended to remove the HOME variable and try again.
-ECHO [babun] WARN: If you are running the installer from a cmd.exe - restart it.
+ECHO [babun] WARN: If you are running the installer from a command prompt - restart it.
 ECHO [babun] WARN: Otherwise the ENV variables will not be propagated to cmd.exe
 SET /p answer="Do you really wish to proceed (Y / N)?" 
 IF "%answer:~0,1%"=="Y" GOTO UNZIP

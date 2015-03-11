@@ -16,7 +16,7 @@ start "" "%CYGWIN_HOME%\bin\mintty.exe" - || goto :ERROR
 GOTO END
 
 :NOTFOUND
-ECHO [babun] Start script not found. Did you delete the the .babun folder from the USER_HOME?
+ECHO [babun] Start script not found. Babun installation seems to be corrupted.
 EXIT /b 255
 
 :ERROR

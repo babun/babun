@@ -365,13 +365,12 @@ case "$command" in
     fi
     
     # run all postinstall scripts
-    
-    pis=`ls /etc/postinstall/*.sh 2>/dev/null | wc -l`
-    if test $pis -gt 0 && ! test $noscripts -eq 1
+
+    if ! test $noscripts -eq 1
     then
-      echo Running postinstall scripts
-      for script in /etc/postinstall/*.sh
+      for script in `find /etc/postinstall/ -name *.sh`
       do
+        echo Running postinstall script: $script
         $script
         mv $script $script.done
       done

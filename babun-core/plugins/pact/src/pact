@@ -34,6 +34,7 @@ function usage()
   echo "  \"pact install <package names>\" to install packages"
   echo "  \"pact remove <package names>\" to remove packages"
   echo "  \"pact update\" to update setup.ini"
+  echo "  \"pact upgrade\" to upgrade packages"
   echo "  \"pact show\" to show installed packages"
   echo "  \"pact find <patterns>\" to find packages matching patterns"
   echo "  \"pact describe <patterns>\" to describe packages matching patterns"
@@ -118,154 +119,22 @@ function checkpackages()
 }
 
 
+
+
 # process options
 
 noscripts=0
 update=0
+upgrade=0
 file=""
 command=""
 filepackages=""
 packages=""
 
-while test $# -gt 0
-do
-  case "$1" in
+function installPkg()
+{
 
-    --mirror|-m)
-      echo "$2" > /etc/setup/last-mirror
-      PACT_REPO="$2"
-      echo "Mirror manually set to $PACT_REPO"
-      shift ; shift
-    ;;
-
-    --noscripts)
-      noscripts=1
-      shift
-    ;;
-
-    --update|-u)
-      update=1
-      shift
-    ;;
-
-    --help)
-      usage
-      exit 0
-    ;;
-
-    --version)
-      version
-      exit 0
-    ;;
-
-
-    update|show|find|describe|packageof|install|remove)
-      if test "-$command-" = "--"
-      then
-        command=$1
-      else
-        packages="$packages $1"
-      fi
-      shift
-
-    ;;
-
-    *)
-      packages="$packages $1"
-      shift
-
-    ;;
-
-  esac
-done
-
-test $noscripts -eq 0 && check_only_one_running "pact"
-
-case "$command" in
-
-  update)
-  
-  update=1
-    findworkspace
-    getsetup
-
-  ;;
-
-
-  show)
-
-    echo 1>&2 The following packages are installed:
-    cat /etc/setup/installed.db | awk '/[^ ]+ [^ ]+ 0/ {print $1}'
-
-  ;;
-
-
-  find)
-
-    checkpackages
-    findworkspace
-    getsetup
-
-    for pkg in $packages
-    do
-      echo ""
-      echo Searching for installed packages matching $pkg:
-      awk '/[^ ]+ [^ ]+ 0/ {if ($1 ~ query) print $1}' query="$pkg" /etc/setup/installed.db
-      echo ""
-      echo Searching for installable packages matching $pkg:
-      cat setup.ini | awk -v query="$pkg" \
-        'BEGIN{RS="\n\n@ "; FS="\n"; ORS="\n"} {if ($1 ~ query) {print $1}}'
-    done
-
-  ;;
-
-
-  describe)
-
-    checkpackages
-    findworkspace
-    getsetup
-    for pkg in $packages
-    do
-      echo ""
-      cat setup.ini | awk -v query="$pkg" \
-        'BEGIN{RS="\n\n@ "; FS="\n"; ORS="\n"} {if ($1 ~ query) {print $0 "\n"}}'
-    done
-
-  ;;
-
-
-  packageof)
-
-    checkpackages
-    for pkg in $packages
-    do
-      key=`which "$pkg" 2>/dev/null | sed "s:^/::"`
-      if test "-$key-" = "--"
-      then
-        key="$pkg"
-      fi
-      for manifest in /etc/setup/*.lst.gz
-      do
-        found=`cat $manifest | gzip -d | grep -c "$key"`
-        if test $found -gt 0
-        then
-          package=`echo $manifest | sed -e "s:/etc/setup/::" -e "s/.lst.gz//"`
-          echo Found $key in the package $package
-        fi
-      done
-    done
-
-  ;;
-
-
-  install)
-
-    checkpackages
-    findworkspace
-    getsetup
-
-    for pkg in $packages
+ for pkg in $packages
     do
 
     already=`grep -c "^$pkg " /etc/setup/installed.db`
@@ -379,14 +248,12 @@ case "$command" in
     echo Package $pkg installed
 
     done
+}
 
-  ;;
+function removePkg()
+{
 
-
-  remove)
-
-    checkpackages
-    for pkg in $packages
+ for pkg in $packages
     do
 
     already=`grep -c "^$pkg " /etc/setup/installed.db`
@@ -429,7 +296,164 @@ case "$command" in
     mv /tmp/awk.$$ /etc/setup/installed.db
     echo Package $pkg removed
 
+    done  
+}
+
+while test $# -gt 0
+do
+  case "$1" in
+
+    --mirror|-m)
+      echo "$2" > /etc/setup/last-mirror
+      PACT_REPO="$2"
+      echo "Mirror manually set to $PACT_REPO"
+      shift ; shift
+    ;;
+
+    --noscripts)
+      noscripts=1
+      shift
+    ;;
+
+    --update|-u)
+      update=1
+      shift
+    ;;
+
+    --help)
+      usage
+      exit 0
+    ;;
+
+    --version)
+      version
+      exit 0
+    ;;
+
+
+    update|upgrade|show|find|describe|packageof|install|remove)
+      if test "-$command-" = "--"
+      then
+        command=$1
+      else
+        packages="$packages $1"
+      fi
+      shift
+
+    ;;
+
+    *)
+      packages="$packages $1"
+      shift
+
+    ;;
+
+  esac
+done
+
+test $noscripts -eq 0 && check_only_one_running "pact"
+
+case "$command" in
+
+  update)
+  
+  update=1
+    findworkspace
+    getsetup
+
+  ;;
+
+  show)
+
+    echo 1>&2 The following packages are installed:
+    cat /etc/setup/installed.db | awk '/[^ ]+ [^ ]+ 0/ {print $1}'
+
+  ;;
+
+
+  find)
+
+    checkpackages
+    findworkspace
+    getsetup
+
+    for pkg in $packages
+    do
+      echo ""
+      echo Searching for installed packages matching $pkg:
+      awk '/[^ ]+ [^ ]+ 0/ {if ($1 ~ query) print $1}' query="$pkg" /etc/setup/installed.db
+      echo ""
+      echo Searching for installable packages matching $pkg:
+      cat setup.ini | awk -v query="$pkg" \
+        'BEGIN{RS="\n\n@ "; FS="\n"; ORS="\n"} {if ($1 ~ query) {print $1}}'
     done
+
+  ;;
+
+
+  describe)
+
+    checkpackages
+    findworkspace
+    getsetup
+    for pkg in $packages
+    do
+      echo ""
+      cat setup.ini | awk -v query="$pkg" \
+        'BEGIN{RS="\n\n@ "; FS="\n"; ORS="\n"} {if ($1 ~ query) {print $0 "\n"}}'
+    done
+
+  ;;
+
+
+  packageof)
+
+    checkpackages
+    for pkg in $packages
+    do
+      key=`which "$pkg" 2>/dev/null | sed "s:^/::"`
+      if test "-$key-" = "--"
+      then
+        key="$pkg"
+      fi
+      for manifest in /etc/setup/*.lst.gz
+      do
+        found=`cat $manifest | gzip -d | grep -c "$key"`
+        if test $found -gt 0
+        then
+          package=`echo $manifest | sed -e "s:/etc/setup/::" -e "s/.lst.gz//"`
+          echo Found $key in the package $package
+        fi
+      done
+    done
+
+  ;;
+
+
+  install)
+
+    checkpackages
+    findworkspace
+    getsetup
+    installPkg
+
+  ;;
+
+
+  upgrade)
+    
+    removePkg
+    checkpackages
+    findworkspace
+    getsetup
+    installPkg
+
+  ;;
+
+  remove)
+
+    checkpackages
+    removePkg
 
   ;;
 
@@ -437,7 +461,11 @@ case "$command" in
 
     usage
 
+
+
   ;;
 
 esac
+
+
 

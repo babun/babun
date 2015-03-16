@@ -1,12 +1,6 @@
 #!/bin/bash
 source "/usr/local/etc/babun.instance"
-source "$babun_tools/git.sh"
-"$babun_tools/start.sh"
+
+"$babun_plugins/start.sh"
 "$babun_tools/welcome.sh"
 
-if ! [[ "$DISABLE_CHECK_ON_STARTUP" == "true" ]]; then
-	source "$babun_tools/check.sh"
-	guarded_babun_check
-	trap - DEBUG ERR
-	trap	
-fi

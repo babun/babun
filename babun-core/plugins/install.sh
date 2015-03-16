@@ -22,3 +22,4 @@ plugin_install "oh-my-zsh"
 plugin_install "git"
 plugin_install "cygdrive"
 plugin_install "dist"
+

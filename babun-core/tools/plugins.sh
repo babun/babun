@@ -93,3 +93,15 @@ function plugin_install_home {
 	fi
 	bash "$install_home_script"	"$installed_version"
 }
+
+function plugin_start {
+	local plugin_name="$1"
+
+	local start_script="$babun_plugins/$plugin_name/start.sh"
+	if [[ ! -f "$install_home_script" ]]; then
+		echo "ERROR: Cannot find plugin start.sh script [$plugin_name] [$start_script]"	
+		exit 1	
+	fi 
+
+	bash "$start_script" || echo "Could not start plugin [$plugin_name]"
+}

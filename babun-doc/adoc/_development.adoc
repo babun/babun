@@ -108,7 +108,7 @@ Every time the plugin is changed the version has to be incremented. Otherwise th
 
 ==== start.sh (optional)
 
-The start.sh is an optional script for plugins that require triggering certain actions on every start up of the application (for example update check).
+The start.sh is an optional script for plugins that require triggering certain actions on every babun start (for example update check).
 
 === Branches
 

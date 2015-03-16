@@ -62,9 +62,10 @@ The release goal expects the following environment variables: +bintray_user+ and
 
 Every plugin has to consist of three main files:
 
-* install.sh - a file that will be invoke during the creation of the babun's distribution
-* install_home.sh - a file that will be invoked during the installation of babun to the user's home folder 
+* install.sh - a file that will be executed during the creation of the babun's distribution
+* install_home.sh - a file that will be executed during the installation of babun to the user's home folder 
 * plugin.desc - a plugin description that contains the plugin_name and plugin_version variables
+* start.sh (optional) - a file that will be executed on babun startup
 
 Have a look at the pact plugin - it's a perfect example of a relatively small plugin using all the features.
 

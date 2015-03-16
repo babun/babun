@@ -29,11 +29,14 @@ GOTO RUN
 
 :RUN
 ECHO [babun] Upgrading cygwin from %MIRROR%
-set DIST_DIR=dist
-if exist %DIST_DIR% rmdir %DIST_DIR% /s /q
-%WGET% --timestamping --directory-prefix=%DIST_DIR% https://cygwin.com/setup-x86.exe || goto :ERROR
-cd %DIST_DIR%
-setup-x86.exe --upgrade-also --site=%MIRROR% --quiet-mode --no-admin --root=%CYGWIN_HOME% || goto :ERROR
+set DIST_DIR=%BABUN_HOME%/dist
+if exist "%DIST_DIR%" rmdir "%DIST_DIR%" /s /q
+%WGET% --timestamping --directory-prefix="%DIST_DIR%" https://cygwin.com/setup-x86.exe || goto :ERROR
+%WGET% --timestamping --directory-prefix="%DIST_DIR%" https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version || goto :ERROR
+
+cd "%DIST_DIR%"
+setup-x86.exe --upgrade-also --site="%MIRROR%" --quiet-mode --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" || goto :ERROR
+cp /Y "%DIST_DIR%/cygwin.version" "%CYGWIN_HOME%/usr/local/etc/babun/installed/cygwin" || goto :ERROR
 GOTO END
 
 :MIRRORNOTSET
@@ -55,3 +58,4 @@ ECHO [babun] Terminating due to internal error #%errorlevel%
 EXIT /b %errorlevel%
 
 :END
+

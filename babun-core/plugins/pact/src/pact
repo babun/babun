@@ -5,11 +5,11 @@ set -f -o pipefail
 
 source "/usr/local/etc/babun.instance"
 # source "$babun_tools/script.sh"
+source "$babun_tools/check.sh"
 source "$babun_tools/procps.sh"
 source ~/.pact/pact.repo
 
 # this script requires some packages
-
 WGET=`which wget 2> /dev/null`
 BZIP2=`which bzip2 2> /dev/null`
 TAR=`which tar 2> /dev/null`
@@ -26,22 +26,44 @@ if [ -z "$USER_AGENT" ]; then
   USER_AGENT="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"
 fi
   
+
+function checkCygwin() {
+  # Check if the underlying Cygwin distribution is up to date
+  local newest_cygwin_version=$( get_newest_cygwin_version )
+  if [[ -z "$newest_cygwin_version" ]]; then 
+    echo -e "[WARNING] Could not check the Cygwin distribution version. Installed packages may not work!"
+    return
+  else
+    local newest_cygwin_version_number=$( get_version_as_number $newest_cygwin_version )
+    local current_cygwin_version=$( get_current_cygwin_version )
+    local current_cygwin_version_number=$( get_version_as_number $current_cygwin_version )
+    if [[ $newest_cygwin_version_number -gt $current_cygwin_version_number ]]; then
+      echo -e "-------------------------------------------------------------------------------"
+      echo -e "WARNING: The underlying Cygwin kernel version is outdated!"
+      echo -e "It's forbidden to install new packages as they may fail to work." 
+      echo -e "Execute 'babun update' and follow the command-line instructions!"
+      echo -e "-------------------------------------------------------------------------------"
+      exit 1
+    fi    
+  fi
+}
+
 function usage()
 {
   echo pact: Installs and removes Cygwin packages.
   echo ""
   echo "Usage:"
-  echo "  \"pact install <package names>\" to install packages"
-  echo "  \"pact remove <package names>\" to remove packages"
-  echo "  \"pact update\" to update setup.ini"
-  echo "  \"pact upgrade\" to upgrade packages"
+  echo "  \"pact install <package names>\" to install given packages"
+  echo "  \"pact remove <package names>\" to remove given packages"
+  echo "  \"pact update <package names>\" to update given packages"
   echo "  \"pact show\" to show installed packages"
   echo "  \"pact find <patterns>\" to find packages matching patterns"
   echo "  \"pact describe <patterns>\" to describe packages matching patterns"
   echo "  \"pact packageof <commands or files>\" to locate parent packages"
+  echo "  \"pact invalidate\" to invalidate pact caches (setup.ini, etc.)"
   echo "Options:"
   echo "  --mirror, -m <url> : set mirror"
-  echo "  --update, -u       : force update setup.ini from mirror"
+  echo "  --invalidate, -i       : invalidates pact caches (setup.ini, etc.)"
   echo "  --help"
   echo "  --version"
 }
@@ -50,9 +72,9 @@ function usage()
 
 function version()
 {
-  echo "pact version 1.0.0 (based on apt-cyg 0.57)"
+  echo "pact version 1.0.2 (based on apt-cyg 0.57)"
   echo "Tweaked and maintained by Tom Bujok (@tombujok)"
-  echo "Copyright (c) 2014. Released under the MIT."
+  echo "Copyright (c) 2014-2015. Released under the MIT."
 }
 
 
@@ -83,7 +105,7 @@ function getsetup()
   currdir="$(pwd)"
   if test "$noscripts" == "0"
   then
-    if test "$update" == "0" && [ -s "$currdir/setup.ini" ] && [ -s "$currdir/setup.ini-save" ] && [ $(find "$currdir" -mtime 0 -type f -regex '.*setup.ini-save' 2>/dev/null) ] && cmp -s "$currdir/setup.ini" "$currdir/setup.ini-save" ; then
+    if test "$invalidate" == "0" && [ -s "$currdir/setup.ini" ] && [ -s "$currdir/setup.ini-save" ] && [ $(find "$currdir" -mtime 0 -type f -regex '.*setup.ini-save' 2>/dev/null) ] && cmp -s "$currdir/setup.ini" "$currdir/setup.ini-save" ; then
     echo "setup.ini taken from the cache"
   else
     touch setup.ini
@@ -124,8 +146,7 @@ function checkpackages()
 # process options
 
 noscripts=0
-update=0
-upgrade=0
+invalidate=0
 file=""
 command=""
 filepackages=""
@@ -315,8 +336,8 @@ do
       shift
     ;;
 
-    --update|-u)
-      update=1
+    --invalidate|-i)
+      invalidate=1
       shift
     ;;
 
@@ -331,7 +352,7 @@ do
     ;;
 
 
-    update|upgrade|show|find|describe|packageof|install|remove)
+    invalidate|update|show|find|describe|packageof|install|remove)
       if test "-$command-" = "--"
       then
         command=$1
@@ -355,9 +376,9 @@ test $noscripts -eq 0 && check_only_one_running "pact"
 
 case "$command" in
 
-  update)
+  invalidate)
   
-  update=1
+  invalidate=1
     findworkspace
     getsetup
 
@@ -431,7 +452,8 @@ case "$command" in
 
 
   install)
-
+    
+    checkCygwin
     checkpackages
     findworkspace
     getsetup
@@ -440,8 +462,9 @@ case "$command" in
   ;;
 
 
-  upgrade)
+  update)
     
+    checkCygwin
     removePkg
     checkpackages
     findworkspace
@@ -451,7 +474,7 @@ case "$command" in
   ;;
 
   remove)
-
+    
     checkpackages
     removePkg
 

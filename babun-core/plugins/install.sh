@@ -21,6 +21,4 @@ plugin_install "shell"
 plugin_install "oh-my-zsh"
 plugin_install "git"
 plugin_install "cygdrive"
-
-# set the installed version
-cat "$babun_source/babun.version" > "$babun/installed/babun"
+plugin_install "dist"

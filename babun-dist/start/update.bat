@@ -31,8 +31,8 @@ GOTO RUN
 ECHO [babun] Upgrading cygwin from %MIRROR%
 set DIST_DIR=%BABUN_HOME%/dist
 if exist "%DIST_DIR%" rmdir "%DIST_DIR%" /s /q
-%WGET% --timestamping --directory-prefix="%DIST_DIR%" https://cygwin.com/setup-x86.exe || goto :ERROR
-%WGET% --timestamping --directory-prefix="%DIST_DIR%" https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version || goto :ERROR
+"%WGET%" --timestamping --directory-prefix="%DIST_DIR%" https://cygwin.com/setup-x86.exe || goto :ERROR
+"%WGET%" --timestamping --directory-prefix="%DIST_DIR%" https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version || goto :ERROR
 
 cd "%DIST_DIR%"
 setup-x86.exe --upgrade-also --site="%MIRROR%" --quiet-mode --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" || goto :ERROR

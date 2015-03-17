@@ -1,5 +1,5 @@
 @echo off
-setlocal enableextensions enabledelayedexpansione
+setlocal enableextensions enabledelayedexpansion
 
 set SCRIPT_PATH=%~dp0
 set SCRIPT_PATH=%SCRIPT_PATH:\=/%

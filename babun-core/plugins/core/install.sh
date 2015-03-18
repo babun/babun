@@ -54,7 +54,7 @@ for profile in "${profiles[@]}"; do
 		echo "source /usr/local/etc/babun.rc" >> "$profile"
 	fi
 
-	if ! grep -Fxq "source /usr/local/etc/babun.bash" "$profile" ;then
+	if ! grep -Fxq "source /usr/local/etc/babun.zsh" "$profile" ;then
 		echo "Supplementing zsh -> $profile"
 		echo "source /usr/local/etc/babun.zsh" >> "$profile"
 	fi

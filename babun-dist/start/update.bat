@@ -8,7 +8,6 @@ set BABUN_HOME=%SCRIPT_PATH%
 :BEGIN
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 set WGET=%CYGWIN_HOME%\bin\wget.exe
-set CP=%CYGWIN_HOME%\bin\cp.exe
 if exist "%WGET%" goto SELECTSITE
 if not exist "%WGET%" goto NOTFOUND
 
@@ -37,7 +36,7 @@ if exist "%DIST_DIR%" rmdir "%DIST_DIR%" /s /q
 
 cd "%DIST_DIR%"
 setup-x86.exe --upgrade-also --site="%MIRROR%" --quiet-mode --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" || goto :ERROR
-"%CP%" /Y "%DIST_DIR%/cygwin.version" "%CYGWIN_HOME%/usr/local/etc/babun/installed/cygwin" || goto :ERROR
+copy /Y "%DIST_DIR%/cygwin.version" "%CYGWIN_HOME%/usr/local/etc/babun/installed/cygwin" || goto :ERROR
 GOTO END
 
 :MIRRORNOTSET

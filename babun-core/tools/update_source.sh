@@ -59,12 +59,14 @@ if [[ "$option" != "--force" ]]; then
 
 	if ! [[ $newest_version -gt $installed_version ]]; then
 		echo "Babun is up to date"
+		check_cygwin_version
 		exit 0
 	fi
 else 
 	echo "  installed [$installed_version_string]"
 	echo "  newest    [FORCE]"
 fi
+
 
 
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" reset --hard
@@ -85,3 +87,5 @@ find "$babun/source/babun-core" -type f -regex '.*sh' -exec chmod 755 {} \;
 
 
 "$babun"/source/babun-core/tools/update_exec.sh
+
+check_cygwin_version

@@ -6,9 +6,9 @@ source "$babun_tools/plugins.sh"
 
 
 # start plugins
-plugin_install "git"
-plugin_install "core"
-plugin_install "cygdrive"
+plugin_start "git"
+plugin_start "core"
+plugin_start "cygdrive"
 
 
 # Automatic start disabled for now as we have to control the order of plugin starts

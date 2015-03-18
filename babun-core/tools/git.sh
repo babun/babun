@@ -1,5 +1,5 @@
-local push=$(git config --global push.default || echo "")
-local version=$(git --version || echo "")
+push=$(git config --global push.default || echo "")
+version=$(git --version || echo "")
 
 if [[ $version == *" 1."* ]]; then
 	if [[ "$push" != "nothing" && "$push" != "matching" && "$push" != "tracking" && "$push" != "current" ]]; then

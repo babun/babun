@@ -18,11 +18,11 @@ if ! [[ -f "$babun/installed/cygwin" ]]; then
 fi
 
 # copy dist files to the dist folder
-cp -rf "$src/fonts" "$dest"
-cp -rf "$src/tools" "$dest"
+cp -rf "$src/fonts" "$babun_root"
+cp -rf "$src/tools" "$babun_root"
 
 # copy start/update scripts
 # not overriding start.bat for now -> but possible
-# cp -rf "$src/start/start.bat" "$dest"
-cp -rf "$src/start/update.bat" "$dest"
-cp -rf "$src/start/rebase.bat" "$dest"
+# cp -rf "$src/start/start.bat" "$babun_root"
+cp -rf "$src/start/update.bat" "$babun_root"
+cp -rf "$src/start/rebase.bat" "$babun_root"

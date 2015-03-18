@@ -29,7 +29,7 @@ function get_current_cygwin_version {
 	fi
 	dos2unix $babun/installed/cygwin 2> /dev/null
 	local current_cygwin_version=$( cat "$babun/installed/cygwin" 2> /dev/null || echo "0.0.0" )
-	echo "$current_version"
+	echo "$current_cygwin_version"
 }
 
 function get_newest_cygwin_version {

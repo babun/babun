@@ -41,8 +41,7 @@ function plugin_installed_ok {
 }
 
 function plugin_install {	
-	local plugin_name="$1"
-	local installed_version=$(cat "$babun/installed/$plugin_name" || echo "0") 
+	local plugin_name="$1"	
 	echo "Installing plugin [$plugin_name]"
 	local plugin_desc="$babun/source/babun-core/plugins/$plugin_name/plugin.desc"
 	if [[ ! -f "$plugin_desc" ]]; then	
@@ -68,7 +67,7 @@ function plugin_install {
 
 	# sets the version to the newest one
 	# uses the plugin descriptor variables
-	plugin_installed_ok "$plugin_name" "$installed_version"
+	plugin_installed_ok "$plugin_name"
 }
 
 function plugin_install_home {

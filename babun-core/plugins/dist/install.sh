@@ -3,8 +3,8 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 
-local src="$babun_source/babun-dist"
-local babun_root=/cygdrive/$( cygpath -ma "/" | sed "s/://"g )/..
+src="$babun_source/babun-dist"
+babun_root=/cygdrive/$( cygpath -ma "/" | sed "s/://"g )/..
 
 typeset -i installed_version
 installed_version=$(echo "$1" || echo "0") 

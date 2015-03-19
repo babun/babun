@@ -9,10 +9,10 @@ dest="$babun/home/oh-my-zsh/.oh-my-zsh"
 
 if [ ! -d "$src" ]; then
 	PATH=/usr/bin git clone https://github.com/robbyrussell/oh-my-zsh.git "$src" 
-	git --git-dir="$dest/.git" --work-tree="$dest" config core.trustctime false 
-	git --git-dir="$dest/.git" --work-tree="$dest" config core.autocrlf false 
-	git --git-dir="$dest/.git" --work-tree="$dest" rm --cached -r . > /dev/null
-	git --git-dir="$dest/.git" --work-tree="$dest" reset --hard 
+	git --git-dir="$src/.git" --work-tree="$src" config core.trustctime false 
+	git --git-dir="$src/.git" --work-tree="$src" config core.autocrlf false 
+	git --git-dir="$src/.git" --work-tree="$src" rm --cached -r . > /dev/null
+	git --git-dir="$src/.git" --work-tree="$src" reset --hard 
 fi
 
 if [ ! -d "$dest" ]; then

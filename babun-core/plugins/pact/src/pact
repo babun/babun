@@ -151,6 +151,7 @@ function checkCygwin() {
           echo -e "If you know what you are doing add '--force' flag to proceed."
           echo -e "-------------------------------------------------------------------------------"
           exit 1
+      fi
     fi    
   fi
 }

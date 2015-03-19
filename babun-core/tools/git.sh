@@ -12,3 +12,5 @@ else
 	    git config --global push.default "matching" || echo "ERROR: Cannot set git push.default to 'matching' - may cause problems..."
 	fi
 fi
+
+git config --global core.trustctime false

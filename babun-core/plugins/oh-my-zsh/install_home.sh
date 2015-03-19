@@ -26,3 +26,9 @@ if [ ! -f "$homedir/.zshrc" ]; then
 	zsh -c "source ~/.zshrc; cat \"$homedir/.zcompdump\" > \"$homedir/.zcompdump-\"*" &> /dev/null	
 fi
 
+if [[ "$installed_version" -le 1 ]]; then   
+    git --git-dir="$homedir/.oh-my-zsh/.git" --work-tree="$homedir/.oh-my-zsh" config core.trustctime false
+    git --git-dir="$homedir/.oh-my-zsh/.git" --work-tree="$homedir/.oh-my-zsh" config core.autocrlf false
+    git --git-dir="$homedir/.oh-my-zsh/.git" --work-tree="$homedir/.oh-my-zsh" rm --cached -r .
+    git --git-dir="$homedir/.oh-my-zsh/.git" --work-tree="$homedir/.oh-my-zsh" reset --hard
+fi

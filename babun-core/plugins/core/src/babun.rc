@@ -41,6 +41,16 @@ export VIM=/etc
 
 alias vi=vim
 
+# Fake 'sudo' command
+# (see http://superuser.com/questions/122418/theres-no-sudo-command-in-cygwin)
+if [ -e /dev/clipboard ]; then
+cat <<EOF > /usr/bin/sudo
+#!/bin/bash
+"\$@"
+EOF
+chmod ug+x /usr/bin/sudo
+fi
+
 #
 # IMPORTANT -> THIS HAS TO BE LOCATED AT THE END OF THIS SCRIPT
 # install babun to user's home folder if it does not exist

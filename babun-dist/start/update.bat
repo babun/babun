@@ -4,10 +4,12 @@ setlocal enableextensions enabledelayedexpansion
 set SCRIPT_PATH=%~dp0
 set SCRIPT_PATH=%SCRIPT_PATH:\=/%
 set BABUN_HOME=%SCRIPT_PATH%
+set DIST_DIR=%BABUN_HOME%/dist
 
 :BEGIN
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 set WGET=%CYGWIN_HOME%\bin\wget.exe
+set BASH=%CYGWIN_HOME%\bin\bash.exe
 if exist "%WGET%" goto SELECTSITE
 if not exist "%WGET%" goto NOTFOUND
 
@@ -28,14 +30,38 @@ set MIRROR=%2
 GOTO RUN
 
 :RUN
-ECHO [babun] Upgrading cygwin from %MIRROR%
-set DIST_DIR=%BABUN_HOME%/dist
-if exist "%DIST_DIR%" rmdir "%DIST_DIR%" /s /q
-"%WGET%" --timestamping --directory-prefix="%DIST_DIR%" https://cygwin.com/setup-x86.exe || goto :ERROR
-"%WGET%" --timestamping --directory-prefix="%DIST_DIR%" https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version || goto :ERROR
+echo [babun] Upgrading cygwin from %MIRROR%
+echo [babun] Writing data to %DIST_DIR%
 
+%BASH% -c "source ~/.babunrc; /bin/rm.exe -f '%DIST_DIR%/setup-x86.exe' '%DIST_DIR%/cygwin.version'" || goto :ERROR
+%BASH% -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://cygwin.com/setup-x86.exe" || goto :ERROR
+%BASH% -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version" || goto :ERROR
+
+GOTO SETUPPROXY
+
+:SETUPPROXY
+%BASH% -c "/bin/grep.exe 'export http_proxy=' ~/.babunrc | /bin/cut.exe -d "@" -f 2 " > "%DIST_DIR%/proxy" 
+set /p PROXY=<"%DIST_DIR%/proxy" 
+
+if "%PROXY%" == "" (
+    GOTO DIRECTDOWNLOAD
+) ELSE (
+    GOTO PROXYDOWNLOAD
+)
+
+:DIRECTDOWNLOAD
 cd "%DIST_DIR%"
-setup-x86.exe --upgrade-also --site="%MIRROR%" --quiet-mode --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" || goto :ERROR
+echo [babun] Downloading cygwin packages without proxy
+setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --download --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" || goto :ERROR
+GOTO VERSION
+
+:PROXYDOWNLOAD
+cd "%DIST_DIR%"
+echo [babun] Downloading cygwin packages with proxy=%PROXY%
+setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --download --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" --proxy=%PROXY% || goto :ERROR
+GOTO VERSION
+
+:VERSION
 copy /Y "%DIST_DIR%/cygwin.version" "%CYGWIN_HOME%/usr/local/etc/babun/installed/cygwin" || goto :ERROR
 GOTO END
 

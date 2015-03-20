@@ -97,3 +97,9 @@ if [[ "$installed_version" -le 1 ]]; then
 	
 
 fi
+
+if [[ "$installed_version" -le 2 ]]; then	
+	#remove duplicate lines from /etc/zshrc (consequence of #249)
+	/bin/awk '!a[$0]++' /etc/zshrc > /etc/zshrc.fixed
+	/bin/mv /etc/zshrc.fixed /etc/zshrc
+fi

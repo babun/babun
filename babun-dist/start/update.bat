@@ -40,7 +40,7 @@ echo [babun] Writing data to %DIST_DIR%
 GOTO SETUPPROXY
 
 :SETUPPROXY
-%BASH% -c "/bin/grep.exe 'export http_proxy=' ~/.babunrc | /bin/cut.exe -d "@" -f 2 " > "%DIST_DIR%/proxy" 
+%BASH% -c "/bin/grep.exe 'export http_proxy=' ~/.babunrc | /bin/grep.exe -v '#' | /bin/cut.exe -d "@" -f 2 " > "%DIST_DIR%/proxy" 
 set /p PROXY=<"%DIST_DIR%/proxy" 
 
 if "%PROXY%" == "" (

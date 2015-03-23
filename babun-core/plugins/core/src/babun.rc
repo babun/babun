@@ -45,11 +45,11 @@ alias vi=vim
 # Fake 'sudo' command
 # (see http://superuser.com/questions/122418/theres-no-sudo-command-in-cygwin)
 if [ -e /usr/bin/sudo ]; then
-cat <<EOF > /usr/bin/sudo
+/bin/cat <<EOF > /usr/bin/sudo
 #!/bin/bash
 "\$@"
 EOF
-chmod ug+x /usr/bin/sudo
+/bin/chmod ug+x /usr/bin/sudo
 fi
 
 #

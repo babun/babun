@@ -14,9 +14,10 @@ function usage()
   echo "Usage:"
   echo "  \"babun update\" to fetch the newest version of babun"  
   echo "  \"babun check\" to check if the installation is correct"  
-  echo "  \"babun shell\" to display the name of the current user's shell"  
-  echo "  \"babun shell <new_shell>\" to set the current user's shell to new_shell"  
+  echo "  \"babun shell\" to display the name of the user's default shell (may not be the currently used shell)"  
+  echo "  \"babun shell <new_shell>\" to set the user's default shell to new_shell"   
   echo "  \"babun install\" to (re)install babun to the current user's home folder"  
+  echo "  \"babun login\" to login to the user's default shell"  
   echo "Options:"
   echo "  --help"
   echo "  --version"
@@ -82,8 +83,12 @@ do
       exit 0
     ;;
 
+    --login)
+      login
+      exit 0
+    ;;
 
-    update|check|shell|install)
+    update|check|shell|install|login)
       if test "-$command-" = "--"
       then
         command=$1     
@@ -146,6 +151,11 @@ function shell()
     fi
 }
 
+function login()
+{
+    proc_shell_login
+}
+
 case "$command" in
 
   update)
@@ -169,7 +179,10 @@ case "$command" in
     install
   ;;
 
+  login)
 
+    login
+  ;;
 
   *)
 

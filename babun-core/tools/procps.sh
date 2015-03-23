@@ -17,3 +17,19 @@ function check_only_one_running {
         exit 1;
     fi
 }
+
+function proc_exec_on_script_finish_trap {
+    rm -rf "/var/lock/$proc_name"; exit $?    
+}
+
+function proc_shell_login {
+    currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
+    if [[ $currshell == "" ]]; then   
+        echo Login to default shell $currshell
+        proc_exec_on_script_finish_trap
+        exec $currshell 
+    else
+        echo Could not login to default shell >&2
+        exit 1
+    fi    
+}

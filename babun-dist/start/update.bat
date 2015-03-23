@@ -8,6 +8,7 @@ set DIST_DIR=%BABUN_HOME%/dist
 
 :BEGIN
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
+set AHK=%DIST_DIR%\tools\ahk.exe
 set WGET=%CYGWIN_HOME%\bin\wget.exe
 set BASH=%CYGWIN_HOME%\bin\bash.exe
 if exist "%WGET%" goto SELECTSITE
@@ -52,12 +53,18 @@ if "%PROXY%" == "" (
 :DIRECTDOWNLOAD
 cd "%DIST_DIR%"
 echo [babun] Downloading cygwin packages without proxy
+echo [babun] Adjusting installation parameters
+start %AHK%
+setup-x86.exe --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" || goto :ERROR
 setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" || goto :ERROR
 GOTO VERSION
 
 :PROXYDOWNLOAD
 cd "%DIST_DIR%"
 echo [babun] Downloading cygwin packages with proxy=%PROXY%
+echo [babun] Adjusting installation parameters
+start %AHK%
+setup-x86.exe --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" --proxy=%PROXY% || goto :ERROR
 setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" --proxy=%PROXY% || goto :ERROR
 GOTO VERSION
 

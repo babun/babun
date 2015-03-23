@@ -90,4 +90,5 @@ find "$babun/source/babun-core" -type f -regex '.*sh' -exec chmod 755 {} \;
 
 check_cygwin_version
 
+source "$babun_tools/procps.sh"
 proc_shell_login

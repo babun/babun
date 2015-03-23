@@ -52,13 +52,13 @@ if "%PROXY%" == "" (
 :DIRECTDOWNLOAD
 cd "%DIST_DIR%"
 echo [babun] Downloading cygwin packages without proxy
-setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --download --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" || goto :ERROR
+setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" || goto :ERROR
 GOTO VERSION
 
 :PROXYDOWNLOAD
 cd "%DIST_DIR%"
 echo [babun] Downloading cygwin packages with proxy=%PROXY%
-setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --download --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" --proxy=%PROXY% || goto :ERROR
+setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" --proxy=%PROXY% || goto :ERROR
 GOTO VERSION
 
 :VERSION

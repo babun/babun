@@ -206,11 +206,14 @@ function installPkg()
     # check the verification hash (md5 or sha512)
     digest=`cat "desc" | awk '/^install: / { print $4; exit }'` 
     md5digactual=`md5sum $file | awk '{print $1}'`
-    shadigactual=`sha512sum $file | awk '{print $1}'`
-    if ! [[ $digest == $md5digactual || $digest == $shadigactual ]]
+    if ! [[ $digest == $md5digactual ]]
     then
-      echo Verification hash did not match, exiting
-      exit 1
+      shadigactual=`sha512sum $file | awk '{print $1}'`
+      if ! [[ $digest == $shadigactual ]]
+      then
+        echo Verification hash did not match, exiting
+        exit 1
+      fi
     fi
     
     echo "Unpacking..."

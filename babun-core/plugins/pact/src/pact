@@ -203,12 +203,13 @@ function installPkg()
     cd "release/$pkg"
     wget --user-agent="$USER_AGENT" -nc $mirror/$install
     
-    # check the sha512 hash
+    # check the verification hash (md5 or sha512)
     digest=`cat "desc" | awk '/^install: / { print $4; exit }'` 
-    digactual=`sha512sum $file | awk '{print $1}'`
-    if ! [[ $digest == $digactual ]]
+    md5digactual=`md5sum $file | awk '{print $1}'`
+    shadigactual=`sha512sum $file | awk '{print $1}'`
+    if ! [[ $digest == $md5digactual || $digest == $shadigactual ]]
     then
-      echo SHA512 sum did not match, exiting
+      echo Verification hash did not match, exiting
       exit 1
     fi
     

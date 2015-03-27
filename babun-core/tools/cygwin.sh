@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e -f -o pipefail
+source "$babun_tools/check.sh"
 
 function check_cygwin_version() {
 

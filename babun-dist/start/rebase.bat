@@ -17,11 +17,14 @@ GOTO END
 
 :NOTFOUND
 ECHO [babun] dash.exe not found. Babun installation seems to be corrupted.
+pause
 EXIT /b 255
 
 :ERROR
 ECHO [babun] Terminating due to internal error #%errorlevel%
+pause
 EXIT /b %errorlevel%
 
 :END
 ECHO [babun] Finished rebaseall
+pause

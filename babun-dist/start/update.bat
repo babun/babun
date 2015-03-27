@@ -72,7 +72,7 @@ echo [babun] Downloading Cygwin %CYGWIN_VERSION%
 
 :SETUPRC
 echo [babun] Preparing setup.rc config
-%BASH% -c "source ~/.babunrc; /bin/rm.exe -f /etc/setup/setup.rc; /bin/cp.exe /etc/setup/setup.rc.old /etc/setup/setup.rc" || goto :ERROR
+%BASH% -c "source ~/.babunrc; /bin/rm.exe -f /etc/setup/setup.rc" || goto :ERROR
 
 :RUNNINGCHECK
 %BASH% -c "source ~/.babunrc; /bin/ps.exe | /bin/grep.exe /usr/bin/mintty | /bin/wc.exe -l" > "%DIST_DIR%/running_count"

@@ -8,29 +8,59 @@ set DIST_DIR=%BABUN_HOME%/dist
 
 :BEGIN
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
-set AHK=%DIST_DIR%\tools\ahk.exe
 set WGET=%CYGWIN_HOME%\bin\wget.exe
 set BASH=%CYGWIN_HOME%\bin\bash.exe
-if exist "%WGET%" goto SELECTSITE
+
 if not exist "%WGET%" goto NOTFOUND
 
-:SELECTSITE
-if %1.==. (
-	set MIRROR=http://mirrors.kernel.org/sourceware/cygwin
+:PARSE
+IF "%~1"=="" (
 	GOTO RUN
-)	
-if "%1"=="/s" GOTO SETSITE
-if "%1"=="/site" GOTO SETSITE
+)
+
+:PARSESITE
+if "%~1"=="/site" (
+	GOTO DOPARSESITE
+)
+GOTO AFTERPARSESITE
+
+:DOPARSESITE
+	SHIFT
+	if %~1.==. (
+		GOTO MIRRORNOTSET
+	)
+	set MIRROR=%~1
+	SHIFT
+	GOTO PARSE
+)
+
+:AFTERPARSESITE
+
+:PARSEPROXY
+if "%~1"=="/proxy" (
+	GOTO DOPARSEPROXY
+)
+GOTO AFTERPARSEPROXY
+
+:DOPARSEPROXY
+	SHIFT
+	if %~1.==. (
+		GOTO PROXYNOTSET
+	)
+	set PROXY=%~1
+	SHIFT
+	GOTO PARSE
+)
+:AFTERPARSEPROXY
+
 GOTO UNKNOWNFLAG
 
-:SETSITE
-if %2.==. (
-	GOTO MIRRORNOTSET
-)
-set MIRROR=%2
-GOTO RUN
-
 :RUN
+if "%MIRROR%"=="" (
+	set MIRROR=http://mirrors.kernel.org/sourceware/cygwin
+	GOTO RUN
+)
+
 echo [babun] Upgrading cygwin from %MIRROR%
 echo [babun] Writing data to %DIST_DIR%
 
@@ -38,11 +68,32 @@ echo [babun] Writing data to %DIST_DIR%
 %BASH% -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://cygwin.com/setup-x86.exe" || goto :ERROR
 %BASH% -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version" || goto :ERROR
 
-GOTO SETUPPROXY
+:SETUPRC
+echo [babun] Preparing setup.rc config
+%BASH% -c "source ~/.babunrc; /bin/rm.exe -f /etc/setup/setup.rc; /bin/cp.exe /etc/setup/setup.rc.old /etc/setup/setup.rc" || goto :ERROR
+
+:RUNNINGCHECK
+%BASH% -c "source ~/.babunrc; /bin/ps.exe | /bin/grep.exe /usr/bin/mintty | /bin/wc.exe -l" > "%DIST_DIR%/running_count"
+set /p RUNNING_COUNT=<"%DIST_DIR%/running_count"	
+
+if NOT "%PROXY%"=="0" (
+	echo [babun] ERROR: There's %RUNNING_COUNT% running babun instance[s]. Close them and try again!
+	GOTO BABUNRUNNING
+)
+
+%BASH% -c "source ~/.babunrc; /bin/rm.exe -f /etc/setup/setup.rc;" || goto :ERROR
+rem Due to bug in setup.exe's quiet-mode the /etc/setup/setup.rc file is not read anyway...
+rem %BASH% -c "source ~/.babunrc; /bin/echo.exe 'net-method' >> /etc/setup/setup.rc" || goto :ERROR
+rem %BASH% -c "source ~/.babunrc; /bin/echo.exe '	IE' >> /etc/setup/setup.rc" || goto :ERROR
+rem %BASH% -c "source ~/.babunrc; /bin/echo.exe 'last-action' >> /etc/setup/setup.rc" || goto :ERROR
+rem %BASH% -c "source ~/.babunrc; /bin/echo.exe '	Download,Install' >> /etc/setup/setup.rc" || goto :ERROR
 
 :SETUPPROXY
-%BASH% -c "/bin/grep.exe 'export http_proxy=' ~/.babunrc | /bin/grep.exe -v '#' | /bin/cut.exe -d "@" -f 2 " > "%DIST_DIR%/proxy" 
-set /p PROXY=<"%DIST_DIR%/proxy" 
+if "%PROXY%"=="" (
+	echo [babun] Proxy flag not set, trying to read the proxy from ~/.babunrc
+	%BASH% -c "/bin/grep.exe 'export http_proxy=' ~/.babunrc | /bin/grep.exe -v '#' | /bin/sed.exe 's/export http_proxy=//g' | /bin/cut.exe -d "@" -f 2 " > "%DIST_DIR%/proxy" 
+	set /p PROXY=<"%DIST_DIR%/proxy"	
+)
 
 if "%PROXY%" == "" (
     GOTO DIRECTDOWNLOAD
@@ -52,19 +103,13 @@ if "%PROXY%" == "" (
 
 :DIRECTDOWNLOAD
 cd "%DIST_DIR%"
-echo [babun] Downloading cygwin packages without proxy
-echo [babun] Adjusting installation parameters
-start %AHK%
-setup-x86.exe --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" || goto :ERROR
+echo [babun] Executing cygwin upgrade without proxy
 setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" || goto :ERROR
 GOTO VERSION
 
 :PROXYDOWNLOAD
 cd "%DIST_DIR%"
-echo [babun] Downloading cygwin packages with proxy=%PROXY%
-echo [babun] Adjusting installation parameters
-start %AHK%
-setup-x86.exe --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" --proxy=%PROXY% || goto :ERROR
+echo [babun] Executing cygwin upgrade with proxy=%PROXY%
 setup-x86.exe --quiet-mode --upgrade-also --site="%MIRROR%" --no-admin --no-shortcuts --no-startmenu --no-desktop --root="%CYGWIN_HOME%" --local-package-dir="%DIST_DIR%" --proxy=%PROXY% || goto :ERROR
 GOTO VERSION
 
@@ -73,9 +118,15 @@ copy /Y "%DIST_DIR%/cygwin.version" "%CYGWIN_HOME%/usr/local/etc/babun/installed
 GOTO END
 
 :MIRRORNOTSET
-ECHO [babun] /SITE flag was set, but no mirror was provided. Please add site URL. Terminating!
+ECHO [babun] /site flag was given, but no site was provided. Please add the site URL. Terminating!
 pause
 EXIT /b 255
+
+:PROXYNOTSET
+ECHO [babun] /proxy flag was given, but no proxy was provided. Please add proxy URL. Terminating!
+pause
+EXIT /b 255
+
 
 :UNKNOWNFLAG
 ECHO [babun] Unknown flag provided. Terminating!
@@ -84,10 +135,17 @@ EXIT /b 255
 
 :NOTFOUND
 ECHO [babun] Wget not found. Babun installation seems to be corrupted.
+pause
+EXIT /b 255
+
+:BABUNRUNNING
+ECHO [babun] Terminating!
+pause
 EXIT /b 255
 
 :ERROR
 ECHO [babun] Terminating due to internal error #%errorlevel%
+pause
 EXIT /b %errorlevel%
 
 :END

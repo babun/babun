@@ -3,6 +3,7 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 source "$babun_tools/procps.sh"
+source "$babun_tools/cygwin.sh"
 
 # install/update plugins
 "$babun"/source/babun-core/plugins/install.sh || { echo "ERROR: Could not update babun!"; exit -2; }

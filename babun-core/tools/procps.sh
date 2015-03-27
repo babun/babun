@@ -19,7 +19,7 @@ function check_only_one_running {
 }
 
 function proc_exec_on_script_finish_trap {
-    rm -rf "/var/lock/$proc_name"; exit $?    
+    rm -rf "/var/lock/$proc_name";    
 }
 
 function proc_shell_login {

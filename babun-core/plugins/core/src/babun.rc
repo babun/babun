@@ -14,6 +14,7 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias emacs=emacs-nox
 alias open='cygstart'
+unset GREP_OPTIONS
 
 # User Agent section -> especially for @aalmiray :)
 # List of user agents: http://www.useragentstring.com/pages/useragentstring.php

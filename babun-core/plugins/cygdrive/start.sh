@@ -8,7 +8,7 @@ do
 	link_target=$(readlink $root_dir)
 
 	if [[ "$link_target" =~ ^\/cygdrive\/.$ ]]; then
-		rm "$root_dir"	
+		rm "$root_dir" || true
 	fi
 done
 

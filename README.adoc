@@ -421,6 +421,7 @@ Every time the plugin is changed the version has to be incremented. Otherwise th
 === Branches
 
 The babun's repository contains three main branches:
+
 * master - development branch
 * candidate - release candidate branch, no direct commmits, only fast forwards from the master/other branch
 * release - release, no direct commits, only fast forwards from the candidate branch

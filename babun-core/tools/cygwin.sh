@@ -2,7 +2,7 @@
 set -e -f -o pipefail
 source "$babun_tools/check.sh"
 
-function check_cygwin_version() {
+function update_cygwin_instance() {
 
 	local newest_cygwin_version=$( get_newest_cygwin_version )
 	if [[ -z "$newest_cygwin_version" ]]; then 
@@ -18,14 +18,13 @@ function check_cygwin_version() {
 		echo "  newest    [$newest_cygwin_version]"
 		if [[ $newest_cygwin_version_number -gt $current_cygwin_version_number ]]; then
 			local babun_root=$( cygpath -ma "/" | sed "s#/cygwin##g" ) 
-			echo 
-			echo -e "It's necessary to update Cygwin! Unfortunately it's not possible to do it from within babun."
-			echo -e "Execute the following steps to update the underlying Cygwin instance:"
-			echo -e "  - close all babun windows"
-			echo -e "  - open the following folder $babun_root"
-			echo -e "  - execute the update.bat script"
-		else 
-			echo -e "Cygwin is up to date"
+			local running_count = $( ps | grep /usr/bin/mintty | wc -l )
+			if [[ $running_count -gt 1 ]]; then
+				echo -e "ERROR: There's $running_count running babun instance[s]. Close all OTHER babun windows [mintty processes] and try again."
+				return
+			fi
+			echo "cygstart"
+			# cygstart $babun_root/update.bat && pkill 'mintty'
 		fi 		
 	fi
 

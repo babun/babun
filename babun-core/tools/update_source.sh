@@ -31,7 +31,7 @@ if [[ "$option" != "--force" ]]; then
 
 	if ! [[ $newest_version -gt $installed_version ]]; then
 		echo "Babun is up to date"
-		check_cygwin_version
+		update_cygwin_instance
 		exit 0
 	fi
 else 

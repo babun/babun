@@ -32,6 +32,12 @@ function update_cygwin_instance() {
 			echo -e "DO NOT close the window during the update process!"
 			echo -e "------------------------------------------------------------------"
 			sleep 5
+			echo -e "Upgrading Cygwin in:"
+			for i in {3..1}
+			do
+			   echo "$i"
+			   sleep 1
+			done
 			cygstart $babun_root/update.bat && pkill 'mintty'
 		else
 			echo "Cygwin is up to date" 

@@ -27,4 +27,3 @@ EXIT /b %errorlevel%
 
 :END
 ECHO [babun] Finished rebaseall
-pause

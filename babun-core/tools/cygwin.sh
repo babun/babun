@@ -20,8 +20,10 @@ function update_cygwin_instance() {
 			local babun_root=$( cygpath -ma "/" | sed "s#/cygwin##g" ) 
 			local running_count=$( ps | grep /usr/bin/mintty | wc -l )
 			if [[ $running_count -gt 1 ]]; then
-				echo -e "ERROR: There's $running_count running babun instance[s]."
-				echo -e "Close all OTHER babun windows [mintty processes] and execute 'babun update'"
+				echo -e "------------------------------------------------------------------"
+				echo -e "ERROR: Cannot upgrade Cygwin! There's $running_count running babun instance[s]."
+				echo -e "Close all OTHER babun windows [mintty] and execute 'babun update'"
+				echo -e "------------------------------------------------------------------"
 				return
 			fi
 			cygstart $babun_root/update.bat && pkill 'mintty'

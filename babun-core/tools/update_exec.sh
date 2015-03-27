@@ -14,8 +14,8 @@ source "$babun_tools/cygwin.sh"
 # set the newest version marker
 cat "$babun/source/babun.version" > "$babun/installed/babun"
 
-# login to the default shell once again to execute plugin startup sequence
-proc_shell_login
-
 # execute cygwin update
 update_cygwin_instance
+
+# login to the default shell once again to execute plugin startup sequence
+proc_shell_login

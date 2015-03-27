@@ -148,6 +148,7 @@ EXIT /b 255
 
 :ERROR
 ECHO [babun] Terminating due to internal error #%errorlevel%
+ECHO [babun] Execute %BABUN_HOME%/update.bat to rerun the Cygwin update process.
 pause
 EXIT /b %errorlevel%
 

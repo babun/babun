@@ -17,6 +17,7 @@ function update_cygwin_instance() {
 		echo "  installed [$current_cygwin_version]"
 		echo "  newest    [$newest_cygwin_version]"
 		if [[ $newest_cygwin_version_number -gt $current_cygwin_version_number ]]; then
+			echo "Cygwin is outdated"
 			local babun_root=$( cygpath -ma "/" | sed "s#/cygwin##g" ) 
 			local running_count=$( ps | grep /usr/bin/mintty | wc -l )
 			if [[ $running_count -gt 1 ]]; then
@@ -26,8 +27,15 @@ function update_cygwin_instance() {
 				echo -e "------------------------------------------------------------------"
 				return
 			fi
+			echo -e "------------------------------------------------------------------"
+			echo -e "Babun will close itself in 5 seconds to upgrade the underlying Cygwin instance."
+			echo -e "DO NOT close the window during the update process!"
+			echo -e "------------------------------------------------------------------"
+			sleep 5
 			cygstart $babun_root/update.bat && pkill 'mintty'
-		fi 		
+		else
+			echo "Cygwin is up to date" 
+		fi		
 	fi
 
 }

@@ -45,9 +45,9 @@ git --git-dir="$babun/source/.git" --work-tree="$babun/source" reset --hard
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" clean -d -x -f -f
 
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" fetch --all
+git --git-dir="$babun/source/.git" --work-tree="$babun/source" checkout $BABUN_BRANCH
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" pull --all
 
-git --git-dir="$babun/source/.git" --work-tree="$babun/source" checkout $BABUN_BRANCH
 git --git-dir="$babun/source/.git" --work-tree="$babun/source" clean -d -x -f -f
 
 

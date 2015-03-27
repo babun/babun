@@ -39,7 +39,7 @@ function update_cygwin_instance() {
 			   sleep 1
 			done
 			echo "0"
-			cygstart $babun_root/update.bat && pkill 'mintty'
+			cygstart "$babun_root/update.bat" && pkill 'mintty'
 		else
 			echo "Cygwin is up to date" 
 		fi		

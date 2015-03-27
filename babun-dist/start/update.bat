@@ -65,8 +65,10 @@ echo [babun] Upgrading Cygwin from %MIRROR%
 echo [babun] Writing data to %DIST_DIR%
 
 %BASH% -c "source ~/.babunrc; /bin/rm.exe -f '%DIST_DIR%/setup-x86.exe' '%DIST_DIR%/cygwin.version'" || goto :ERROR
-%BASH% -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://cygwin.com/setup-x86.exe" || goto :ERROR
 %BASH% -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version" || goto :ERROR
+set /p CYGWIN_VERSION=<"%DIST_DIR%/cygwin.version"
+echo [babun] Downloading Cygwin %CYGWIN_VERSION%
+%BASH% -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://raw.githubusercontent.com/babun/babun-cygwin/%CYGWIN_VERSION%/babun-cygwin/setup-x86.exe" || goto :ERROR
 
 :SETUPRC
 echo [babun] Preparing setup.rc config

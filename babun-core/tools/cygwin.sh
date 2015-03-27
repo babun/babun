@@ -18,7 +18,7 @@ function update_cygwin_instance() {
 		echo "  newest    [$newest_cygwin_version]"
 		if [[ $newest_cygwin_version_number -gt $current_cygwin_version_number ]]; then
 			local babun_root=$( cygpath -ma "/" | sed "s#/cygwin##g" ) 
-			local running_count = $( ps | grep /usr/bin/mintty | wc -l )
+			local running_count=$( ps | grep /usr/bin/mintty | wc -l )
 			if [[ $running_count -gt 1 ]]; then
 				echo -e "ERROR: There's $running_count running babun instance[s]. Close all OTHER babun windows [mintty processes] and try again."
 				return

@@ -7,7 +7,7 @@ source "$babun_tools/plugins.sh"
 # install home folder content
 plugin_install_home "dist"
 plugin_install_home "core"
-plugin_install_home "cygwin"
+plugin_install_home "cygfix"
 plugin_install_home "shell"
 plugin_install_home "pact"
 plugin_install_home "cacert"

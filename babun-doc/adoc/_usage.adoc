@@ -69,13 +69,15 @@ Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit o
 * git
 * oh-my-zsh
 * pact
+* cygdrive
+* dist
 * shell
 
 ==== Auto-update
 
 Self-update is at the very heart of babun! Many Cygwin tools are simple bash scripts - once you install them there is no chance of getting the newer version in a smooth way. You either delete the older version or overwrite it with the newest one losing all the changes you have made in between.
 
-Babun contains an auto-update feature which enables updating both the microkernel and the plugins. Files located in your home folder will not be deleted nor overwritten which preserves your local config and customizations.
+Babun contains an auto-update feature which enables updating both the microkernel, the plugins and even the underlying cygwin. Files located in your home folder will never be deleted nor overwritten which preserves your local config and customizations.
 
 ==== Installer
 
@@ -141,20 +143,22 @@ Package arj installed
 
 Here's the list of all pact's features:
 ----
-{ ~ }  » pact --help                                                                         ~
+{ ~ }  » pact --help                                                                            
 pact: Installs and removes Cygwin packages.
 
 Usage:
-  "pact install <package names>" to install packages
-  "pact remove <package names>" to remove packages
-  "pact update" to update setup.ini
+  "pact install <package names>" to install given packages
+  "pact remove <package names>" to remove given packages
+  "pact update <package names>" to update given packages
   "pact show" to show installed packages
   "pact find <patterns>" to find packages matching patterns
   "pact describe <patterns>" to describe packages matching patterns
   "pact packageof <commands or files>" to locate parent packages
+  "pact invalidate" to invalidate pact caches (setup.ini, etc.)
 Options:
   --mirror, -m <url> : set mirror
-  --update, -u       : force update setup.ini from mirror
+  --invalidate, -i       : invalidates pact caches (setup.ini, etc.)
+  --force, -f : force the execution
   --help
   --version
 ----
@@ -180,11 +184,23 @@ The output contains two lines: the previous default shell and the new default sh
 
 Execute the following command the check the configuration:
 ----
-{ ~ } » babun check                                                                          ~ 
+{ ~ }  » babun check                                                                         ~
 Executing babun check
 Prompt speed      [OK]
 Connection check  [OK]
 Update check      [OK]
+Cygwin check      [OK]
+----
+
+By executing this command you can also check whether there is a newer cygwin version available:
+----
+{ ~ }  » babun check                                                                            ~
+Executing babun check
+Prompt speed      [OK]
+Connection check  [OK]
+Update check      [OK]
+Cygwin check      [OUTDATED]
+Hint: the underlying Cygwin kernel is outdated. Execute 'babun update' and follow the instructions!
 ----
 
 It will check if there are problems with the speed of the git prompt, if there's access to the Internet or finally if you are running the newest version of babun.
@@ -197,6 +213,7 @@ Prompt speed      [SLOW]
 Hint: your prompt is very slow. Check the installed 'BLODA' software.
 Connection check  [OK]
 Update check      [OK]
+Cygwin check      [OK]
 ----
 
 On each startup, but only every 24 hours, babun will execute this check automatically. You can disable the automatic check in the ~/.babunrc file.
@@ -238,3 +255,5 @@ To update babun to the newest version execute:
 babun update
 ----
 Please note that your local configuration files will not be overwritten. 
+
+The 'babun update' command will also update the underlying cygwin version if never version is available. In such case babun will download the new cygwin installer, close itself and start the cygwin installation process. Once cygwin installation is completed babun will restart.

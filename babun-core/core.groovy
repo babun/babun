@@ -8,7 +8,7 @@ def execute() {
     try {
         checkArguments()
         (rootFolder, cygwinFolder, outputFolder, babunBranch) = initEnvironment()
-        copyCygwin(cygwinFolder, outputFolder)
+        copyCygwin(rootFolder, cygwinFolder, outputFolder)
         installCore(outputFolder, babunBranch)    
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
@@ -35,7 +35,7 @@ def initEnvironment() {
     return [rootFolder, cygwinFolder, outputFolder, babunBranch]
 }
 
-def copyCygwin(File cygwinFolder, File outputFolder) {
+def copyCygwin(File rootFolder, File cygwinFolder, File outputFolder) {
     new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin", quiet: true ) {
       fileset( dir: "${cygwinFolder.absolutePath}", defaultexcludes:"no" )
     }

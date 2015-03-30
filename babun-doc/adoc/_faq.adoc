@@ -183,7 +183,7 @@ Try emacs-nox
 
 use C:\\
 
-Note two back-slashe marks
+Note two back-slash marks
 
 ==== How to use sshfs command
 
@@ -192,5 +192,13 @@ Use Dokan sshfs. Free and open source.
 ==== Use SSH id_rsa key from Windows
 
 see https://github.com/babun/babun/issues/208[Issue 208]
+
+==== When I start babun.bat three shell windows open
+
+This is a known issue on Windows 10. To workaround it go to +.babun/cygwin/bin+ and change +mintty.exe+ to Windows 8 compatibility mode.
+
+=== How do I update the underlying cygwin version
+
+just execute +babun update+. If there is a new supported cygwin version babun will upgrade it
 
 

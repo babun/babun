@@ -103,10 +103,3 @@ if [[ "$installed_version" -le 2 ]]; then
 	/bin/awk '!a[$0]++' /etc/zshrc > /etc/zshrc.fixed
 	/bin/mv /etc/zshrc.fixed /etc/zshrc
 fi
-
-# set cygwin version while creating babun.zip (when no plugin installed)
-if [[ "$installed_version" -eq 0 ]]; then	
-	if [[ ! -f "$babun/installed/cygwin" ]]; then
-		echo "1.7.35" > "$babun/installed/cygwin" 
-	fi
-fi

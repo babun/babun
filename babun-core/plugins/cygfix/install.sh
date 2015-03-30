@@ -3,7 +3,7 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 
-src="$babun_source/babun-core/plugins/cygwin/src"
+src="$babun_source/babun-core/plugins/cygfix/src"
 
 /bin/cp -rf /bin/mkpasswd.exe /bin/mkpasswd.exe.current
 /bin/cp -rf $src/bin/mkpasswd_1.7.29.exe /bin/mkpasswd.exe

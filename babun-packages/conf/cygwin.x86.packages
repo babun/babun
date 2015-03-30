@@ -30,6 +30,7 @@ gnutls
 grep
 groff
 gzip
+hostname
 ipc-utils
 keychain
 less

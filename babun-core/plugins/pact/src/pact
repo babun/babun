@@ -131,28 +131,31 @@ packages=""
 force=0
 
 function checkCygwin() {
-  # Check if the underlying Cygwin distribution is up to date
-  local newest_cygwin_version=$( get_newest_cygwin_version )
-  if [[ -z "$newest_cygwin_version" ]]; then 
-    echo -e "[WARNING] Could not check the Cygwin distribution version. Installed packages may not work!"
-    return
-  else
-    local newest_cygwin_version_number=$( get_version_as_number $newest_cygwin_version )
-    local current_cygwin_version=$( get_current_cygwin_version )
-    local current_cygwin_version_number=$( get_version_as_number $current_cygwin_version )
-    if [[ $newest_cygwin_version_number -gt $current_cygwin_version_number ]]; then
-      if [[ force -eq 1 ]]; then
-          echo -e "CRITICAL: The underlying Cygwin version is outdated! Force option enabled - continuing!"
-      else 
-          echo -e "-------------------------------------------------------------------------------"
-          echo -e "CRITICAL: The underlying Cygwin version is outdated!"
-          echo -e "It's forbidden to install new packages as they may fail to work." 
-          echo -e "Execute 'babun update' and follow the instructions to update Cygwin."
-          echo -e "If you know what you are doing add '--force' flag to proceed."
-          echo -e "-------------------------------------------------------------------------------"
-          exit 1
-      fi
-    fi    
+  if test "$noscripts" == "0"
+  then
+    # Check if the underlying Cygwin distribution is up to date
+    local newest_cygwin_version=$( get_newest_cygwin_version )
+    if [[ -z "$newest_cygwin_version" ]]; then 
+      echo -e "[WARNING] Could not check the Cygwin distribution version. Installed packages may not work!"
+      return
+    else
+      local newest_cygwin_version_number=$( get_version_as_number $newest_cygwin_version )
+      local current_cygwin_version=$( get_current_cygwin_version )
+      local current_cygwin_version_number=$( get_version_as_number $current_cygwin_version )
+      if [[ $newest_cygwin_version_number -gt $current_cygwin_version_number ]]; then
+        if [[ force -eq 1 ]]; then
+            echo -e "CRITICAL: The underlying Cygwin version is outdated! Force option enabled - continuing!"
+        else 
+            echo -e "-------------------------------------------------------------------------------"
+            echo -e "CRITICAL: The underlying Cygwin version is outdated!"
+            echo -e "It's forbidden to install new packages as they may fail to work." 
+            echo -e "Execute 'babun update' and follow the instructions to update Cygwin."
+            echo -e "If you know what you are doing add '--force' flag to proceed."
+            echo -e "-------------------------------------------------------------------------------"
+            exit 1
+        fi
+      fi    
+    fi
   fi
 }
 

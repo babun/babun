@@ -114,6 +114,7 @@ The start.sh is an optional script for plugins that require triggering certain a
 === Branches
 
 The babun's repository contains three main branches:
+
 * master - development branch
 * candidate - release candidate branch, no direct commits, only fast forwards from the master/other branch
 * release - release, no direct commits, only fast forwards from the candidate branch

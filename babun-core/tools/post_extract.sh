@@ -5,6 +5,8 @@ source "$babun_tools/script.sh"
 
 # fix symlinks on local instance
 /bin/dos2unix.exe /etc/postinstall/symlinks_repair.sh
+
+/bin/chmod 755 /etc/postinstall/symlinks_repair.sh
 /etc/postinstall/symlinks_repair.sh
 /bin/mv.exe /etc/postinstall/symlinks_repair.sh /etc/postinstall/symlinks_repair.sh.done
 

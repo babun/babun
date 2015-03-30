@@ -52,7 +52,7 @@ function usage()
 
 function version()
 {
-  echo "pact version 1.0.2 (based on apt-cyg 0.57)"
+  echo "pact version 1.1.0 (based on apt-cyg 0.57)"
   echo "Tweaked and maintained by Tom Bujok (@tombujok)"
   echo "Copyright (c) 2014-2015. Released under the MIT."
 }

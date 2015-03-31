@@ -8,6 +8,7 @@ Babun is open source and driven by the community. There are many ways to contrib
 * Recommend it to your friends
 * Submit a https://github.com/babun/babun/issues[feature request] or a https://github.com/babun/babun/issues[bug report]
 * Fork it on https://github.com/babun/babun[github] and submit pull request
+* Motivate the community, tweet about the project and star it on github :)
 
 We are looking for new contributors, so if you fancy bash programming and if you would like to contribute a patch or a code up a new plugin give us a shout!
 

@@ -110,6 +110,14 @@ function update()
 {
   if [ "$args" != "" ] && [ "$args" != "--force" ]; then echo "ERROR: Wrong argument $args"; exit 1; fi
   echo "Executing babun update"
+
+  permcheck=$( chmod 755 /usr/ 2> /dev/null || echo "FAILED" )
+  if [[  $permcheck == "FAILED" ]]; then
+    echo -e "You don't have write permission to / filesystem. Aborting!"
+    echo -e "Hint: Have you installed babun as admin and run it from a non-admin account? Retry as admin." 
+    exit 1       
+  fi  
+
   cp "$core"/tools/update_source.sh /tmp/update_source.sh
   /tmp/update_source.sh "$args"
   exit 0

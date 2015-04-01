@@ -71,6 +71,16 @@ function exec_check_prompt {
 	fi	
 }
 
+function exec_check_permissions {
+	permcheck=$( chmod 755 /usr/ 2> /dev/null || echo "FAILED" )
+	if [[  $permcheck == "FAILED" ]]; then
+		echo -e "File permissions  [FAILED]"
+		echo -e "Hint: Have you installed babun as admin and run it from a non-admin account?"			
+	else 
+		echo -e "File permissions  [OK]"
+	fi	
+}
+
 function exec_check_cygwin {
 	local newest_cygwin_version=$( get_newest_cygwin_version )
 	if [[ -z "$newest_cygwin_version" ]]; then 
@@ -92,6 +102,7 @@ function exec_check_cygwin {
 
 function babun_check {	
 	exec_check_prompt
+	exec_check_permissions
 
 	local newest_version=$( get_newest_version )
 	if [[ -z "$newest_version" ]]; then 

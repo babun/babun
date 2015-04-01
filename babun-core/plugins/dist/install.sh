@@ -9,9 +9,6 @@ babun_root=/cygdrive/$( cygpath -ma "/" | sed "s/://"g )/..
 typeset -i installed_version
 installed_version=$(echo "$1" || echo "0") 
 
-# set the babun's installed version
-cat "$babun_source/babun.version" > "$babun/installed/babun"
-
 # set the cygwin's installed version
 if ! [[ -f "$babun/installed/cygwin" ]]; then
 	echo -e "1.7.29" > "$babun/installed/cygwin"

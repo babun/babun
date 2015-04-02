@@ -64,6 +64,8 @@ function exec_check_unfinished_update {
 	if ! [[ "$installed_version" == "$source_version" ]]; then
 		echo -e "Source consistent [FAILED]"
 		echo -e "Hint: babun is in INCONSISTENT state! Run babun update to finish the update process!"	
+	else 
+		echo -e "Source consistent [OK]"
 	fi
 }
 
@@ -107,7 +109,7 @@ function exec_check_cygwin {
 		local current_cygwin_version_number=$( get_version_as_number $current_cygwin_version )
 		if [[ $newest_cygwin_version_number -gt $current_cygwin_version_number ]]; then
 			echo -e "Cygwin check      [OUTDATED]"
-			echo -e "Hint: the underlying Cygwin kernel is outdated. Execute 'babun update' and follow the instructions!"	
+			echo -e "Hint: the underlying Cygwin kernel is outdated. Execute 'babun update'"	
 		else 
 			echo -e "Cygwin check      [OK]"
 		fi 		
@@ -126,15 +128,17 @@ function babun_check {
 		echo -e "Hint: adjust proxy settings in ~/.babunrc and execute 'source ~/.babunrc'"
 		return
 	else 
-		echo -e "Connection check  [OK]"
-		echo -e "Update check      [OK]"
+		echo -e "Connection check  [OK]"		
 	fi
 
 	local current_version=$( get_current_version )
     local current_version_number=$( get_version_as_number $current_version )
     local newest_version_number=$( get_version_as_number $newest_version )
     if [[ $newest_version_number -gt $current_version_number ]]; then
-		echo -e "Hint: your version is outdated. Execute 'babun update'"	
+    	echo -e "Update check      [OUTDATED]"
+		echo -e "Hint: your babun is outdated. Execute 'babun update'"	
+	else 
+		echo -e "Update check      [OK]"
 	fi	
 
 	exec_check_cygwin	

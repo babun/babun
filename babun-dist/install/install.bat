@@ -106,6 +106,7 @@ ECHO [babun] Running post-installation scripts. It may take a while...
 "%CYGWIN_HOME%"\bin\bash.exe --norc --noprofile -c "/usr/local/etc/babun/source/babun-core/tools/post_extract.sh" || goto :ERROR
 rem execute any command with -l (login) to run the post-installation scripts
 "%CYGWIN_HOME%"\bin\bash.exe -l -c "date" || goto :ERROR
+"%CYGWIN_HOME%"\bin\bash.exe -l -c "cat /usr/local/etc/babun/source/babun.version > /usr/local/etc/babun/installed/babun"  || goto :ERROR
 "%CYGWIN_HOME%"\bin\bash.exe -l -c "/usr/local/etc/babun/source/babun-core/plugins/install_home.sh" || goto :ERROR
 
 :PATH

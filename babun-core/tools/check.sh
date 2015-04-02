@@ -88,7 +88,7 @@ function exec_check_prompt {
 }
 
 function exec_check_permissions {
-	permcheck=$( chmod 755 /usr/ 2> /dev/null || echo "FAILED" )
+	permcheck=$( chmod 777 /etc/passwd /usr/local/bin/babun 2> /dev/null || echo "FAILED" )
 	if [[  $permcheck == "FAILED" ]]; then
 		echo -e "File permissions  [FAILED]"
 		echo -e "Hint: Have you installed babun as admin and run it from a non-admin account?"			

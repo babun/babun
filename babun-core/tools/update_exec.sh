@@ -5,6 +5,13 @@ source "$babun_tools/script.sh"
 source "$babun_tools/procps.sh"
 source "$babun_tools/cygwin.sh"
 
+permcheck=$( chmod 755 /usr/ 2> /dev/null || echo "FAILED" )
+if [[  $permcheck == "FAILED" ]]; then
+  echo "You don't have write permission to / filesystem. Aborting!"
+  echo "Hint: Have you installed babun as admin and run it from a non-admin account? Retry as admin." 
+  exit -1       
+fi  
+
 # install/update plugins
 "$babun"/source/babun-core/plugins/install.sh || { echo "ERROR: Could not update babun!"; exit -2; }
  

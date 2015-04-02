@@ -15,6 +15,11 @@ function get_current_version {
 	echo "$current_version"
 }
 
+function get_current_source_version {
+	local current_source_version=$( cat "$babun_source/babun.version" 2> /dev/null || echo "0.0.0" )
+	echo "$current_source_version"
+}
+
 function get_newest_version {
 	if [[ -z $CHECK_TIMEOUT_IN_SECS ]]; then 
 		CHECK_TIMEOUT_IN_SECS=4
@@ -51,6 +56,15 @@ function get_version_as_number {
 	revision=$(( ${version_string##*.} ))
 	version_number=$(( $major + $minor + $revision ))
 	echo "$version_number"
+}
+
+function exec_check_unfinished_update {
+	local installed_version=$( get_current_version )
+	local source_version=$( get_current_source_version )
+	if ! [[ "$installed_version" == "$source_version" ]]; then
+		echo -e "Source consistent [FAILED]"
+		echo -e "Hint: babun is in INCONSISTENT state! Run babun update to finish the update process!"	
+	fi
 }
 
 function exec_check_prompt {
@@ -101,6 +115,7 @@ function exec_check_cygwin {
 }
 
 function babun_check {	
+	exec_check_unfinished_update
 	exec_check_prompt
 	exec_check_permissions
 

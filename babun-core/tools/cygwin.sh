@@ -46,3 +46,15 @@ function update_cygwin_instance() {
 	fi
 
 }
+
+function check_file_permissions_on_update() {
+	permcheck=$( chmod 777 /usr/ 2> /dev/null || echo "FAILED" )
+	if [[  $permcheck == "FAILED" ]]; then
+		echo -e "-----------------------------------------------------------------"
+		echo -e "ERROR: The update has failed! You don't have write permission to / filesystem!"
+		echo -e "Your babun instance is NOT in a consistent state right now."
+		echo -e "Restart babun as an Admin and rexecute babun update!"
+		echo -e "-----------------------------------------------------------------"
+		exit 1       
+	fi  
+}

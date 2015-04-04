@@ -8,6 +8,7 @@ base-files
 bash
 bc
 bzip2
+chere
 coreutils
 cron
 crypt

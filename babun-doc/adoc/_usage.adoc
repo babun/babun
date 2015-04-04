@@ -256,4 +256,4 @@ babun update
 ----
 Please note that your local configuration files will not be overwritten. 
 
-The 'babun update' command will also update the underlying cygwin version if never version is available. In such case babun will download the new cygwin installer, close itself and start the cygwin installation process. Once cygwin installation is completed babun will restart.
+The 'babun update' command will also update the underlying cygwin version if a newer version is available. In such case babun will download the new cygwin installer, close itself and start the cygwin installation process. Once cygwin installation is completed babun will restart.

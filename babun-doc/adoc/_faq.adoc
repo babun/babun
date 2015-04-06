@@ -19,15 +19,15 @@ The response of the community has been outstanding - around 1K github stars and 
 
 Footnote: If it does not convince you. if you love tweaking Cygwin, if want to install everything manually and if you want to spend a lot of time updating every single thing you once installed let's say it: babun is not for you - just use bare Cygwin in this case!
 
-== Is there an interference with an existing Cygwin installation that I have already had
+== Is there an interference with an existing Cygwin installation that I have already had?
 
 No, there is not.
 
-== Will I face problems if I have a "whitespace" character in my username
+== Will I face problems if I have a "whitespace" character in my username?
 
 No, you will not, but it's not recommended. See Cygwin's https://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
 
-== How can I install babun to a custom folder
+== How can I install babun to a custom folder?
 
 Use the install.bat script and specify the /target option.
 
@@ -109,7 +109,7 @@ Babun supports HTTP(s) proxying, but corporate firewalls can be tricky... Have a
 
 Follow this https://github.com/babun/babun/issues/97[link].
 
-== Is pact based on apt-cyg
+== Is pact based on apt-cyg?
 
 Yes, it is. It diverged a bit, some functions have been changed, some things have been added to provide better integration with babun and make it a first class citizen. 
 
@@ -126,21 +126,21 @@ You need to be online in order to update Babun - you can configure a proxy if th
 
 == How do I install ruby?
 
-If you can live with ruby 1.9.3 then just install it via `pact install ruby`. If you need a newer version have a look at this https://github.com/babun/babun/issues/93[link].
+Execute `pact install ruby`. If you need a newer version have a look at this https://github.com/babun/babun/issues/93[link].
 
 == Why multtiple shells share the same history?
 
 This is a feature of zsh. oh-my-zsh has `INC_APPEND_HISTORY` on as default. To disable this put this in your .zshrc: ` setopt APPEND_HISTORY`
 
-== I tried to run python scripts but get 'modules not found'
+== I tried to run python scripts but get 'modules not found'.
 
 See https://github.com/babun/babun/issues/104[Issue 104]
 
-== How to run an X-Server
+== How to run an X-Server?
 
 See https://github.com/babun/babun/issues/105[Issue 105]
 
-== I have a problem with Windows line endings
+== I have a problem with Windows line endings.
 
 Try running dos2unix on these files.
 
@@ -148,7 +148,7 @@ Try running dos2unix on these files.
 
 See https://github.com/babun/babun/issues/130[Issue 130]
 
-== How to install virtualenvwrapper
+== How to install virtualenvwrapper?
 
 See https://github.com/babun/babun/issues/147[Issue 147]
 
@@ -192,14 +192,14 @@ Use Dokan sshfs. Free and open source.
 
 see https://github.com/babun/babun/issues/208[Issue 208]
 
-== When I start babun.bat three shell windows open
+== When I start babun.bat three shell windows open.
 
 This is a known issue on Windows 10. To workaround it go to `.babun/cygwin/bin` and change `mintty.exe` to Windows 8 compatibility mode.
 
-== How do I update the underlying cygwin version
+== How do I update the underlying cygwin version?
 
 just execute `babun update`. If there is a new supported cygwin version babun will upgrade it
 
-== I get chmod: permission denied errors during update
+== I get chmod: permission denied errors during update.
 
 You have probably installed babun as an admin an try to upgrade it now without admin rights or using a different user. Please restart the update as an admin, or as a user you used to install babun with.

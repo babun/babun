@@ -1,6 +1,6 @@
 
 
-=== Features in 10 seconds
+== Features in 10 seconds
 
 Babun features the following:
 
@@ -16,21 +16,21 @@ Babun features the following:
 
 Have a look at a sample screenshot!
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_vim.png[babun - a Windows shell you will love!, align="center"]
 
 Do you like it? Follow babun on Twitter https://twitter.com/babunshell[@babunshell] or https://twitter.com/tombujok[@tombujok].
 
-=== Features in 3 minutes
+== Features in 3 minutes
 
-==== Cygwin
+=== Cygwin
 
 The core of Babun consists of a pre-configured Cygwin. Cygwin is a great tool, but there's a lot of quirks and tricks that makes you lose a lot of time to make it actually 'usable'. Not only does babun solve most of these problems, but also contains a lot of vital packages, so that you can be productive from the very first minute. 
 
-==== Package manager
+=== Package manager
 
-Babun provides a package manager called +pact+. It is similar to 'apt-get' or 'yum'. Pact enables installing/searching/upgrading and deinstalling cygwin packages with no hassle at all. Just invoke +pact --help+ to check how to use it.
+Babun provides a package manager called `pact`. It is similar to 'apt-get' or 'yum'. Pact enables installing/searching/upgrading and deinstalling cygwin packages with no hassle at all. Just invoke `pact --help` to check how to use it.
 
-==== Shell
+=== Shell
 
 Babun's shell is tweaked in order to provide the best possible user-experience. There are two shell types that are pre-configured and available right away - bash and zsh (zsh is the default one). Babun's shell features:
 
@@ -41,15 +41,15 @@ Babun's shell is tweaked in order to provide the best possible user-experience. 
 * custom scripts and aliases
 * and much more!
 
-==== Console
+=== Console
 
-Mintty is the console used in babun. It features an +xterm-256+ mode, nice fonts and simply looks great!
+Mintty is the console used in babun. It features an `xterm-256` mode, nice fonts and simply looks great!
 
-==== Proxying
+=== Proxying
 
-Babun supports HTTP proxying out of the box. Just add the address and the credentials of your HTTP proxy server to the +.babunrc+ file located in your home folder and execute +source .babunrc+ to enable HTTP proxying. SOCKS proxies are not supported for now.
+Babun supports HTTP proxying out of the box. Just add the address and the credentials of your HTTP proxy server to the `.babunrc` file located in your home folder and execute `source .babunrc` to enable HTTP proxying. SOCKS proxies are not supported for now.
 
-==== Developer tools
+=== Developer tools
 
 Babun provides many packages, convenience tools and scripts that make your life much easier. The long list of features includes:
 
@@ -60,7 +60,7 @@ Babun provides many packages, convenience tools and scripts that make your life 
 * oh-my-zsh
 * custom scripts (pbcopy, pbpaste, babun, etc.)
 
-==== Plugin architecture
+=== Plugin architecture
 
 Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit of a convention) and a plugin architecture on the top of it. It means that almost everything is a plugin in the babun's world! Not only does it structure babun in a clean way, but also enables others to contribute small chunks of code. Currently, babun comprises six plugins:
 
@@ -73,20 +73,20 @@ Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit o
 * dist
 * shell
 
-==== Auto-update
+=== Auto-update
 
 Self-update is at the very heart of babun! Many Cygwin tools are simple bash scripts - once you install them there is no chance of getting the newer version in a smooth way. You either delete the older version or overwrite it with the newest one losing all the changes you have made in between.
 
 Babun contains an auto-update feature which enables updating both the microkernel, the plugins and even the underlying cygwin. Files located in your home folder will never be deleted nor overwritten which preserves your local config and customizations.
 
-==== Installer
+=== Installer
 
 Babun features an silent command-line installation script that may be executed without admin rights on any Windows hosts.
 
-=== Using babun
+== Using babun
 
-==== Setting up proxy
-To setup proxy uncomment following lines in the +.babunrc+ file +(%USER_HOME%\.babun\cygwin\home\USER\.babunrc)+
+=== Setting up proxy
+To setup proxy uncomment following lines in the `.babunrc` file `(%USER_HOME%\.babun\cygwin\home\USER\.babunrc)`
 ----
 # Uncomment this lines to set up your proxy
 # export http_proxy=http://user:password@server:port
@@ -95,7 +95,7 @@ To setup proxy uncomment following lines in the +.babunrc+ file +(%USER_HOME%\.b
 # export no_proxy=localhost
 ----
 
-==== Setting up git
+=== Setting up git
 Babun has a pre-configured git. The only thing you should do after the installation is to add your name and email to the git config:
 ----
 git config --global user.name "your name"
@@ -116,8 +116,8 @@ gitalias['alias.last']='log -1 --stat'
 gitalias['alias.unstage']='reset HEAD --'
 ----
 
-==== Installing and removing packages
-Babun is shipped with +pact+ - a Linux like package manager. It uses the cygwin repository for downloading packages:
+=== Installing and removing packages
+Babun is shipped with `pact` - a Linux like package manager. It uses the cygwin repository for downloading packages:
 ----
 { ~ } » pact install arj                                                                     ~ 
 Working directory is /setup
@@ -133,7 +133,7 @@ HTTP request sent, awaiting response... 200 OK
 Length: 189944 (185K) [application/x-bzip2]
 Saving to: `arj-3.10.22-1.tar.bz2'
 
-100%[==========================================================>] 189,944      193K/s   in 1.0s
+100%[=======================================>] 189,944      193K/s   in 1.0s
 
 2014-03-30 19:34:39 (193 KB/s) - `arj-3.10.22-1.tar.bz2' saved [189944/189944]
 
@@ -163,7 +163,7 @@ Options:
   --version
 ----
 
-==== Changing the default shell
+=== Changing the default shell
 The zsh (with .oh-my-zsh) is the default babun's shell.
 
 Executing the following command will output your default shell:
@@ -180,7 +180,7 @@ In order to change your default shell execute:
 ----
 The output contains two lines: the previous default shell and the new default shell
 
-==== Checking the configuration
+=== Checking the configuration
 
 Execute the following command the check the configuration:
 ----
@@ -218,7 +218,7 @@ Cygwin check      [OK]
 
 On each startup, but only every 24 hours, babun will execute this check automatically. You can disable the automatic check in the ~/.babunrc file.
 
-==== Tweaking the configuration
+=== Tweaking the configuration
 
 You can tweak some config options in the ~/.babunrc file. Here's the full list of variables that may be modified:
 ----
@@ -248,7 +248,7 @@ export LC_ALL="en_US.UTF-8"
 # export no_proxy=localhost
 ----
 
-==== Updating babun
+=== Updating babun
 
 To update babun to the newest version execute:
 ----
@@ -256,4 +256,4 @@ babun update
 ----
 Please note that your local configuration files will not be overwritten. 
 
-The 'babun update' command will also update the underlying cygwin version if a newer version is available. In such case babun will download the new cygwin installer, close itself and start the cygwin installation process. Once cygwin installation is completed babun will restart.
+The 'babun update' command will also update the underlying cygwin version if never version is available. In such case babun will download the new cygwin installer, close itself and start the cygwin installation process. Once cygwin installation is completed babun will restart.

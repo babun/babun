@@ -6,6 +6,10 @@ Would you like to use a linux-like console on a Windows host without a lot of fu
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 
 
 Have a look at a 2 minutes long screencast by https://twitter.com/tombujok[@tombujok]: http://vimeo.com/95045348
@@ -18,17 +22,17 @@ video::95045348[vimeo, width=827, height=465, align="center"]
 
 // https://www.youtube.com/watch?v=VOHIYhbRIq0
 
-=== Installation
+== Installation
 
 Just download the http://projects.reficio.org/babun/babun-dist.zip[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
-The application will be installed to the +%USER_HOME%\.babun+ directory. Use the '/target' option to install babun to a custom directory.
+The application will be installed to the `%USER_HOME%\.babun` directory. Use the '/target' option to install babun to a custom directory.
 
 NOTE: There is no interference with existing Cygwin installation
 
 NOTE: You may have "whitespace" chars in your username - it is not recommended by Cygwin though http://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
 
 
-=== Features in 10 seconds
+== Features in 10 seconds
 
 Babun features the following:
 
@@ -44,21 +48,21 @@ Babun features the following:
 
 Have a look at a sample screenshot!
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_vim.png[babun - a Windows shell you will love!, align="center"]
 
 Do you like it? Follow babun on Twitter https://twitter.com/babunshell[@babunshell] or https://twitter.com/tombujok[@tombujok].
 
-=== Features in 3 minutes
+== Features in 3 minutes
 
-==== Cygwin
+=== Cygwin
 
 The core of Babun consists of a pre-configured Cygwin. Cygwin is a great tool, but there's a lot of quirks and tricks that makes you lose a lot of time to make it actually 'usable'. Not only does babun solve most of these problems, but also contains a lot of vital packages, so that you can be productive from the very first minute. 
 
-==== Package manager
+=== Package manager
 
-Babun provides a package manager called +pact+. It is similar to 'apt-get' or 'yum'. Pact enables installing/searching/upgrading and deinstalling cygwin packages with no hassle at all. Just invoke +pact --help+ to check how to use it.
+Babun provides a package manager called `pact`. It is similar to 'apt-get' or 'yum'. Pact enables installing/searching/upgrading and deinstalling cygwin packages with no hassle at all. Just invoke `pact --help` to check how to use it.
 
-==== Shell
+=== Shell
 
 Babun's shell is tweaked in order to provide the best possible user-experience. There are two shell types that are pre-configured and available right away - bash and zsh (zsh is the default one). Babun's shell features:
 
@@ -69,15 +73,15 @@ Babun's shell is tweaked in order to provide the best possible user-experience. 
 * custom scripts and aliases
 * and much more!
 
-==== Console
+=== Console
 
-Mintty is the console used in babun. It features an +xterm-256+ mode, nice fonts and simply looks great!
+Mintty is the console used in babun. It features an `xterm-256` mode, nice fonts and simply looks great!
 
-==== Proxying
+=== Proxying
 
-Babun supports HTTP proxying out of the box. Just add the address and the credentials of your HTTP proxy server to the +.babunrc+ file located in your home folder and execute +source .babunrc+ to enable HTTP proxying. SOCKS proxies are not supported for now.
+Babun supports HTTP proxying out of the box. Just add the address and the credentials of your HTTP proxy server to the `.babunrc` file located in your home folder and execute `source .babunrc` to enable HTTP proxying. SOCKS proxies are not supported for now.
 
-==== Developer tools
+=== Developer tools
 
 Babun provides many packages, convenience tools and scripts that make your life much easier. The long list of features includes:
 
@@ -88,7 +92,7 @@ Babun provides many packages, convenience tools and scripts that make your life 
 * oh-my-zsh
 * custom scripts (pbcopy, pbpaste, babun, etc.)
 
-==== Plugin architecture
+=== Plugin architecture
 
 Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit of a convention) and a plugin architecture on the top of it. It means that almost everything is a plugin in the babun's world! Not only does it structure babun in a clean way, but also enables others to contribute small chunks of code. Currently, babun comprises six plugins:
 
@@ -101,20 +105,20 @@ Babun has a very small microkernel (cygwin, a couple of bash scripts and a bit o
 * dist
 * shell
 
-==== Auto-update
+=== Auto-update
 
 Self-update is at the very heart of babun! Many Cygwin tools are simple bash scripts - once you install them there is no chance of getting the newer version in a smooth way. You either delete the older version or overwrite it with the newest one losing all the changes you have made in between.
 
 Babun contains an auto-update feature which enables updating both the microkernel, the plugins and even the underlying cygwin. Files located in your home folder will never be deleted nor overwritten which preserves your local config and customizations.
 
-==== Installer
+=== Installer
 
 Babun features an silent command-line installation script that may be executed without admin rights on any Windows hosts.
 
-=== Using babun
+== Using babun
 
-==== Setting up proxy
-To setup proxy uncomment following lines in the +.babunrc+ file +(%USER_HOME%\.babun\cygwin\home\USER\.babunrc)+
+=== Setting up proxy
+To setup proxy uncomment following lines in the `.babunrc` file `(%USER_HOME%\.babun\cygwin\home\USER\.babunrc)`
 ----
 # Uncomment this lines to set up your proxy
 # export http_proxy=http://user:password@server:port
@@ -123,7 +127,7 @@ To setup proxy uncomment following lines in the +.babunrc+ file +(%USER_HOME%\.b
 # export no_proxy=localhost
 ----
 
-==== Setting up git
+=== Setting up git
 Babun has a pre-configured git. The only thing you should do after the installation is to add your name and email to the git config:
 ----
 git config --global user.name "your name"
@@ -144,8 +148,8 @@ gitalias['alias.last']='log -1 --stat'
 gitalias['alias.unstage']='reset HEAD --'
 ----
 
-==== Installing and removing packages
-Babun is shipped with +pact+ - a Linux like package manager. It uses the cygwin repository for downloading packages:
+=== Installing and removing packages
+Babun is shipped with `pact` - a Linux like package manager. It uses the cygwin repository for downloading packages:
 ----
 { ~ } » pact install arj                                                                     ~ 
 Working directory is /setup
@@ -161,7 +165,7 @@ HTTP request sent, awaiting response... 200 OK
 Length: 189944 (185K) [application/x-bzip2]
 Saving to: `arj-3.10.22-1.tar.bz2'
 
-100%[==========================================================>] 189,944      193K/s   in 1.0s
+100%[=======================================>] 189,944      193K/s   in 1.0s
 
 2014-03-30 19:34:39 (193 KB/s) - `arj-3.10.22-1.tar.bz2' saved [189944/189944]
 
@@ -191,7 +195,7 @@ Options:
   --version
 ----
 
-==== Changing the default shell
+=== Changing the default shell
 The zsh (with .oh-my-zsh) is the default babun's shell.
 
 Executing the following command will output your default shell:
@@ -208,7 +212,7 @@ In order to change your default shell execute:
 ----
 The output contains two lines: the previous default shell and the new default shell
 
-==== Checking the configuration
+=== Checking the configuration
 
 Execute the following command the check the configuration:
 ----
@@ -246,7 +250,7 @@ Cygwin check      [OK]
 
 On each startup, but only every 24 hours, babun will execute this check automatically. You can disable the automatic check in the ~/.babunrc file.
 
-==== Tweaking the configuration
+=== Tweaking the configuration
 
 You can tweak some config options in the ~/.babunrc file. Here's the full list of variables that may be modified:
 ----
@@ -276,7 +280,7 @@ export LC_ALL="en_US.UTF-8"
 # export no_proxy=localhost
 ----
 
-==== Updating babun
+=== Updating babun
 
 To update babun to the newest version execute:
 ----
@@ -286,93 +290,93 @@ Please note that your local configuration files will not be overwritten.
 
 The 'babun update' command will also update the underlying cygwin version if never version is available. In such case babun will download the new cygwin installer, close itself and start the cygwin installation process. Once cygwin installation is completed babun will restart.
 
-
-=== Screenshots
-
-==== Startup screen
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_welcome.png[babun - a Windows shell you will love!, align="center"]
-
-==== Pact - package installation
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_install.png[babun - a Windows shell you will love!, align="center"]
-
-==== Pact - package installed
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_pact_installed.png[babun - a Windows shell you will love!, align="center"]
-
-==== Babun oh-my-zsh - auto-update
-
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_zsh_update.png[babun - a Windows shell you will love!, align="center"]
+== Screenshots
 
 
-==== VIM syntax highlighting 
+[big]#Startup screen#
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_vim.png[babun - a Windows shell you will love!, align="center"]
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_welcome.png[babun - a Windows shell you will love!, align="center"]
 
-==== Nano syntax highlighting
+[big]#Pact - package installation#
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_nano.png[babun - a Windows shell you will love!, align="center"]
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_pact_install.png[babun - a Windows shell you will love!, align="center"]
 
-==== Git aliases - git lg
+[big]#Pact - package installed#
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_lg.png[babun - a Windows shell you will love!, align="center"]
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_pact_installed.png[babun - a Windows shell you will love!, align="center"]
 
-==== Git aliases - git st
+[big]#Babun oh-my-zsh - auto-update#
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_git_st.png[babun - a Windows shell you will love!, align="center"]
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_zsh_update.png[babun - a Windows shell you will love!, align="center"]
 
-==== Shell prompt
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_shell.png[babun - a Windows shell you will love!, align="center"]
+[big]#VIM syntax highlighting#
 
-==== Babun update
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_vim.png[babun - a Windows shell you will love!, align="center"]
 
-image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screen_update.png[babun - a Windows shell you will love!, align="center"]
+[big]#Nano syntax highlighting#
 
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_nano.png[babun - a Windows shell you will love!, align="center"]
+
+[big]#Git aliases - git lg#
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_git_lg.png[babun - a Windows shell you will love!, align="center"]
+
+[big]#Git aliases - git st#
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_git_st.png[babun - a Windows shell you will love!, align="center"]
+
+[big]#Shell prompt#
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_shell.png[babun - a Windows shell you will love!, align="center"]
+
+[big]#Babun update#
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_update.png[babun - a Windows shell you will love!, align="center"]
 
 
 == Development
 
-=== Project structure
+
+== Project structure
 
 The project consists of five modules.
 
-==== babun-packages
+=== babun-packages
 
-The main goal of the +babun-packages+ module is to download the cygwin packages listed in the +conf/cygwin.x86.packages+ file.
-The above mentioned packages will be downloaded together with the whole dependency tree. Repositories which the packages are downloaded from are listed in the +conf/cygwin.repositories+ file. At the beginning the first repository is taken, if a package is not available in this repo the second repo is used, etc. The process continues until all packages have been downloaded. 
+The main goal of the `babun-packages` module is to download the cygwin packages listed in the `conf/cygwin.x86.packages` file.
+The above mentioned packages will be downloaded together with the whole dependency tree. Repositories which the packages are downloaded from are listed in the `conf/cygwin.repositories` file. At the beginning the first repository is taken, if a package is not available in this repo the second repo is used, etc. The process continues until all packages have been downloaded. 
 
-All downloaded packages are stored in the +target/babun-packages+ folder.
+All downloaded packages are stored in the `target/babun-packages` folder.
 
-==== babun-cygwin
+=== babun-cygwin
 
-The main goal of the +babun-cygwin+ module is to download and invoke the native cygwin.exe installer. The packages downloaded by the babun-packages module are used as the input - all of them will be installed in the offline cygwin installation. 
+The main goal of the `babun-cygwin` module is to download and invoke the native cygwin.exe installer. The packages downloaded by the babun-packages module are used as the input - all of them will be installed in the offline cygwin installation. 
 
-It is not trivial to install and zip a local instance of Cygwin - there are problems with the symlinks as the symlink-file-flags are lost during the compression process. Babun can work it around though. At first, just after the installation, the +symlinks_find.sh+ script is invoked in order to store the list of all cygwin's symlinks. This file is delivered as a part of the the babun's core. Then, after babun is installed from the zip file on the user's host the +symlinks_repair.sh+ script is invoked - it will correct all the broken symlinks listed in the above mentioned file.
+It is not trivial to install and zip a local instance of Cygwin - there are problems with the symlinks as the symlink-file-flags are lost during the compression process. Babun can work it around though. At first, just after the installation, the `symlinks_find.sh` script is invoked in order to store the list of all cygwin's symlinks. This file is delivered as a part of the the babun's core. Then, after babun is installed from the zip file on the user's host the `symlinks_repair.sh` script is invoked - it will correct all the broken symlinks listed in the above mentioned file.
 
-Preinstalled cygwin is located in the +target/babun-cygwin+ folder.
+Preinstalled cygwin is located in the `target/babun-cygwin` folder.
 
-==== babun-core
+=== babun-core
 
-The main goal of the +babun-core+ module is to install babun's core along with all the plugins and tools. +install.sh+ script is invoked during the creation of the distribution package in order to preinstall the plugins. Whenever babun is installed on the user's host the +install_home.sh+ script is invoke in order to install the babun-related files to the cygwin-user's home folder.
+The main goal of the `babun-core` module is to install babun's core along with all the plugins and tools. `install.sh` script is invoked during the creation of the distribution package in order to preinstall the plugins. Whenever babun is installed on the user's host the `install_home.sh` script is invoke in order to install the babun-related files to the cygwin-user's home folder.
 
-Preinstalled cygwin with installed babun is located in the +target/babun-cygwin+ folder.
+Preinstalled cygwin with installed babun is located in the `target/babun-cygwin` folder.
 
-==== babun-dist
+=== babun-dist
 
-The main goal of the +babun-dist+ module is to zip the ready-made instance of babun, copy some installation scripts and zip the distribution.
+The main goal of the `babun-dist` module is to zip the ready-made instance of babun, copy some installation scripts and zip the distribution.
 
-Distribution package is located in the +target/babun-dist+ folder.
+Distribution package is located in the `target/babun-dist` folder.
 
-==== babun-doc
+=== babun-doc
 
 This module contains documentation written in ASCIIDOC.
 
 
-=== Building from source
+== Building from source
 
-The project is regularly build on Jenkins, on a slave node featuring the Windows Server OS. The Windows OS is required to fully build the distribution package as one of the goals invokes the native +cygwin.exe+ installer. The artifacts created by each module are cached/stored in the target folder after a successful build of each step. This mechanism is not intelligent enough to calculate the diffs so if you would like to fully rebuild the whole dist package make sure to invoke the +clean+ goal before the +package+ goal. For now it's not possible to invoke a build of a selective modules only. 
+The project is regularly build on Jenkins, on a slave node featuring the Windows Server OS. The Windows OS is required to fully build the distribution package as one of the goals invokes the native `cygwin.exe` installer. The artifacts created by each module are cached/stored in the target folder after a successful build of each step. This mechanism is not intelligent enough to calculate the diffs so if you would like to fully rebuild the whole dist package make sure to invoke the `clean` goal before the `package` goal. For now it's not possible to invoke a build of a selective modules only. 
 
 In order to build the dist package invoke:
 ----
@@ -388,9 +392,9 @@ In order to publish the release version to bintray invoke:
 ----
 groovy build.groovy release
 ----
-The release goal expects the following environment variables: +bintray_user+ and +bintray_secret+
+The release goal expects the following environment variables: `bintray_user` and `bintray_secret`
 
-=== Developing a plugin
+== Developing a plugin
 
 Every plugin has to consist of three main files:
 
@@ -401,9 +405,9 @@ Every plugin has to consist of three main files:
 
 Have a look at the pact plugin - it's a perfect example of a relatively small plugin using all the features.
 
-==== install.sh
+=== install.sh
 
-Its main responsibility is to install the plugin - for example to copy the plugin files to, e.g. +/usr/local/etc+ or +/usr/local/bin+ directories. install.sh script is also responsible for preparing the user's home folder template. The template files have to be copied to the +/usr/local/babun/home/<plugin_name>+ folder.
+Its main responsibility is to install the plugin - for example to copy the plugin files to, e.g. `/usr/local/etc` or `/usr/local/bin` directories. install.sh script is also responsible for preparing the user's home folder template. The template files have to be copied to the `/usr/local/babun/home/<plugin_name>` folder.
 
 install.sh will be invoked many times - on every plugin update if the plugin version is higher than the version of the installed plugin - thus it's logic has to work in an incremental way. This mechanism is invoked automatically though. The plugin does not have to contain the version check.
 
@@ -414,9 +418,9 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 ----
 
-==== install_home.sh
+=== install_home.sh
 
-Its main responsibility is to configure the user's home folder with the plugin related stuff, if necessary. For example, it may copy the files from the +/usr/local/babun/home/<plugin_name>+ folder to the user's home folder.
+Its main responsibility is to configure the user's home folder with the plugin related stuff, if necessary. For example, it may copy the files from the `/usr/local/babun/home/<plugin_name>` folder to the user's home folder.
 It is also responsible for any other things that may be necessary during the user's home configuration process.
 
 install_home.sh will be invoked many times - on every plugin update if the plugin version is higher than the version of the installed plugin - thus it's logic has to work in an incremental way.
@@ -428,7 +432,7 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 ----
 
-==== plugin.desc
+=== plugin.desc
 
 A plugin descriptor looks like this:
 ----
@@ -439,11 +443,11 @@ plugin_version=1
 
 Every time the plugin is changed the version has to be incremented. Otherwise the newest version will not be installed.
 
-==== start.sh (optional)
+=== start.sh (optional)
 
 The start.sh is an optional script for plugins that require triggering certain actions on every babun start (for example update check).
 
-=== Branches
+== Branches
 
 The babun's repository contains three main branches:
 
@@ -453,9 +457,9 @@ The babun's repository contains three main branches:
 
 In order to check babun update against other branch (for example during a development of a plugin), set the babun_branch variable to (master or candidate). External repo's are not supporter (this mechanism has to be extended to include user's repos).
 
-=== Folder structure in Cygwin
+== Folder structure in Cygwin
 
-An instance of babun installed in Cygwin is located in the +/usr/local/etc/babun+ folder.
+An instance of babun installed in Cygwin is located in the `/usr/local/etc/babun` folder.
 The folder structure looks like this:
 ----
 ├── babun
@@ -495,38 +499,38 @@ The folder structure looks like this:
 16 directories, 17 files
 ----
 
-==== source
+=== source
 
 The folder contains the sources of babun checkout from github.
 
-==== stamps
+=== stamps
 
-The folder contains files which modification time indicates certain things to babun. For example +babun check+ is executed automatically on babun's start up every 24 hours. Whenever it's invoked a file named +checked+ is being modified (the content of the modification does not matter).Whenever the mod_time of this file is not within 24 hours and babun is being started a +babun check+ will be invoked and the file +check+ located in the +stamps+ folder will be modified again.
+The folder contains files which modification time indicates certain things to babun. For example `babun check` is executed automatically on babun's start up every 24 hours. Whenever it's invoked a file named `checked` is being modified (the content of the modification does not matter).Whenever the mod_time of this file is not within 24 hours and babun is being started a `babun check` will be invoked and the file `check` located in the `stamps` folder will be modified again.
 
-==== installed
+=== installed
 
-The folder contains files that indicated which versions of babun's plugins and babun itself are installed. Each file contains a number - for example: a file named +core+ contains has one line with number +2+ in its content. It means that the plugin +core+ is installed and has version +2+
+The folder contains files that indicated which versions of babun's plugins and babun itself are installed. Each file contains a number - for example: a file named `core` contains has one line with number `2` in its content. It means that the plugin `core` is installed and has version `2`
 
-==== external
+=== external
 
 The folder contains external resources, like cloned repos of other projects (for example oh-my-zsh).
 
-==== home
+=== home
 
-The folder contains folders named like plugins. If a plugin needs to install something to user's folder this content has to be copied to "home/<plugin_name>" folder. It's just a store of the user's home files, so that whenever a new user's account is created babun can install user's home related content to the user's home folder (it's the plugin install_home.sh script's responsibility, however, to copy this content to the actual user's home folder). 
+The folder contains folders named like plugins. If a plugin needs to install something to user's folder this content has to be copied to `home/<plugin_name>` folder. It's just a store of the user's home files, so that whenever a new user's account is created babun can install user's home related content to the user's home folder (it's the plugin install_home.sh script's responsibility, however, to copy this content to the actual user's home folder). 
 
 
-=== Licence
+== Licence
 
 The source code located in the babun's repository is published under the Apache License, Version 2.0, January 2004 if not stated otherwise. 
 
 Since the distribution (zip) package contains the Cygwin's DLLs the distribution package is licensed under the GPLv3+ licence to satisfy the Cygwin's licensing terms (http://cygwin.com/licensing.html).
 
-=== Supporters
+== Supporters
 
 Special thanks go to companies who provided free hosting! 
 
-===== XCLOUD
+=== XCLOUD
 
 http://xcloud.me/[XCLOUD.ME] provided a free hosted OS X instance (a free Xcloud Mini Server subscription). It works like a charm! Thank you!
 
@@ -535,7 +539,7 @@ image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/xcl
 
 _XCLOUD is a trademark of AG from Switzerland._
 
-===== Windows Azure
+=== Windows Azure
 
 http://www.azure.microsoft.com[Windows Azure] provided a free Windows Hosting (a free, renewable MSDN subscription). Everything was organised by @bureado. Thank you!
 
@@ -544,7 +548,7 @@ image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/ms_
 _Microsoft and Windows are registered trademarks of Microsoft Corporation in the United States of America and other countries. Windows Azure is a trademark of Microsoft Corporation._
 
 
-=== Contribute
+== Contribute
 
 Babun is open source and driven by the community. There are many ways to contribute:
 
@@ -558,10 +562,10 @@ We are looking for new contributors, so if you fancy bash programming and if you
 
 Visit the http://babun.github.io/development/[development] section to find out how to create plugins and extensions.
 
-=== Meet the team
+== Meet the team
 
-https://twitter.com/tombujok
+https://twitter.com/tombujok[@tombujok]
 
-https://twitter.com/lukaszpielak
+https://twitter.com/lukaszpielak[@lukaszpielak]
 
 image::https://d2weczhvl823v0.cloudfront.net/reficio/babun/trend.png["Bitdeli Badge", link="https://bitdeli.com/free"]

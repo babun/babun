@@ -1,46 +1,43 @@
 
-
-== Development
-
-=== Project structure
+== Project structure
 
 The project consists of five modules.
 
-==== babun-packages
+=== babun-packages
 
-The main goal of the +babun-packages+ module is to download the cygwin packages listed in the +conf/cygwin.x86.packages+ file.
-The above mentioned packages will be downloaded together with the whole dependency tree. Repositories which the packages are downloaded from are listed in the +conf/cygwin.repositories+ file. At the beginning the first repository is taken, if a package is not available in this repo the second repo is used, etc. The process continues until all packages have been downloaded. 
+The main goal of the `babun-packages` module is to download the cygwin packages listed in the `conf/cygwin.x86.packages` file.
+The above mentioned packages will be downloaded together with the whole dependency tree. Repositories which the packages are downloaded from are listed in the `conf/cygwin.repositories` file. At the beginning the first repository is taken, if a package is not available in this repo the second repo is used, etc. The process continues until all packages have been downloaded. 
 
-All downloaded packages are stored in the +target/babun-packages+ folder.
+All downloaded packages are stored in the `target/babun-packages` folder.
 
-==== babun-cygwin
+=== babun-cygwin
 
-The main goal of the +babun-cygwin+ module is to download and invoke the native cygwin.exe installer. The packages downloaded by the babun-packages module are used as the input - all of them will be installed in the offline cygwin installation. 
+The main goal of the `babun-cygwin` module is to download and invoke the native cygwin.exe installer. The packages downloaded by the babun-packages module are used as the input - all of them will be installed in the offline cygwin installation. 
 
-It is not trivial to install and zip a local instance of Cygwin - there are problems with the symlinks as the symlink-file-flags are lost during the compression process. Babun can work it around though. At first, just after the installation, the +symlinks_find.sh+ script is invoked in order to store the list of all cygwin's symlinks. This file is delivered as a part of the the babun's core. Then, after babun is installed from the zip file on the user's host the +symlinks_repair.sh+ script is invoked - it will correct all the broken symlinks listed in the above mentioned file.
+It is not trivial to install and zip a local instance of Cygwin - there are problems with the symlinks as the symlink-file-flags are lost during the compression process. Babun can work it around though. At first, just after the installation, the `symlinks_find.sh` script is invoked in order to store the list of all cygwin's symlinks. This file is delivered as a part of the the babun's core. Then, after babun is installed from the zip file on the user's host the `symlinks_repair.sh` script is invoked - it will correct all the broken symlinks listed in the above mentioned file.
 
-Preinstalled cygwin is located in the +target/babun-cygwin+ folder.
+Preinstalled cygwin is located in the `target/babun-cygwin` folder.
 
-==== babun-core
+=== babun-core
 
-The main goal of the +babun-core+ module is to install babun's core along with all the plugins and tools. +install.sh+ script is invoked during the creation of the distribution package in order to preinstall the plugins. Whenever babun is installed on the user's host the +install_home.sh+ script is invoke in order to install the babun-related files to the cygwin-user's home folder.
+The main goal of the `babun-core` module is to install babun's core along with all the plugins and tools. `install.sh` script is invoked during the creation of the distribution package in order to preinstall the plugins. Whenever babun is installed on the user's host the `install_home.sh` script is invoke in order to install the babun-related files to the cygwin-user's home folder.
 
-Preinstalled cygwin with installed babun is located in the +target/babun-cygwin+ folder.
+Preinstalled cygwin with installed babun is located in the `target/babun-cygwin` folder.
 
-==== babun-dist
+=== babun-dist
 
-The main goal of the +babun-dist+ module is to zip the ready-made instance of babun, copy some installation scripts and zip the distribution.
+The main goal of the `babun-dist` module is to zip the ready-made instance of babun, copy some installation scripts and zip the distribution.
 
-Distribution package is located in the +target/babun-dist+ folder.
+Distribution package is located in the `target/babun-dist` folder.
 
-==== babun-doc
+=== babun-doc
 
 This module contains documentation written in ASCIIDOC.
 
 
-=== Building from source
+== Building from source
 
-The project is regularly build on Jenkins, on a slave node featuring the Windows Server OS. The Windows OS is required to fully build the distribution package as one of the goals invokes the native +cygwin.exe+ installer. The artifacts created by each module are cached/stored in the target folder after a successful build of each step. This mechanism is not intelligent enough to calculate the diffs so if you would like to fully rebuild the whole dist package make sure to invoke the +clean+ goal before the +package+ goal. For now it's not possible to invoke a build of a selective modules only. 
+The project is regularly build on Jenkins, on a slave node featuring the Windows Server OS. The Windows OS is required to fully build the distribution package as one of the goals invokes the native `cygwin.exe` installer. The artifacts created by each module are cached/stored in the target folder after a successful build of each step. This mechanism is not intelligent enough to calculate the diffs so if you would like to fully rebuild the whole dist package make sure to invoke the `clean` goal before the `package` goal. For now it's not possible to invoke a build of a selective modules only. 
 
 In order to build the dist package invoke:
 ----
@@ -56,9 +53,9 @@ In order to publish the release version to bintray invoke:
 ----
 groovy build.groovy release
 ----
-The release goal expects the following environment variables: +bintray_user+ and +bintray_secret+
+The release goal expects the following environment variables: `bintray_user` and `bintray_secret`
 
-=== Developing a plugin
+== Developing a plugin
 
 Every plugin has to consist of three main files:
 
@@ -69,9 +66,9 @@ Every plugin has to consist of three main files:
 
 Have a look at the pact plugin - it's a perfect example of a relatively small plugin using all the features.
 
-==== install.sh
+=== install.sh
 
-Its main responsibility is to install the plugin - for example to copy the plugin files to, e.g. +/usr/local/etc+ or +/usr/local/bin+ directories. install.sh script is also responsible for preparing the user's home folder template. The template files have to be copied to the +/usr/local/babun/home/<plugin_name>+ folder.
+Its main responsibility is to install the plugin - for example to copy the plugin files to, e.g. `/usr/local/etc` or `/usr/local/bin` directories. install.sh script is also responsible for preparing the user's home folder template. The template files have to be copied to the `/usr/local/babun/home/<plugin_name>` folder.
 
 install.sh will be invoked many times - on every plugin update if the plugin version is higher than the version of the installed plugin - thus it's logic has to work in an incremental way. This mechanism is invoked automatically though. The plugin does not have to contain the version check.
 
@@ -82,9 +79,9 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 ----
 
-==== install_home.sh
+=== install_home.sh
 
-Its main responsibility is to configure the user's home folder with the plugin related stuff, if necessary. For example, it may copy the files from the +/usr/local/babun/home/<plugin_name>+ folder to the user's home folder.
+Its main responsibility is to configure the user's home folder with the plugin related stuff, if necessary. For example, it may copy the files from the `/usr/local/babun/home/<plugin_name>` folder to the user's home folder.
 It is also responsible for any other things that may be necessary during the user's home configuration process.
 
 install_home.sh will be invoked many times - on every plugin update if the plugin version is higher than the version of the installed plugin - thus it's logic has to work in an incremental way.
@@ -96,7 +93,7 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 ----
 
-==== plugin.desc
+=== plugin.desc
 
 A plugin descriptor looks like this:
 ----
@@ -107,11 +104,11 @@ plugin_version=1
 
 Every time the plugin is changed the version has to be incremented. Otherwise the newest version will not be installed.
 
-==== start.sh (optional)
+=== start.sh (optional)
 
 The start.sh is an optional script for plugins that require triggering certain actions on every babun start (for example update check).
 
-=== Branches
+== Branches
 
 The babun's repository contains three main branches:
 
@@ -121,9 +118,9 @@ The babun's repository contains three main branches:
 
 In order to check babun update against other branch (for example during a development of a plugin), set the babun_branch variable to (master or candidate). External repo's are not supporter (this mechanism has to be extended to include user's repos).
 
-=== Folder structure in Cygwin
+== Folder structure in Cygwin
 
-An instance of babun installed in Cygwin is located in the +/usr/local/etc/babun+ folder.
+An instance of babun installed in Cygwin is located in the `/usr/local/etc/babun` folder.
 The folder structure looks like this:
 ----
 ├── babun
@@ -163,22 +160,22 @@ The folder structure looks like this:
 16 directories, 17 files
 ----
 
-==== source
+=== source
 
 The folder contains the sources of babun checkout from github.
 
-==== stamps
+=== stamps
 
-The folder contains files which modification time indicates certain things to babun. For example +babun check+ is executed automatically on babun's start up every 24 hours. Whenever it's invoked a file named +checked+ is being modified (the content of the modification does not matter).Whenever the mod_time of this file is not within 24 hours and babun is being started a +babun check+ will be invoked and the file +check+ located in the +stamps+ folder will be modified again.
+The folder contains files which modification time indicates certain things to babun. For example `babun check` is executed automatically on babun's start up every 24 hours. Whenever it's invoked a file named `checked` is being modified (the content of the modification does not matter).Whenever the mod_time of this file is not within 24 hours and babun is being started a `babun check` will be invoked and the file `check` located in the `stamps` folder will be modified again.
 
-==== installed
+=== installed
 
-The folder contains files that indicated which versions of babun's plugins and babun itself are installed. Each file contains a number - for example: a file named +core+ contains has one line with number +2+ in its content. It means that the plugin +core+ is installed and has version +2+
+The folder contains files that indicated which versions of babun's plugins and babun itself are installed. Each file contains a number - for example: a file named `core` contains has one line with number `2` in its content. It means that the plugin `core` is installed and has version `2`
 
-==== external
+=== external
 
 The folder contains external resources, like cloned repos of other projects (for example oh-my-zsh).
 
-==== home
+=== home
 
-The folder contains folders named like plugins. If a plugin needs to install something to user's folder this content has to be copied to "home/<plugin_name>" folder. It's just a store of the user's home files, so that whenever a new user's account is created babun can install user's home related content to the user's home folder (it's the plugin install_home.sh script's responsibility, however, to copy this content to the actual user's home folder). 
+The folder contains folders named like plugins. If a plugin needs to install something to user's folder this content has to be copied to `home/<plugin_name>` folder. It's just a store of the user's home files, so that whenever a new user's account is created babun can install user's home related content to the user's home folder (it's the plugin install_home.sh script's responsibility, however, to copy this content to the actual user's home folder). 

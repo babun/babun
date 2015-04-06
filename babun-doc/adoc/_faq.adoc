@@ -1,7 +1,6 @@
+:numbered:
 
-=== Frequent Asked Questions
-
-==== Why was babun created? Cygwin was already there...
+== Why was babun created? Cygwin was already there...
 
 Cygwin is a great tool, but there are a lot of quirks and tricks that make you lose a lot of time to make it actually 'usable'. 
 Did you see a bare Cygwin console after installation...? grep - oops not found, curl - oops again, 16-color prompt? Wow! and so on... 
@@ -20,48 +19,48 @@ The response of the community has been outstanding - around 1K github stars and 
 
 Footnote: If it does not convince you. if you love tweaking Cygwin, if want to install everything manually and if you want to spend a lot of time updating every single thing you once installed let's say it: babun is not for you - just use bare Cygwin in this case!
 
-==== Is there an interference with an existing Cygwin installation that I have already had
+== Is there an interference with an existing Cygwin installation that I have already had
 
 No, there is not.
 
-==== Will I face problems if I have a "whitespace" character in my username
+== Will I face problems if I have a "whitespace" character in my username
 
 No, you will not, but it's not recommended. See Cygwin's https://cygwin.com/faq.html#faq.setup.name-with-space[FAQ]
 
-==== How can I install babun to a custom folder
+== How can I install babun to a custom folder
 
 Use the install.bat script and specify the /target option.
 
-==== I cloned Babun from github but when i try to start it I get some weird error messages.
+== I cloned Babun from github but when i try to start it I get some weird error messages.
 
 You have to download the distribution package from http://babun.github.io.
 On github we only host raw source files. The dist package is enriched by cygwin and some other stuff you need to be able to run Babun.
 
-==== How can I uninstall Babun?
+== How can I uninstall Babun?
 
 Why would you? :-) Seriously, just delete the .babun folder (by default installed in %USER_HOME%).
 
-==== What is BLODA software?
+== What is BLODA software?
 
 BLODA is a list of applications that may interfere with cygwin. This could be for example an anti virus program or
 a graphics card driver. See the https://cygwin.com/faq/faq.html#faq.using.bloda[cygwin page] for more details.
 
-==== When I run Babun I can see: 'Your prompt is very slow. Check the installed BLODA software'. How to fix that?
+== When I run Babun I can see: 'Your prompt is very slow. Check the installed BLODA software'. How to fix that?
 
 Sometimes the prompt is slow when you start Babun as the initialization and loading of dll's take time.
-But when you execute +babun check+ it is usually ok again. In such case you can ignore this message.
+But when you execute `babun check` it is usually ok again. In such case you can ignore this message.
 
-==== How to disable BLODA warnings?
+== How to disable BLODA warnings?
 
-Put +export CYGWIN="nodosfilewarning mintty"+ in the +~/.babunrc+ file.
+Put `export CYGWIN="nodosfilewarning mintty"` in the `~/.babunrc` file.
 
-==== I often get following error message: "bash 2216 child_info_fork::abort: data segment start".
+== I often get following error message: "bash 2216 child_info_fork::abort: data segment start".
 
-This is a known cygwin issue. It may be caused by BLODA software. Sometimes +rebaseall+ resolves this issue. Follow this http://stackoverflow.com/questions/9300722/cygwin-error-bash-fork-retry-resource-temporarily-unavailable[link].
+This is a known cygwin issue. It may be caused by BLODA software. Sometimes `rebaseall` resolves this issue. Follow this http://stackoverflow.com/questions/9300722/cygwin-error-bash-fork-retry-resource-temporarily-unavailable[link].
 
 Also, have a look at this https://github.com/babun/babun/issues/143[thread].
 
-==== How do I integrate Babun with ConEmu?
+== How do I integrate Babun with ConEmu?
 
 * Update to the latest ConEmu
 * In ConEmu
@@ -72,11 +71,11 @@ Also, have a look at this https://github.com/babun/babun/issues/143[thread].
 
 Babun is available in the "Create new console" menu.
 
-==== How do I pin Babun to the taskbar in Windows 7/8?
+== How do I pin Babun to the taskbar in Windows 7/8?
 
 It should work out-of-the box now, if not have a look https://github.com/babun/babun/issues/90[here].
 
-==== Old version of Git doesn't like my .gitconfig.
+== Old version of Git doesn't like my .gitconfig.
 
 ----
 git clone git@github.com:Painted-Fox/docker-postgresql.git
@@ -88,72 +87,72 @@ fatal: bad config file line 11 in /cygdrive/c/Users/ryan.seto/.gitconfig
 
 The fix for the error above was described http://stackoverflow.com/questions/14330050/how-to-get-git-1-8-in-cygwin[here].
 
-==== I get 'error while loading shared libraries' when I execute git commands.
+== I get 'error while loading shared libraries' when I execute git commands.
 
-Install +gettext+, +libsasl2+ and +ca-certificates+ using pact.
+Install `gettext`, `libsasl2` and `ca-certificates` using pact.
 
-==== When I run git status in git shell and in Babun I get different results.
+== When I run git status in git shell and in Babun I get different results.
 
-It is probably an end-of-line issue. Execute +git config --list+ both in cmd and in Babun and compare the
-+core.autocrlf+ values. If your cmd prints +core.autocrlf = true+ execute +git config --global core.autocrlf true+ in Babun.
+It is probably an end-of-line issue. Execute `git config --list` both in cmd and in Babun and compare the
+`core.autocrlf` values. If your cmd prints `core.autocrlf = true` execute `git config --global core.autocrlf true` in Babun.
 
 
-==== How can I change the default fonts and size of Babun's (mintty) window on startup.
+== How can I change the default fonts and size of Babun's (mintty) window on startup.
 
-Add / edit +~/.minttyrc+
+Add / edit `~/.minttyrc`
 
-==== Babun cannot connect to the Internet.
+== Babun cannot connect to the Internet.
 
 Babun supports HTTP(s) proxying, but corporate firewalls can be tricky... Have a look at this thread: https://github.com/babun/babun/issues/95[#95]
 
-==== Cannot copy/paste into VIM.
+== Cannot copy/paste into VIM.
 
 Follow this https://github.com/babun/babun/issues/97[link].
 
-==== Is pact based on apt-cyg
+== Is pact based on apt-cyg
 
 Yes, it is. It diverged a bit, some functions have been changed, some things have been added to provide better integration with babun and make it a first class citizen. 
 
-==== How could I install and update babun on a computer not directly connected to the internet?
+== How could I install and update babun on a computer not directly connected to the internet?
 
 You can install Babun without any problems while being offline. Just download the ZIP file with the distribution.
 You need to be online in order to update Babun - you can configure a proxy if that's your case.
 
-==== How do I install gvm tool?
+== How do I install gvm tool?
 
-* download gvmtool: +curl -s get.gvmtool.net | bash+
-* edit .bash_profile, .bashrc and .zshrc and replace all occurrences of +/c/Users/...+ with +/cygdrive/c/Users/...+
+* download gvmtool: `curl -s get.gvmtool.net | bash`
+* edit .bash_profile, .bashrc and .zshrc and replace all occurrences of `/c/Users/...` with `/cygdrive/c/Users/...`
 * restart babun
 
-==== How do I install ruby?
+== How do I install ruby?
 
-If you can live with ruby 1.9.3 then just install it via +pact install ruby+. If you need a newer version have a look at this https://github.com/babun/babun/issues/93[link].
+If you can live with ruby 1.9.3 then just install it via `pact install ruby`. If you need a newer version have a look at this https://github.com/babun/babun/issues/93[link].
 
-==== Why multtiple shells share the same history?
+== Why multtiple shells share the same history?
 
-This is a feature of zsh. oh-my-zsh has +INC_APPEND_HISTORY+ on as default. To disable this put this in your .zshrc: + setopt APPEND_HISTORY+
+This is a feature of zsh. oh-my-zsh has `INC_APPEND_HISTORY` on as default. To disable this put this in your .zshrc: ` setopt APPEND_HISTORY`
 
-==== I tried to run python scripts but get 'modules not found'
+== I tried to run python scripts but get 'modules not found'
 
 See https://github.com/babun/babun/issues/104[Issue 104]
 
-==== How to run an X-Server
+== How to run an X-Server
 
 See https://github.com/babun/babun/issues/105[Issue 105]
 
-==== I have a problem with Windows line endings
+== I have a problem with Windows line endings
 
 Try running dos2unix on these files.
 
-==== No display name and no $DISPLAY environment variable
+== No display name and no $DISPLAY environment variable
 
 See https://github.com/babun/babun/issues/130[Issue 130]
 
-==== How to install virtualenvwrapper
+== How to install virtualenvwrapper
 
 See https://github.com/babun/babun/issues/147[Issue 147]
 
-==== chmod does not work as expected
+== chmod does not work as expected
 
 See 
 
@@ -161,7 +160,7 @@ http://superuser.com/questions/397288/using-cygwin-in-windows-8-chmod-600-does-n
 
 http://superuser.com/questions/348694/bad-owner-or-permissions-error-using-cygwins-ssh-exe
 
-==== I see: compdef: unknown command or service: git
+== I see: compdef: unknown command or service: git
 
 Execute:
 
@@ -170,35 +169,37 @@ $ compinit
 $ cp .zcompdump .zcompdump-$HOSTNAME-5.0.2
 ----
 
-==== ps option -U and -o unknown
+== ps option -U and -o unknown
 
 See https://github.com/babun/babun/issues/172[Issue 172]
 
-==== zsh: command not found: emacs
+== zsh: command not found: emacs
 
 Try emacs-nox
 
 
-==== "C:\" as target directory on installation fails
+== "C:\" as target directory on installation fails
 
 use C:\\
 
 Note two back-slash marks
 
-==== How to use sshfs command
+== How to use sshfs command
 
 Use Dokan sshfs. Free and open source.
 
-==== Use SSH id_rsa key from Windows
+== Use SSH id_rsa key from Windows
 
 see https://github.com/babun/babun/issues/208[Issue 208]
 
-==== When I start babun.bat three shell windows open
+== When I start babun.bat three shell windows open
 
-This is a known issue on Windows 10. To workaround it go to +.babun/cygwin/bin+ and change +mintty.exe+ to Windows 8 compatibility mode.
+This is a known issue on Windows 10. To workaround it go to `.babun/cygwin/bin` and change `mintty.exe` to Windows 8 compatibility mode.
 
-=== How do I update the underlying cygwin version
+== How do I update the underlying cygwin version
 
-just execute +babun update+. If there is a new supported cygwin version babun will upgrade it
+just execute `babun update`. If there is a new supported cygwin version babun will upgrade it
 
+== I get chmod: permission denied errors during update
 
+You have probably installed babun as an admin an try to upgrade it now without admin rights or using a different user. Please restart the update as an admin, or as a user you used to install babun with.

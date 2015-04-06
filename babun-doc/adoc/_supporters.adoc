@@ -1,10 +1,10 @@
 
 
-=== Supporters
+== Supporters
 
 Special thanks go to companies who provided free hosting! 
 
-===== XCLOUD
+=== XCLOUD
 
 http://xcloud.me/[XCLOUD.ME] provided a free hosted OS X instance (a free Xcloud Mini Server subscription). It works like a charm! Thank you!
 
@@ -13,7 +13,7 @@ image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/xcl
 
 _XCLOUD is a trademark of AG from Switzerland._
 
-===== Windows Azure
+=== Windows Azure
 
 http://www.azure.microsoft.com[Windows Azure] provided a free Windows Hosting (a free, renewable MSDN subscription). Everything was organised by @bureado. Thank you!
 

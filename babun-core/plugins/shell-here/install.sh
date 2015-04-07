@@ -10,6 +10,10 @@ keys=("HKCU\Software\Classes\Directory\Background\shell\babun"
 	"HKCU\Software\Classes\Drive\Background\Shell\babun"
 	"HKCU\Software\Classes\Drive\shell\babun")
 
+#start with installing chere
+pact install chere || echo "Installing 'chere' failed"
+
+#install registry keys
 for key in ${keys[*]}
 do 
 	cmd /c "reg" "add" "${key}" "/ve" "/d" "${name}" "/t" "REG_SZ" "/f"

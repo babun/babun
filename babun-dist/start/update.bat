@@ -94,8 +94,8 @@ rem "%BASH%" -c "source ~/.babunrc; /bin/echo.exe '	Download,Install' >> /etc/se
 :SETUPPROXY
 if "%PROXY%"=="" (
 	echo [babun] Proxy flag not set, trying to read the proxy from ~/.babunrc
-	"%BASH%" -c "/bin/grep.exe 'export http_proxy=' ~/.babunrc | /bin/grep.exe -v '#' | /bin/sed.exe 's/export http_proxy=//g' | /bin/cut.exe -d "@" -f 2 " > "%DIST_DIR%/proxy" 
-	set /p PROXY=<"%DIST_DIR%/proxy"	
+	"%BASH%" -c "source ~/.babunrc && echo $http_proxy | /bin/sed.exe 's,http://,,g' | /bin/gawk.exe '{n=split($0,a,\"@\"); print a[n]}'" > "%DIST_DIR%/proxy"
+	set /p PROXY=<"%DIST_DIR%/proxy"
 )
 
 if "%PROXY%" == "" (

@@ -10,6 +10,8 @@ Would you like to use a linux-like console on a Windows host without a lot of fu
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 
 
 Have a look at a 2 minutes long screencast by https://twitter.com/tombujok[@tombujok]: http://vimeo.com/95045348
@@ -24,7 +26,7 @@ video::95045348[vimeo, width=827, height=465, align="center"]
 
 == Installation
 
-Just download the http://projects.reficio.org/babun/babun-dist.zip[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
+Just download the http://projects.reficio.org/babun/download[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
 The application will be installed to the `%USER_HOME%\.babun` directory. Use the '/target' option to install babun to a custom directory.
 
 NOTE: There is no interference with existing Cygwin installation

@@ -6,8 +6,6 @@ babun_root=$( cygpath -w "/" | sed "s#\\\cygwin##g" )
 name="Babun Shell here"
 cmd="${babun_root}\cygwin\bin\mintty.exe -e /bin/xhere /bin/zsh.exe"
 
-echo $cmd
-
 keys=("HKCU\Software\Classes\Directory\Background\shell\babun"
 	"HKCU\Software\Classes\Directory\shell\babun"
 	"HKCU\Software\Classes\Drive\Background\Shell\babun"

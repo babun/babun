@@ -2,8 +2,11 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun.instance"
 source "$babun_tools/script.sh"
 
+babun_root=$( cygpath -w "/" | sed "s#\\\cygwin##g" )
 name="Babun Shell here"
-cmd="%HOMEDRIVE%%HOMEPATH%\.babun\cygwin\bin\mintty.exe -e /bin/xhere /bin/zsh.exe"
+cmd="${babun_root}\cygwin\bin\mintty.exe -e /bin/xhere /bin/zsh.exe"
+
+echo $cmd
 
 keys=("HKCU\Software\Classes\Directory\Background\shell\babun"
 	"HKCU\Software\Classes\Directory\shell\babun"

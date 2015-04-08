@@ -13,7 +13,7 @@ function check_only_one_running {
     if mkdir /var/lock/$proc_name 2>/dev/null ; then
         trap 'rm -rf "/var/lock/$proc_name"; exit $?' INT TERM EXIT
     else
-        echo "You can run only one instance of $proc_name. Close all other instances of $proc_name or remove the /var/lock/$proc_name/ directory if you are sure there are no other instances currently running.";
+        echo "You can run only one instance of $proc_name. Close all other instances of $proc_name or delete the /var/lock/$proc_name/ directory if you are sure there are no other instances currently running.";
         exit 1;
     fi
 }

@@ -46,13 +46,26 @@ rem NOTHING FOR NOW
 :CHECKFREESPACE	
 set DRIVE_LETTER=%BABUN_HOME:~0,2%
 FOR /F "usebackq tokens=*" %%r in (`cscript //Nologo "%FREESPACE_SCRIPT%" "%DRIVE_LETTER%"`) DO SET FREE_SPACE=%%r
+
+REM Check whether the cscript command returned text or number - http://stackoverflow.com/questions/17584282/how-to-check-if-a-parameter-or-variable-is-numeric-in-windows-batch-file
+SET "istext="&for /f "delims=0123456789" %%i in ("%FREE_SPACE%") do set "istext=%%i"
+if defined istext (
+    ECHO [babun] ERROR: %FREE_SPACE%
+    ECHO [babun] ERROR: Unable to run .vbs script to determine free space on drive.
+    ECHO [babun] ERROR: This is often caused by anti-virus applications blocking execution of .vbs files.
+    ECHO [babun] ERROR: If you are sure that you have enough disk space, you can continue at your own risk.
+    CHOICE /M "[babun] Do you want to continue? "
+    IF ERRORLEVEL 2 exit /b 255
+    GOTO CHECKHOME
+)
+
 if %FREE_SPACE% lss 1024 (
 	ECHO [babun] ERROR: There is not enough space on your destination drive %DRIVE_LETTER%
 	ECHO [babun] ERROR: Babun requires at least 1024 MB to operate properly
 	ECHO [babun] ERROR: Free Space on %DRIVE_LETTER% %FREE_SPACE% MB
 	ECHO [babun] ERROR: Please install babun to another destination using the /target option:
 	ECHO [babun] install.bat /target "D:\target_folder"
-	pause	
+    PAUSE
 	EXIT /b 255
 )
 

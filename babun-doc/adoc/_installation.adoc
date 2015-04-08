@@ -2,7 +2,7 @@
 
 == Installation
 
-Just download the http://projects.reficio.org/babun/download[dist file], unzip it and run the install.bat script. After a few minutes babun starts automatically.
+Just download the dist file from http://babun.github.io, unzip it and run the install.bat script. After a few minutes babun starts automatically.
 The application will be installed to the `%USER_HOME%\.babun` directory. Use the '/target' option to install babun to a custom directory.
 
 NOTE: There is no interference with existing Cygwin installation

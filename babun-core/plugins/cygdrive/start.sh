@@ -12,7 +12,7 @@ do
 	fi
 done
 
-for cygdrive_dir in $(find /cygdrive/ -maxdepth 1 -type d)
+for cygdrive_dir in $(find /cygdrive/ -maxdepth 1 -type d 2>/dev/null)
 do
 	drive_name=$(basename $cygdrive_dir)
 

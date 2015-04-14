@@ -203,3 +203,15 @@ just execute `babun update`. If there is a new supported cygwin version babun wi
 == I get chmod: permission denied errors during update.
 
 You have probably installed babun as an admin an try to upgrade it now without admin rights or using a different user. Please restart the update as an admin, or as a user you used to install babun with.
+
+== Open Babun here context menu doesnt work
+
+Execute `babun shell-here init`
+
+== Open Babun here context menu opens the wrong babun instance
+
+It is possible to have multiple Babun instances installed but the context menu can be linked to only one. If you want to change the link to a particular instance open the babun instance and execute `babun shell-here init`.
+
+== How to use the cygwin's ping
+
+Babun is unsing Windows native ping.exe because Cygwin's ping requires admin rights to be executed. If you still want to use the cygwin ping use 'cygping'.

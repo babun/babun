@@ -18,6 +18,7 @@ function usage()
   echo "  \"babun shell <new_shell>\" to set the user's default shell to new_shell"   
   echo "  \"babun install\" to (re)install babun to the current user's home folder"  
   echo "  \"babun login\" to login to the user's default shell"  
+  echo "  \"babun <plugin_name> cmd\" to execute cmd provided by the given plugin"
   echo "Options:"
   echo "  --help"
   echo "  --version"
@@ -98,7 +99,11 @@ do
     ;;
 
     *)
-      if [[ $args == "" ]]; then args="$1"; else args="$args $1"; fi      
+      if [[ $args == "" ]]; then
+        args="$1";
+      else
+        args="$args $1";
+      fi
       shift
     ;;  
 
@@ -168,7 +173,7 @@ case "$command" in
 
   update)
   
-  	update
+    update
   ;;
 
 
@@ -194,8 +199,18 @@ case "$command" in
 
   *)
 
-    usage
-
+    # forward the execution to the plugin in the babun <plugin_name> cmd format
+    cmds=($args)
+    cmdsLength=${#cmds[@]}
+    if [ $cmdsLength -gt 0 ]; then
+      if [[ -f "$babun_plugins/${cmds[0]}/exec.sh" ]]; then
+        "$babun_plugins/${cmds[0]}/exec.sh" ${cmds[@]:1}
+      else
+        usage
+      fi
+    else
+      usage
+    fi
   ;;
 
 esac

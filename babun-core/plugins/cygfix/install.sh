@@ -13,4 +13,7 @@ chmod 755 /bin/mkpasswd.exe
 /bin/cp -rf $src/bin/mkgroup_1.7.29.exe /bin/mkgroup.exe
 chmod 755 /bin/mkgroup.exe
 
-
+if [ ! -f "/bin/vi" ]
+then
+ ln -s /usr/bin/vim /bin/vi
+fi

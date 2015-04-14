@@ -40,7 +40,7 @@ image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/scr
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_update.png[babun - a Windows shell you will love!, align="center"]
 
-[big]#Babun update#
+[big]#Open Babun here - Context Menu#
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_context_menu.png[babun - a Windows shell you will love!, align="center"]
 

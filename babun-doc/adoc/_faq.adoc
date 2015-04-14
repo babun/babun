@@ -212,6 +212,10 @@ Execute `babun shell-here init`
 
 It is possible to have multiple Babun instances installed but the context menu can be linked to only one. If you want to change the link to a particular instance open the babun instance and execute `babun shell-here init`.
 
+== How to use ping IPv6
+
+Execute `ping -6`. Babun uses the native Windows ping.
+
 == How to use the cygwin's ping
 
 Babun is unsing Windows native ping.exe because Cygwin's ping requires admin rights to be executed. If you still want to use the cygwin ping use 'cygping'.

@@ -13,6 +13,7 @@ Babun features the following:
 * Pre-configured git and shell
 * Integrated oh-my-zsh
 * Auto update feature
+* "Open Babun Here" context menu entry
 
 Have a look at a sample screenshot!
 

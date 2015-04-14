@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+[-HKEY_CURRENT_USER\SOFTWARE\Classes\Directory\Background\shell\babun]
+[-HKEY_CURRENT_USER\SOFTWARE\Classes\Directory\shell\babun]
+[-HKEY_CURRENT_USER\SOFTWARE\Classes\Drive\Background\Shell\babun]
+[-HKEY_CURRENT_USER\SOFTWARE\Classes\Drive\shell\babun]

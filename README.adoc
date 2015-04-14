@@ -1,5 +1,7 @@
 = Babun - a windows shell you will love
 
+image:https://badges.gitter.im/Join%20Chat.svg[link="https://gitter.im/babun/babun?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"]
+
 Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun!
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n

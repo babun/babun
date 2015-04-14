@@ -63,6 +63,7 @@ Every plugin has to consist of three main files:
 * install_home.sh - a file that will be executed during the installation of babun to the user's home folder 
 * plugin.desc - a plugin description that contains the plugin_name and plugin_version variables
 * start.sh (optional) - a file that will be executed on babun startup
+* exec.sh (optiona) - a file that allows adding commands to babun script
 
 Have a look at the pact plugin - it's a perfect example of a relatively small plugin using all the features.
 
@@ -107,6 +108,12 @@ Every time the plugin is changed the version has to be incremented. Otherwise th
 === start.sh (optional)
 
 The start.sh is an optional script for plugins that require triggering certain actions on every babun start (for example update check).
+
+=== exec.sh (optional)
+
+If the plugin folder contains an exec.sh script, 
+whenever `babun <plugin_name> xxx yyy` command is invoked, the execution is passed to `<plugin_name>/exec.sh` script with params `xxx yyy`. 
+In this way a plugin may add some additional shell commands without implementing its own `/usr/local/bin/xxx` script.
 
 == Branches
 

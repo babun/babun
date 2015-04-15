@@ -1,0 +1,4 @@
+# plugin descriptor
+# installs ack and ack-vim plugin (http://beyondgrep.com)
+plugin_name=ack
+plugin_version=1

@@ -86,7 +86,7 @@ EXIT /b 255
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 
 if exist "%BABUN_HOME%/*.*" (
- 	ECHO [babun] Babun home already exists: %BABUN_HOME%"
+ 	ECHO [babun] Babun home already exists: "%BABUN_HOME%"
 	ECHO [babun] Delete the old folder in order to proceed. Terminating!
 	pause
  	EXIT /b 255

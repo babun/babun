@@ -47,7 +47,7 @@ rem NOTHING FOR NOW
 set DRIVE_LETTER=%BABUN_HOME:~0,2%
 FOR /F "usebackq tokens=*" %%r in (`cscript //Nologo "%FREESPACE_SCRIPT%" "%DRIVE_LETTER%"`) DO SET FREE_SPACE=%%r
 
-REM Check whether the cscript command returned text or number - http://stackoverflow.com/questions/17584282/how-to-check-if-a-parameter-or-variable-is-numeric-in-windows-batch-file
+REM Check whether the cscript command returned text or number
 SET "istext="&for /f "delims=0123456789" %%i in ("%FREE_SPACE%") do set "istext=%%i"
 if defined istext (
     ECHO [babun] ERROR: %FREE_SPACE%

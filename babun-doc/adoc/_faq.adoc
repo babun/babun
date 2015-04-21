@@ -171,7 +171,7 @@ $ cp .zcompdump .zcompdump-$HOSTNAME-5.0.2
 
 == ps option -U and -o unknown
 
-See https://github.com/babun/babun/issues/172[Issue 172]
+See https://github.com/babun/babun/issues/172[#172]
 
 == zsh: command not found: emacs
 
@@ -204,7 +204,11 @@ just execute `babun update`. If there is a new supported cygwin version babun wi
 
 You have probably installed babun as an admin an try to upgrade it now without admin rights or using a different user. Please restart the update as an admin, or as a user you used to install babun with.
 
-== Open Babun here context menu doesnt work
+== How do I launch Windows applications from command line with correct path arguments?
+
+You have to convert the path with the 'cygpath -w' command. See https://github.com/babun/babun/issues/299[#299].
+
+== Open Babun here context menu doesn't work
 
 Execute `babun shell-here init`
 

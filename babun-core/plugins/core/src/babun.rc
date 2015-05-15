@@ -55,6 +55,20 @@ EOF
 /bin/chmod ug+x /usr/bin/sudo
 fi
 
+# set PATH so it includes user's private bin if it exists
+HOME_LOCAL_BIN="$homedir/.local/bin"
+HOME_BIN="$homedir/bin"
+
+if [ ! -d "$HOME_LOCAL_BIN" ] ; then
+    mkdir -p $HOME_LOCAL_BIN
+fi
+
+if [ ! -d "$HOME_BIN" ] ; then
+	ln -s "$HOME_LOCAL_BIN" "$HOME_BIN"
+fi
+
+PATH="$HOME_LOCAL_BIN:$PATH"
+
 #
 # IMPORTANT -> THIS HAS TO BE LOCATED AT THE END OF THIS SCRIPT
 # install babun to user's home folder if it does not exist

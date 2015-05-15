@@ -125,7 +125,7 @@ ECHO [babun] Creating a desktop link
 if not exist "%LINK_SCRIPT%" (
     ECHO [babun] ERROR: Cannot create a desktop link. Script not found!
 )
-cscript //Nologo "%LINK_SCRIPT%" "%USERPROFILE%\Desktop\babun.lnk" "%BABUN_HOME%\babun.bat"
+cscript //Nologo "%LINK_SCRIPT%" "%USERPROFILE%\Desktop\babun.lnk" "%BABUN_HOME%\cygwin\bin\mintty.exe -"
 
 :INSTALLED
 ECHO [babun] Babun installed successfully. You can delete the installer now.

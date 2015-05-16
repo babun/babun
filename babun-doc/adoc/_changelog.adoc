@@ -1,0 +1,61 @@
+
+== Changelog
+
+=== Babun 1.1.1
+
+Auto update supports cntlm proxy (fix for #273).
+
+=== Babun 1.1.0
+
+This release features an important change in the auto-update behavior.
+
+From now on babun update will also check and update the underlying Cygwin instance with all Cygwin packages that have been already installed, apart from updating babun itself.
+
+The most important features are:
+
+* 'pact update', so that you may update a package to a newer version
+* 'fake sudo', so that you can run scripts containg sudo
+* soft links to harddrives, like /c, /d, so that you may forget about /cygdrive/c
+* a lot of fixed bugs; all of them are listed here: https://github.com/babun/babun/issues/266
+
+Also a big thank you to @almorelle, @vanushv, @tonilampela, @v-yadli, @harijoe, @airborn and @kubamarchwicki for taking time and effort of testing this version.
+
+P.S. If somebody is interested in the full list of issues that have been squashed in 1.1.0, just have a look:
+
+* MD5 sum did not patch, exiting #265
+* Package 'git' is broken after update #259
+* Cmake just returns to prompt without doing anything #252
+* Upgrading Git #242
+* versioning in pact, and pact upgrade & pact dist-upgrade (or the other way) #239
+* Updating git #232
+* Numpy not working after pact install #231
+* Command exits with 127 on Babun, but works on Cygwin #225
+* Unable to start X server after pact install xorg-server xinit #222
+* Emacs doesn’t run #210
+* g++ compilation doesn’t produce any resulting file #203
+* Upgrading with pact not available #199
+* shellshock: bash 4.1.10(4) and zsh 5.0.2 (i686-cygwin) vulnerablility #198
+* Pact Installer, Md5 checksum not matching…​ #257
+* Add "login" command to babun’s script #253
+* Rerun babun startup scripts after running 'babun update' #250
+* Duplicate call of babun.zsh in /etc/zshrc #249
+* Git plugin changes my gitconfig #247
+* Cannot update oh-my-zsh on start #211
+* etc/zprofile is being called twice causing CHERE_INVOKING to fail. #205
+* .bashrc running three times #166
+
+=== Babun 1.0.1
+
+There’s a lot of goodies that have been included in this release - the most importants ones are:
+
+* There is no interference with the existing Cygwin installations.
+* You may have whicespace or accent characters in your Windows username.
+* You may install to a custom folder using the install.bat /t "d:\babun_folder" switch.
+* You may install babun having the %HOME% env variable set (babun will reuse the user’s Windows home folder)
+* You can easily pin babun to taskbar
+
+We would like to thank the community for being very active and supportive. Special thanks to Babun’s contributors:
+
+austingreco #75, SamMorrowDrums #85, meeech #85, olivierdagenais #91, simonbasle #103, jsevol #108 #110, prabirshrestha #129, dogrizz #138, mmounirou #153 #156, bentsai #162, Johann-S #141, jktravis
+
+=== Babun 1.0.0

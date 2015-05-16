@@ -3,7 +3,7 @@ set -e -f -o pipefail
 
 function set_reg_keys {
 
-	local babun_root=$( cygpath -w "/" | sed "s#\\\cygwin##g" )
+	local babun_root="$( cygpath -w "/" | sed "s#\\\cygwin##g" )"
 	# the name that appears in the right-click context menu
 	local name="Open Babun here"
 	local cmd="${babun_root}\cygwin\bin\mintty.exe /bin/env CHERE_INVOKING=1 /bin/zsh.exe"

@@ -60,7 +60,7 @@ HOME_LOCAL_BIN="$homedir/.local/bin"
 HOME_BIN="$homedir/bin"
 
 if [ ! -d "$HOME_LOCAL_BIN" ] ; then
-    mkdir -p $HOME_LOCAL_BIN
+    mkdir -p "$HOME_LOCAL_BIN"
 fi
 
 if [ ! -d "$HOME_BIN" ] ; then

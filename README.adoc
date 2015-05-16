@@ -12,6 +12,7 @@ Would you like to use a linux-like console on a Windows host without a lot of fu
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
+// THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 
 
 Have a look at a 2 minutes long screencast by https://twitter.com/tombujok[@tombujok]: http://vimeo.com/95045348
@@ -47,6 +48,7 @@ Babun features the following:
 * Pre-configured git and shell
 * Integrated oh-my-zsh
 * Auto update feature
+* "Open Babun Here" context menu entry
 
 Have a look at a sample screenshot!
 
@@ -336,6 +338,10 @@ image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/scr
 
 image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_update.png[babun - a Windows shell you will love!, align="center"]
 
+[big]#Open Babun here - Context Menu#
+
+image::https://raw.githubusercontent.com/babun/babun.github.io/master/images/screenshots/screen_context_menu.png[babun - a Windows shell you will love!, align="center"]
+
 
 == Development
 
@@ -404,6 +410,7 @@ Every plugin has to consist of three main files:
 * install_home.sh - a file that will be executed during the installation of babun to the user's home folder 
 * plugin.desc - a plugin description that contains the plugin_name and plugin_version variables
 * start.sh (optional) - a file that will be executed on babun startup
+* exec.sh (optional) - a file that allows adding commands to babun script
 
 Have a look at the pact plugin - it's a perfect example of a relatively small plugin using all the features.
 
@@ -448,6 +455,12 @@ Every time the plugin is changed the version has to be incremented. Otherwise th
 === start.sh (optional)
 
 The start.sh is an optional script for plugins that require triggering certain actions on every babun start (for example update check).
+
+=== exec.sh (optional)
+
+If the plugin folder contains an exec.sh script, 
+whenever `babun <plugin_name> xxx yyy` command is invoked, the execution is passed to `<plugin_name>/exec.sh` script with params `xxx yyy`. 
+In this way a plugin may add some additional shell commands without implementing its own `/usr/local/bin/xxx` script.
 
 == Branches
 

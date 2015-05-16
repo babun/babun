@@ -1,0 +1,41 @@
+== Release procedure
+
+* make sure that versions of all updated plugins have been incremented
+* make sure that the babun version is incremented
+* regenerate README.adoc and commit to master
+
+* build master on jenkins to see if the build is passing
+
+* promote master to candidate branch 
+
+----
+git checkout candidate
+git rebase master
+git push
+----
+
+* build candidate on jenkins
+
+* download candidate zip file from jenkins and install
+** test all new features
+** smoke test existing features
+
+* download candidate zip with previous version from jenkins, install and execute `babun update` 
+** test all new features
+** smoke test existing features
+
+* promote candidate branch to release
+
+----
+git checkout release
+git rebase candidate
+git push
+----
+
+* increment babun version on master for the next release
+
+* execute release build on jenkins (will be uploaded to bintray)
+
+* update release notes and blog entry on the website
+
+* change the htaccess rules for the download link to redirect to the newest zip

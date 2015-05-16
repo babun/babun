@@ -7,7 +7,7 @@ source "/usr/local/etc/babun.instance"
 export CYGWIN_VERSION=x86
 export CYGWIN="nodosfilewarning mintty"
 export TERM=xterm-256color
-export CYGWIN_HOME=$( /usr/bin/cygpath.exe -ma "/" )
+export CYGWIN_HOME="$( /usr/bin/cygpath.exe -ma "/" )"
 export BABUN_HOME=$( echo $CYGWIN_HOME | /usr/bin/sed.exe "s#/cygwin##g" )
 
 alias ls='ls --color=auto'

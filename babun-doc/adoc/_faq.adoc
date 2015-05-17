@@ -2,18 +2,18 @@
 
 == Why was babun created? Cygwin was already there...
 
-Cygwin is a great tool, but there are a lot of quirks and tricks that make you lose a lot of time to make it actually 'usable'. 
-Did you see a bare Cygwin console after installation...? grep - oops not found, curl - oops again, 16-color prompt? Wow! and so on... 
+Cygwin is a great tool, but there are a lot of quirks and tricks that make you lose a lot of time to make it actually 'usable'.
+Did you see a bare Cygwin console after installation...? grep - oops not found, curl - oops again, 16-color prompt? Wow! and so on...
 
 You probably know that it is not that easy to install certain unix packages on Cygwin - let's take rvm for example. Did you manage to do it?
 How would you like to share it to the others? Maybe a blog entry that will be outdated in a couple of months?
-In babun you can just code up an rvm plugin and enable thousands of users to enjoy seamless rvm installation. 
+In babun you can just code up an rvm plugin and enable thousands of users to enjoy seamless rvm installation.
 Does a newer version or rvm get released, just update your plugin and again thousands of users will enjoy an automatic update.
 Isn't that great?
 
 We have been using Cygwin for many years and thought that it would be great to share our configuration - that's how babun was born.
-It offers a preconfigured Cygwin distribution where everything should work out of the box. 
-It is not that easy with BLODA, Windows and Cygwin quirks, firewalls, etc - but we are doing our best to provide the best possible user experience. 
+It offers a preconfigured Cygwin distribution where everything should work out of the box.
+It is not that easy with BLODA, Windows and Cygwin quirks, firewalls, etc - but we are doing our best to provide the best possible user experience.
 
 The response of the community has been outstanding - around 1K github stars and 10K downloads in the first week only!
 
@@ -38,7 +38,11 @@ On github we only host raw source files. The dist package is enriched by cygwin 
 
 == How can I uninstall Babun?
 
-Why would you? :-) Seriously, just delete the .babun folder (by default installed in %USER_HOME%).
+Why would you? :-) Seriously, just execute the uninstall.bat script from the installation directory.
+
+== How do I find out where Babun was installed?
+
+Execute  `echo $BABUN_HOME`
 
 == What is BLODA software?
 
@@ -111,7 +115,7 @@ Follow this https://github.com/babun/babun/issues/97[link].
 
 == Is pact based on apt-cyg?
 
-Yes, it is. It diverged a bit, some functions have been changed, some things have been added to provide better integration with babun and make it a first class citizen. 
+Yes, it is. It diverged a bit, some functions have been changed, some things have been added to provide better integration with babun and make it a first class citizen.
 
 == How could I install and update babun on a computer not directly connected to the internet?
 
@@ -154,7 +158,7 @@ See https://github.com/babun/babun/issues/147[Issue 147]
 
 == chmod does not work as expected
 
-See 
+See
 
 http://superuser.com/questions/397288/using-cygwin-in-windows-8-chmod-600-does-not-work-as-expected
 

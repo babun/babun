@@ -17,6 +17,10 @@ ECHO [babun] Uninstalling plugins...
 
 "%CYGWIN_HOME%"\bin\bash.exe -l -c "/usr/local/etc/babun/source/babun-core/plugins/uninstall.sh" || GOTO :ERROR_CLEANUP
 
+ECHO [babun] Deleting desktop shortcut...
+
+DEL /F /Q "%USERPROFILE%\Desktop\babun.lnk" || ECHO "Could not delete desktop shortcut."
+
 rem Quick solution for now
 ECHO [babun] Deleting files and directories...
 

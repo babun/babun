@@ -22,9 +22,28 @@ function set_reg_keys {
 
 }
 
+function unset_reg_keys {
 
-if [ "$1" != "init" ]; then
-	echo "Invalid option $1"
-else 
+	local keys=("HKCU\Software\Classes\Directory\Background\shell\babun"
+	"HKCU\Software\Classes\Directory\shell\babun"
+	"HKCU\Software\Classes\Drive\Background\Shell\babun"
+	"HKCU\Software\Classes\Drive\shell\babun")
+
+	#install registry keys
+	for key in ${keys[*]}
+	do 
+		cmd /c "reg" "delete" "${key}" "/f" || echo "Failed deleting ${key}"
+	done
+
+}
+
+
+if [ "$1" == "init" ]; then
 	set_reg_keys
+elif [ "$1" == "remove" ]; then
+	unset_reg_keys
+elif [ "$1" == "" ]; then
+	echo "Missing argument. Use 'init' or 'remove' option."
+else 
+	echo "Invalid option $1. Valid options are 'init' and 'remove'."
 fi

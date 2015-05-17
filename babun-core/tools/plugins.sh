@@ -104,3 +104,15 @@ function plugin_start {
 
 	bash "$start_script" || echo "Could not start plugin [$plugin_name]"
 }
+
+function plugin_uninstall {
+	local plugin_name="$1"
+
+	local uninstall_script="$babun_plugins/$plugin_name/uninstall.sh"
+	if [[ ! -f "$uninstall_script" ]]; then
+		echo "ERROR: Cannot find plugin uninstall.sh script [$plugin_name] [$start_script]"	
+		exit 1	
+	fi 
+
+	bash "$uninstall_script" || echo "Could not uninstall plugin [$plugin_name]"
+}

@@ -94,6 +94,10 @@ set -e -f -o pipefail
 source "/usr/local/etc/babun/source/babun-core/tools/script.sh"
 ----
 
+=== uninstall.sh (optional)
+
+Its responsibility is to cleanup all entries that a plugin may leave for example on the filesystem or in the windows registry.
+
 === plugin.desc
 
 A plugin descriptor looks like this:

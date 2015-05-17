@@ -216,6 +216,10 @@ Execute `babun shell-here init`
 
 It is possible to have multiple Babun instances installed but the context menu can be linked to only one. If you want to change the link to a particular instance open the babun instance and execute `babun shell-here init`.
 
+== I don't want the 'Open Babun here' option in the context menu
+
+Execute `babun shell-here remove`
+
 == How to use ping IPv6
 
 Execute `ping -6`. Babun uses the native Windows ping.

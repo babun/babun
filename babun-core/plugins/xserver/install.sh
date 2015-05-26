@@ -6,19 +6,6 @@ source "$babun_tools/script.sh"
 src="$babun_source/babun-core/plugins/xserver/src/."
 dest="$babun/home/xserver"
 
-
 pact install xorg-server xinit xorg-docs
 
-
-# /bin/cp -rf $src/pact /usr/local/bin
-# chmod 755 /usr/local/bin/pact
-
-# if [ ! -d "$dest" ]; then
-    # mkdir -p "$dest"
-echo $src
 /bin/cp -rf "$src/" "$dest"
-# fi
-
-# if [ ! -f "$dest/pact.repo" ]; then
-#     /bin/cp "$src/pact.repo" "$dest"
-# fi

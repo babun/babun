@@ -1,0 +1,15 @@
+Xftantialias: true
+Xftautohint: true
+XTermbackground: black
+XTermforeground: grey
+XTermcursorColor: grey
+XTerm.vt100.geometry: 79x25
+XTermscrollBar: true
+XTermrightScrollBar: true
+XTermsaveLines: 10000
+XTermfaceName: Monospaced
+XTermfaceSize: 12
+XTermtoolBar: off
+xTerm.VT100.utf8: 1
+xTerm.VT100.renderFont: true
+XTermfont: -misc-fixed-medium-r-semicondensed--0-0-75-75-c-0-iso8859-1

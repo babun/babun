@@ -1,0 +1,5 @@
+#!/bin/sh
+# import .Xresources
+xrdb -merge ~/.Xresources
+# start Xterm w/ Display set to xserver
+xterm -display $DISPLAY -fn fixed -e zsh

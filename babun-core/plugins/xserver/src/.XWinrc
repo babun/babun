@@ -1,0 +1,6 @@
+MENU systray {
+xterm EXEC "xterm -display %display% -fn fixed -e zsh"
+emacs EXEC "emacs-X11 -display %display%"
+SEPARATOR
+}
+ROOTMENU systray

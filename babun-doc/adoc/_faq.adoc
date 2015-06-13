@@ -170,7 +170,7 @@ Execute:
 
 ----
 $ compinit
-$ cp .zcompdump .zcompdump-$HOSTNAME-5.0.2
+$ cp .zcompdump .zcompdump-$HOSTNAME-$ZSH_VERSION
 ----
 
 == ps option -U and -o unknown

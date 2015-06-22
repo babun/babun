@@ -32,3 +32,8 @@ export LC_ALL="en_US.UTF-8"
 
 # Uncomment to enable bloda detection
 # export CYGWIN="nodosfilewarning mintty detect_bloda"
+
+# Uncomment to prioritize Anaconda- and Miniconda-installed packages (e.g.,
+# "/cygdrive/c/Miniconda3/python") over pact-installed packages (e.g.,
+# "/usr/bin/python"). By default, the latter takes priority over the former.
+# export PRIORITIZE_CONDA_PACKAGES="true"

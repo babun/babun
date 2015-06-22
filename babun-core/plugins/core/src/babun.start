@@ -1,6 +1,10 @@
 #!/bin/bash
 source "/usr/local/etc/babun.instance"
 
+# Source plugins modifying the current shell process *BEFORE* running plugins
+# in a new bash process. (The latter inherit the modifications of the former.)
+source "$babun_plugins/start_sourced.sh"
+
 "$babun_plugins/start.sh"
 "$babun_tools/welcome.sh"
 

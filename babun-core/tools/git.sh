@@ -13,4 +13,7 @@ else
 	fi
 fi
 
-git config --global core.trustctime false
+trustctime=$(git config --global core.trustctime || echo "")
+if [[ "$trustctime" != "false" ]]; then
+	git config --global core.trustctime false
+fi

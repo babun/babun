@@ -19,7 +19,14 @@ if [ ! -d "$dest" ]; then
 	mkdir -p "$dest"
     /bin/cp -rf "$src/." "$dest"
     /bin/cp "$dest/templates/zshrc.zsh-template" "$babun/home/.zshrc"
-    /bin/sed -i 's/ZSH_THEME=".*"/ZSH_THEME="babun"/' "$babun/home/.zshrc"
     /bin/cp -rf "$babun_source/babun-core/plugins/oh-my-zsh/src/babun.zsh-theme" "$dest/custom"
+
+    # Set the default oh-my-zsh theme to the Babun theme installed above.
+    /bin/sed -i 's/ZSH_THEME=".*"/ZSH_THEME="babun"/' "$babun/home/.zshrc"
+
+    # Avoid prepending the ${PATH} with "/usr/local/bin". Doing so conflicts
+    # with plugins also prepending the ${PATH} (e.g., "conda") and is redundant
+    # (as "/usr/local/bin" already heads the ${PATH} by default).
+    /bin/sed -i '/^export PATH=/s~/usr/local/bin:~~' "$babun/home/.zshrc"
 fi
 

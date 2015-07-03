@@ -39,6 +39,7 @@ export LC_ALL="en_US.UTF-8"
 
 export DISABLE_CHECK_ON_STARTUP="false"
 export CHECK_TIMEOUT_IN_SECS=4
+export PRIORITIZE_CONDA_PACKAGES="false"
 
 # otherwise vim will not find /etc/vimrc
 export VIM=/etc

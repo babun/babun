@@ -1,5 +1,5 @@
 # JVM options
-export JAVA_OPTS="-Xms128m -Xmx256m"
+# export JAVA_OPTS="-Xms128m -Xmx256m"
 
 # Modify these lines to set your locale 
 export LANG="en_US.UTF-8"

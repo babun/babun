@@ -71,7 +71,7 @@ Also, have a look at this https://github.com/babun/babun/issues/143[thread].
 ** Go to Settings>Startup>Tasks
 ** Create a new task
 *** Task parameters - /icon "%userprofile%\.babun\cygwin\bin\mintty.exe" /dir "%userprofile%"
-*** Commands %userprofile%\.babun\cygwin\bin\mintty.exe -
+*** Commands %userprofile%\.babun\cygwin\bin\mintty.exe /bin/env CHERE_INVOKING=1 /bin/zsh.exe
 
 Babun is available in the "Create new console" menu.
 

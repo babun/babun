@@ -5,13 +5,15 @@ function set_reg_keys {
 
 	local babun_root="$( cygpath -w "/" | sed "s#\\\cygwin##g" )"
 	# the name that appears in the right-click context menu
-	local name="Open Babun here"
-	local cmd="${babun_root}\cygwin\bin\mintty.exe /bin/env CHERE_INVOKING=1 /bin/zsh.exe"
+	local name="Open in Babun"
+	local background_name="Open Babun here"
+	local cmd="${babun_root}\babun.bat \"%1\""
+	local background_cmd="${babun_root}\babun.bat \"%V\""
 
-	local keys=("HKCU\Software\Classes\Directory\Background\shell\babun"
-	"HKCU\Software\Classes\Directory\shell\babun"
-	"HKCU\Software\Classes\Drive\Background\Shell\babun"
+	local keys=("HKCU\Software\Classes\Directory\shell\babun"
 	"HKCU\Software\Classes\Drive\shell\babun")
+	local background_keys=("HKCU\Software\Classes\Directory\Background\shell\babun"
+	"HKCU\Software\Classes\Drive\Background\Shell\babun")
 
 	#install registry keys
 	for key in ${keys[*]}
@@ -19,7 +21,11 @@ function set_reg_keys {
 		cmd /c "reg" "add" "${key}" "/ve" "/d" "${name}" "/t" "REG_SZ" "/f" || echo "Failed adding ${key}"
 		cmd /c "reg" "add" "${key}\command" "/ve" "/d" "${cmd}" "/t" "REG_EXPAND_SZ" "/f" || echo "Failed adding ${key}"
 	done
-
+	for key in ${background_keys[*]}
+	do
+		cmd /c "reg" "add" "${key}" "/ve" "/d" "${background_name}" "/t" "REG_SZ" "/f" || echo "Failed adding ${key}"
+		cmd /c "reg" "add" "${key}\command" "/ve" "/d" "${background_cmd}" "/t" "REG_EXPAND_SZ" "/f" || echo "Failed adding ${key}"
+	done
 }
 
 function unset_reg_keys {
@@ -29,7 +35,7 @@ function unset_reg_keys {
 	"HKCU\Software\Classes\Drive\Background\Shell\babun"
 	"HKCU\Software\Classes\Drive\shell\babun")
 
-	#install registry keys
+	#uninstall registry keys
 	for key in ${keys[*]}
 	do 
 		cmd /c "reg" "delete" "${key}" "/f" || echo "Failed deleting ${key}"

@@ -1,6 +1,6 @@
 = Babun - a windows shell you will love
 
-Would you like to use a linux-like console on a Windows host without a lot of fuzz? Try out babun!
+Would you like to use a linux-like console on a Windows host without a lot of fuss? Try out babun!
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n

@@ -27,10 +27,19 @@ EXIT /b 255
 
 :TARGET
 if %2.==. GOTO NOTARGET
+if "%~nx2"=="babun" GOTO NOSUBFOLDER
 set BABUN_HOME=%~2\.babun
 set TARGET=%~2
 set CUSTOM=true
 ECHO [babun] Installing to: "%BABUN_HOME%"
+GOTO CHECKTARGET
+
+:NOSUBFOLDER
+set BABUN_HOME=%~f2
+set TARGET=%~dp2.
+set CUSTOM=nosub
+ECHO [babun] Installing to: "%BABUN_HOME%"
+ECHO [babun] Make sure no ".babun" in "%TARGET%"
 GOTO CHECKTARGET
 
 :NOTARGET
@@ -85,16 +94,33 @@ EXIT /b 255
 :UNZIP
 set CYGWIN_HOME=%BABUN_HOME%\cygwin
 
+if not exist "%BABUN_HOME%" goto STARTUNZIP
+ECHO [babun] Removing old folder to reinstall?
+rmdir /s "%BABUN_HOME%"
+
 if exist "%BABUN_HOME%/*.*" (
  	ECHO [babun] Babun home already exists: "%BABUN_HOME%"
 	ECHO [babun] Delete the old folder in order to proceed. Terminating!
 	pause
  	EXIT /b 255
 )
-if not exist "%BABUN_HOME%" (mkdir "%BABUN_HOME%" || goto :ERROR)
+if exist "%TARGET%/.babun/*.*" (
+ 	ECHO [babun] Babun home already exists: "%TARGET%\.babun"
+	ECHO [babun] Delete the old folder in order to proceed. Terminating!
+	pause
+ 	EXIT /b 255
+)
+
+:STARTUNZIP
+mkdir "%BABUN_HOME%"
 ECHO [babun] Unzipping 
 
 "%UNZIPPER%" "%BABUN_ZIP%" -d "%TARGET%"
+if "%CUSTOM%"=="true" GOTO AFTERUNZIP
+rmdir "%BABUN_HOME%"
+move "%TARGET%\.babun" "%BABUN_HOME%"
+
+:AFTERUNZIP
 if not exist "%BABUN_HOME%/*.*" (GOTO ERROR)
 
 :POSTINSTALL

@@ -236,3 +236,8 @@ Babun is unsing Windows native ping.exe because Cygwin's ping requires admin rig
 
 Execute `pact install libffi-devel` and try again.
 see https://github.com/babun/babun/issues/191[Issue 191]
+
+== How to use Sublime Text 3 as editor for commit message
+
+see https://github.com/babun/babun/issues/421[Issue 421]
+

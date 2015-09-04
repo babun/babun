@@ -8,3 +8,6 @@ source "/usr/local/etc/babun.instance"
 
 # overwrite values with user's local settings
 test -f "$homedir/.babunrc" && source "$homedir/.babunrc"
+
+# disable oh-my-zsh auto updates
+DISABLE_AUTO_UPDATE="true"

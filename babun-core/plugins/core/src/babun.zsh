@@ -6,8 +6,8 @@ source /etc/zprofile
 test -f "$homedir/.zprofile" && source "$homedir/.zprofile"
 source "/usr/local/etc/babun.instance"
 
-# overwrite values with user's local settings
-test -f "$homedir/.babunrc" && source "$homedir/.babunrc"
-
 # disable oh-my-zsh auto updates
 export DISABLE_AUTO_UPDATE="true"
+
+# overwrite values with user's local settings
+test -f "$homedir/.babunrc" && source "$homedir/.babunrc"

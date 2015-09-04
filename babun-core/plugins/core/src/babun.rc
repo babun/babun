@@ -17,7 +17,6 @@ alias fgrep='fgrep --color=auto'
 alias emacs=emacs-nox
 alias open='cygstart'
 unset GREP_OPTIONS
-unsetopt promptcr
 
 # User Agent section -> especially for @aalmiray :)
 # List of user agents: http://www.useragentstring.com/pages/useragentstring.php

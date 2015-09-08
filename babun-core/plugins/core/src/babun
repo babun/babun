@@ -42,6 +42,7 @@ function welcome()
   echo -e "      pact remove tar -> will remove tar package from your system"
   echo -e ""
   echo -e "   babun -> a script that manages babun and enables auto-update"
+  echo -e "      babun help -> will display babun script usage"
   echo -e "      babun check -> will check the configuration (proxy, connection, etc)"
   echo -e "      babun update -> will update babun to the newest version"
   echo -e "      babun --welcome -> will display this message again"

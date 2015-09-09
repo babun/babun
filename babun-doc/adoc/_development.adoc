@@ -37,7 +37,7 @@ This module contains documentation written in ASCIIDOC.
 
 == Building from source
 
-The project is regularly build on Jenkins, on a slave node featuring the Windows Server OS. The Windows OS is required to fully build the distribution package as one of the goals invokes the native `cygwin.exe` installer. The artifacts created by each module are cached/stored in the target folder after a successful build of each step. This mechanism is not intelligent enough to calculate the diffs so if you would like to fully rebuild the whole dist package make sure to invoke the `clean` goal before the `package` goal. For now it's not possible to invoke a build of a selective modules only. 
+The project is regularly built using Jenkins, on a slave node featuring the Windows Server OS. The Windows OS is required to fully build the distribution package as one of the goals invokes the native `cygwin.exe` installer. The artifacts created by each module are cached/stored in the target folder after a successful build of each step. This mechanism is not intelligent enough to calculate the diffs so if you would like to fully rebuild the whole dist package make sure to invoke the `clean` goal before the `package` goal. For now it's not possible to invoke a build of selective modules only. 
 
 In order to build the dist package invoke:
 ----

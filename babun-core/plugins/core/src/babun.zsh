@@ -9,5 +9,7 @@ source "/usr/local/etc/babun.instance"
 # disable oh-my-zsh auto updates
 export DISABLE_AUTO_UPDATE="true"
 
+unsetopt promptcr
+
 # overwrite values with user's local settings
 test -f "$homedir/.babunrc" && source "$homedir/.babunrc"

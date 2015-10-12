@@ -11,7 +11,7 @@ set DASH=%CYGWIN_HOME%\bin\dash.exe
 if not exist "%DASH%" goto NOTFOUND
 
 :RUN
-ECHO [babun] Runnig rebaseall
+ECHO [babun] Running rebaseall
 "%DASH%" -c '/usr/bin/rebaseall -v'
 GOTO END
 

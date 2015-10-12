@@ -71,7 +71,7 @@ Also, have a look at this https://github.com/babun/babun/issues/143[thread].
 ** Go to Settings>Startup>Tasks
 ** Create a new task
 *** Task parameters - /icon "%userprofile%\.babun\cygwin\bin\mintty.exe" /dir "%userprofile%"
-*** Commands %userprofile%\.babun\cygwin\bin\mintty.exe -
+*** Commands %userprofile%\.babun\cygwin\bin\mintty.exe /bin/env CHERE_INVOKING=1 /bin/zsh.exe
 
 Babun is available in the "Create new console" menu.
 
@@ -170,7 +170,7 @@ Execute:
 
 ----
 $ compinit
-$ cp .zcompdump .zcompdump-$HOSTNAME-5.0.2
+$ cp .zcompdump .zcompdump-$HOSTNAME-$ZSH_VERSION
 ----
 
 == ps option -U and -o unknown
@@ -231,3 +231,13 @@ Execute `ping -6`. Babun uses the native Windows ping.
 == How to use the cygwin's ping
 
 Babun is unsing Windows native ping.exe because Cygwin's ping requires admin rights to be executed. If you still want to use the cygwin ping use 'cygping'.
+
+== I see "error: command 'gcc' failed with exit status 1"
+
+Execute `pact install libffi-devel` and try again.
+see https://github.com/babun/babun/issues/191[Issue 191]
+
+== How to use Sublime Text 3 as editor for commit message
+
+see https://github.com/babun/babun/issues/421[Issue 421]
+

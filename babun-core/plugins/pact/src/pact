@@ -120,6 +120,25 @@ function checkpackages()
   fi
 }
 
+function checkPackagesCompatibility() {
+  for pkg in $packages
+    do      
+      if [[ $pkg == "git" ]]; then
+          if [[ force -eq 1 ]]; then
+             echo -e "CRITICAL: Installing git in force mode" 
+           else
+            echo -e "-------------------------------------------------------------------------------"
+            echo -e "CRITICAL: Git cannot be updated in this version!"
+            echo -e "Due to the bug https://github.com/babun/babun/issues/455 it's forbidden to install "
+            echo -e "git as it may not work correctly behind ntlm proxy"             
+            echo -e "If you know what you are doing add '--force' flag to proceed."
+            echo -e "-------------------------------------------------------------------------------"
+            exit 1
+          fi
+      fi
+    done
+}
+
 
 # process options
 noscripts=0
@@ -471,6 +490,7 @@ case "$command" in
   install)
     
     checkCygwin
+    checkPackagesCompatibility
     checkpackages
     findworkspace
     getsetup
@@ -482,6 +502,7 @@ case "$command" in
   update)
     
     checkCygwin
+    checkPackagesCompatibility
     removePkg
     checkpackages
     findworkspace

@@ -50,9 +50,9 @@ function welcome()
   echo -e "There are a couple of plugins installed by default: oh-my-zsh, pact, cacert, etc."
   echo -e "There are also a lot of dev tools such as git, svn, unix utils, etc"
   echo -e "If you would like to contribute, code up a plugin or report an issue just"
-  echo -e "go to github: https://github.com/babun/babun"
+  echo -e "go to GitHub: https://github.com/babun/babun"
   echo -e ""
-  echo -e "If you like the project star it on github and follow me on twitter!"
+  echo -e "If you like the project, star it on GitHub and follow me on twitter!"
   echo -e "This project is created and maintained by Tom Bujok (@tombujok)"
 }
 

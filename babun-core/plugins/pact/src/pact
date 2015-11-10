@@ -10,15 +10,15 @@ source "$babun_tools/procps.sh"
 source ~/.pact/pact.repo
 
 # this script requires some packages
-WGET=`which wget 2> /dev/null`
+CURL=`which curl 2> /dev/null`
 BZIP2=`which bzip2 2> /dev/null`
 TAR=`which tar 2> /dev/null`
 GAWK=`which awk 2> /dev/null`
 XZ=`which xz 2> /dev/null`
-if test "-$WGET-" = "--" || test "-$BZIP2-" = "--" || test "-$TAR-" = "--" \
+if test "-$CURL-" = "--" || test "-$BZIP2-" = "--" || test "-$TAR-" = "--" \
   || test "-$GAWK-" = "--" || test "-$XZ-" = "--"
 then
-  echo You must install wget, tar, gawk, bzip2 and xz to use pact.
+  echo You must install curl, tar, gawk, bzip2 and xz to use pact.
   exit 1
 fi
 
@@ -90,14 +90,14 @@ function getsetup()
   else
     touch setup.ini
     mv setup.ini setup.ini-save
-    wget --user-agent="$USER_AGENT" -N $mirror/$CYGWIN_VERSION/setup.bz2
+    curl --user-agent="$USER_AGENT" -z setup.bz2 $mirror/$CYGWIN_VERSION/setup.bz2
     if test -e setup.bz2 && test $? -eq 0
     then
       bunzip2 setup.bz2
       mv setup setup.ini
       echo Updated setup.ini
     else
-      wget --user-agent="$USER_AGENT" -N $mirror/$CYGWIN_VERSION/setup.ini
+      curl --user-agent="$USER_AGENT" -z setup.ini $mirror/$CYGWIN_VERSION/setup.ini
       if test -e setup.ini && test $? -eq 0
       then
       echo Updated setup.ini
@@ -221,7 +221,7 @@ function installPkg()
 
     file=`basename $install`
     cd "release/$pkg"
-    wget --user-agent="$USER_AGENT" -nc $mirror/$install
+    curl --user-agent="$USER_AGENT" -z $install $mirror/$install
     
     # check the verification hash (md5 or sha512)
     digest=`cat "desc" | awk '/^install: / { print $4; exit }'` 
@@ -313,7 +313,7 @@ function removePkg()
       continue
     fi
 
-    dontremove="cygwin coreutils gawk bzip2 tar wget bash"
+    dontremove="cygwin coreutils gawk bzip2 tar curl bash"
     for req in $dontremove
     do
       if test "-$pkg-" = "-$req-"

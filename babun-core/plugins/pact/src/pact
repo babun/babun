@@ -232,6 +232,7 @@ function installPkg()
       if ! [[ $digest == $shadigactual ]]
       then
         echo Verification hash did not match, exiting
+        rm $file # Remove the file with bad checksum
         exit 1
       fi
     fi

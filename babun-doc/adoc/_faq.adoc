@@ -230,7 +230,7 @@ Execute `ping -6`. Babun uses the native Windows ping.
 
 == How to use the cygwin's ping
 
-Babun is unsing Windows native ping.exe because Cygwin's ping requires admin rights to be executed. If you still want to use the cygwin ping use 'cygping'.
+Babun is using Windows native ping.exe because Cygwin's ping requires admin rights to be executed. If you still want to use the cygwin ping use 'cygping'.
 
 == I see "error: command 'gcc' failed with exit status 1"
 

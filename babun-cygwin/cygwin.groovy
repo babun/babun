@@ -6,11 +6,12 @@ execute()
 def execute() {
     File repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile
     boolean downloadOnly
+    String arch
     try {
         checkArguments()
-        (repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, downloadOnly) = initEnvironment()
+        (repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, downloadOnly, arch) = initEnvironment()
         // install cygwin
-        File cygwinInstaller = downloadCygwinInstaller(outputFolder)
+        File cygwinInstaller = downloadCygwinInstaller(outputFolder, arch)
         if(downloadOnly) {
             println "downloadOnly flag set to true - Cygwin installation skipped.";
             return
@@ -29,8 +30,8 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 5) {
-        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder> <pkgs_file> <download_only>")
+    if (this.args.length != 6) {
+        error("Usage: cygwin.groovy <repo_folder> <input_folder> <output_folder> <pkgs_file> <download_only> <arch>")
         exit(-1)
     }
 }
@@ -50,15 +51,15 @@ def initEnvironment() {
         return 
     }
     cygwinFolder.mkdir()
-    return [repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, downloadOnly]
+    return [repoFolder, inputFolder, outputFolder, cygwinFolder, pkgsFile, downloadOnly, this.args[5]]
 }
 
-def downloadCygwinInstaller(File outputFolder) {    
-    File cygwinInstaller = new File(outputFolder, "setup-x86.exe")
+def downloadCygwinInstaller(File outputFolder, String arch) {
+    File cygwinInstaller = new File(outputFolder, "setup-${arch}.exe")
     if(!cygwinInstaller.exists()) {
         println "Downloading Cygwin installer"
         use(FileBinaryCategory) {
-            cygwinInstaller << "http://cygwin.com/setup-x86.exe".toURL()
+            cygwinInstaller << "http://cygwin.com/setup-${arch}.exe".toURL()
         }
     } else {
         println "Cygwin installer alread exists, skipping the download!";

@@ -74,6 +74,7 @@ def installCygwin(File cygwinInstaller, File repoFolder, File cygwinFolder, File
     println "Packages to install: ${pkgs}"
     String installCommand = "\"${cygwinInstaller.absolutePath}\" " +
             "--quiet-mode " +
+            "--no-admin " +
             "--local-install " +
             "--local-package-dir \"${repoFolder.absolutePath}\" " +
             "--root \"${cygwinFolder.absolutePath}\" " +

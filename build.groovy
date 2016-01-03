@@ -71,7 +71,7 @@ def doPackage(String arch) {
     executeBabunPackages(arch)
     executeBabunCygwin(arch)
     executeBabunCore()
-    executeBabunDist()
+    executeBabunDist(arch)
 }
 
 def doCygwin(String arch) {
@@ -125,7 +125,7 @@ def executeBabunCore() {
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
-def executeBabunDist() {
+def executeBabunDist(String arch) {
     String module = "babun-dist"
     log "EXEC ${module}"
     if (shouldSkipModule(module)) return
@@ -133,7 +133,7 @@ def executeBabunDist() {
     String input = workingDir.absolutePath
     String cygwin = new File(getTarget(), "babun-core/cygwin").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "dist.groovy", cygwin, input, out, VERSION]
+    def command = ["groovy", "dist.groovy", cygwin, input, out, VERSION, arch]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 

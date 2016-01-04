@@ -68,11 +68,8 @@ echo [babun] Writing data to %DIST_DIR%
 set /p CYGWIN_ARCH=<"%DIST_DIR%/cygwin.arch"
 
 "%BASH%" -c "source ~/.babunrc; /bin/rm.exe -f '%DIST_DIR%/setup-%CYGWIN_ARCH%.exe' '%DIST_DIR%/cygwin.version'" || goto :ERROR
-echo download cyg version
-"%BASH%" -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version" || goto :ERROR
-set /p CYGWIN_VERSION=<"%DIST_DIR%/cygwin.version"
-echo [babun] Downloading Cygwin %CYGWIN_VERSION%
-"%BASH%" -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://raw.githubusercontent.com/babun/babun-cygwin/%CYGWIN_VERSION%/babun-cygwin/setup-%CYGWIN_ARCH%.exe" || goto :ERROR
+echo [babun] Downloading latest Cygwin
+"%BASH%" -c "source ~/.babunrc; /bin/wget.exe --directory-prefix='%DIST_DIR%' https://cygwin.com/setup-%CYGWIN_ARCH%.exe" || goto :ERROR
 
 :SETUPRC
 echo [babun] Preparing setup.rc config
@@ -120,8 +117,7 @@ setup-%CYGWIN_ARCH%.exe --quiet-mode --upgrade-also --site="%MIRROR%" --no-admin
 GOTO VERSION
 
 :VERSION
-echo [babun] Updating Cygwin version number
-copy /Y "%DIST_DIR%/cygwin.version" "%CYGWIN_HOME%/usr/local/etc/babun/installed/cygwin" || goto :ERROR
+rem We don't need to update the Cygwin version number anymore
 GOTO END
 
 :MIRRORNOTSET

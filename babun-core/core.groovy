@@ -39,8 +39,6 @@ def copyCygwin(File rootFolder, File cygwinFolder, File outputFolder) {
     new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin", quiet: true ) {
       fileset( dir: "${cygwinFolder.absolutePath}", defaultexcludes:"no" )
     }
-    new AntBuilder().copy( file:"${rootFolder.absolutePath}/target/cygwin.version", 
-                           tofile:"${outputFolder.absolutePath}/cygwin/usr/local/etc/babun/installed/cygwin" )
 }
 
 // -----------------------------------------------------

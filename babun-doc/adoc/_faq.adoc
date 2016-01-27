@@ -251,7 +251,7 @@ You need to add the environment variable HOME into your windows account.
 ** or you search in the start menu "env" and select "Select Edit environment variables for your account"
 **  Select New
 *** Name: HOME
-*** Value: C:\Users\nfarrar
+*** Value: C:\Users\login
 * Launch babun
 * Type: babun install
 * Restart babun

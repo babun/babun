@@ -241,3 +241,23 @@ see https://github.com/babun/babun/issues/191[Issue 191]
 
 see https://github.com/babun/babun/issues/421[Issue 421]
 
+== How to use the Windows' user profile directory as my home directory in babun ? 
+
+You need to add the environment variable HOME into your windows account.
+
+* Edit your environment variables
+** You can execute this command :
+*** rundll32 sysdm.cpl,EditEnvironmentVariables
+** or you search in the start menu "env" and select "Select Edit environment variables for your account"
+**  Select New
+*** Name: HOME
+*** Value: C:\Users\login
+* Launch babun
+* Type: babun install
+* Restart babun
+
+Your babun home directory should now be your windows user profile directory, usually c:\user\login\
+
+see https://github.com/babun/babun/issues/289[Issue 289]
+
+

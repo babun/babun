@@ -4,7 +4,7 @@
 # If you want to some options modify the following file: ~/.babunrc
 source "/usr/local/etc/babun.instance"
 
-export CYGWIN_VERSION=x86
+export CYGWIN_VERSION=${PROCESSOR_ARCHITECTURE/AMD64/x86_64}
 export CYGWIN="nodosfilewarning mintty"
 export TERM=xterm-256color
 export CYGWIN_HOME="$( /usr/bin/cygpath.exe -ma '/' )"

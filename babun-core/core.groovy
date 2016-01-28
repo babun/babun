@@ -9,7 +9,7 @@ def execute() {
         checkArguments()
         (rootFolder, cygwinFolder, outputFolder, babunBranch) = initEnvironment()
         copyCygwin(rootFolder, cygwinFolder, outputFolder)
-        installCore(outputFolder, babunBranch)    
+        installCore(rootFolder, outputFolder, babunBranch)
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()
@@ -39,8 +39,6 @@ def copyCygwin(File rootFolder, File cygwinFolder, File outputFolder) {
     new AntBuilder().copy( todir: "${outputFolder.absolutePath}/cygwin", quiet: true ) {
       fileset( dir: "${cygwinFolder.absolutePath}", defaultexcludes:"no" )
     }
-    new AntBuilder().copy( file:"${rootFolder.absolutePath}/target/cygwin.version", 
-                           tofile:"${outputFolder.absolutePath}/cygwin/usr/local/etc/babun/installed/cygwin" )
 }
 
 // -----------------------------------------------------
@@ -48,7 +46,7 @@ def copyCygwin(File rootFolder, File cygwinFolder, File outputFolder) {
 // THIS SHOULD BE A SEPARATE SHELL SCRIPT
 // IT WILL ENABLE INSTALLING THE CORE ON OSX!!!
 // -----------------------------------------------------
-def installCore(File outputFolder, String babunBranch) {    
+def installCore(File rootFolder, File outputFolder, String babunBranch) {
     // rebase dll's
     executeCmd("${outputFolder.absolutePath}/cygwin/bin/dash.exe -c '/usr/bin/rebaseall'", 5)
 
@@ -56,11 +54,12 @@ def installCore(File outputFolder, String babunBranch) {
     String bash = "${outputFolder.absolutePath}/cygwin/bin/bash.exe -l"
 
     // checkout babun
-    String sslVerify = "git config --global http.sslverify"
+    String repo = "\$( cygpath '${rootFolder.absolutePath}' )"
     String src = "/usr/local/etc/babun/source"
-    String clone = "git clone https://github.com/babun/babun.git ${src}"
+    String clone = "git -c 'http.sslverify=false' clone " +
+                   "\$( git --git-dir=\\\"${repo}/.git\\\" config --get remote.origin.url ) ${src}"
     String checkout = "git --git-dir='${src}/.git' --work-tree='${src}' checkout ${babunBranch}"    
-    executeCmd("${bash} -c \"${sslVerify} 'false'; ${clone}; ${checkout}; ${sslVerify} 'true';\"", 5)
+    executeCmd("${bash} -c \"${clone}; ${checkout};\"", 5)
     
     // remove windows new line feeds
     String dos2unix = "find /usr/local/etc/babun/source/babun-core -type f -exec dos2unix {} \\;"

@@ -24,16 +24,13 @@ function get_newest_version {
 	if [[ -z $CHECK_TIMEOUT_IN_SECS ]]; then 
 		CHECK_TIMEOUT_IN_SECS=4
 	fi
-	local newest_version=$( curl --silent --insecure --user-agent "$USER_AGENT" --connect-timeout $CHECK_TIMEOUT_IN_SECS --location https://raw.githubusercontent.com/babun/babun/$BABUN_BRANCH/babun.version || echo "" )
+	local url=$( git --git-dir=$babun_source/.git config --get remote.origin.url | sed -e 's/\.git//' )/raw/$BABUN_BRANCH/babun.version
+	local newest_version=$( curl --silent --insecure --user-agent "$USER_AGENT" --connect-timeout $CHECK_TIMEOUT_IN_SECS --location $url || echo "" )
 	echo "$newest_version"
 }
 
 function get_current_cygwin_version {
-	if [[ ! -f "$babun/installed/cygwin" ]]; then
-		echo "1.7.29" > "$babun/installed/cygwin" 
-	fi
-	dos2unix $babun/installed/cygwin 2> /dev/null
-	local current_cygwin_version=$( cat "$babun/installed/cygwin" 2> /dev/null || echo "0.0.0" )
+	local current_cygwin_version=$( uname -r | sed -e 's/(.*//' 2> /dev/null || echo "0.0.0" )
 	echo "$current_cygwin_version"
 }
 
@@ -41,7 +38,8 @@ function get_newest_cygwin_version {
 	if [[ -z $CHECK_TIMEOUT_IN_SECS ]]; then 
 		CHECK_TIMEOUT_IN_SECS=4
 	fi
-	local newest_cygwin_version=$( curl --silent --insecure --user-agent "$USER_AGENT" --connect-timeout $CHECK_TIMEOUT_IN_SECS --location https://raw.githubusercontent.com/babun/babun-cygwin/master/cygwin.version || echo "" )
+	local url=$( git --git-dir=$babun_source/.git config --get remote.origin.url | sed -e 's/\.git//' )/raw/$BABUN_BRANCH/cygwin.version
+	local newest_cygwin_version=$( curl --silent --insecure --user-agent "$USER_AGENT" --connect-timeout $CHECK_TIMEOUT_IN_SECS --location $url || echo "" )
 	echo "$newest_cygwin_version"
 }
 

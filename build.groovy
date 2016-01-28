@@ -5,30 +5,45 @@ import static java.lang.System.getenv
 VERSION = new File("${getRoot()}/babun.version").text.trim()
 TEN_MINUTES = 10
 TWENTY_MINUTES = 20
+ARG_64BIT = "--64bit"
 
 execute()
 
 def execute() {
     log "EXEC"
-    checkArguments()
+    if (this.args.length < 1) {
+        printUsageAndExit();
+    }
     String mode = this.args[0]
+    String arch = "x86"
+
+    List args = this.args.drop(1)
+    if (ARG_64BIT in args) {
+        arch = "x86_64"
+        args -= ARG_64BIT
+    }
+    if (args) {
+        // Unrecognized arguments
+        printUsageAndExit();
+    }
+
     if (mode == "clean") {
         doClean()
     } else if (mode == "cygwin") {
-        doCygwin()
+        doCygwin(arch)
     } else if (mode == "package") {
-        doPackage()
+        doPackage(arch)
     } else if (mode == "release") {
-        doRelease()
+        doRelease(arch)
+    } else {
+        printUsageAndExit();
     }
     log "FINISHED"
 }
 
-def checkArguments() {
-    if (this.args.length != 1 || !this.args[0].matches("clean|cygwin|package|release")) {
-        err.println "Usage: build.groovy <clean|cygwin|package|release>"
-        exit(-1)
-    }
+def printUsageAndExit() {
+    err.println "Usage: build.groovy <clean|cygwin|package|release> [args...]"
+    exit(-1)
 }
 
 def initEnvironment() {
@@ -40,56 +55,59 @@ def initEnvironment() {
 
 def doClean() {
     log "EXEC clean"
+    if (this.args.length > 1) {
+        printUsageAndExit();
+    }
     File target = getTarget()
     if (target.exists()) {
         if (!target.deleteDir()) {
-            throw new RuntimeException("Cannot delete targe folder")
+            throw new RuntimeException("Cannot delete target folder")
         }
     }
 }
 
-def doPackage() {
+def doPackage(String arch) {
     log "EXEC package"  
-    executeBabunPackages()  
-    executeBabunCygwin()
+    executeBabunPackages(arch)
+    executeBabunCygwin(arch)
     executeBabunCore()
-    executeBabunDist()
+    executeBabunDist(arch)
 }
 
-def doCygwin() {    
-    executeBabunPackages()    
+def doCygwin(String arch) {
+    executeBabunPackages(arch)
     boolean downloadOnly=true
-    executeBabunCygwin(downloadOnly)
+    executeBabunCygwin(arch, downloadOnly)
 }
 
-def doRelease() {
+def doRelease(String arch) {
     log "EXEC release"
-    doPackage()
+    doPackage(arch)
     executeRelease()
 }
 
-def executeBabunPackages() {    
+def executeBabunPackages(String arch) {
     String module = "babun-packages"
     log "EXEC ${module}"
     if (shouldSkipModule(module)) return
     File workingDir = new File(getRoot(), module);
     String conf = new File(getRoot(), "${module}/conf/").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "packages.groovy", conf, out]
+    def command = ["groovy", "packages.groovy", conf, out, arch]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
-def executeBabunCygwin(boolean downloadOnly = false) {
+def executeBabunCygwin(String arch, boolean downloadOnly = false) {
     String module = "babun-cygwin"
     log "EXEC ${module}"
     File workingDir = new File(getRoot(), module);
     String input = workingDir.absolutePath
     String repo = new File(getTarget(), "babun-packages").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    String pkgs = new File(getRoot(), "babun-packages/conf/cygwin.x86.packages")
+    String pkgs = new File(getRoot(), "babun-packages/conf/cygwin.${arch}.packages")
     String downOnly = downloadOnly as String
     println "Download only flag set to: ${downOnly}"
-    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, downOnly]
+    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, downOnly, arch]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
@@ -107,7 +125,7 @@ def executeBabunCore() {
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
-def executeBabunDist() {
+def executeBabunDist(String arch) {
     String module = "babun-dist"
     log "EXEC ${module}"
     if (shouldSkipModule(module)) return
@@ -115,7 +133,7 @@ def executeBabunDist() {
     String input = workingDir.absolutePath
     String cygwin = new File(getTarget(), "babun-core/cygwin").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "dist.groovy", cygwin, input, out, VERSION]
+    def command = ["groovy", "dist.groovy", cygwin, input, out, VERSION, arch]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 

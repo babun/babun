@@ -8,7 +8,7 @@ def execute() {
     String version
     try {
         checkArguments()
-        (cygwinFolder, inputFolder, outputFolder, version) = initEnvironment()
+        (cygwinFolder, inputFolder, outputFolder, version, arch) = initEnvironment()
         // prepare .babun
         copyCygwin(cygwinFolder, outputFolder)
         copyTools(inputFolder, outputFolder)
@@ -17,7 +17,7 @@ def execute() {
         // prepare Dist
         zipBabun(outputFolder)
         copyInstallScripts(inputFolder, outputFolder)
-        createBabunDist(outputFolder, version)        
+        createBabunDist(outputFolder, version, arch)
     } catch (Exception ex) {
         error("ERROR: Unexpected error occurred: " + ex + " . Quitting!", true)
         ex.printStackTrace()
@@ -26,8 +26,8 @@ def execute() {
 }
 
 def checkArguments() {
-    if (this.args.length != 4) {
-        error("Usage: dist.groovy <cygwin_folder> <input_folder> <output_folder> <version>")
+    if (this.args.length != 5) {
+        error("Usage: dist.groovy <cygwin_folder> <input_folder> <output_folder> <version> <arch>")
         exit(-1)
     }
 }
@@ -40,7 +40,7 @@ def initEnvironment() {
     if (!outputFolder.exists()) {
         outputFolder.mkdir()
     }    
-    return [cygwinFolder, inputFolder, outputFolder, version]
+    return [cygwinFolder, inputFolder, outputFolder, version, this.args[4]]
 }
 
 def copyCygwin(File cygwinFolder, File outputFolder) {
@@ -91,14 +91,14 @@ def copyInstallScripts(File inputFolder, File outputFolder) {
     }
 }
 
-def createBabunDist(File outputFolder, String version) {
+def createBabunDist(File outputFolder, String version, String arch) {
     // rename dist folder
     File dist = new File(outputFolder, "dist")
     File distWithVersion = new File(outputFolder, "babun-${version}")
     dist.renameTo(distWithVersion)
 
     // zip dist folder
-    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-dist.zip", level: 3) {
+    new AntBuilder().zip(destFile: "${outputFolder.absolutePath}/babun-${version}-${arch}-dist.zip", level: 3) {
         fileset(dir: "${outputFolder.absolutePath}", defaultexcludes:"no") {
             include(name: "babun-${version}/**")
         }

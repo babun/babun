@@ -5,7 +5,7 @@ The project consists of five modules.
 
 === babun-packages
 
-The main goal of the `babun-packages` module is to download the cygwin packages listed in the `conf/cygwin.x86.packages` file.
+The main goal of the `babun-packages` module is to download the cygwin packages listed in the `conf/cygwin.x86.packages` or `conf/cygwin.x86_64.packages` file.
 The above mentioned packages will be downloaded together with the whole dependency tree. Repositories which the packages are downloaded from are listed in the `conf/cygwin.repositories` file. At the beginning the first repository is taken, if a package is not available in this repo the second repo is used, etc. The process continues until all packages have been downloaded. 
 
 All downloaded packages are stored in the `target/babun-packages` folder.
@@ -41,7 +41,7 @@ The project is regularly built using Jenkins, on a slave node featuring the Wind
 
 In order to build the dist package invoke:
 ----
-groovy build.groovy package 
+groovy build.groovy package [--64bit]
 ----
 
 In order to clean the project target folder invoke:

@@ -82,7 +82,7 @@ Babun contains an auto-update feature which enables updating both the microkerne
 
 === Installer
 
-Babun features an silent command-line installation script that may be executed without admin rights on any Windows hosts.
+Babun features a silent command-line installation script that may be executed without admin rights on any Windows hosts.
 
 == Using babun
 

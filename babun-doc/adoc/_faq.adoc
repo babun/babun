@@ -246,18 +246,16 @@ see https://github.com/babun/babun/issues/421[Issue 421]
 You need to add the environment variable HOME into your windows account.
 
 * Edit your environment variables
-** You can execute this command :
-*** rundll32 sysdm.cpl,EditEnvironmentVariables
-** or you search in the start menu "env" and select "Select Edit environment variables for your account"
+** execute `rundll32 sysdm.cpl,EditEnvironmentVariables` or search in the start menu for `env` and select "Select Edit environment variables for your account"
 **  Select New
-*** Name: HOME
-*** Value: C:\Users\login
+*** Name: `HOME`
+*** Value: `C:\Users\USERNAME`
 * Launch babun
-* Type: babun install
+* Type `babun install`
 * Restart babun
 
-Your babun home directory should now be your windows user profile directory, usually c:\user\login\
+Your babun home directory should now be your windows user profile directory, usually `c:\user\USERNAME`
 
-see https://github.com/babun/babun/issues/289[Issue 289]
+See https://github.com/babun/babun/issues/289[Issue 289].
 
 

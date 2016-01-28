@@ -14,13 +14,13 @@ All downloaded packages are stored in the `target/babun-packages` folder.
 
 The main goal of the `babun-cygwin` module is to download and invoke the native cygwin.exe installer. The packages downloaded by the babun-packages module are used as the input - all of them will be installed in the offline cygwin installation. 
 
-It is not trivial to install and zip a local instance of Cygwin - there are problems with the symlinks as the symlink-file-flags are lost during the compression process. Babun can work it around though. At first, just after the installation, the `symlinks_find.sh` script is invoked in order to store the list of all cygwin's symlinks. This file is delivered as a part of the the babun's core. Then, after babun is installed from the zip file on the user's host the `symlinks_repair.sh` script is invoked - it will correct all the broken symlinks listed in the above mentioned file.
+It is not trivial to install and zip a local instance of Cygwin - there are problems with the symlinks as the symlink-file-flags are lost during the compression process. Babun can work it around though. At first, just after the installation, the `symlinks_find.sh` script is invoked in order to store the list of all cygwin's symlinks. This file is delivered as a part of the babun's core. Then, after babun is installed from the zip file on the user's host the `symlinks_repair.sh` script is invoked - it will correct all the broken symlinks listed in the above mentioned file.
 
 Preinstalled cygwin is located in the `target/babun-cygwin` folder.
 
 === babun-core
 
-The main goal of the `babun-core` module is to install babun's core along with all the plugins and tools. `install.sh` script is invoked during the creation of the distribution package in order to preinstall the plugins. Whenever babun is installed on the user's host the `install_home.sh` script is invoke in order to install the babun-related files to the cygwin-user's home folder.
+The main goal of the `babun-core` module is to install babun's core along with all the plugins and tools. `install.sh` script is invoked during the creation of the distribution package in order to preinstall the plugins. Whenever babun is installed on the user's host the `install_home.sh` script is invoked in order to install the babun-related files to the cygwin-user's home folder.
 
 Preinstalled cygwin with installed babun is located in the `target/babun-cygwin` folder.
 

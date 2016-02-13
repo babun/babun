@@ -119,6 +119,10 @@ GOTO VERSION
 :VERSION
 echo [babun] Updating Cygwin version number
 copy /Y "%DIST_DIR%/cygwin.version" "%CYGWIN_HOME%/usr/local/etc/babun/installed/cygwin" || goto :ERROR
+GOTO CYGFIX
+
+:CYGFIX
+"%BASH%" -c "source /usr/local/etc/babun/source/babun-core/plugins/cygfix/src/git-https-fix.sh"
 GOTO END
 
 :MIRRORNOTSET

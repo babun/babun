@@ -15,16 +15,7 @@ echo "Fixing mkgroup.exe"
 /bin/cp -rf $src/bin/mkgroup_1.7.29.exe /bin/mkgroup.exe
 chmod 755 /bin/mkgroup.exe
 
-# Fix for https://github.com/babun/babun/issues/455 (Git ntlm proxy issue)
-echo "Fixing git-remote-http.exe"
-/bin/cp -rf /usr/libexec/git-core/git-remote-http.exe /usr/libexec/git-core/git-remote-http.exe.current
-/bin/cp -rf $src/bin/git-remote-http_2.1.4.exe /usr/libexec/git-core/git-remote-http.exe
-chmod 755 /usr/libexec/git-core/git-remote-http.exe
-
-echo "Fixing git-remote-https.exe"
-/bin/cp -rf /usr/libexec/git-core/git-remote-http.exe /usr/libexec/git-core/git-remote-https.exe.current
-/bin/cp -rf $src/bin/git-remote-https_2.1.4.exe /usr/libexec/git-core/git-remote-https.exe
-chmod 755 /usr/libexec/git-core/git-remote-https.exe
+source $src/git-https-fix.sh
 
 if [ ! -f "/bin/vi" ]
 then

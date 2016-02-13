@@ -1,0 +1,7 @@
+# Add menu entries for xterm in xserver system tray
+
+MENU systray {
+xterm EXEC "xterm -display %display% -fn fixed -e zsh"
+SEPARATOR
+}
+ROOTMENU systray

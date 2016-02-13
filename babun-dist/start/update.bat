@@ -122,7 +122,7 @@ copy /Y "%DIST_DIR%/cygwin.version" "%CYGWIN_HOME%/usr/local/etc/babun/installed
 GOTO CYGFIX
 
 :CYGFIX
-"%BASH%" -c "source /usr/local/etc/babun/source/babun-core/plugins/cygfix/src/git-https-fix.sh"
+"%BASH%" -c "source /usr/local/etc/babun/source/babun-core/plugins/cygfix/src/git-https-fix.sh" || goto :ERROR
 GOTO END
 
 :MIRRORNOTSET

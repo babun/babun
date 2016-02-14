@@ -25,6 +25,7 @@ gitalias['alias.dc']='diff --cached'
 gitalias['alias.lg']="log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all"
 gitalias['alias.last']='log -1 --stat'
 gitalias['alias.unstage']='reset HEAD --'
+gitalias['alias.boom']='reset --hard HEAD'
 
 # git mergetool config
 gitmerge['merge.tool']='vimdiff'

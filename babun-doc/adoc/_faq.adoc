@@ -194,7 +194,7 @@ Use Dokan sshfs. Free and open source.
 
 == Use SSH id_rsa key from Windows
 
-see https://github.com/babun/babun/issues/208[Issue 208]
+See https://github.com/babun/babun/issues/208[Issue 208]
 
 == When I start babun.bat three shell windows open.
 
@@ -235,11 +235,11 @@ Babun is using Windows native ping.exe because Cygwin's ping requires admin righ
 == I see "error: command 'gcc' failed with exit status 1"
 
 Execute `pact install libffi-devel` and try again.
-see https://github.com/babun/babun/issues/191[Issue 191]
+See https://github.com/babun/babun/issues/191[Issue 191]
 
 == How to use Sublime Text 3 as editor for commit message
 
-see https://github.com/babun/babun/issues/421[Issue 421]
+See https://github.com/babun/babun/issues/421[Issue 421]
 
 == How to use the Windows' user profile directory as my home directory in babun ? 
 

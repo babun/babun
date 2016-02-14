@@ -28,7 +28,7 @@ function usage()
 function version()
 {
   echo "babun version $(cat $babun/installed/babun 2> /dev/null || echo '1.0.1 ???')"
-  echo "Created and maintained by Tom Bujok (@tombujok) and the Babun Team (http://babun.github.io)."
+  echo "Created and maintained by Tom Bujok (@tombujok) and Lukasz Pielak (@lukaszpielak)."
   echo "Copyright (c) 2014-2015."
 }
 
@@ -53,7 +53,7 @@ function welcome()
   echo -e "go to GitHub: https://github.com/babun/babun"
   echo -e ""
   echo -e "If you like the project, star it on GitHub and follow us on twitter!"
-  echo -e "This project is created and maintained by Tom Bujok (@tombujok) and the Babun Team (http://babun.github.io)."
+  echo -e "This project is created and maintained by Tom Bujok (@tombujok) and Lukasz Pielak (@lukaszpielak)."
 }
 
 #babun

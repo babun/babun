@@ -258,4 +258,21 @@ Your babun home directory should now be your windows user profile directory, usu
 
 See https://github.com/babun/babun/issues/289[Issue 289].
 
+== How do a I run babun in cmder?
+
+* Add new task in CMDER settings
+* Rename task by {Babun}
+* Add this command in Task Parameters:
+
+----
+/icon "%userprofile%\.babun\cygwin\bin\mintty.exe" /dir "%userprofile%"
+----
+
+* Add this command in Commands:
+
+----
+%userprofile%\.babun\cygwin\bin\mintty.exe /bin/env CHERE_INVOKING=1 /bin/zsh.exe
+----
+
+* You're now ready to use Babun in CMDER ! :)
 

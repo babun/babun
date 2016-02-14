@@ -8,5 +8,10 @@ e.g install.bat /t "D:\target_folder"
 Enjoy!
 
 --
+Babun Team:
+
 Tom Bujok 
 https://twitter.com/tombujok
+
+Lukasz Pielak
+https://twitter.com/lukaszpielak

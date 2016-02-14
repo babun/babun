@@ -142,7 +142,7 @@ cscript //Nologo "%LINK_SCRIPT%" "%USERPROFILE%\Desktop\babun.lnk" "%BABUN_HOME%
 
 :INSTALLED
 ECHO [babun] Babun installed successfully. You can delete the installer now.
-ECHO [babun] Enjoy! @tombujok
+ECHO [babun] Enjoy! Babun Team (http://babun.github.io).
 
 :RUN
 ECHO [babun] Starting babun

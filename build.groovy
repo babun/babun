@@ -75,7 +75,7 @@ def executeBabunPackages() {
     File workingDir = new File(getRoot(), module);
     String conf = new File(getRoot(), "${module}/conf/").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "packages.groovy", conf, out]
+    def command = ["groovy.bat", "packages.groovy", conf, out]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
@@ -89,7 +89,7 @@ def executeBabunCygwin(boolean downloadOnly = false) {
     String pkgs = new File(getRoot(), "babun-packages/conf/cygwin.x86.packages")
     String downOnly = downloadOnly as String
     println "Download only flag set to: ${downOnly}"
-    def command = ["groovy", "cygwin.groovy", repo, input, out, pkgs, downOnly]
+    def command = ["groovy.bat", "cygwin.groovy", repo, input, out, pkgs, downOnly]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
@@ -103,7 +103,7 @@ def executeBabunCore() {
     String out = new File(getTarget(), "${module}").absolutePath    
     String branch = getenv("babun_branch") ? getenv("babun_branch") : "release"
     println "Taking babun branch [${branch}]"
-    def command = ["groovy", "core.groovy", root, cygwin, out, branch]
+    def command = ["groovy.bat", "core.groovy", root, cygwin, out, branch]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 
@@ -115,7 +115,7 @@ def executeBabunDist() {
     String input = workingDir.absolutePath
     String cygwin = new File(getTarget(), "babun-core/cygwin").absolutePath
     String out = new File(getTarget(), "${module}").absolutePath
-    def command = ["groovy", "dist.groovy", cygwin, input, out, VERSION]
+    def command = ["groovy.bat", "dist.groovy", cygwin, input, out, VERSION]
     executeCmd(command, workingDir, TEN_MINUTES)
 }
 

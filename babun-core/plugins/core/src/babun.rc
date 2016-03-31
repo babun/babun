@@ -69,6 +69,12 @@ fi
 
 PATH="$HOME_LOCAL_BIN:$PATH"
 
+# shell-here
+if [ ! -z "$INVOKE_CD" ] ; then
+    cd "$INVOKE_CD"
+    unset INVOKE_CD
+fi
+
 #
 # IMPORTANT -> THIS HAS TO BE LOCATED AT THE END OF THIS SCRIPT
 # install babun to user's home folder if it does not exist

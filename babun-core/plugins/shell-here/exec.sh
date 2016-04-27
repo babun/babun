@@ -67,7 +67,7 @@ function set_reg_keys {
 	echo 'End Function' >> "${vbs}"
 	echo 'Sub Invoke(path, verb)' >> "${vbs}"
 	echo '	Set app = CreateObject("Shell.Application")' >> "${vbs}"
-	echo '	app.ShellExecute "D:\.babun\cygwin\bin\mintty.exe", "/bin/env CHERE_INVOKING=1 INVOKE_CD=" & Chr(34) & CutBackslash(path) & Chr(34) & " /bin/zsh", "", verb, 1' >> "${vbs}"
+	echo '	app.ShellExecute "'${mintty}'", "/bin/env CHERE_INVOKING=1 INVOKE_CD=" & Chr(34) & CutBackslash(path) & Chr(34) & " /bin/zsh", "", verb, 1' >> "${vbs}"
 	echo 'End Sub' >> "${vbs}"
 
 	# install registry keys

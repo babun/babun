@@ -35,7 +35,11 @@ def initEnvironment() {
 }
 
 def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
-    def rootPackages = new File(confFolder, "cygwin.${bitVersion}.packages").readLines().findAll() { it }
+    File packagesFile = new File(confFolder, "cygwin.${bitVersion}.packages")
+    // prepare structure for babun-cygwin repo
+    Files.copy(packagesFile, new File(outputFolder, "cygwin.${bitVersion}.packages"))
+
+    def rootPackages = packagesFile.readLines().findAll() { it }
     def repositories = new File(confFolder, "cygwin.repositories").readLines().findAll() { it }
     def processed = [] as Set
     for (repo in repositories) {

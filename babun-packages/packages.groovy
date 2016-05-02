@@ -37,9 +37,9 @@ def initEnvironment() {
 def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
     File packagesFile = new File(confFolder, "cygwin.${bitVersion}.packages")
     // prepare structure for babun-cygwin repo
-    File packagesFileCopy = new File(outputFolder, "cygwin.${bitVersion}.packages")
-    packagesFileCopy.createNewFile();
-    packagesFileCopy << packagesFile.text
+//    File packagesFileCopy = new File(outputFolder, "cygwin.${bitVersion}.packages")
+//    packagesFileCopy.createNewFile();
+//    packagesFileCopy << packagesFile.text
 
     def rootPackages = packagesFile.readLines().findAll() { it }
     def repositories = new File(confFolder, "cygwin.repositories").readLines().findAll() { it }

@@ -11,6 +11,7 @@ def execute() {
         checkArguments()
         (confFolder, outputFolder, setupVersion) = initEnvironment()
         downloadPackages(confFolder, outputFolder, "x86")
+        copyPackagesListToTarget(confFolder, outputFolder, "x86")
     } catch (Exception ex) {
         error("Unexpected error occurred: " + ex + " . Quitting!")
         ex.printStackTrace()
@@ -34,13 +35,15 @@ def initEnvironment() {
     return [confFolder, outputFolder]
 }
 
+def copyPackagesListToTarget(File confFolder, File outputFolder, String bitVersion) {
+    File packagesFile = new File(confFolder, "cygwin.${bitVersion}.packages")
+    File outputFile = new File(outputFolder, "cygwin.${bitVersion}.packages")
+    outputFile.createNewFile()
+    outputFile << packagesFile.text
+}
+
 def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
     File packagesFile = new File(confFolder, "cygwin.${bitVersion}.packages")
-    // prepare structure for babun-cygwin repo
-//    File packagesFileCopy = new File(outputFolder, "cygwin.${bitVersion}.packages")
-//    packagesFileCopy.createNewFile();
-//    packagesFileCopy << packagesFile.text
-
     def rootPackages = packagesFile.readLines().findAll() { it }
     def repositories = new File(confFolder, "cygwin.repositories").readLines().findAll() { it }
     def processed = [] as Set
@@ -52,7 +55,9 @@ def downloadPackages(File confFolder, File outputFolder, String bitVersion) {
             processed.addAll(processedInStep)
         }
         rootPackages.removeAll(processed)
-        if (rootPackages.isEmpty()) return
+        if (rootPackages.isEmpty()) {
+            return
+        }
     }
     if (!rootPackages.isEmpty()) {
         error("Could not download the following ${rootPackages}! Quitting!")
@@ -66,23 +71,8 @@ def downloadSetupIni(String repository, String bitVersion, File outputFolder) {
     String downloadSetupIni = "wget -l 2 -r -np -q --cut-dirs=3 -P " + outputFolder.getAbsolutePath() + " " + setupIniUrl    
     executeCmd(downloadSetupIni, 5)
     String setupIniContent = setupIniUrl.toURL().text
-    // adjustSetupVersion(outputFolder, setupVersion)
     return setupIniContent
 }
-
-// not used - turned out to be problematic
-def adjustSetupVersion(File outputFolder, String newSetupVersion) {
-    outputFolder.eachFileRecurse(FILES) { File file -> 
-        if(file.name == ('setup.ini')) {
-            println "Adjusting setup-version of [${file.getAbsolutePath()}]"
-            String content = file.text
-            String adjustedContent = content.replaceAll("setup-version: .*", "setup-version: ${newSetupVersion}")
-            def fileWriter = file.newWriter()
-            fileWriter << adjustedContent
-        }
-    }
-}
-
 
 def downloadRootPackage(String repo, String setupIni, String rootPkg, Set<String> processed, File outputFolder) {
     def processedInStep = [] as Set

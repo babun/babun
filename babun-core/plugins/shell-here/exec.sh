@@ -6,7 +6,7 @@ function set_reg_keys {
 	local babun_root="$( cygpath -w "/" | sed "s#\\\cygwin##g" )"
 	# the name that appears in the right-click context menu
 	local name="Open Babun here"
-	local cmd="${babun_root}\cygwin\bin\mintty.exe /bin/env CHERE_INVOKING=1 /bin/zsh.exe"
+	local cmd="${babun_root}\cygwin\bin\mintty.exe"
 
 	local keys=("HKCU\Software\Classes\Directory\Background\shell\babun"
 	"HKCU\Software\Classes\Directory\shell\babun"

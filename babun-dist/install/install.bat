@@ -130,15 +130,16 @@ if not exist "%SETPATH_SCRIPT%" (
 cscript //Nologo "%SETPATH_SCRIPT%" "%BABUN_HOME%"
 
 :LINK
-if exist "%USERPROFILE%\Desktop\babun.lnk" (
+for /f "usebackq tokens=3*" %%D IN (`reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop`) do set DESKTOPDIR=%%D
+if exist "%DESKTOPDIR%\babun.lnk" (
     ECHO [babun] Deleting old desktop link
-    DEL /F /Q "%USERPROFILE%\Desktop\babun.lnk"
+    DEL /F /Q "%DESKTOPDIR%\babun.lnk"
 )
 ECHO [babun] Creating a desktop link
 if not exist "%LINK_SCRIPT%" (
     ECHO [babun] ERROR: Cannot create a desktop link. Script not found!
 )
-cscript //Nologo "%LINK_SCRIPT%" "%USERPROFILE%\Desktop\babun.lnk" "%BABUN_HOME%"\cygwin\bin\mintty.exe
+cscript //Nologo "%LINK_SCRIPT%" "%DESKTOPDIR%\babun.lnk" "%BABUN_HOME%"\cygwin\bin\mintty.exe
 
 :INSTALLED
 ECHO [babun] Babun installed successfully. You can delete the installer now.

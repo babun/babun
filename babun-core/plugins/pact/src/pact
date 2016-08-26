@@ -472,9 +472,9 @@ case "$command" in
       then
         key="$pkg"
       fi
-      for manifest in /etc/setup/*.lst.gz
+      for manifest in `find /etc/setup -type f -name '*\.lst\.gz'`
       do
-        found=`cat $manifest | gzip -d | grep -c "$key"`
+        found=`cat $manifest | gzip -d | if [ $(grep -c "$key") -gt 0 ]; then echo "1"; else echo "0"; fi`
         if test $found -gt 0
         then
           package=`echo $manifest | sed -e "s:/etc/setup/::" -e "s/.lst.gz//"`

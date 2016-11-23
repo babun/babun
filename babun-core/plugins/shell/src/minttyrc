@@ -36,3 +36,4 @@ PgUpDnScroll=yes
 Term=xterm-256color
 CopyAsRTF=no
 RightClickAction=paste
+Scrollbar=none

@@ -1,4 +1,4 @@
-= Babun - a windows shell you will love
+= Babun - a windows shell you will love [https://github.com/babun/babun/issues/868[PROJECT DISCONTINUED]]
 
 Would you like to use a linux-like console on a Windows host without a lot of fuss? Try out babun!
 // THIS DOCUMENT WAS GENERATED. DO NOT EDIT IT.\n

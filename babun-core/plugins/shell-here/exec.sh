@@ -13,7 +13,7 @@ function set_reg_keys {
 	"HKCU\Software\Classes\Drive\Background\Shell\babun"
 	"HKCU\Software\Classes\Drive\shell\babun")
 
-	#install registry keys
+	# install registry keys
 	for key in ${keys[*]}
 	do 
 		cmd /c "reg" "add" "${key}" "/ve" "/d" "${name}" "/t" "REG_SZ" "/f" || echo "Failed adding ${key}"
@@ -29,7 +29,7 @@ function unset_reg_keys {
 	"HKCU\Software\Classes\Drive\Background\Shell\babun"
 	"HKCU\Software\Classes\Drive\shell\babun")
 
-	#install registry keys
+	# delete registry keys
 	for key in ${keys[*]}
 	do 
 		cmd /c "reg" "delete" "${key}" "/f" || echo "Failed deleting ${key}"

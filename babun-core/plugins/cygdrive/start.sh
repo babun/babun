@@ -18,7 +18,7 @@ if ! [[ "$DISABLE_PLUGIN_CYGDRIVE" == "true" ]]; then
 	do
 		drive_name=$(basename $cygdrive_dir)
 
-		if [[ "$drive_name" != "cygdrive" ]]; then
+		if [[ "$drive_name" != "cygdrive" && ! -e "/$drive_name" ]]; then
 			ln -s "$cygdrive_dir" "/$drive_name"
 		fi
 	done

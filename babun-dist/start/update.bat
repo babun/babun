@@ -158,5 +158,5 @@ pause
 EXIT /b %errorlevel%
 
 :END
-ECHO [babun] Full success - startung babun
+ECHO [babun] Full success - starting babun
 start "" "%CYGWIN_HOME%\bin\mintty.exe" - || goto :ERROR

@@ -27,8 +27,13 @@ EXIT /b 255
 
 :TARGET
 if %2.==. GOTO NOTARGET
-set BABUN_HOME=%~2\.babun
-set TARGET=%~2
+SET TARGET=%~2
+REM Check for trailing backslash that would break the installer
+IF %TARGET:~-1%==\ (
+	REM Remove the trailing backslash
+	SET TARGET=%TARGET:~0,-1%
+)
+set BABUN_HOME=%TARGET%\.babun
 set CUSTOM=true
 ECHO [babun] Installing to: "%BABUN_HOME%"
 GOTO CHECKTARGET

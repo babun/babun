@@ -1,7 +1,7 @@
 local return_code="%(?..%{$fg[red]%}%? %{$reset_color%})"
 
 PROMPT='%{$fg[blue]%}{ %c } \
-%{$fg[green]%}$(  git rev-parse --abbrev-ref HEAD 2> /dev/null || echo ""  )%{$reset_color%} \
+%{$fg[green]%}$(  git rev-parse --abbrev-ref HEAD 2> /dev/null || echo "\b"  )%{$reset_color%} \
 %{$fg[red]%}%(!.#.»)%{$reset_color%} '
 
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'

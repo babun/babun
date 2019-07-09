@@ -50,7 +50,7 @@ alias vi=vim
 if [ ! -e /usr/bin/sudo ]; then
 /bin/cat <<EOF > /usr/bin/sudo
 #!/bin/bash
-"\$@"
+cygstart --action=runas "\$@"
 EOF
 /bin/chmod ug+x /usr/bin/sudo
 fi

@@ -27,7 +27,7 @@ EXIT /b 255
 
 :TARGET
 if %2.==. GOTO NOTARGET
-set BABUN_HOME=%~2\.babun
+set BABUN_HOME=%~2
 set TARGET=%~2
 set CUSTOM=true
 ECHO [babun] Installing to: "%BABUN_HOME%"

@@ -44,7 +44,7 @@ def initEnvironment() {
 }
 
 def copyCygwin(File cygwinFolder, File outputFolder) {
-    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/cygwin", quiet: true) {
+    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/cygwin", quiet: true) {
         fileset(dir: "${cygwinFolder.absolutePath}", defaultexcludes:"no") {
             exclude(name: "Cygwin.bat")
             exclude(name: "Cygwin.ico")
@@ -54,19 +54,19 @@ def copyCygwin(File cygwinFolder, File outputFolder) {
 }
 
 def copyTools(File inputFolder, File outputFolder) {
-    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/tools", quiet: true) {
+    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/tools", quiet: true) {
         fileset(dir: "${inputFolder.absolutePath}/tools", defaultexcludes:"no")
     }
 }
 
 def copyFonts(File inputFolder, File outputFolder) {
-    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun/fonts", quiet: true) {
+    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/fonts", quiet: true) {
         fileset(dir: "${inputFolder.absolutePath}/fonts", defaultexcludes:"no")
     }
 }
 
 def copyStartScripts(File inputFolder, File outputFolder) {
-    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/.babun", quiet: true) {
+    new AntBuilder().copy(todir: "${outputFolder.absolutePath}/", quiet: true) {
         fileset(dir: "${inputFolder.absolutePath}/start", defaultexcludes:"no")
     }
 }

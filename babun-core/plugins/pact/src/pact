@@ -441,7 +441,7 @@ case "$command" in
       echo ""
       echo Searching for installable packages matching $pkg:
       cat setup.ini | awk -v query="$pkg" \
-        'BEGIN{RS="\n\n@ "; FS="\n"; ORS="\n"} {if ($1 ~ query) {print $1}}'
+        'BEGIN{IGNORECASE = 1; RS="\n\n@ "; FS="\n"; ORS="\n"} {if ($1 ~ query) {print $1}}'
     done
 
   ;;

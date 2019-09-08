@@ -151,7 +151,7 @@ function shell()
         echo "$passwd" > /etc/passwd
     fi
     newshell=$args
-    currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
+    currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh ":/.*sh" | grep -oP "(?<=.:)/.*" )
     if [[ $newshell == "" ]]; then        
         echo "$currshell"
     else

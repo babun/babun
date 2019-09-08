@@ -23,7 +23,7 @@ function proc_exec_on_script_finish_trap {
 }
 
 function proc_shell_login {
-    currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh "/bin/.*sh" )
+    currshell=$( awk "/^$USERNAME/ { print $1 }" /etc/passwd | grep -oh ":/.*sh" | grep -oP "(?<=.:)/.*" )
     if ! [[ $currshell == "" ]]; then
         echo Login to default shell $currshell
         proc_exec_on_script_finish_trap
